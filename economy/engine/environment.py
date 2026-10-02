@@ -5,8 +5,16 @@ from typing import Any
 
 
 class Environment:
+    """Seasons and patches.
+
+    If ``scenario.calendar_cycle_seconds`` is set, the authored season list (which must cover exactly one
+    cycle) repeats: at each multiple of the cycle the calendar wraps back to the first season, and seasonal
+    deposits recur each cycle. Without it, the last season simply continues.
+    """
+
     def __init__(self, defs: dict[str, Any]):
         self.seasons = defs["seasons"]
+        self.cycle = defs.get("scenario", {}).get("calendar_cycle_seconds")
         self.patch_defs = defs.get("patches", {})
         # None marks a renewable patch with no finite reserve.
         self.reserves: dict[str, float | None] = {
@@ -15,15 +23,23 @@ class Environment:
         }
         self.deposit_log: list[tuple[int, str, float]] = []
 
+    def calendar_second(self, second: int) -> int:
+        return second % int(self.cycle) if self.cycle else second
+
+    def cycle_index(self, second: int) -> int:
+        return second // int(self.cycle) if self.cycle else 0
+
     def season_at(self, second: int) -> dict[str, Any]:
+        second = self.calendar_second(second)
         for season in self.seasons:
             if season["start"] <= second < season["end"]:
                 return season
         return self.seasons[-1]
 
     def step(self, second: int, dt: float) -> None:
+        local = self.calendar_second(second)
         for season in self.seasons:
-            if season["start"] == second:
+            if season["start"] == local:
                 for patch_id, patch in self.patch_defs.items():
                     amount = patch.get("season_deposits", {}).get(season["id"])
                     if amount and self.reserves[patch_id] is not None:

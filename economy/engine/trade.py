@@ -50,6 +50,16 @@ class TradeState:
         accrued = min(float(offer["max"]), float(offer["per_minute"]) * second / 60.0)
         return max(0, int(floor(accrued + 1e-9)) - self.bought.get(resource, 0))
 
+    def partner_demand(self, resource: str, second: int) -> int:
+        """Units the partner will still buy now. Demand with ``per_minute`` accrues over time up to ``max``."""
+        demand = self.table["partner_buys"].get(resource)
+        if not demand:
+            return 0
+        cap = float(demand["max"])
+        if demand.get("per_minute"):
+            cap = min(cap, float(demand["per_minute"]) * second / 60.0)
+        return max(0, int(floor(cap + 1e-9)) - self.sold.get(resource, 0))
+
     def buy_price(self, resource: str) -> float:
         return float(self.table["base_values"][resource]) * self.price_multipliers.get(resource, 1.0)
 
@@ -61,7 +71,7 @@ class TradeState:
             if not demand:
                 problems.append(f"partner_does_not_buy:{resource}")
                 continue
-            if self.sold.get(resource, 0) + quantity > demand["max"]:
+            if quantity > self.partner_demand(resource, second):
                 problems.append(f"partner_demand_exhausted:{resource}")
             income += quantity * float(demand["price"])
         cost = 0.0

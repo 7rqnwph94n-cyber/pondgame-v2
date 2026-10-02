@@ -5,12 +5,13 @@
     "Construction costs, staffing, services, morphologies, trade and the starting colony come from ../design/VERDANT_VERTICAL_SLICE_ECONOMY.md (section references in each 'source').",
     "Entries whose source is 'provisional' are NOT specified by any design document. They are placeholders so the model can run and must be confirmed by Rich.",
     "2026-10-02: Rich's bootstrap rules 1-8 promoted (AGENT_CHAT 15:18Z). The doc-faithful values remain runnable via economy/data/experiments/legacy_doc_faithful.json.",
-    "The scenario horizon is 120 minutes (first-success target 100-120). The design calendar ends at 90 minutes; the Dry Phase is extended to the horizon as the least generous assumption, pending Rich's decision."
+    "The scenario horizon is 120 minutes (first-success target 100-120). The authored 90-minute calendar repeats (Rich, 2026-10-02T16:50Z): at 90:00 it wraps to Bloom and the High Water phosphate deposit recurs each cycle."
   ],
   "scenario": {
     "id": "verdant_basin_v0_2",
     "duration_seconds": 7200,
     "first_success_target_minutes": [100, 120],
+    "calendar_cycle_seconds": 5400,
     "step_seconds": 1,
     "seed": 1,
     "districts": ["core"]
@@ -19,7 +20,7 @@
     {"id": "bloom", "start": 0, "end": 1080, "farm": 1.25, "filter": 0.80, "sediment": 0.75},
     {"id": "high_water", "start": 1080, "end": 2100, "farm": 1.00, "filter": 1.50, "sediment": 0.25},
     {"id": "recession", "start": 2100, "end": 3480, "farm": 1.10, "filter": 1.00, "sediment": 1.35},
-    {"id": "dry", "start": 3480, "end": 7201, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
+    {"id": "dry", "start": 3480, "end": 5400, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
   ],
   "resources": [
     "biomass", "staple", "phosphate_sediment", "suspended_nutrient",
@@ -171,7 +172,9 @@
       "habitat_composite": 12, "repair_enzyme": 9, "pigment_ornament": 14
     },
     "partner_sells": {"carbonate": {"per_minute": 0.5, "max": 30}, "cured_resin": {"per_minute": 0.2, "max": 8}},
-    "partner_buys": {"pigment_ornament": {"max": 8, "price": 18}, "growth_nutrient": {"max": 12, "price": 8}, "prepared_silica": {"max": 10, "price": 6}},
+    "partner_buys": {"pigment_ornament": {"max": 8, "price": 18}, "growth_nutrient": {"max": 12, "price": 8}, "prepared_silica": {"max": 10, "price": 6},
+      "staple": {"max": 20, "per_minute": 0.2, "price": 2, "source": "Rich 2026-10-02T16:50Z: neighbour buys modest Staple so the opening economy can earn Carbonate; quantities provisional (sweep level 'small'), price = §15.2 base value"},
+      "biomass": {"max": 20, "per_minute": 0.2, "price": 1, "source": "Rich 2026-10-02T16:50Z: neighbour buys modest Biomass; quantities provisional (sweep level 'small'), price = §15.2 base value"}},
     "contracts": {
       "fertile_exchange": {"deliver": {"growth_nutrient": 8}, "deadline": 3300, "reward": {"carbonate": 12}, "price_multipliers": {"carbonate": 0.85}},
       "colour_of_memory": {"deliver": {"pigment_ornament": 6}, "reward": {"stored_value": 90}}

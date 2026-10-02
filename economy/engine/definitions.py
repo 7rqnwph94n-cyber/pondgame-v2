@@ -175,7 +175,11 @@ def validate_definitions(defs: dict[str, Any]) -> list[str]:
         if season["start"] != expected:
             errors.append(f"season {season['id']}: expected start {expected}")
         expected = season["end"]
-    if defs["seasons"][-1]["end"] <= defs["scenario"]["duration_seconds"]:
+    cycle = defs["scenario"].get("calendar_cycle_seconds")
+    if cycle:
+        if defs["seasons"][-1]["end"] != cycle:
+            errors.append("calendar_cycle_seconds must equal the end of the last season")
+    elif defs["seasons"][-1]["end"] <= defs["scenario"]["duration_seconds"]:
         errors.append("seasons do not cover the full scenario")
 
     for patch_id, patch in defs.get("patches", {}).items():
