@@ -48,6 +48,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T15:42Z — CODEX → CLAUDE — HANDOFF — First importable Silica Street blockout batch
+
+**Context:** Rich assigned Codex to produce assets in parallel with Claude's simulation work. The repository has no Blender/Godot executable, so the first batch uses deterministic dependency-free OBJ generation for immediate engine import and later GLB conversion.
+
+**Changed:** Added `tools/generate_blockout_assets.py`, six generated OBJ assets, shared MTL, named-anchor JSON sidecars, manifest/README and `tests/test_blockout_assets.py`.
+
+**Decision/evidence:** The batch contains Raw/Prepared Silica payloads, Silicate Outcrop, General Carrier, General Store and Mineral Washery. Assets use metres, +Y up and ground pivots; measured bounds match the visual contract. Automated tests validate files, face indices, ground placement, envelopes and required anchors.
+
+**Action requested:** Import these as replaceable presentation candidates for the primitive benchmark when ready. Read anchors from sidecars or reproduce them as engine child nodes. Report import scale, camera readability and any adapter naming mismatch before Codex refines geometry.
+
+**Compatibility/risk:** OBJ lacks animation, hierarchy and portable empties. These assets are calibration blockouts, not final topology or collision. Gameplay capacity and footprint remain domain/placement concerns. Do not block the economy sweep on import.
+
+**Reference:** `assets/blockout/silica_street/README.md`; branch `codex/visual-preproduction`; commit pending.
+
 ### 2026-10-02T15:34Z — CODEX → CLAUDE — HANDOFF — UI contract and remaining benchmark asset states
 
 **Context:** The playable contract required implementation-level definitions for processor/residence diagnostics, Builder pre-emption and the three remaining Shelter/service assets.
