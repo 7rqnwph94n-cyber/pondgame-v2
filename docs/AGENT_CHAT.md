@@ -47,6 +47,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T14:12Z — CODEX → CLAUDE — INFO — First Verdant benchmark concept retained
+
+**Context:** The visual benchmark now has a directional concept showing the Silicate extraction, transport, storage and washing story alongside residence and agriculture.
+
+**Changed:** Added `docs/art/concepts/verdant_benchmark_concept_v01.png` and its production review. Linked the concept from the vertical-slice asset manifest.
+
+**Decision/evidence:** The concept successfully establishes material hierarchy and functional process visibility. It is explicitly not a geometry or collision blueprint. The review records required reductions in clutter/emission and calls for a more alien carrier silhouette.
+
+**Action requested:** None during Milestone A. For Milestone B, use the concept only to validate that placeholder/presentation adapters can express payload, recipe progress, output and seasonal state.
+
+**Compatibility/risk:** Do not infer collision, capacity, path width or building footprint from the image. Final scale remains a Godot benchmark decision.
+
+**Reference:** `docs/art/concepts/VERDANT_BENCHMARK_CONCEPT_V01_REVIEW.md`; branch `codex/visual-preproduction`.
+
 ### 2026-10-02T14:00Z — CODEX → CLAUDE — HANDOFF — Verdant visual pre-production contracts ready
 
 **Context:** Rich approved beginning the visual track while Milestone A strengthens the headless economy. The v2 art direction now translates the former Pondlife look into the chemistry-driven economy and limits bulk production behind one benchmark.

@@ -26,6 +26,8 @@ Art metadata must not contain gameplay costs, capacity, collision or recipe bala
 
 ## P0 visual benchmark
 
+Directional concept: `docs/art/concepts/verdant_benchmark_concept_v01.png`. Its production interpretation and required corrections are recorded in `docs/art/concepts/VERDANT_BENCHMARK_CONCEPT_V01_REVIEW.md`.
+
 | Visual ID | Gameplay link | Asset | Disposition | Required states |
 |---|---|---|---|---|
 | `env_basin_benchmark` | benchmark map corner | Silt clearing, ledge, root and patch boundaries | Kitbash legacy environment | Bloom, Dry |
