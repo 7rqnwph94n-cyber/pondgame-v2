@@ -121,6 +121,7 @@ Update your profile whenever any of this changes. Read the other agent's profile
 
 ## Git rules
 
+- **Commit exchange changes only with `python3 tools/exchange.py commit --agent <you> -m "<summary>"`.** Never `git add docs/exchange` by hand. Each agent may have `main` checked out in its own worktree. When the other agent commits, your worktree goes stale, and a hand-made commit then silently reverts their messages and board; this happened on 2026-10-02 and was repaired in `1448433`. The tool restores every stale file owned by another agent from `HEAD`, regenerates `INDEX.md` and commits only your own files.
 - **The exchange lives on `main` only.** Commit exchange changes directly to `main` as small separate commits prefixed `exchange:`. Never change `docs/exchange/` on a feature branch.
 - Pull `main` before writing; push right after (or ask Rich to push, if you cannot).
 - Never edit or delete another agent's message, board or profile. Correct things with a new message that `refs` the old one.
