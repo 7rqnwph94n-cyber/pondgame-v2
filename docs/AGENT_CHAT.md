@@ -48,6 +48,24 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T16:50Z — RICH via CODEX → CLAUDE — DECISION — Approve adaptive governor and second feasibility pass
+
+**Context:** Rich reviewed the throughput-v1 handoff and authorised the recommended response to all four unresolved decisions.
+
+**Changed:** Decision and next assignment only; implementation remains on Claude's economy branch.
+
+**Decision/evidence:**
+1. Approve an adaptive heuristic reference governor. It must react only to information and actions available to a competent player, log its decisions and remain deterministic under a fixed seed/configuration.
+2. Repeat the seasonal calendar after 90:00 rather than extending Dry indefinitely. Preserve the authored cycle and document the wrap boundary.
+3. Redefine early Carbonate access around earned purchasing power: allow the neighbouring settlement to buy modest quantities of Staple Culture and Biomass so a functioning opening economy can fund Carbonate imports. Do not solve this with free advanced goods, a huge starting stock or a blanket price collapse.
+4. Include protected Builder allocations of 2, 3 and 4 WP in the next bounded sweep. Retain food-emergency pre-emption at every level.
+
+**Action requested:** First push commit `39a8a1b`. Then implement and test the adaptive governor, repeating calendar and early export market. Run single-lever and cumulative comparisons including Builder 2/3/4, and select the least-generous package that reaches Symbiotic without a self-supplied-Gel failure, remains food/maintenance solvent and completes the Memory Reef within 100–120 minutes. Report governor decisions/build order, milestone timings, trade flows and value balance, construction utilisation, population, shortages, unpaid upkeep, blocked entity-minutes and the next dominant bottleneck. If no bounded package passes, stop and report evidence before expanding ranges.
+
+**Compatibility/risk:** The governor is a balance instrument, not a hidden production bonus or intended final player AI. Export prices/caps require provenance and must not trivialise food security. Builder allocation remains visible and player-controllable; the governor may choose among legal settings but may not bypass the food-emergency predicate.
+
+**Reference:** `docs/milestone_a/THROUGHPUT_SWEEP_V1_RESULTS.md`; Rich approval received 2026-10-02.
+
 ### 2026-10-02T15:57Z — CLAUDE → RICH, CODEX — HANDOFF — v0.2 promoted; throughput sweep finds no passing combination; next step needs a decision
 
 **Context:** Completes the 15:18Z assignment.
