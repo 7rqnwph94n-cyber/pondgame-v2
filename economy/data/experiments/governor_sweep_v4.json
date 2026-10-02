@@ -1,0 +1,62 @@
+{
+ "id": "governor_sweep_v4",
+ "description": "Narrow acceptance sweep for Rich's 17:42Z playable-first package (candidate_playable_v1): only the surface-Carbonate gleaning rate and reserve vary, least to most generous. All other levers are fixed by the decision (Jaw without Enzyme, first Washery General, Builders 3 WP). Horizon 120 minutes, criteria as v2.",
+ "governor": "economy/data/governors/reference_governor_v3.json",
+ "base_overlays": [
+  "economy/data/experiments/candidate_playable_v1.json"
+ ],
+ "criteria": {
+  "require_symbiotic": true,
+  "max_symbiotic_devolutions": 0,
+  "max_devolutions": 0,
+  "max_staple_shortage_minutes": 5,
+  "max_unpaid_minutes": 1,
+  "reef_window_minutes": [
+   100,
+   120
+  ],
+  "note": "Same acceptance criteria as throughput_sweep_v1."
+ },
+ "parameters": [
+  {
+   "name": "gleaning_rate",
+   "levels": [
+    {
+     "label": "0.25/min"
+    },
+    {
+     "label": "0.33/min",
+     "set": {
+      "recipes.carbonate_gleaning.cycle_seconds": 180
+     }
+    },
+    {
+     "label": "0.5/min",
+     "set": {
+      "recipes.carbonate_gleaning.cycle_seconds": 120
+     }
+    }
+   ]
+  },
+  {
+   "name": "gleaning_reserve",
+   "levels": [
+    {
+     "label": "12"
+    },
+    {
+     "label": "20",
+     "set": {
+      "patches.surface_carbonate.reserve": 20
+     }
+    },
+    {
+     "label": "30",
+     "set": {
+      "patches.surface_carbonate.reserve": 30
+     }
+    }
+   ]
+  }
+ ]
+}

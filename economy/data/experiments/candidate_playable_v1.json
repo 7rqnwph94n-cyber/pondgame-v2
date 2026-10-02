@@ -1,0 +1,57 @@
+{
+  "id": "candidate_playable_v1",
+  "status": "CANDIDATE - not promoted; Rich decides promotion.",
+  "description": "Targeted structural repair package from Rich's 17:42Z playable-first decision: (1) slow, finite surface-Carbonate gleaning by General workers; (2) Mineral Jaw research without Repair Enzyme; (3) first Mineral Washery staffed by General workers; (4) protected Builders at 3 WP (food-emergency pre-emption unchanged). Gleaning rate and reserve are set to the least generous values and swept by governor_sweep_v4.",
+  "patch": {
+    "patches": {
+      "surface_carbonate": {
+        "reserve": 12,
+        "source": "Rich 2026-10-02T17:42Z ('lets get this playable', relayed by Codex) item 1 (finite, earned map resource; least-generous swept reserve); Rich 17:46Z selected the matching option."
+      }
+    },
+    "recipes": {
+      "carbonate_gleaning": {
+        "cycle_seconds": 240,
+        "outputs": {
+          "carbonate": 1
+        },
+        "source": "Rich 2026-10-02T17:42Z ('lets get this playable', relayed by Codex) item 1 (slow: least-generous swept rate 0.25/min at full crew); Rich 17:46Z selected the matching option."
+      }
+    },
+    "buildings": {
+      "carbonate_gleaning_site": {
+        "category": "extraction",
+        "cost": {
+          "biomass": 2
+        },
+        "work": 4,
+        "jobs": {
+          "general": 2
+        },
+        "recipes": [
+          "carbonate_gleaning"
+        ],
+        "patch": "surface_carbonate",
+        "maintenance_weight": 0.5,
+        "source": "Rich 2026-10-02T17:42Z ('lets get this playable', relayed by Codex) item 1: General workers glean shallow Carbonate before industrial cutting; costs no Carbonate; Rich 17:46Z selected the matching option."
+      },
+      "mineral_washery": {
+        "first_instance": {
+          "jobs": {
+            "general": 3
+          }
+        }
+      }
+    },
+    "morphologies": {
+      "mineral_jaw": {
+        "research_cost": {
+          "repair_enzyme": null
+        }
+      }
+    },
+    "construction_rules": {
+      "builder_wp": 3
+    }
+  }
+}

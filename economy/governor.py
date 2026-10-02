@@ -107,6 +107,7 @@ class Governor:
         self.next_trade_at = 0
         self.started = False
         self._ids: dict[str, int] = {}
+        self.prioritised: set[str] = set()
 
     # -------------------------------------------------------------- plumbing
     def _issue(self, sim, rule: str, cmd: dict[str, Any], reason: str) -> bool:
@@ -156,7 +157,7 @@ class Governor:
             self.started = True
             view = observe(sim)
         budget = int(self.config.get("max_actions_per_decision", 4))
-        for rule in (self._food, self._idle_crews, self._housing, self._evolution, self._morphology,
+        for rule in (self._food, self._labour, self._idle_crews, self._housing, self._evolution, self._morphology,
                      self._build_order, self._kiln_fuel, self._trade, self._contracts, self._great_work):
             if budget <= 0:
                 break
@@ -212,6 +213,19 @@ class Governor:
                                    f"food crisis {minutes:.1f} min < {cfg['crisis_minutes']}: farms staffed first"):
                         self.ranked_farms.add(fid)
                         actions += 1
+        return actions
+
+    def _labour(self, sim, view) -> int:
+        """Staff the population engine first: a player-visible labour priority per building (config `labour_priorities`)."""
+        wanted = self.config.get("labour_priorities", {})
+        actions = 0
+        for fid, f in sorted(view["facilities"].items()):
+            if fid in self.prioritised or f["building"] not in wanted:
+                continue
+            self.prioritised.add(fid)
+            if self._issue(sim, "labour", {"do": "set_labour_priority", "target": fid, "value": int(wanted[f["building"]])},
+                           f"{f['building']} feeds population growth: staff it ahead of its category"):
+                actions += 1
         return actions
 
     def _idle_crews(self, sim, view) -> int:
@@ -349,6 +363,8 @@ class Governor:
             return 0
         for step in self.config["build_order"]:
             building = step["building"]
+            if building not in sim.defs["buildings"]:
+                continue   # the rules in play do not define this building
             if self._count(view, building) >= step.get("count", 1):
                 continue
             if "early_if_cost_only" in step:
@@ -382,6 +398,8 @@ class Governor:
     def _carbonate_need(self, sim, view) -> int:
         missing = sum(s["missing"].get("carbonate", 0) for s in view["sites"].values())
         for step in self.config["build_order"]:
+            if step["building"] not in sim.defs["buildings"]:
+                continue
             if self._count(view, step["building"]) < step.get("count", 1):
                 if "early_if_cost_only" in step and not set(self._next_cost(sim, view, step["building"])) <= set(step["early_if_cost_only"]):
                     continue

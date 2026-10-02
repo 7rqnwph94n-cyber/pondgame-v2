@@ -141,3 +141,46 @@ class GovernorV2AndSweepV3Tests(unittest.TestCase):
                    "upkeep_unpaid_minutes": 0, "reef_minutes": 140.0, "reef_completed_at": "140:00"}
         self.assertIn("reef_too_late", evaluate(summary, {"reef_window_minutes": [100, 120]}))
         self.assertEqual([], evaluate(summary, {"reef_window_minutes": [100, 150]}))
+
+
+class PlayableCandidateTests(unittest.TestCase):
+    """Rich 2026-10-02T17:42Z playable-first package (candidate_playable_v1) and reference governor v3."""
+
+    OVERLAY = "economy/data/experiments/candidate_playable_v1.json"
+
+    def _run(self, defs, version="v3", until=None):
+        from economy.engine.definitions import read_json
+        sim = Simulation(defs, {"id": "governor", "commands": []})
+        governor = Governor(read_json(f"economy/data/governors/reference_governor_{version}.json"))
+        sim.controllers.append(governor)
+        return sim, governor, sim.run(until=until)
+
+    def test_candidate_package_contents(self):
+        defs = load_definitions(overlays=[self.OVERLAY])
+        self.assertNotIn("repair_enzyme", defs["morphologies"]["mineral_jaw"]["research_cost"])
+        self.assertEqual({"general": 3}, defs["buildings"]["mineral_washery"]["first_instance"]["jobs"])
+        self.assertEqual({"adapted": 3}, defs["buildings"]["mineral_washery"]["jobs"])   # later Washeries stay Adapted
+        self.assertEqual(3, defs["construction_rules"]["builder_wp"])
+        gleaner = defs["buildings"]["carbonate_gleaning_site"]
+        self.assertEqual({"general": 2}, gleaner["jobs"])
+        self.assertNotIn("carbonate", gleaner["cost"])
+        self.assertIsNotNone(defs["patches"]["surface_carbonate"].get("reserve"))   # finite, not a grant
+
+    def test_gleaning_is_finite(self):
+        defs = load_definitions(overlays=[self.OVERLAY])
+        sim, _, _ = self._run(defs)
+        remaining = sim.env.reserves["surface_carbonate"]
+        self.assertGreaterEqual(remaining, 0)
+        self.assertLess(remaining, defs["patches"]["surface_carbonate"]["reserve"])   # it was actually gleaned
+
+    def test_governor_v3_never_builds_undefined_buildings_and_issues_only_legal_commands(self):
+        _, governor, _ = self._run(load_definitions(), until=1800)
+        built = [e["command"]["building"] for e in governor.log if e["command"].get("do") == "construct"]
+        self.assertNotIn("carbonate_gleaning_site", built)
+        self.assertTrue(all(e["ok"] for e in governor.log))
+
+    def test_labour_priority_keeps_the_population_engine_staffed(self):
+        defs = load_definitions(overlays=[self.OVERLAY])
+        _, governor, report = self._run(defs, until=2400)
+        self.assertTrue(any(e["rule"] == "labour" and e["ok"] for e in governor.log))
+        self.assertIsNotNone(report["outcome"]["tier_first_reached"].get("stable"))
