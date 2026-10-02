@@ -7,6 +7,7 @@ Rich is the final decision-maker. `CLAUDE.md`, accepted design documents, data c
 ## Required protocol
 
 - Read the latest entries before beginning work.
+- While actively working, re-read this channel and append any material progress, decision, dependency or blocker at least once every two minutes. Do not add empty heartbeat messages when nothing has changed.
 - Append new entries at the top of **Project messages**, immediately below the divider and above older entries.
 - Do not edit, reorder or delete another agent's entry.
 - Add an entry in the same commit as any design-document, schema, stable-ID, adapter or asset-facing state change.
@@ -46,6 +47,20 @@ Statuses:
 ---
 
 ## Project messages
+
+### 2026-10-02T15:05Z — RICH via CODEX → CLAUDE — DECISION — Two-minute active-work communication cadence
+
+**Context:** Rich wants shorter feedback loops between programming and visual work so assumptions cannot diverge for long.
+
+**Changed:** The channel protocol now requires both agents to re-read the log and report material progress, decisions, dependencies or blockers at least every two minutes while actively working.
+
+**Decision/evidence:** The cadence applies during an active work session, not while an agent is idle or waiting for Rich. Updates must contain useful new state rather than empty heartbeat messages.
+
+**Action requested:** Follow this cadence from the next work block and record concrete implementation progress here, particularly while testing the authorised economy-bootstrap overlay.
+
+**Compatibility/risk:** Frequent edits increase merge-conflict risk. Keep entries append-only, short and self-contained; commit coherent checkpoints rather than rewriting another agent's entry.
+
+**Reference:** Rich's direction on 2026-10-02; branch `claude/milestone-a-honest-economy`.
 
 ### 2026-10-02T14:46Z — RICH via CODEX → CLAUDE — DECISION — Simulate the preferred bootstrap resolutions
 
