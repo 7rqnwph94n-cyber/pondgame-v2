@@ -1,47 +1,47 @@
 ---
 agent: claude
-updated: 2026-10-02T18:09Z
-state: active
-current_task: Milestone B start (Rich 17:42Z item 6) — ADR and smallest Godot client shell for the playable Silica Street slice
-branch: claude/milestone-a-honest-economy
-head_commit: 16455ef
-waiting_on: Rich, who must push main and the branch; a population or job-scale decision is needed for the Reef but does not block
+updated: 2026-10-02T18:32Z
+state: waiting
+current_task: Milestone B client shell delivered (Godot 4.3 over the Python bridge); waiting for Rich to push and play, and for Codex's import review
+branch: claude/milestone-b-client-shell
+head_commit: 70f9b7a
+waiting_on: Rich, who must push three branches and try the client; Codex, for import review and adoption of sim_bridge v1
 ---
 
 ## Now
 
-- Milestone A balance passes are finished.
-  - Sweep v3: 0 of 243 pass.
-  - Sweep v4 (narrow 17:42Z package): 0 of 9 pass.
-  - Carbonate is solved. Labour supply against job count now binds (see 1809Z HANDOFF).
-- Starting Milestone B:
-  1. a Godot client ADR;
-  2. a client shell that loads the same definitions;
-  3. headless simulation stepping, placeholder entities through the presentation adapter, pause and speed controls, and one "why stalled" inspector.
+- The **client shell runs** (`70f9b7a` on `claude/milestone-b-client-shell`). It has:
+  - Codex's blockouts at runtime;
+  - pause and speed controls (1–32×);
+  - a build list;
+  - a stall inspector with actions;
+  - Autoplay.
+- Captures are in `docs/milestone_b/captures/`.
+- Contract `sim_bridge` v1 is published (1832Z CONTRACT). ADR 0001 is in `docs/adr/`.
 
 ## Next
 
-1. ADR: `docs/adr/0001-godot-client.md`. How the Python domain and the Godot client share rules and data.
-2. Client shell on `claude/milestone-b-client-shell`.
-3. Silica Street early loop using Codex's ten OBJ blockouts as replaceable wrappers.
+1. Fix whatever Rich hits on first run on his Mac (Python path, Godot 4.3 import).
+2. Fold in Codex's import-review fixes through `client/presentation/asset_map.json` and `EntityView`.
+3. Economy: once Rich chooses a population or job-scale fix (1809Z HANDOFF), the Reef can become reachable.
+4. Then spatial placement and logistics: positions become domain state (ADR 0001, point 7).
 
 ## Blocked on / waiting for
 
-- Rich: push `main` and `claude/milestone-a-honest-economy`.
-- Godot is not available in my Mac VM. I will try a headless Godot in my workspace for tests; Rich will run the editor locally.
+- Rich: push `main`, `claude/milestone-a-honest-economy` and `claude/milestone-b-client-shell`, then open `client/project.godot` in Godot 4.3.
+- Codex: import review at the shell camera; adopt `sim_bridge` v1; use `tools/exchange.py commit` (1804Z REQUEST).
 
 ## Assumptions I'm making about the other agent's work
 
-- Codex treats `presentation_states.json` v1 as authoritative, with no `restoring` Builder state.
-- Codex's ten Silica Street OBJ blockouts on `codex/visual-preproduction` (`4eac599`) are replaceable calibration geometry with no gameplay values.
-- Codex commits exchange changes with `tools/exchange.py commit` (1804Z REQUEST).
+- Codex's blockouts stay at `assets/blockout/silica_street/<asset>.obj` with `silica_street_blockout.mtl`, in metres, +Y up and ground pivot. The client reads them at runtime.
+- Codex owns `client/presentation/asset_map.json` (presentation data only).
 
 ## Recently finished
 
-- 16455ef: candidate_playable_v1, governor v3, sweep v4 and its report.
-- 0119aec: governor v2, sweep v3 and its report.
-- 04d8deb and 1448433: safe exchange commit command, and repair of the stale-worktree reverts.
+- 70f9b7a: Milestone B client shell, `economy/bridge.py`, `economy/player_view.py`, ADR 0001, bridge and client tests.
+- 16455ef: `candidate_playable_v1`, governor v3 and sweep v4.
+- 04d8deb and 1448433: safe exchange commit, and repair of the stale-worktree reverts.
 
 ## Questions for Rich
 
-- Not blocking: choose a population or job-scale fix so the Reef becomes reachable. Options are in the 1809Z HANDOFF.
+- Not blocking: choose a population or job-scale fix for the Reef (1809Z HANDOFF).
