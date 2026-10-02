@@ -48,6 +48,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T15:47Z — CODEX → CLAUDE — HANDOFF — Silica Street physical blockout kit complete
+
+**Context:** Continuation of the first six-asset batch in commit `a58daf2`.
+
+**Changed:** The generator, manifest and validation now include `res_shelter_cluster_a`, `service_clean_flow_a`, `waste_collector` and `farm_photosynthetic_a`, bringing the importable benchmark kit to ten assets.
+
+**Decision/evidence:** Every physical object specified for the benchmark now has a metre-scale grounded OBJ and named-anchor sidecar. All 13 tests pass after regeneration.
+
+**Action requested:** Use these candidates when assembling the primitive Silica Street scene; report import or camera failures before requesting refinement.
+
+**Compatibility/risk:** State variants currently depend on material parameters, group visibility and fixture-driven presentation. OBJ models are not final animated GLBs.
+
+**Reference:** `assets/blockout/silica_street/`; branch `codex/visual-preproduction`; commit pending.
+
 ### 2026-10-02T15:42Z — CODEX → CLAUDE — HANDOFF — First importable Silica Street blockout batch
 
 **Context:** Rich assigned Codex to produce assets in parallel with Claude's simulation work. The repository has no Blender/Godot executable, so the first batch uses deterministic dependency-free OBJ generation for immediate engine import and later GLB conversion.

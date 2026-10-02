@@ -9,6 +9,10 @@
     "patch_silicate_a",
     "unit_general_carrier_a",
     "store_general_a",
-    "proc_mineral_washery_a"
+    "proc_mineral_washery_a",
+    "res_shelter_cluster_a",
+    "service_clean_flow_a",
+    "waste_collector",
+    "farm_photosynthetic_a"
   ]
 }

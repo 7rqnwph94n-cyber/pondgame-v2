@@ -204,6 +204,53 @@ def washery():
     m.write({"InputAnchor_raw_silicate": [-3.5,.25,-1.6], "OutputAnchor_prepared_silica": [3.45,.25,-1.6], "WorkerAnchor_1": [-1.2,0,-3.0], "WorkerAnchor_2": [1.2,0,-3.0], "ServiceAnchor": [0,.2,2.9], "LabelAnchor": [0,4.0,0], "FXAnchor": [0,1.2,0], "CameraAnchor": [0,1.8,0]})
 
 
+def shelter():
+    m = Mesh("res_shelter_cluster_a")
+    m.ellipsoid((0,0,0),(3.35,.35,2.75),"shell_teal","foundation",rings=4,segments=12)
+    for i,(x,z,rx,rz) in enumerate([(-1.35,0,.95,1.35),(.2,.55,1.15,1.2),(1.55,-.2,.8,1.15)]):
+        m.ellipsoid((x,.28,z),(rx,.95,rz),"shell_teal",f"chamber_{i}",rings=5,segments=10)
+        m.ellipsoid((x,.38,z-rz*.78),(rx*.27,.32,.18),"active_amber",f"occupancy_{i}",rings=3,segments=7)
+    radial_ribs(m,3.3,2.7,3.45,11,"lattice")
+    m.cylinder_between((-2.8,.12,2.0),(2.7,.12,2.0),.11,"membrane","service_channel",sides=6)
+    m.write({"WorkerAnchor_1": [-2.4,0,-2.45], "WorkerAnchor_2": [1.6,0,-2.6], "ServiceAnchor": [0,.12,2.75], "ConstructionAnchor": [-3.2,0,0], "LabelAnchor": [0,3.9,0], "CameraAnchor": [0,1.8,0]})
+
+
+def clean_flow():
+    m = Mesh("service_clean_flow_a")
+    m.ellipsoid((0,0,0),(1.45,.3,1.45),"shell_teal","base",rings=4,segments=10)
+    radial_ribs(m,1.42,1.42,2.35,8,"lattice")
+    m.ellipsoid((0,.2,0),(.72,.18,.72),"membrane","flow_basin",rings=3,segments=10)
+    for t in (0, math.pi/2, math.pi, 3*math.pi/2):
+        a=(.55*math.cos(t),.48,.55*math.sin(t))
+        b=(1.35*math.cos(t),.12,1.35*math.sin(t))
+        m.cylinder_between(a,b,.11,"membrane","flow_arms",sides=6)
+    m.ellipsoid((0,.65,0),(.22,.35,.22),"active_amber","activity_organ",rings=3,segments=7)
+    m.write({"WorkerAnchor_1": [0,0,-1.7], "ServiceAnchor": [0,.1,1.55], "InputAnchor_clean_flow": [-1.55,.1,0], "OutputAnchor_clean_flow": [1.55,.1,0], "LabelAnchor": [0,2.8,0], "CameraAnchor": [0,1.2,0]})
+
+
+def waste_collector():
+    m = Mesh("waste_collector")
+    m.ellipsoid((0,0,0),(1.9,.32,1.9),"shell_teal","base",rings=4,segments=10)
+    radial_ribs(m,1.88,1.88,2.25,9,"lattice")
+    for i,(x,z) in enumerate([(-.75,-.55),(.75,-.55),(0,.7)]):
+        m.ellipsoid((x,.28,z),(.58,.38,.58),"organic_dark",f"waste_chamber_{i}",rings=3,segments=8)
+    m.ellipsoid((0,.45,0),(.22,.25,.22),"active_amber","activity_organ",rings=3,segments=7)
+    m.write({"WorkerAnchor_1": [0,0,-2.2], "ServiceAnchor": [0,.1,2.0], "InputAnchor_waste": [0,.25,-1.75], "LabelAnchor": [0,2.7,0], "CameraAnchor": [0,1.2,0]})
+
+
+def photosynthetic_field():
+    m = Mesh("farm_photosynthetic_a")
+    # Three broad cultivation beds with low carbonate edges and leaf membranes.
+    for row,z in enumerate((-1.75,0,1.75)):
+        m.box((0,.12,z),(8.6,.24,1.25),"organic_dark",f"bed_{row}")
+        for side in (-1,1):
+            m.cylinder_between((-4.3,.25,z+side*.62),(4.3,.25,z+side*.62),.07,"carbonate",f"bed_edge_{row}",sides=6)
+        for col,x in enumerate((-3.5,-2.3,-1.1,.1,1.3,2.5,3.7)):
+            scale=.34 + .04*((row+col)%3)
+            m.ellipsoid((x,.22,z),(scale,.12,scale*.72),"membrane",f"leaf_{row}_{col}",rings=3,segments=7)
+    m.write({"WorkerAnchor_1": [-3.5,0,-3.0], "WorkerAnchor_2": [0,0,-3.0], "WorkerAnchor_3": [3.5,0,-3.0], "OutputAnchor_photosynthetic_food": [4.45,.2,0], "ServiceAnchor": [-4.45,.1,0], "LabelAnchor": [0,1.4,0], "CameraAnchor": [0,.8,0]})
+
+
 def write_materials():
     OUT.mkdir(parents=True, exist_ok=True)
     lines = ["# Silica Street blockout materials"]
@@ -214,14 +261,14 @@ def write_materials():
 
 def main():
     write_materials()
-    for fn in (payload_raw, payload_prepared, outcrop, carrier, store, washery):
+    for fn in (payload_raw, payload_prepared, outcrop, carrier, store, washery, shelter, clean_flow, waste_collector, photosynthetic_field):
         fn()
     manifest = {
         "generated_by": "tools/generate_blockout_assets.py",
         "units": "metres",
         "up_axis": "+Y",
         "format": "Wavefront OBJ blockout source",
-        "assets": ["payload_raw_silicate_a", "payload_prepared_silica_a", "patch_silicate_a", "unit_general_carrier_a", "store_general_a", "proc_mineral_washery_a"],
+        "assets": ["payload_raw_silicate_a", "payload_prepared_silica_a", "patch_silicate_a", "unit_general_carrier_a", "store_general_a", "proc_mineral_washery_a", "res_shelter_cluster_a", "service_clean_flow_a", "waste_collector", "farm_photosynthetic_a"],
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"Generated {len(manifest['assets'])} assets in {OUT}")

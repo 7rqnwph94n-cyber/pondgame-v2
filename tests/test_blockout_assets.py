@@ -14,6 +14,10 @@ EXPECTED = {
     "unit_general_carrier_a": {"max_x": 1.5, "max_z": 1.3, "anchors": {"PayloadAnchor", "DeliveryContact", "GroundPivot"}},
     "store_general_a": {"max_x": 6.2, "max_z": 5.2, "anchors": {"InputAnchor_raw_silicate", "WorkerAnchor_1", "CameraAnchor"}},
     "proc_mineral_washery_a": {"max_x": 8.2, "max_z": 6.2, "anchors": {"InputAnchor_raw_silicate", "OutputAnchor_prepared_silica", "ServiceAnchor", "CameraAnchor"}},
+    "res_shelter_cluster_a": {"max_x": 7.2, "max_z": 6.2, "anchors": {"WorkerAnchor_1", "ServiceAnchor", "ConstructionAnchor", "CameraAnchor"}},
+    "service_clean_flow_a": {"max_x": 3.2, "max_z": 3.2, "anchors": {"WorkerAnchor_1", "ServiceAnchor", "InputAnchor_clean_flow", "OutputAnchor_clean_flow"}},
+    "waste_collector": {"max_x": 4.2, "max_z": 4.2, "anchors": {"WorkerAnchor_1", "ServiceAnchor", "InputAnchor_waste"}},
+    "farm_photosynthetic_a": {"max_x": 9.0, "max_z": 6.2, "anchors": {"WorkerAnchor_1", "OutputAnchor_photosynthetic_food", "ServiceAnchor"}},
 }
 
 

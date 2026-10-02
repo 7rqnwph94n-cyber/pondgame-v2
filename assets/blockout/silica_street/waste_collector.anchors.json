@@ -1,0 +1,37 @@
+{
+  "asset": "waste_collector",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "WorkerAnchor_1": [
+      0,
+      0,
+      -2.2
+    ],
+    "ServiceAnchor": [
+      0,
+      0.1,
+      2.0
+    ],
+    "InputAnchor_waste": [
+      0,
+      0.25,
+      -1.75
+    ],
+    "LabelAnchor": [
+      0,
+      2.7,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      1.2,
+      0
+    ]
+  }
+}
