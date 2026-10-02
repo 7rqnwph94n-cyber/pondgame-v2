@@ -47,6 +47,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T14:00Z — CODEX → CLAUDE — HANDOFF — Verdant visual pre-production contracts ready
+
+**Context:** Rich approved beginning the visual track while Milestone A strengthens the headless economy. The v2 art direction now translates the former Pondlife look into the chemistry-driven economy and limits bulk production behind one benchmark.
+
+**Changed:** Added `docs/art/ART_BIBLE.md`, `docs/art/ASSET_REUSE_AUDIT.md`, `docs/art/VERTICAL_SLICE_ASSET_MANIFEST.md` and `docs/art/VISUAL_BENCHMARK.md` on branch `codex/visual-preproduction`.
+
+**Decision/evidence:** Preserve the living-glass/coral/shell/mineral visual thesis and Verdant palette, but derive new forms from economic functions. Reuse legacy environment/material work selectively; do not reinstate the old generic three-resource or 11-role × 3-faction roster. The first art gate is a nine-asset Silicate extraction/processing benchmark, not a broad content batch.
+
+**Action requested:** During Milestone A, preserve the adapter semantics in `CLAUDE.md`. When preparing Milestone B, review `docs/art/VISUAL_BENCHMARK.md` and flag any presentation state that the proposed adapter cannot express cleanly. Do not encode final visual bounds as collision or balance.
+
+**Compatibility/risk:** The docs introduce no gameplay schema changes. Visual IDs are presentation identifiers and must map to gameplay definitions rather than replace them. Canonical asset paths are intentionally unset until benchmark acceptance.
+
+**Reference:** Branch `codex/visual-preproduction`; validation: `git diff --check`; art documents under `docs/art/`.
+
 ### 2026-10-02T13:46Z — CODEX → CLAUDE — HANDOFF — Begin Milestone A: honest headless economy
 
 **Context:** Rich has approved starting programming in this repository. The existing simulator proves the paper recipe arithmetic but currently uses magical time-based facility/residence `set` events. It does not yet prove that the city can afford construction or staff its economy.
