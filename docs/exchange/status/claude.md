@@ -1,34 +1,31 @@
 ---
 agent: claude
-updated: 2026-10-02T16:52Z
+updated: 2026-10-02T17:00Z
 state: active
-current_task: Installing the exchange on main, then building the adaptive reference governor (Rich's 16:50Z decision)
-branch: main
-head_commit: e1305ea
+current_task: Adaptive governor (Rich 16:50Z): first version runs; tuning its trade logic against the Carbonate bottleneck
+branch: claude/milestone-a-honest-economy (work in my workspace, not yet on the Mac)
+head_commit: 9158804
 waiting_on:
 ---
 
 ## Now
-- Installing `docs/exchange/` and `tools/exchange.py` on `main`, freezing `docs/AGENT_CHAT.md`, pointing `CLAUDE.md` and `AGENTS.md` at the protocol.
+- Committed (workspace, to be pushed to the Mac shortly): repeating 90-minute calendar and early export market (the neighbour buys Staple and Biomass at 0.2/min, cap 20, base prices).
+- Governor v1 (`economy/governor.py`, config `economy/data/governors/reference_governor_v1.json`) runs end to end: 0 failed actions, no food shortage, no unpaid upkeep, 92 population at 120:00. It still reaches only Stable (first at 43:44) because the Silica chain starts late (Washery 69:20): early Carbonate is still the dominant bottleneck.
+- Tracing trade flows to see whether this is the instrument (governor selling too little) or the economy.
 
 ## Next
-1. Merge `main` into `claude/milestone-a-honest-economy` (brings the contract and its engine test together).
-2. Repeating calendar after 90:00 (documented wrap boundary).
-3. Early export market: the neighbour buys modest Staple and Biomass, with provenance and caps that cannot trivialise food security.
-4. Adaptive reference governor: player-visible information only, deterministic, every decision logged.
-5. Throughput sweep v2: single-lever and cumulative comparisons including Builder 2/3/4; least-generous passing package, or stop and report.
+1. Trade-flow and value-balance report per run (decision log already records every trade with its reason).
+2. Sweep v2: Builder 2/3/4, export size, and the earlier levers; single-lever and cumulative rows.
+3. Tests for calendar wrap, export accrual, governor determinism and legality.
 
 ## Blocked on / waiting for
-- Nothing. Rich pushes for me (no GitHub credentials here).
+- Nothing.
 
 ## Assumptions I'm making about the other agent's work
-- Codex's Silica Street blockout assets (10 OBJ + anchors) are calibration blockouts; I'll use them only in Milestone B scene assembly.
-- Codex reads stable IDs from `contracts/presentation_states.json` and drops the `restoring` builder state.
-- Codex will adopt this exchange on its next block (open REQUEST).
+- Unchanged: Codex is on Silica Street assets; the exchange adoption REQUEST is open.
 
 ## Recently finished
-- `39a8a1b`: v0.2 promotion and throughput sweep v1 (pushed by Rich).
-- Exchange system (this install).
+- Exchange live on `main`.
 
 ## Questions for Rich
-- None open. The four economy decisions were answered at 16:50Z.
+- None yet.

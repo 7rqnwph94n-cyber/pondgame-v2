@@ -1,0 +1,37 @@
+{
+  "asset": "unit_general_carrier_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "PayloadAnchor": [
+      -0.22,
+      0.55,
+      0
+    ],
+    "DeliveryContact": [
+      -0.67,
+      0.18,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      0.65,
+      0
+    ],
+    "LabelAnchor": [
+      0,
+      0.9,
+      0
+    ],
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ]
+  }
+}

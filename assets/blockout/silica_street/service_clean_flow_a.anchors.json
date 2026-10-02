@@ -1,0 +1,42 @@
+{
+  "asset": "service_clean_flow_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "WorkerAnchor_1": [
+      0,
+      0,
+      -1.7
+    ],
+    "ServiceAnchor": [
+      0,
+      0.1,
+      1.55
+    ],
+    "InputAnchor_clean_flow": [
+      -1.55,
+      0.1,
+      0
+    ],
+    "OutputAnchor_clean_flow": [
+      1.55,
+      0.1,
+      0
+    ],
+    "LabelAnchor": [
+      0,
+      2.8,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      1.2,
+      0
+    ]
+  }
+}

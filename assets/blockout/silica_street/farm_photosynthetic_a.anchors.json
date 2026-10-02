@@ -1,0 +1,47 @@
+{
+  "asset": "farm_photosynthetic_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "WorkerAnchor_1": [
+      -3.5,
+      0,
+      -3.0
+    ],
+    "WorkerAnchor_2": [
+      0,
+      0,
+      -3.0
+    ],
+    "WorkerAnchor_3": [
+      3.5,
+      0,
+      -3.0
+    ],
+    "OutputAnchor_photosynthetic_food": [
+      4.45,
+      0.2,
+      0
+    ],
+    "ServiceAnchor": [
+      -4.45,
+      0.1,
+      0
+    ],
+    "LabelAnchor": [
+      0,
+      1.4,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      0.8,
+      0
+    ]
+  }
+}

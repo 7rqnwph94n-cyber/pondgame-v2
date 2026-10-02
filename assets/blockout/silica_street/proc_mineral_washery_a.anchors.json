@@ -1,0 +1,52 @@
+{
+  "asset": "proc_mineral_washery_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "InputAnchor_raw_silicate": [
+      -3.5,
+      0.25,
+      -1.6
+    ],
+    "OutputAnchor_prepared_silica": [
+      3.45,
+      0.25,
+      -1.6
+    ],
+    "WorkerAnchor_1": [
+      -1.2,
+      0,
+      -3.0
+    ],
+    "WorkerAnchor_2": [
+      1.2,
+      0,
+      -3.0
+    ],
+    "ServiceAnchor": [
+      0,
+      0.2,
+      2.9
+    ],
+    "LabelAnchor": [
+      0,
+      4.0,
+      0
+    ],
+    "FXAnchor": [
+      0,
+      1.2,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      1.8,
+      0
+    ]
+  }
+}

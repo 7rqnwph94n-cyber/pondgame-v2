@@ -1,0 +1,42 @@
+{
+  "asset": "res_shelter_cluster_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "WorkerAnchor_1": [
+      -2.4,
+      0,
+      -2.45
+    ],
+    "WorkerAnchor_2": [
+      1.6,
+      0,
+      -2.6
+    ],
+    "ServiceAnchor": [
+      0,
+      0.12,
+      2.75
+    ],
+    "ConstructionAnchor": [
+      -3.2,
+      0,
+      0
+    ],
+    "LabelAnchor": [
+      0,
+      3.9,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      1.8,
+      0
+    ]
+  }
+}
