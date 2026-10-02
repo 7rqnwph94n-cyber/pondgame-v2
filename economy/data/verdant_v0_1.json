@@ -1,0 +1,148 @@
+{
+  "scenario": {
+    "id": "verdant_basin_v0_1",
+    "duration_seconds": 5400,
+    "step_seconds": 1,
+    "starting_inventory": {
+      "biomass": 4,
+      "staple": 8,
+      "carbonate": 6,
+      "prepared_silica": 2,
+      "stored_value": 20
+    }
+  },
+  "seasons": [
+    {"id": "bloom", "start": 0, "end": 1080, "farm": 1.25, "filter": 0.80, "sediment": 0.75},
+    {"id": "high_water", "start": 1080, "end": 2100, "farm": 1.00, "filter": 1.50, "sediment": 0.00},
+    {"id": "recession", "start": 2100, "end": 3480, "farm": 1.10, "filter": 1.00, "sediment": 1.35},
+    {"id": "dry", "start": 3480, "end": 5401, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
+  ],
+  "resources": [
+    "biomass", "staple", "phosphate_sediment", "suspended_nutrient",
+    "growth_nutrient", "balanced_gel", "raw_silicate", "prepared_silica",
+    "carbonate", "anoxic_organics", "raw_fibre", "woven_fibre",
+    "raw_resin", "cured_resin", "raw_pigment", "fired_ceramic",
+    "habitat_composite", "organic_waste", "repair_enzyme",
+    "recovered_fertiliser", "pigment_ornament", "stored_value"
+  ],
+  "recipes": {
+    "photosynthetic_field": {
+      "cycle_seconds": 60, "outputs": {"biomass": 1}, "season_factor": "farm", "fertility": 0.90
+    },
+    "culture_bed": {
+      "cycle_seconds": 60, "inputs": {"biomass": 1}, "outputs": {"staple": 1},
+      "byproduct_every": 5, "byproducts": {"organic_waste": 1}
+    },
+    "sediment_dredge": {
+      "cycle_seconds": 120, "outputs": {"phosphate_sediment": 1}, "season_factor": "sediment"
+    },
+    "filter_crown": {
+      "cycle_seconds": 100, "outputs": {"suspended_nutrient": 1}, "season_factor": "filter"
+    },
+    "nutrient_washer": {
+      "cycle_seconds": 120, "inputs": {"phosphate_sediment": 1}, "outputs": {"growth_nutrient": 1}
+    },
+    "channel_separator": {
+      "cycle_seconds": 150, "inputs": {"suspended_nutrient": 1}, "outputs": {"growth_nutrient": 1}
+    },
+    "nutrient_kitchen": {
+      "cycle_seconds": 180, "inputs": {"staple": 2, "growth_nutrient": 1}, "outputs": {"balanced_gel": 4},
+      "byproduct_every": 2, "byproducts": {"organic_waste": 1}
+    },
+    "silicate_pit": {
+      "cycle_seconds": 120, "outputs": {"raw_silicate": 1}
+    },
+    "mineral_washery": {
+      "cycle_seconds": 120, "inputs": {"raw_silicate": 1}, "outputs": {"prepared_silica": 1}
+    },
+    "carbonate_cutter": {
+      "cycle_seconds": 100, "outputs": {"carbonate": 1}
+    },
+    "anoxic_pump": {
+      "cycle_seconds": 170, "outputs": {"anoxic_organics": 1}
+    },
+    "fibre_garden": {
+      "cycle_seconds": 100, "outputs": {"raw_fibre": 1}, "season_factor": "farm", "fertility": 1.00
+    },
+    "retting_pool": {
+      "cycle_seconds": 100, "inputs": {"raw_fibre": 1}, "outputs": {"woven_fibre": 1}
+    },
+    "resin_grove": {
+      "cycle_seconds": 150, "outputs": {"raw_resin": 1}, "season_factor": "farm", "fertility": 1.00
+    },
+    "resin_curing": {
+      "cycle_seconds": 150, "inputs": {"raw_resin": 1}, "outputs": {"cured_resin": 1}
+    },
+    "pigment_bed": {
+      "cycle_seconds": 240, "outputs": {"raw_pigment": 1}, "season_factor": "farm", "fertility": 1.00
+    },
+    "ceramic_kiln": {
+      "cycle_seconds": 240, "inputs": {"prepared_silica": 2, "anoxic_organics": 1}, "outputs": {"fired_ceramic": 2}
+    },
+    "composite_workshop": {
+      "cycle_seconds": 480,
+      "inputs": {"woven_fibre": 2, "cured_resin": 2, "prepared_silica": 1},
+      "outputs": {"habitat_composite": 4}
+    },
+    "waste_digester": {
+      "cycle_seconds": 240, "inputs": {"organic_waste": 2},
+      "outputs": {"repair_enzyme": 1, "recovered_fertiliser": 1}
+    },
+    "emergency_enzyme": {
+      "cycle_seconds": 180, "inputs": {"staple": 2, "anoxic_organics": 1}, "outputs": {"repair_enzyme": 1}
+    },
+    "artisan_organ": {
+      "cycle_seconds": 240, "inputs": {"raw_pigment": 1, "cured_resin": 1}, "outputs": {"pigment_ornament": 1}
+    }
+  },
+  "residences": {
+    "shelter": {"capacity": 8, "workforce": 6, "class": "general", "per_minute": {"staple": 0.20}, "waste_per_minute": 0.05},
+    "stable": {"capacity": 12, "workforce": 8, "class": "adapted", "per_minute": {"staple": 0.24}, "waste_per_minute": 0.08},
+    "symbiotic": {"capacity": 16, "workforce": 10, "class": "artisan", "per_minute": {"staple": 0.12, "balanced_gel": 0.18}, "waste_per_minute": 0.12},
+    "memory": {"capacity": 20, "workforce": 12, "class": "coordinator", "per_minute": {"staple": 0.10, "balanced_gel": 0.22, "pigment_ornament": 0.05}, "waste_per_minute": 0.15}
+  },
+  "great_work": {
+    "stages": [
+      {"id": "foundation", "cost": {"carbonate": 12, "fired_ceramic": 6}, "physical_work": 30, "coordinator_work": 0},
+      {"id": "lattice", "cost": {"carbonate": 12, "fired_ceramic": 8, "habitat_composite": 10}, "physical_work": 45, "coordinator_work": 20},
+      {"id": "crown", "cost": {"carbonate": 6, "fired_ceramic": 10, "habitat_composite": 14, "repair_enzyme": 8, "pigment_ornament": 6}, "physical_work": 40, "coordinator_work": 40}
+    ]
+  },
+  "reference_plan": {
+    "facility_events": [
+      {"at": 0, "set": {"photosynthetic_field": 1, "culture_bed": 1}},
+      {"at": 360, "set": {"photosynthetic_field": 2, "culture_bed": 2, "sediment_dredge": 1, "nutrient_washer": 1}},
+      {"at": 1320, "set": {"filter_crown": 1, "channel_separator": 1}},
+      {"at": 1500, "set": {"silicate_pit": 1, "mineral_washery": 1, "carbonate_cutter": 1}},
+      {"at": 1680, "set": {"fibre_garden": 1, "retting_pool": 1, "resin_grove": 1, "resin_curing": 1}},
+      {"at": 1800, "set": {"photosynthetic_field": 3, "culture_bed": 3}},
+      {"at": 2100, "set": {"nutrient_kitchen": 1, "anoxic_pump": 1}},
+      {"at": 2280, "set": {"ceramic_kiln": 1, "waste_digester": 1}},
+      {"at": 2400, "set": {"silicate_pit": 2, "mineral_washery": 2}},
+      {"at": 2640, "set": {"composite_workshop": 1, "pigment_bed": 1}},
+      {"at": 2700, "set": {"artisan_organ": 1, "resin_grove": 2, "resin_curing": 2}},
+      {"at": 3000, "set": {"photosynthetic_field": 4, "culture_bed": 4, "silicate_pit": 2, "mineral_washery": 2, "pigment_bed": 2}},
+      {"at": 3300, "set": {"composite_workshop": 2, "fibre_garden": 2, "retting_pool": 2, "resin_grove": 4, "resin_curing": 4, "artisan_organ": 2}},
+      {"at": 3480, "set": {"ceramic_kiln": 2, "anoxic_pump": 2}},
+      {"at": 4200, "set": {"emergency_enzyme": 1}}
+    ],
+    "residence_events": [
+      {"at": 0, "set": {"shelter": 3}},
+      {"at": 480, "set": {"shelter": 4}},
+      {"at": 900, "set": {"shelter": 3, "stable": 1}},
+      {"at": 1200, "set": {"shelter": 3, "stable": 2}},
+      {"at": 1800, "set": {"shelter": 4, "stable": 3}},
+      {"at": 2400, "set": {"shelter": 4, "stable": 3, "symbiotic": 1}},
+      {"at": 3000, "set": {"shelter": 4, "stable": 4, "symbiotic": 2}},
+      {"at": 3600, "set": {"shelter": 4, "stable": 4, "symbiotic": 3, "memory": 1}}
+    ],
+    "inventory_events": [
+      {"at": 1560, "add": {"carbonate": 12}, "label": "first carbonate trade"},
+      {"at": 3300, "add": {"carbonate": 12}, "label": "Fertile Exchange reward"},
+      {"at": 3600, "remove": {"growth_nutrient": 20, "prepared_silica": 8, "woven_fibre": 8, "repair_enzyme": 4, "balanced_gel": 2, "pigment_ornament": 2}, "label": "aggregate morphology and residence evolution investment"}
+    ],
+    "great_work_start": 3600,
+    "physical_workforce": 10,
+    "coordinator_workforce": 6
+  }
+}
