@@ -33,6 +33,7 @@ from pathlib import Path
 from typing import Any
 
 from .engine import Simulation, load_definitions, load_plan, validate_definitions
+from .engine.definitions import read_json
 
 TIERS = ["shelter", "stable", "symbiotic", "memory"]
 
@@ -82,7 +83,11 @@ def apply_level(defs: dict[str, Any], level: dict[str, Any]) -> None:
 
 # ---------------------------------------------------------------- outcome summary
 def _minutes(stamp: str | None) -> float | None:
-    return None if stamp is None else int(stamp[:2]) + int(stamp[3:]) / 60
+    """'MM:SS' with any number of minute digits (the horizon passes 99:59)."""
+    if stamp is None:
+        return None
+    minutes, _, seconds = stamp.partition(":")
+    return int(minutes) + int(seconds) / 60
 
 
 def progress(report: dict[str, Any]) -> tuple:
@@ -118,6 +123,9 @@ def summarise(report: dict[str, Any]) -> dict[str, Any]:
         "food_emergency_minutes": report.get("food_emergency", {}).get("minutes_active", 0.0),
         "upkeep_unpaid_minutes": report["maintenance_upkeep"]["unpaid_minutes"],
         "blocked_entity_minutes": report.get("blocked_entity_minutes_total"),
+        "trade_sold": report["trade"]["sold"],
+        "trade_bought": report["trade"]["bought"],
+        "idle_construction_wp_minutes": report["risks_not_enforced"]["idle_construction_wp_minutes"],
         "top_bottlenecks": [b["key"] for b in report["bottlenecks"][:3]],
     }
 
@@ -146,13 +154,29 @@ def evaluate(summary: dict[str, Any], criteria: dict[str, Any] | None) -> list[s
 
 
 # ---------------------------------------------------------------- running
-def _run_one(job: tuple[dict[str, Any], dict[str, Any], dict[str, Any], list[int], dict[str, Any] | None]) -> dict[str, Any]:
-    defs, plan, setting, combo, criteria = job
+def simulate(defs: dict[str, Any], plan: dict[str, Any], governor_config: dict[str, Any] | None):
+    """Run one simulation; with a governor config, the reference governor plays (plan should be empty)."""
+    sim = Simulation(defs, plan)
+    governor = None
+    if governor_config:
+        from .governor import Governor
+        governor = Governor(governor_config)
+        sim.controllers.append(governor)
+    return sim, sim.run(), governor
+
+
+def _run_one(job: tuple) -> dict[str, Any]:
+    defs, plan, setting, combo, criteria, governor_config = job
     errors = validate_definitions(defs)
     if errors:
         raise ValueError(errors)
-    report = Simulation(defs, plan).run()
+    _, report, governor = simulate(defs, plan, governor_config)
     summary = summarise(report)
+    if governor is not None:
+        from .governor import summarise_log
+        log = summarise_log(governor)
+        summary["governor_actions"] = log["actions_by_rule"]
+        summary["governor_failed_actions"] = log["failed_actions"]
     failures = evaluate(summary, criteria)
     window = (criteria or {}).get("reef_window_minutes")
     early = bool(window and summary["reef_minutes"] is not None and summary["reef_minutes"] < window[0])
@@ -162,7 +186,8 @@ def _run_one(job: tuple[dict[str, Any], dict[str, Any], dict[str, Any], list[int
 
 def run_sweep(spec: dict[str, Any], workers: int | None = None) -> dict[str, Any]:
     base = load_definitions(overlays=spec.get("base_overlays", []))
-    plan = load_plan(spec["plan"])
+    plan = load_plan(spec["plan"]) if spec.get("plan") else {"id": "governor", "commands": []}
+    governor_config = read_json(spec["governor"]) if spec.get("governor") else None
     parameters = spec["parameters"]
     criteria = spec.get("criteria")
     levels = [parameter_levels(p) for p in parameters]
@@ -173,7 +198,7 @@ def run_sweep(spec: dict[str, Any], workers: int | None = None) -> dict[str, Any
         for parameter, options, index in zip(parameters, levels, combo):
             apply_level(defs, options[index])
             setting[parameter["name"]] = options[index]["label"]
-        jobs.append((defs, plan, setting, list(combo), criteria))
+        jobs.append((defs, plan, setting, list(combo), criteria, governor_config))
     with ProcessPoolExecutor(max_workers=workers) as pool:
         runs = list(pool.map(_run_one, jobs))   # order preserved -> deterministic output
     passing = [r for r in runs if r["passes"]]
@@ -197,7 +222,7 @@ def run_sweep(spec: dict[str, Any], workers: int | None = None) -> dict[str, Any
             steps.append(by_levels[tuple(current)])
         ladders.append({"name": ladder["name"], "steps": steps})
     ranked = sorted(runs, key=lambda r: (not r["passes"], r["generosity"] if r["passes"] else 0, [-x for x in r["progress"]]))
-    return {"id": spec["id"], "plan": spec["plan"], "criteria": criteria, "verdict": verdict, "recommendation": best,
+    return {"id": spec["id"], "plan": spec.get("plan") or f"governor:{spec.get('governor')}", "criteria": criteria, "verdict": verdict, "recommendation": best,
             "passing_count": len(passing), "viable_count": len(passing), "singles": singles, "ladders": ladders,
             "marginal_effects": marginal_effects(runs), "runs": ranked}
 

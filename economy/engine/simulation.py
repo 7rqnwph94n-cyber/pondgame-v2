@@ -218,6 +218,7 @@ class Simulation:
         self.pending: list[command_module.PendingCommand] = []
         self.command_log: list[dict[str, Any]] = []
         self._queued = sorted(enumerate(self.plan.get("commands", [])), key=lambda item: (item[1]["at"], item[0]))
+        self.controllers: list[Any] = []   # e.g. economy.governor.Governor; act only through issue()
         self.diag = Diagnostics(self)
         self._load_starting_state()
 
@@ -373,6 +374,19 @@ class Simulation:
             })
             self.events.append(f"{stamp(self.second)} {pending.command['do']} FAILED: {', '.join(result.reasons)}")
         self.pending = still_pending
+
+    def issue(self, cmd: dict[str, Any], source: str) -> command_module.CommandResult:
+        """Execute a command immediately on behalf of a controller (same legality checks as plan commands)."""
+        result = command_module.execute(self, cmd)
+        self.command_log.append({
+            "index": f"{source}#{len(self.command_log)}", "do": cmd["do"], "issued_at": self.second,
+            "executed_at": self.second if result.ok else None, "failed_at": None if result.ok else self.second,
+            "ok": result.ok, "info": result.info, "reasons": result.reasons, "label": cmd.get("label", ""),
+            "waited": {}, "source": source,
+        })
+        if result.ok:
+            self.events.append(f"{stamp(self.second)} [{source}] {cmd['do']} ok: {result.info}")
+        return result
 
     def _allocate_workforce(self) -> None:
         workforce = self.defs["workforce"]
@@ -581,6 +595,8 @@ class Simulation:
         self.season = self.env.season_at(self.second)
         self.env.step(self.second, self.dt)
         self._process_commands()
+        for controller in self.controllers:
+            controller.act(self)
         self.upkeep.step(self)
         self.food_emergency.update(self)
         self._allocate_workforce()
