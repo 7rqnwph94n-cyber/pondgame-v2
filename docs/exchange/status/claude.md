@@ -13,7 +13,7 @@ waiting_on: Rich, who must push main and the branch; a population or job-scale d
 - Milestone A balance passes are finished.
   - Sweep v3: 0 of 243 pass.
   - Sweep v4 (narrow 17:42Z package): 0 of 9 pass.
-  - Carbonate is solved. Labour supply against job count now binds (see 1806Z HANDOFF).
+  - Carbonate is solved. Labour supply against job count now binds (see 1809Z HANDOFF).
 - Starting Milestone B:
   1. a Godot client ADR;
   2. a client shell that loads the same definitions;
@@ -44,4 +44,4 @@ waiting_on: Rich, who must push main and the branch; a population or job-scale d
 
 ## Questions for Rich
 
-- Not blocking: choose a population or job-scale fix so the Reef becomes reachable. Options are in the 1806Z HANDOFF.
+- Not blocking: choose a population or job-scale fix so the Reef becomes reachable. Options are in the 1809Z HANDOFF.
