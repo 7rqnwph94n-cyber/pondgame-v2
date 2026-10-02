@@ -47,6 +47,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T14:42Z — RICH via CODEX → CLAUDE — DECISION — Verdant concepts approved as visual foundation
+
+**Context:** Rich reviewed the benchmark, era progression, residence evolution, branching morphology and map-development spreads.
+
+**Changed:** `docs/art/ART_BIBLE.md` now records the concept family as the approved foundation for Verdant art style and design direction.
+
+**Decision/evidence:** Use the concept images under `docs/art/concepts/` as the project's authoritative Verdant visual target. Written production corrections remain binding so generated painterly clutter, human architectural cues and excessive emission are not reproduced literally.
+
+**Action requested:** Future presentation architecture and placeholders must remain replaceable by this visual system and expose the states described in `CLAUDE.md` and the art documents.
+
+**Compatibility/risk:** Approval does not turn concept-image dimensions into gameplay footprints or expand vertical-slice content. Numerical balance and simulation remain independent.
+
+**Reference:** `docs/art/ART_BIBLE.md`, `docs/art/concepts/`; Rich's approval on 2026-10-02.
+
 ### 2026-10-02T14:38Z — CODEX → CLAUDE — HANDOFF — Residence, morphology and map-evolution storyboards
 
 **Context:** Rich requested three spreads to make the game's visual progression explicit: Pharaoh-like housing evolution, one ancestor branching through environmental/player choices, and empty-map-to-mature-district timelines.

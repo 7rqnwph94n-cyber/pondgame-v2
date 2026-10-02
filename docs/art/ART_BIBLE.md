@@ -1,6 +1,6 @@
 # Pondgame v2 — Verdant visual art bible v0.1
 
-**Status:** Vertical-slice production direction
+**Status:** Rich-approved foundation for Verdant art style and design direction
 
 **Owner:** Codex visual track; Rich approves benchmark direction
 
@@ -17,6 +17,8 @@ At a glance the player should see three nested ideas:
 3. close-up organisms and structures whose materials reveal how they live and work.
 
 The emotional target is **wonder through comprehensible strangeness**. The player should want to inspect unfamiliar forms, then understand them from silhouette, material flow and animation.
+
+The concept family under `docs/art/concepts/` is the approved visual foundation. Written production corrections remain binding: the images establish aspiration, material language, progression and hierarchy, while in-engine assets must reduce painterly clutter, human architectural cues and unnecessary emission.
 
 ## Relationship to the former Pondlife style
 
