@@ -106,3 +106,50 @@ class ExchangeMechanicsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SafeCommitTests(unittest.TestCase):
+    """Two agents with `main` checked out in separate worktrees must never revert each other's exchange files."""
+
+    def setUp(self):
+        import subprocess
+        self.run_ = lambda cwd, *a: subprocess.run(list(a), cwd=cwd, capture_output=True, text=True, check=True).stdout
+        self.tmp = Path(tempfile.mkdtemp())
+        self.a = self.tmp / "a"
+        (self.a / "tools").mkdir(parents=True)
+        root = Path(__file__).resolve().parents[1]
+        shutil.copy(root / "tools" / "exchange.py", self.a / "tools" / "exchange.py")
+        shutil.copytree(root / "docs" / "exchange", self.a / "docs" / "exchange")
+        g = ["git", "-c", "user.name=t", "-c", "user.email=t@t"]
+        self.run_(self.a, "git", "init", "-q", "-b", "main")
+        self.run_(self.a, "git", "add", "-A")
+        self.run_(self.a, *g, "commit", "-q", "-m", "init")
+        self.b = self.tmp / "b"
+        self.run_(self.a, "git", "worktree", "add", "-q", "-f", str(self.b), "main")
+        self.g = g
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _exchange(self, cwd, *args):
+        return self.run_(cwd, sys.executable, "tools/exchange.py", *args)
+
+    def _post(self, cwd, sender, subject):
+        body = "\n".join(f"## {s}\n\nx\n" for s in ("Context", "Changed", "Decision/evidence", "Action requested",
+                                                   "Compatibility/risk", "Reference"))
+        f = cwd / "body.md"
+        f.write_text(body, encoding="utf-8")
+        self._exchange(cwd, "new", "--from", sender, "--to", "rich", "--status", "INFO", "--subject", subject, "--body-file", str(f))
+        f.unlink()
+
+    def test_commit_from_a_stale_worktree_keeps_the_other_agents_files(self):
+        self._post(self.a, "codex", "codex note")
+        self._exchange(self.a, "commit", "--agent", "codex", "-m", "codex note", "--git-name", "c", "--git-email", "c@c")
+        # Worktree b still has the old files: a plain `git add` here would delete Codex's message.
+        self._post(self.b, "claude", "claude note")
+        out = self._exchange(self.b, "commit", "--agent", "claude", "-m", "claude note", "--git-name", "c", "--git-email", "c@c")
+        self.assertIn("restored", out)
+        files = self.run_(self.a, "git", "ls-tree", "-r", "--name-only", "HEAD", "docs/exchange/messages")
+        self.assertTrue(any("codex-codex-note" in f for f in files.splitlines()))
+        self.assertTrue(any("claude-claude-note" in f for f in files.splitlines()))
+        self.assertEqual("", self.run_(self.b, "git", "status", "--porcelain", "--", "docs/exchange"))

@@ -9,6 +9,7 @@ Standard library only (Python 3.10+). Run from the repository root.
     python3 tools/exchange.py inbox --agent codex [--since ID]   # what is new / open for an agent
     python3 tools/exchange.py index                             # regenerate docs/exchange/INDEX.md
     python3 tools/exchange.py check                             # validate everything (CI/tests use this)
+    python3 tools/exchange.py commit --agent claude -m "board — ..."  # the ONLY safe way to commit exchange changes
 
 Every message is its own file under docs/exchange/messages/YYYY/MM-DD/, so two agents never edit the
 same file. Each agent overwrites only its own status board under docs/exchange/status/. INDEX.md is
@@ -265,6 +266,82 @@ def new_message(sender: str, to: list[str], status: str, subject: str, body: str
     return path
 
 
+# ---------------------------------------------------------------------------------------------- safe commit
+def _git(*args: str, check: bool = True) -> str:
+    import subprocess
+    result = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
+    if check and result.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args)} failed: {result.stderr.strip()}")
+    return result.stdout
+
+
+def path_owner(rel: str, text: str | None) -> str | None:
+    """Which agent may change this exchange path (None = generated or shared)."""
+    parts = Path(rel).parts   # docs/exchange/...
+    sub = parts[2] if len(parts) > 2 else ""
+    if sub in ("status", "agents") and len(parts) == 4:
+        return Path(parts[3]).stem
+    if sub == "messages" and text is not None:
+        meta, _ = parse_front_matter(text)
+        return meta.get("relayed_by") or meta.get("from")
+    return None
+
+
+def changed_exchange_paths() -> list[tuple[str, str]]:
+    """(git status code, repo-relative path) for every change under docs/exchange, untracked included."""
+    out = _git("status", "--porcelain", "--untracked-files=all", "--", "docs/exchange")
+    changes = []
+    for line in out.splitlines():
+        code, rel = line[:2], line[3:].strip().strip('"')
+        if " -> " in rel:
+            rel = rel.split(" -> ", 1)[1]
+        changes.append((code, rel))
+    return changes
+
+
+def safe_commit(agent: str, message: str, name: str | None = None, email: str | None = None) -> str:
+    """Commit only this agent's exchange changes.
+
+    Several worktrees (one per agent) can have `main` checked out on the same machine. When another agent
+    commits, this worktree's files go stale, and a plain `git add docs/exchange` would silently revert the
+    other agent's work. Here every changed path owned by another agent is restored from HEAD (an agent never
+    edits another agent's files), INDEX.md is regenerated, and only this agent's paths are committed.
+    """
+    restored, mine = [], []
+    for code, rel in changed_exchange_paths():
+        absolute = ROOT / rel
+        text = absolute.read_text(encoding="utf-8") if absolute.exists() else _git("show", f"HEAD:{rel}", check=False) or None
+        owner = path_owner(rel, text)
+        if rel.endswith("INDEX.md"):
+            continue
+        if owner is not None and owner != agent:
+            if code.strip() == "??":
+                restored.append(f"left untracked {rel} (owned by {owner})")
+            else:
+                _git("checkout", "HEAD", "--", rel)
+                restored.append(f"restored {rel} from HEAD (owned by {owner}; this worktree was stale)")
+            continue
+        mine.append(rel)
+    INDEX.write_text(build_index(), encoding="utf-8")
+    errors = check()
+    if errors:
+        raise RuntimeError("exchange check failed: " + "; ".join(errors))
+    for note in restored:
+        print(note)
+    if not mine:
+        print("nothing of yours to commit")
+        return ""
+    _git("add", "--all", "--", *mine, str(INDEX.relative_to(ROOT)))
+    identity = []
+    if name:
+        identity += ["-c", f"user.name={name}"]
+    if email:
+        identity += ["-c", f"user.email={email}"]
+    _git(*identity, "commit", "-q", "-m", message if message.startswith("exchange:") else f"exchange: {message}",
+         "--", *mine, str(INDEX.relative_to(ROOT)))
+    return _git("log", "--oneline", "-1").strip()
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -286,7 +363,16 @@ def main(argv: list[str] | None = None) -> int:
     p_inbox.add_argument("--since", help="only messages with id greater than this")
     sub.add_parser("index", help="regenerate docs/exchange/INDEX.md")
     sub.add_parser("check", help="validate messages, boards and contracts")
+    p_commit = sub.add_parser("commit", help="commit only your own exchange changes (safe with stale worktrees)")
+    p_commit.add_argument("--agent", required=True, choices=AGENTS)
+    p_commit.add_argument("-m", "--message", required=True)
+    p_commit.add_argument("--git-name")
+    p_commit.add_argument("--git-email")
     args = parser.parse_args(argv)
+
+    if args.command == "commit":
+        print(safe_commit(args.agent, args.message, args.git_name, args.git_email))
+        return 0
 
     if args.command == "new":
         body = args.body_file.read_text(encoding="utf-8") if args.body_file else sys.stdin.read()
