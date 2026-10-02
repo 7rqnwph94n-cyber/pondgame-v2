@@ -18,11 +18,14 @@ from __future__ import annotations
 
 from typing import Any
 
+from .definitions import first_instance_terms
+
 
 def analyse(defs: dict[str, Any]) -> dict[str, Any]:
     classes = defs["workforce"]["classes"]
     tiers_order = defs["residence_rules"]["tier_order"]
-    buildings = defs["buildings"]
+    # One instance is enough to bootstrap a chain, so first-instance terms count.
+    buildings = {b: first_instance_terms(d) for b, d in defs["buildings"].items()}
     recipes = defs["recipes"]
     start = defs["starting_state"]
 
@@ -166,6 +169,21 @@ def analyse(defs: dict[str, Any]) -> dict[str, Any]:
             graph[f"morph:{morph_id}"] = express_blockers(morph_id)
 
     cycles = [sorted(c) for c in _strongly_connected(graph) if len(c) > 1]
+
+    # Recurring needs a tier can only get from its own (or a higher) workforce class: the first home of
+    # that tier starts short and must get the producer staffed before Strain + Dormancy end in devolution.
+    rules = defs["residence_rules"]
+    grace = int(rules["strain_seconds"] + rules["dormancy_seconds"])
+    self_supplied = []
+    for tier in tiers_order[1:]:   # the starting tier is supplied by the starting colony
+        tier_class = classes.index(defs["residences"][tier]["class"])
+        for good in defs["residences"][tier]["per_minute"]:
+            producers = [b for b, d in buildings.items()
+                         if any(good in recipes[r]["outputs"] for r in d.get("recipes", []))]
+            lower_staffable = [b for b in producers
+                               if all(classes.index(c) < tier_class for c in buildings[b].get("jobs", {}))]
+            if producers and not lower_staffable:
+                self_supplied.append({"tier": tier, "need": good, "producers": producers, "grace_seconds": grace})
     stock_only = sorted(r for r in stock if r not in renewable and r != "stored_value")
     return {
         "renewable_goods": sorted(renewable),
@@ -177,6 +195,7 @@ def analyse(defs: dict[str, Any]) -> dict[str, Any]:
         "expressible_morphologies": sorted(morphs_expressed),
         "unreachable": {k: v for k, v in sorted(graph.items())},
         "deadlock_cycles": sorted(cycles, key=len),
+        "self_supplied_needs": self_supplied,
         "viable": not graph,
     }
 
@@ -243,6 +262,9 @@ def format_analysis(result: dict[str, Any]) -> str:
         lines.append("  unreachable (blocked by):")
         for item, blockers in result["unreachable"].items():
             lines.append(f"    {item:32s} <- {', '.join(blockers)}")
+    for item in result.get("self_supplied_needs", []):
+        lines.append(f"  self-supplied need: first {item['tier']} home needs {item['need']}, made only by its own class "
+                     f"({', '.join(item['producers'])}); {item['grace_seconds']} s before devolution")
     for i, cycle in enumerate(result["deadlock_cycles"], 1):
         lines.append(f"  deadlock cycle {i} ({len(cycle)} nodes): {', '.join(cycle)}")
     return "\n".join(lines)

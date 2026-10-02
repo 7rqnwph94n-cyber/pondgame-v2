@@ -90,6 +90,13 @@ def validate_definitions(defs: dict[str, Any]) -> list[str]:
     for building_id, building in buildings.items():
         owner = f"building {building_id}"
         _check_goods(errors, resources, f"{owner} cost", building.get("cost"))
+        first = building.get("first_instance")
+        if first is not None:
+            if "cost" in first:
+                _check_goods(errors, resources, f"{owner} first_instance cost", first["cost"])
+            for job_class in first.get("jobs", {}):
+                if job_class not in classes:
+                    errors.append(f"{owner}: first_instance unknown workforce class {job_class}")
         if building.get("constructible", True) and "work" not in building:
             errors.append(f"{owner}: constructible building needs work")
         for job_class in list(building.get("jobs", {})) + list(building.get("research_jobs", {})):
@@ -117,6 +124,14 @@ def validate_definitions(defs: dict[str, Any]) -> list[str]:
                 errors.append(f"service {service_id}: unknown provider {provider}")
 
     tiers = defs["residence_rules"]["tier_order"]
+    upkeep = defs.get("maintenance_upkeep", {})
+    if upkeep.get("grace_until_tier") and upkeep["grace_until_tier"] not in tiers:
+        errors.append("maintenance_upkeep: unknown grace_until_tier")
+    if upkeep.get("service") and upkeep["service"] not in services:
+        errors.append("maintenance_upkeep: unknown service")
+    builder_class = defs.get("construction_rules", {}).get("builder_class")
+    if builder_class and builder_class not in classes:
+        errors.append("construction_rules: unknown builder_class")
     for residence_id, residence in defs["residences"].items():
         if residence_id not in tiers:
             errors.append(f"residence {residence_id}: missing from tier_order")
@@ -182,6 +197,19 @@ def validate_definitions(defs: dict[str, Any]) -> list[str]:
         if entry["tier"] not in defs["residences"]:
             errors.append(f"starting state: unknown residence tier {entry['tier']}")
     return errors
+
+
+def first_instance_terms(definition: dict[str, Any]) -> dict[str, Any]:
+    """Definition used by the first instance of a building: ``first_instance.cost``/``jobs`` replace the defaults."""
+    override = definition.get("first_instance")
+    if not override:
+        return definition
+    terms = {k: v for k, v in definition.items() if k != "first_instance"}
+    for key in ("cost", "jobs"):
+        if key in override:
+            terms[key] = deepcopy(override[key])
+    terms["first_instance_applied"] = True
+    return terms
 
 
 def is_provisional(entry: dict[str, Any]) -> bool:

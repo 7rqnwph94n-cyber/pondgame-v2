@@ -43,6 +43,7 @@ class Site:
     last_material: str | None = None
     completed_at: int | None = None
     blocked_seconds: dict[str, float] = field(default_factory=dict)
+    terms: dict[str, Any] | None = None   # effective building definition (first-instance terms applied)
 
     @property
     def active(self) -> bool:

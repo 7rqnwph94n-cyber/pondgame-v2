@@ -3,6 +3,8 @@
 Date: 2026-10-02 · Author: Claude · Branch: `claude/milestone-a-honest-economy`
 Reproduce: `python3 -m economy.run` and `python3 -m economy.run --overlay economy/data/experiments/probe_unblock_bootstrap.json`
 
+> **Update 2026-10-02:** Rich's preferred resolutions to the decisions below have been simulated. See `CANDIDATE_RULES_V1_RESULTS.md`: they remove every deadlock here, but the Reef is still infeasible in 90 minutes.
+
 ## Verdict
 
 **The Memory Reef cannot be completed under the documented slice economy.** This is not a timing shortfall. The doc-faithful definitions contain structural deadlocks: the reference city never leaves the Shelter tier, never produces Growth Nutrient, and the Great Work can never unlock.

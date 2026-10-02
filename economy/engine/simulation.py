@@ -32,6 +32,73 @@ from .workforce import Job, allocate
 EPS = 1e-9
 
 
+GRACE = "grace"
+PAID = "paid"
+UNPAID = "unpaid"
+NOT_ENFORCED = "not_enforced"
+
+
+class UpkeepState:
+    """Maintenance upkeep (§13): Repair Enzyme per maintenance weight per minute.
+
+    During the onboarding grace period nothing is charged. Afterwards a debt
+    accrues each second; whole Enzyme units are paid from the store. While a
+    unit is owed and unavailable, the Maintenance service is switched off
+    (which blocks residence evolution). Debt is capped at one unit so
+    resupply restores the service immediately rather than demanding back-pay.
+    """
+
+    def __init__(self, defs: dict[str, Any]):
+        self.rules = defs.get("maintenance_upkeep", {})
+        self.enforced = bool(self.rules.get("enforced", False))
+        self.service = self.rules.get("service", "maintenance")
+        self.state = GRACE if self.enforced else NOT_ENFORCED
+        self.grace_ended_at: int | None = None
+        self.debt = 0.0
+        self.paid = 0
+        self.unpaid_seconds = 0.0
+
+    def _grace_over(self, sim: "Simulation") -> bool:
+        tier = self.rules.get("grace_until_tier")
+        if tier:
+            order = sim.defs["residence_rules"]["tier_order"]
+            if any(order.index(r.tier) >= order.index(tier) for r in sim.residences.values()):
+                return True
+        building = self.rules.get("grace_until_building")
+        if building and any(f.building_id == building for f in sim.facilities.values()):
+            return True
+        limit = self.rules.get("grace_max_seconds")
+        return limit is not None and sim.second >= int(limit)
+
+    def step(self, sim: "Simulation") -> None:
+        if not self.enforced:
+            return
+        if self.state == GRACE:
+            if not self._grace_over(sim):
+                return
+            self.grace_ended_at = sim.second
+            self.state = PAID
+            sim.events.append(f"{stamp(sim.second)} maintenance upkeep begins")
+        providers = sim.defs["services"][self.service]["provided_by"]
+        if not any(f.building_id in providers and not f.paused for f in sim.facilities.values()):
+            return
+        rate = float(self.rules.get("enzyme_per_weight_per_minute", 1.0 / 80.0))
+        self.debt = min(1.0, self.debt + sim.diag.maintenance_weight() * rate * sim.dt / 60.0)
+        store = sim.store(sim.districts[0])
+        if self.debt + EPS >= 1.0:
+            if store.take_up_to("repair_enzyme", 1):
+                self.debt -= 1.0
+                self.paid += 1
+                if self.state == UNPAID:
+                    sim.events.append(f"{stamp(sim.second)} maintenance upkeep restored")
+                self.state = PAID
+            else:
+                if self.state != UNPAID:
+                    sim.events.append(f"{stamp(sim.second)} maintenance upkeep UNPAID: service suspended")
+                self.state = UNPAID
+                self.unpaid_seconds += sim.dt
+
+
 class GreatWorkState:
     def __init__(self) -> None:
         self.begun_at: int | None = None
@@ -72,7 +139,15 @@ class Simulation:
         self.allocations: dict[str, Any] = {}
         self.construction_pool: dict[str, float] = {d: 0.0 for d in self.districts}
         self.coordinator_pool: dict[str, float] = {d: 0.0 for d in self.districts}
-        self.policies: dict[str, float] = {"growth_nutrient_reserve": float(defs["population"]["nutrient_reserve"])}
+        rules = defs.get("construction_rules", {})
+        self.policies: dict[str, float] = {
+            "growth_nutrient_reserve": float(defs["population"]["nutrient_reserve"]),
+            "builder_wp": float(rules.get("builder_wp", 0.0)),
+        }
+        self.first_instance_used: dict[str, str] = {}
+        self.category_priority: dict[str, int] = {}   # player overrides for "construction"/"research" job ranks
+        self.builder_wp: dict[str, float] = {d: 0.0 for d in self.districts}
+        self.upkeep = UpkeepState(defs)
         self.growth_progress = 0.0
         self.nutrient_credit = 0.0
         self.food_positive_since: int | None = 0
@@ -113,8 +188,8 @@ class Simulation:
                 population=float(entry["population"]), created_at=0, order=self.next_order(),
             )
 
-    def _commission_facility(self, facility_id: str, building_id: str, district: str) -> None:
-        definition = self.defs["buildings"][building_id]
+    def _commission_facility(self, facility_id: str, building_id: str, district: str, terms: dict[str, Any] | None = None) -> None:
+        definition = terms or self.defs["buildings"][building_id]
         if definition.get("residence_tier"):
             self.residences[facility_id] = Residence(
                 id=facility_id, tier=definition["residence_tier"], district=district,
@@ -161,7 +236,10 @@ class Simulation:
         if not any(f.building_id == unlock["service_building"] and f.staffing >= min_staff for f in self.facilities.values()):
             blockers.append(f"needs_active_service:{unlock['service_building']}")
         coordinator_class = self.defs["workforce"]["great_work_coordinator_class"]
-        available = sum(a.remaining.get(coordinator_class, 0.0) for a in self.allocations.values())
+        # Coordinators covering lower-class vacancies can be recalled, so they count as available.
+        available = sum(
+            a.remaining.get(coordinator_class, 0.0) + a.below_class.get(coordinator_class, 0.0)
+            for a in self.allocations.values())
         if available + EPS < unlock["coordinator_wp"]:
             blockers.append(f"needs_coordinator_wp:{available:.1f}/{unlock['coordinator_wp']}")
         status = self.trade.contracts.get(unlock["contract_resolved"])
@@ -237,6 +315,7 @@ class Simulation:
     def _allocate_workforce(self) -> None:
         workforce = self.defs["workforce"]
         priorities = {category: i for i, category in enumerate(workforce["job_priority"])}
+        priorities.update(self.category_priority)
         research = self.active_research()
         research_ready = research is not None and research.materials_complete_at is not None
         for district in self.districts:
@@ -251,6 +330,17 @@ class Simulation:
                     for job_class, required in facility.definition.get("research_jobs", {}).items():
                         jobs.append(Job(f"{facility.id}#research:{job_class}", facility.id, job_class, float(required),
                                         priorities["research"], facility.order))
+            coordinator_class = workforce["great_work_coordinator_class"]
+            gw_need = self._great_work_coordinator_demand(district)
+            if gw_need > EPS:
+                jobs.append(Job(f"great_work@{district}", f"great_work@{district}", coordinator_class, gw_need,
+                                priorities.get("great_work", -1), -2))
+            builder_need = self._builder_demand(district)
+            if builder_need > EPS:
+                rules = self.defs.get("construction_rules", {})
+                rank = priorities.get("construction", len(priorities))
+                jobs.append(Job(f"builders@{district}", f"builders@{district}", rules.get("builder_class", "general"),
+                                builder_need, rank, -1))
             allocation = allocate(self.workforce_supply(district), jobs, workforce["classes"], workforce["substitution_efficiency"])
             self.allocations[district] = allocation
             for facility in self.facilities.values():
@@ -258,14 +348,36 @@ class Simulation:
                     continue
                 facility.staffing = _weighted(allocation.staffing, facility, "jobs", ":")
                 facility.research_staffing = _weighted(allocation.staffing, facility, "research_jobs", "#research:") if research_ready else 0.0
-            self.construction_pool[district] = sum(allocation.remaining[c] for c in workforce["construction_classes"])
-            self.coordinator_pool[district] = allocation.remaining[workforce["great_work_coordinator_class"]]
+            self.builder_wp[district] = builder_need * allocation.staffing.get(f"builders@{district}", 0.0)
+            self.construction_pool[district] = self.builder_wp[district] + sum(
+                allocation.remaining[c] for c in workforce["construction_classes"])
+            self.coordinator_pool[district] = gw_need * allocation.staffing.get(f"great_work@{district}", 0.0) + \
+                allocation.remaining[coordinator_class]
             min_staff = workforce["min_staffing_fraction"]
             self.services[district] = {
                 service_id for service_id, service in self.defs["services"].items()
                 if any(f.district == district and f.building_id in service["provided_by"] and not f.paused and f.staffing >= min_staff
                        for f in self.facilities.values())
             }
+            if self.upkeep.state == UNPAID:
+                self.services[district].discard(self.upkeep.service)
+
+    def _great_work_coordinator_demand(self, district: str) -> float:
+        """While a stage is ready for Coordinator work, every Coordinator is claimed for it (top priority)."""
+        site = self.sites.get(self.great_work.site_id) if self.great_work.site_id else None
+        if (site is None or site.district != district or self.great_work.paused or site.materials_complete_at is None
+                or site.coordinator_remaining() <= EPS):
+            return 0.0
+        return self.workforce_supply(district)[self.defs["workforce"]["great_work_coordinator_class"]]
+
+    def _builder_demand(self, district: str) -> float:
+        """Builders are reserved only while a site in this district is ready for physical work."""
+        wanted = self.policies.get("builder_wp", 0.0)
+        if wanted <= EPS:
+            return 0.0
+        ready = any(s.active and s.district == district and s.materials_complete_at is not None and s.physical_remaining() > EPS
+                    and not (s.kind == "great_work_stage" and self.great_work.paused) for s in self.sites.values())
+        return wanted if ready else 0.0
 
     def _residences_step(self) -> None:
         for residence in self.residences.values():
@@ -314,7 +426,7 @@ class Simulation:
                 site.completed_at = self.second
                 self.diag.record_site_complete(site)
                 if site.kind == "building":
-                    self._commission_facility(site.id, site.target, site.district)
+                    self._commission_facility(site.id, site.target, site.district, site.terms)
                     self.events.append(f"{stamp(self.second)} commissioned {site.id} ({site.target})")
                 else:
                     self._complete_great_work_stage(site)
@@ -398,6 +510,7 @@ class Simulation:
         self.season = self.env.season_at(self.second)
         self.env.step(self.second, self.dt)
         self._process_commands()
+        self.upkeep.step(self)
         self._allocate_workforce()
         self._residences_step()
         self._construction_step()

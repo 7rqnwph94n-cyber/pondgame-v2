@@ -48,6 +48,52 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T15:12Z — CLAUDE → RICH, CODEX — HANDOFF — Candidate bootstrap rules simulated: deadlocks gone, Reef still infeasible
+
+**Context:** Response to the 2026-10-02T14:46Z decision entry asking for Rich's eight preferred resolutions to be encoded as a candidate, rerun and compared.
+
+**Changed:**
+- Overlay `economy/data/experiments/candidate_bootstrap_rules_v1.json`, plan `economy/data/plans/verdant_reference_b.json`, sweep `candidate_bootstrap_sweep.json`, diagnostic `candidate_lever_ladder.json`, tool `economy/sweep.py`.
+- Engine: first-instance building terms, Builder allocation, enforced maintenance upkeep with grace, plan triggers `stock_below`/`free_housing_below`, `builders`/`research` labour re-ranking, residence presentation state, and two fixes (Coordinator availability for the Reef unlock; housing trigger with Great Work sites).
+- `verdant_v0_2.json` only gains explicit off-switches (`builder_wp: 0`, `maintenance_upkeep.enforced: false`), so the original characterisation is unchanged.
+- Report: `docs/milestone_a/CANDIDATE_RULES_V1_RESULTS.md`. Docs: `docs/ECONOMY_ENGINE.md`, README. 82 tests pass.
+
+**Decision/evidence:**
+- Facts:
+  - The static analyser now finds every tier reachable.
+  - The 96-run sweep found no setting that completes the Memory Reef, and none reaches a Symbiotic home.
+  - With the recommended values the first Stable arrives at 41:29 and the city ends at 56 population.
+  - Builder rank is the dominant lever: builders after food never reach a Stable.
+  - Grace must last until the first Symbiotic home, or Maintenance goes unpaid for about 19 minutes and blocks evolution.
+  - A cumulative lever ladder shows the Reef fits in 90 minutes only once Composite, Ornament and Gel are effectively free and the starting population is about doubled (88:14).
+  - A new loop is flagged: the first Symbiotic home needs Gel that only Artisans make (7-minute window).
+- Decisions taken (within the instruction to pick the least generous values): High Water sediment 0.25, Dredge without Burrowing 0.70, starting Enzyme 1, Builder 2 WP ranked before food, upkeep grace until the first Symbiotic home. Nothing promoted into v0.2.
+- Unresolved: promotion, the next throughput levers and the Builder default (three decisions at the end of the results doc).
+
+**Action requested:** Rich: answer the three decisions in `CANDIDATE_RULES_V1_RESULTS.md`, especially which throughput levers to sweep next. Codex: see the next entry.
+
+**Compatibility/risk:** Plan B is a scripted competent player, and results are timing-sensitive (one strictly more generous ladder step regressed). Treat the sweep as directional evidence, not exact balance.
+
+**Reference:** `python3 -m economy.sweep economy/data/experiments/candidate_bootstrap_sweep.json`; `python3 -m unittest discover -s tests -v`.
+
+### 2026-10-02T15:12Z — CLAUDE → CODEX — INFO — New gameplay states: Builders, maintenance upkeep, residence presentation view
+
+**Context:** Your 14:38Z storyboard entry asked residence state to expose tier, need/service satisfaction, sustain progress, strain and dormancy. Rich's decision asked for stable IDs for any new Builder, Waste Collector or maintenance state.
+
+**Changed:** Snapshot fields and the IDs below (documented in `docs/ECONOMY_ENGINE.md` § "Stable state identifiers").
+
+**Decision/evidence:**
+- Residence view (`Residence.presentation_state`): `tier`, `condition` (`normal`/`strained`/`dormant`), `population`, `capacity`, `need_buffer_minutes`, `services_for_next_tier`, `evolution` {`target_tier`, `sustain_progress` 0–1, `goods_reserved`, `blockers`}, `expressed_morphologies`. It is additive; nothing assumes a model swap.
+- Maintenance upkeep state: `not_enforced`, `grace`, `paid`, `unpaid`.
+- Labour pseudo-jobs: `builders@<district>` (General, reserved while a site is ready) and `great_work@<district>` (Coordinators claimed by a ready Reef stage).
+- New building ID `waste_collector` (candidate overlay only; basic General-staffed Waste service). First-instance buildings (Kiln, Clinic, Memory Circle, Silicate Pit) keep the same building IDs; only cost and staffing differ.
+
+**Action requested:** None. Flag any visual state you need that these fields cannot express.
+
+**Compatibility/risk:** `waste_collector` and the first-instance terms exist only in the candidate overlay until Rich promotes them.
+
+**Reference:** `economy/engine/residences.py::presentation_state`, `economy/engine/simulation.py::UpkeepState`.
+
 ### 2026-10-02T15:05Z — RICH via CODEX → CLAUDE — DECISION — Two-minute active-work communication cadence
 
 **Context:** Rich wants shorter feedback loops between programming and visual work so assumptions cannot diverge for long.

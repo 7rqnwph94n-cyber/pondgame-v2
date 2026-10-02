@@ -195,7 +195,15 @@
     "cancel_refund_delivered": 0.90,
     "demolish_refund_durable": 0.60,
     "diagnostic_nominal_crew_wp": 4,
-    "source": "§21.3. Materials must be fully delivered before work starts. Delivery is instantaneous within a district in Milestone A (no carriers)."
+    "builder_wp": 0,
+    "builder_class": "general",
+    "source": "§21.3. Materials must be fully delivered before work starts. Delivery is instantaneous within a district in Milestone A (no carriers). builder_wp 0 means only unassigned General/Adapted workers build (§10.2)."
+  },
+  "maintenance_upkeep": {
+    "enforced": false,
+    "service": "maintenance",
+    "enzyme_per_weight_per_minute": 0.0125,
+    "source": "§13: 1 Repair Enzyme per 10 maintenance weight per 8 minutes. Not enforced in the doc-faithful baseline; reported as a risk only."
   },
   "starting_state": {
     "inventory": {"biomass": 4, "staple": 8, "carbonate": 6, "prepared_silica": 2, "stored_value": 20},

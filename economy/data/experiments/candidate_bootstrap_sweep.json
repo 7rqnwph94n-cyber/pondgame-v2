@@ -1,0 +1,17 @@
+{
+  "id": "candidate_bootstrap_sweep",
+  "description": "Bounded comparison of the numbers Rich left open in AGENT_CHAT 2026-10-02T14:46Z. Values are listed least to most generous.",
+  "plan": "economy/data/plans/verdant_reference_b.json",
+  "base_overlays": ["economy/data/experiments/candidate_bootstrap_rules_v1.json"],
+  "parameters": [
+    {"name": "high_water_sediment", "path": "seasons.1.sediment", "values": [0.25, 0.5]},
+    {"name": "dredge_without_burrowing", "path": "buildings.sediment_dredge.morphology_modifier.without", "values": [0.7, 0.8]},
+    {"name": "starting_enzyme", "path": "starting_state.inventory.repair_enzyme", "values": [1, 2, 4]},
+    {"name": "builder_wp", "path": "construction_rules.builder_wp", "values": [2, 4]},
+    {"name": "builder_rank", "path": "workforce.job_priority", "labels": ["after_food", "before_food"], "values": [
+      ["institution", "logistics", "service", "food", "construction", "extraction", "processing", "luxury", "research"],
+      ["institution", "logistics", "service", "construction", "food", "extraction", "processing", "luxury", "research"]
+    ]},
+    {"name": "upkeep_grace_until", "paths": ["maintenance_upkeep.grace_until_tier"], "values": ["stable", "symbiotic"]}
+  ]
+}

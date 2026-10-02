@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from .construction import Site, salvage
+from .definitions import first_instance_terms
 from .morphology import ResearchProject
 from .residences import Residence
 
@@ -48,6 +49,8 @@ def unmet_conditions(sim: "Simulation", when: dict[str, Any]) -> list[str]:
     - researched: morphology id
     - contract: [contract id, [acceptable statuses]]
     - stock: {resource: minimum units in the first district store}
+    - stock_below: {resource: units}; holds while the store has fewer than that many
+    - free_housing_below: n (empty homes plus homes under construction hold fewer than n organisms)
     """
     unmet: list[str] = []
     built = when.get("built")
@@ -66,10 +69,20 @@ def unmet_conditions(sim: "Simulation", when: dict[str, Any]) -> list[str]:
         contract_id, statuses = when["contract"]
         if sim.trade.contracts.get(contract_id) not in statuses:
             unmet.append(f"contract:{contract_id}")
+    if "free_housing_below" in when:
+        free = sum(r.capacity(sim.defs) - r.population for r in sim.residences.values())
+        free += sum(sim.defs["residences"][sim.defs["buildings"][s.target]["residence_tier"]]["capacity"]
+                    for s in sim.sites.values()
+                    if s.active and s.kind == "building" and sim.defs["buildings"][s.target].get("residence_tier"))
+        if free >= when["free_housing_below"]:
+            unmet.append(f"free_housing:{free:.0f}>={when['free_housing_below']}")
     store = sim.store(sim.districts[0])
     for resource, minimum in when.get("stock", {}).items():
         if store.get(resource) < minimum:
             unmet.append(f"stock:{resource}>={minimum}")
+    for resource, maximum in when.get("stock_below", {}).items():
+        if store.get(resource) >= maximum:
+            unmet.append(f"stock:{resource}<{maximum}")
     return unmet
 
 
@@ -95,11 +108,17 @@ def cmd_construct(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
     site_id = cmd.get("id") or sim.next_id(building_id)
     if sim.id_in_use(site_id):
         return fail(f"duplicate_id:{site_id}")
+    # First-instance terms apply once per settlement; a cancelled first site releases them.
+    first = "first_instance" in definition and building_id not in sim.first_instance_used
+    terms = first_instance_terms(definition) if first else definition
+    if first:
+        sim.first_instance_used[building_id] = site_id
     site = Site(
         id=site_id, kind="building", target=building_id, district=district,
-        cost={k: int(v) for k, v in definition.get("cost", {}).items()},
-        physical_work=float(definition["work"]), coordinator_work=0.0,
+        cost={k: int(v) for k, v in terms.get("cost", {}).items()},
+        physical_work=float(terms["work"]), coordinator_work=0.0,
         priority=int(cmd.get("priority", DEFAULT_PRIORITY)), created_at=sim.second, order=sim.next_order(),
+        terms=terms,
     )
     sim.sites[site_id] = site
     return CommandResult(True, info=f"site {site_id} placed")
@@ -113,6 +132,8 @@ def cmd_cancel(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
     if site.kind == "great_work_stage":
         sim.great_work.paused = True
     refunded = site.cancel(sim.store(site.district), sim.defs["construction_rules"]["cancel_refund_delivered"])
+    if sim.first_instance_used.get(site.target) == site.id:
+        del sim.first_instance_used[site.target]
     return CommandResult(True, info=f"refunded {refunded}")
 
 
@@ -217,7 +238,20 @@ def cmd_pause(sim: "Simulation", cmd: dict[str, Any], paused: bool) -> CommandRe
 
 
 def cmd_set_labour_priority(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
-    """Lower numbers are staffed first. Category defaults are 0..N in workforce.job_priority order."""
+    """Lower numbers are staffed first. Category defaults are 0..N in workforce.job_priority order.
+
+    ``target`` may be a facility id, or one of the job categories ``builders``/``research``.
+    """
+    value = cmd.get("value")
+    if cmd.get("target") in ("builders", "research"):
+        if value is not None and not isinstance(value, int):
+            return fail(f"invalid_priority:{value}")
+        category = "construction" if cmd["target"] == "builders" else "research"
+        if value is None:
+            sim.category_priority.pop(category, None)
+        else:
+            sim.category_priority[category] = value
+        return CommandResult(True)
     facility = sim.facilities.get(cmd.get("target"))
     if facility is None:
         return fail(f"no_facility:{cmd.get('target')}")
@@ -268,7 +302,7 @@ def cmd_begin_great_work(sim: "Simulation", cmd: dict[str, Any]) -> CommandResul
     return CommandResult(True, info="Memory Reef begun")
 
 
-POLICIES = {"growth_nutrient_reserve"}
+POLICIES = {"growth_nutrient_reserve", "builder_wp"}
 
 
 def cmd_set_policy(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:

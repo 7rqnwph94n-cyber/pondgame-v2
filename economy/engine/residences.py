@@ -41,6 +41,7 @@ class Residence:
     conversion_until: int = -1
     short_this_step: bool = False
     unmet: dict[str, float] = field(default_factory=dict)
+    last_evolution_blockers: list[str] = field(default_factory=list)
 
     def definition(self, defs: dict[str, Any]) -> dict[str, Any]:
         return defs["residences"][self.tier]
@@ -126,6 +127,36 @@ class Residence:
             if self.population <= capacity + EPS:
                 self.emigration_rate = 0.0
 
+    def presentation_state(self, defs: dict[str, Any], services: set[str]) -> dict[str, Any]:
+        """Stable, presentation-safe view (requested by Codex for residence art states)."""
+        definition = self.definition(defs)
+        occupancy = self.population / definition["capacity"]
+        needs = {}
+        for resource, rate in definition["per_minute"].items():
+            per_minute = rate * max(occupancy, 1e-9)
+            needs[resource] = round(self.buffers.get(resource, 0.0) / per_minute, 2)
+        evolving = None
+        if self.evolution_target:
+            sustain = defs["residences"][self.evolution_target]["evolution"]["sustain_seconds"]
+            evolving = {
+                "target_tier": self.evolution_target,
+                "sustain_progress": round(min(1.0, self.evolution_timer / sustain), 3),
+                "goods_reserved": dict(self.evolution_reserved),
+                "blockers": list(self.last_evolution_blockers),
+            }
+        next_tier = definition.get("next")
+        required = defs["residences"][next_tier]["evolution"].get("services", []) if next_tier else []
+        return {
+            "tier": self.tier,
+            "condition": self.state,
+            "population": round(self.population, 2),
+            "capacity": definition["capacity"],
+            "need_buffer_minutes": needs,
+            "services_for_next_tier": {s: s in services for s in required},
+            "evolution": evolving,
+            "expressed_morphologies": dict(self.expressed),
+        }
+
     def buffers_supplied(self, defs: dict[str, Any]) -> bool:
         return all(self.buffers.get(resource, 0.0) > EPS for resource in self.definition(defs)["per_minute"])
 
@@ -154,6 +185,7 @@ class Residence:
             return []
         evolution = defs["residences"][self.evolution_target]["evolution"]
         blockers = self.evolution_blockers(defs, services, has_morph)
+        self.last_evolution_blockers = list(blockers)
         if blockers:
             if self.evolution_timer > 0 or self.evolution_reserved:
                 events.append(f"{stamp} {self.id} evolution interrupted ({', '.join(blockers)}); reservation released")
@@ -164,7 +196,8 @@ class Residence:
         if not self.evolution_reserved:
             missing = missing_goods(goods, store.counts)
             if missing:
-                return [f"goods:{resource}" for resource in missing]
+                self.last_evolution_blockers = [f"goods:{resource}" for resource in missing]
+                return self.last_evolution_blockers
             store.take(goods)
             self.evolution_reserved = dict(goods)
         self.evolution_timer += dt
@@ -174,5 +207,6 @@ class Residence:
             self.evolution_target = None
             self.evolution_reserved = {}   # consumed
             self.evolution_timer = 0.0
+            self.last_evolution_blockers = []
             events.append(f"{stamp} {self.id} evolved {old} -> {self.tier}")
         return []

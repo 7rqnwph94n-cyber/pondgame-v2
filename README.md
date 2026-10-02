@@ -29,10 +29,11 @@ The source of truth for balance values is `economy/data/verdant_v0_1.json`. The 
 python3 -m economy.run                      # doc-faithful definitions
 python3 -m economy.run --overlay economy/data/experiments/probe_unblock_bootstrap.json
 python3 -m economy.run --bootstrap-only     # static deadlock analysis
+python3 -m economy.sweep economy/data/experiments/candidate_bootstrap_sweep.json   # bounded rule comparison
 ```
 
 - Architecture and contracts: `docs/ECONOMY_ENGINE.md`
-- Current balance evidence: `docs/milestone_a/HONEST_ECONOMY_FINDINGS.md`
+- Current balance evidence: `docs/milestone_a/HONEST_ECONOMY_FINDINGS.md`, then `docs/milestone_a/CANDIDATE_RULES_V1_RESULTS.md`
 - Definitions: `economy/data/verdant_v0_2.json`; reference plan: `economy/data/plans/verdant_reference_a.json`
 
 The legacy paper model above is kept unchanged as an arithmetic check.

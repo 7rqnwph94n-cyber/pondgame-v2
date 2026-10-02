@@ -169,8 +169,10 @@ class Diagnostics:
             "custody": {k: v for k, v in sorted(sim.custody().items()) if v},
             "workforce": workforce,
             "population": round(sum(r.population for r in sim.residences.values()), 2),
-            "residences": {r.id: {"tier": r.tier, "population": round(r.population, 2), "state": r.state,
-                                  "evolving_to": r.evolution_target} for r in sim.residences.values()},
+            "residences": {r.id: r.presentation_state(sim.defs, sim.services.get(r.district, set()))
+                           for r in sim.residences.values()},
+            "maintenance_upkeep": sim.upkeep.state,
+            "builders_wp": {d: round(v, 2) for d, v in sim.builder_wp.items()},
             "services": {d: sorted(s) for d, s in sim.services.items()},
             "facilities": {f.id: {"status": f.status, "detail": f.status_detail, "staffing": round(f.staffing, 2)}
                            for f in sim.facilities.values() if f.recipe_id},
@@ -231,6 +233,7 @@ class Diagnostics:
         for entry in self.sim.command_log:
             for reason, seconds in entry.get("waited", {}).items():
                 add(bottleneck_key("command", reason), f"command #{entry['index']} {entry['do']}", seconds)
+        add("goods:repair_enzyme", "maintenance upkeep unpaid (service suspended)", self.sim.upkeep.unpaid_seconds)
         for residence_id, goods in self.shortage_seconds.items():
             for resource, seconds in goods.items():
                 add(f"goods:{resource}", f"residence {residence_id} need", seconds)
@@ -358,6 +361,13 @@ class Diagnostics:
                 "working_below_class_wp_minutes": {k: round(v, 1) for k, v in self.below_class_wp_minutes.items() if v > EPS},
             },
             "population_growth_blocked_minutes": {k: round(v / 60, 1) for k, v in self.growth_block.items()},
+            "maintenance_upkeep": {
+                "enforced": sim.upkeep.enforced,
+                "state": sim.upkeep.state,
+                "grace_ended_at": _fmt(sim.upkeep.grace_ended_at),
+                "enzyme_paid": sim.upkeep.paid,
+                "unpaid_minutes": round(sim.upkeep.unpaid_seconds / 60, 1),
+            },
             "risks_not_enforced": {
                 "maintenance_enzyme_demand": round(upkeep_demand, 1),
                 "repair_enzyme_produced": enzyme_made,

@@ -1,0 +1,39 @@
+{
+  "id": "candidate_bootstrap_rules_v1",
+  "status": "CANDIDATE - Rich's preferred resolutions (AGENT_CHAT 2026-10-02T14:46Z). Not promoted into verdant_v0_2.json until results are reviewed.",
+  "description": "Rich's eight preferred bootstrap rules. The open numbers use the least generous value from the bounded sweep (candidate_bootstrap_sweep.json) wherever a more generous value made no material difference. No tested setting completes the Memory Reef.",
+  "decisions": {
+    "1_first_stable": "Nutrient Washer, Clean-Flow Node and a new basic Waste Collector use General labour. Channel Separator and Waste Digester stay Adapted.",
+    "2_kiln_clinic": "The first Ceramic Kiln uses Adapted labour (later Kilns need Artisans). The first Detox Clinic costs no Habitat Composite. Health stays a Symbiotic gate.",
+    "3_memory": "The first Memory Circle uses Artisan labour; later Circles need Coordinators.",
+    "4_enzyme": "The first Silicate Pit costs no Repair Enzyme. The Carbonate Cutter keeps its Enzyme cost, and maintenance demands Enzyme.",
+    "5_carbonate": "The Carbonate Cutter runs before Mineral Jaw at 50% (same pattern as the Silicate Pit); Mineral Jaw gives full rate.",
+    "6_growth_nutrient": "High Water slows sediment extraction instead of closing it; the no-Burrowing Dredge penalty is softened.",
+    "7_builders": "A Builder allocation reserves General workers (higher classes may substitute) whenever a site is ready for work, staffed after services and before food crews. The sweep showed builders ranked after food never get workers (no Stable in any of 48 runs).",
+    "8_maintenance": "Upkeep (1 Enzyme per 10 weight per 8 min) is enforced after a grace period that ends at the first Symbiotic home; ending it at the first Stable left Maintenance unpaid for an average of 20 minutes and blocked evolution. The colony starts with a small Enzyme reserve."
+  },
+  "patch": {
+    "seasons": [
+      {"id": "bloom", "start": 0, "end": 1080, "farm": 1.25, "filter": 0.80, "sediment": 0.75},
+      {"id": "high_water", "start": 1080, "end": 2100, "farm": 1.00, "filter": 1.50, "sediment": 0.25},
+      {"id": "recession", "start": 2100, "end": 3480, "farm": 1.10, "filter": 1.00, "sediment": 1.35},
+      {"id": "dry", "start": 3480, "end": 5401, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
+    ],
+    "workforce": {"job_priority": ["institution", "logistics", "service", "construction", "food", "extraction", "processing", "luxury", "research"]},
+    "buildings": {
+      "nutrient_washer": {"jobs": {"general": 3, "adapted": null}, "source": "§14.2, §7.1; staffing: candidate rule 1"},
+      "clean_flow_node": {"jobs": {"general": 1, "adapted": null}, "source": "provisional cost/work; staffing: candidate rule 1"},
+      "waste_collector": {"category": "service", "cost": {"carbonate": 2, "biomass": 1}, "work": 10, "jobs": {"general": 2}, "maintenance_weight": 1.0, "source": "provisional cost/work/staffing: candidate rule 1"},
+      "ceramic_kiln": {"first_instance": {"jobs": {"adapted": 4}}},
+      "detox_clinic": {"first_instance": {"cost": {"fired_ceramic": 2, "repair_enzyme": 1}}},
+      "memory_circle": {"first_instance": {"jobs": {"artisan": 3}}},
+      "silicate_pit": {"first_instance": {"cost": {"carbonate": 2}}},
+      "carbonate_cutter": {"requires_morphology": null, "morphology_modifier": {"morphology": "mineral_jaw", "without": 0.50}, "source": "§14.2, §6; pre-Jaw cutting: candidate rule 5"},
+      "sediment_dredge": {"morphology_modifier": {"morphology": "burrowing_limb", "without": 0.70}}
+    },
+    "services": {"waste": {"provided_by": ["waste_digester", "waste_collector"]}},
+    "construction_rules": {"builder_wp": 2},
+    "maintenance_upkeep": {"enforced": true, "grace_until_tier": "symbiotic"},
+    "starting_state": {"inventory": {"repair_enzyme": 1}}
+  }
+}
