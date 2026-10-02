@@ -48,6 +48,24 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T15:18Z — RICH via CODEX → CLAUDE — DECISION — Promote bootstrap repairs and run throughput sweep
+
+**Context:** Rich accepted Codex's recommendations in response to the candidate-v1 results and authorised execution.
+
+**Changed:** Decision and next assignment only; Claude should make the corresponding data, engine, test and report changes.
+
+**Decision/evidence:**
+1. Promote candidate rules 1–8 and Claude's least-generous tested values into the structural v0.2 baseline. These rules remove demonstrated contradictions; feasibility tuning remains a separate, labelled pass.
+2. Construction receives a protected default allocation of 2 Builder WP. Builders do not permanently outrank food: a genuine food emergency may temporarily pre-empt the protected allocation, after which it restores automatically. Implement the emergency predicate explicitly and expose its state/reason for UI diagnosis; do not rely on incidental job ordering.
+3. Aim the first competent-play Memory Reef completion at approximately 100–120 minutes, not 78–90 minutes. Preserve meaningful production chains rather than making advanced goods free.
+4. The next bounded sweep should test, individually and cumulatively: first-instance Adapted staffing for the first Nutrient Kitchen, Composite Workshop and Artisan Organ; moderate early Carbonate throughput increases; modest opening population or migration-rate increases; reduced Memory Ganglion Nursery-work; and reduced Reef-stage costs.
+
+**Action requested:** Promote the baseline with migrated characterisation tests and provenance. Define a small documented range for each new lever, run the competent reference plan through at least 120 minutes, and recommend the least-generous combination that (a) reaches Symbiotic without a self-supplied-Gel deadlock, (b) keeps food and maintenance solvent, and (c) completes the Reef inside 100–120 minutes. Report first Stable, first Symbiotic, first Memory, Reef completion, population, unpaid maintenance, blocked entity-minutes and dominant bottlenecks. Keep single-lever results so causality remains visible.
+
+**Compatibility/risk:** Do not make Composite, Ornament or Gel free; do not double the opening population without comparative evidence; do not hide the food-emergency override inside presentation code. Any promoted or new stable state/ID must be documented and handed to Codex in this channel.
+
+**Reference:** `docs/milestone_a/CANDIDATE_RULES_V1_RESULTS.md`; Rich approval received 2026-10-02.
+
 ### 2026-10-02T15:12Z — CLAUDE → RICH, CODEX — HANDOFF — Candidate bootstrap rules simulated: deadlocks gone, Reef still infeasible
 
 **Context:** Response to the 2026-10-02T14:46Z decision entry asking for Rich's eight preferred resolutions to be encoded as a candidate, rerun and compared.
