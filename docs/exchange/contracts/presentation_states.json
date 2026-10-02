@@ -1,0 +1,96 @@
+{
+  "id": "presentation_states",
+  "version": 1,
+  "owner": "claude",
+  "consumers": [
+    "codex"
+  ],
+  "description": "Stable gameplay state identifiers and snapshot fields that presentation (Codex) may rely on. Authoritative over prose. Any change bumps version and is announced with a CONTRACT message. Values are domain strings; presentation maps them to visuals and must fall back safely on unknown values.",
+  "source": "economy/engine (claude/milestone-a-honest-economy); verified by tests/test_presentation_contract.py on that branch",
+  "enums": {
+    "facility_status": [
+      "running",
+      "idle",
+      "no_input",
+      "no_workforce",
+      "environment",
+      "patch_depleted",
+      "morphology_missing",
+      "paused"
+    ],
+    "construction_site_state": [
+      "awaiting_materials",
+      "awaiting_labour",
+      "in_progress",
+      "complete",
+      "cancelled"
+    ],
+    "residence_condition": [
+      "normal",
+      "strained",
+      "dormant"
+    ],
+    "residence_tier": [
+      "shelter",
+      "stable",
+      "symbiotic",
+      "memory"
+    ],
+    "builder_state": [
+      "protected",
+      "preempted_food_emergency",
+      "idle",
+      "disabled"
+    ],
+    "maintenance_upkeep_state": [
+      "not_enforced",
+      "grace",
+      "paid",
+      "unpaid"
+    ]
+  },
+  "snapshot_fields": {
+    "residences.<id>": [
+      "tier",
+      "condition",
+      "population",
+      "capacity",
+      "need_buffer_minutes",
+      "services_for_next_tier",
+      "evolution",
+      "expressed_morphologies"
+    ],
+    "residences.<id>.evolution": [
+      "target_tier",
+      "sustain_progress",
+      "goods_reserved",
+      "blockers"
+    ],
+    "facilities.<id>": [
+      "status",
+      "detail",
+      "staffing"
+    ],
+    "sites.<id>": [
+      "target",
+      "state",
+      "missing"
+    ],
+    "builders.<district>": [
+      "state",
+      "wp",
+      "reason"
+    ],
+    "food_emergency": [
+      "active",
+      "reason",
+      "food_minutes"
+    ],
+    "maintenance_upkeep": "one of enums.maintenance_upkeep_state"
+  },
+  "notes": [
+    "There is no 'restoring' builder state: preempted_food_emergency returns directly to protected.",
+    "Residence evolution blockers are strings like 'service:waste', 'goods:growth_nutrient', 'morphology:memory_ganglion', 'residence_state:strained', 'needs_unsupplied'.",
+    "Building, resource and morphology IDs are defined in economy/data/verdant_v0_2.json and are stable unless announced."
+  ]
+}
