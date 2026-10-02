@@ -10,7 +10,8 @@ Each parameter lists levels from LEAST to MOST generous, in one of two forms:
 
 - simple: ``{"name", "path" | "paths", "values", "labels"?}``. Every path gets the level's value.
 - levels: ``{"name", "levels": [{"label", "set"?: {path: value}, "append"?: {path: [items]},
-  "scale"?: {path: factor}}]}``. ``scale`` multiplies every number in the dict at ``path``,
+  "scale"?: {path: factor}, "criteria"?: {key: value}}]}``. ``criteria`` overrides acceptance
+  criteria for runs at that level (e.g. a longer horizon widens ``reef_window_minutes``). ``scale`` multiplies every number in the dict at ``path``,
   rounding to whole units and never below 1.
 
 Paths are dotted, and list indices are allowed (``seasons.1.sediment``). Every combination is
@@ -195,10 +196,13 @@ def run_sweep(spec: dict[str, Any], workers: int | None = None) -> dict[str, Any
     for combo in itertools.product(*[range(len(l)) for l in levels]):
         defs = deepcopy(base)
         setting = {}
+        run_criteria = deepcopy(criteria)
         for parameter, options, index in zip(parameters, levels, combo):
             apply_level(defs, options[index])
             setting[parameter["name"]] = options[index]["label"]
-        jobs.append((defs, plan, setting, list(combo), criteria, governor_config))
+            if options[index].get("criteria") and run_criteria is not None:
+                run_criteria.update(deepcopy(options[index]["criteria"]))
+        jobs.append((defs, plan, setting, list(combo), run_criteria, governor_config))
     with ProcessPoolExecutor(max_workers=workers) as pool:
         runs = list(pool.map(_run_one, jobs))   # order preserved -> deterministic output
     passing = [r for r in runs if r["passes"]]

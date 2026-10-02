@@ -22,7 +22,7 @@ from math import floor
 from pathlib import Path
 from typing import Any
 
-from .engine.definitions import read_json
+from .engine.definitions import first_instance_terms, read_json
 
 DEFAULT_GOVERNOR = Path(__file__).resolve().parent / "data" / "governors" / "reference_governor_v1.json"
 FOOD_BUILDINGS = ("photosynthetic_field", "culture_bed")
@@ -335,6 +335,13 @@ class Governor:
                 break   # research one at a time, in order
         return actions
 
+    def _next_cost(self, sim, view, building: str) -> dict[str, int]:
+        """The cost the player is quoted for the next instance (first-instance terms while unused)."""
+        definition = sim.defs["buildings"][building]
+        if "first_instance" in definition and self._count(view, building) == 0:
+            return first_instance_terms(definition).get("cost", {})
+        return definition.get("cost", {})
+
     def _build_order(self, sim, view) -> int:
         cfg = self.config["build"]
         open_sites = [s for s in view["sites"].values() if s["kind"] == "building" and s["target"] not in ("shelter",) + FOOD_BUILDINGS]
@@ -344,6 +351,10 @@ class Governor:
             building = step["building"]
             if self._count(view, building) >= step.get("count", 1):
                 continue
+            if "early_if_cost_only" in step:
+                # Opportunistic step: take it only while the quoted cost uses nothing outside the listed goods.
+                if not set(self._next_cost(sim, view, building)) <= set(step["early_if_cost_only"]):
+                    continue
             if not all(self._built(view, b) >= 1 for b in step.get("after_built", [])):
                 return 0
             if step.get("after_researched") and step["after_researched"] not in view["researched"]:
@@ -372,7 +383,9 @@ class Governor:
         missing = sum(s["missing"].get("carbonate", 0) for s in view["sites"].values())
         for step in self.config["build_order"]:
             if self._count(view, step["building"]) < step.get("count", 1):
-                missing += sim.defs["buildings"][step["building"]].get("cost", {}).get("carbonate", 0)
+                if "early_if_cost_only" in step and not set(self._next_cost(sim, view, step["building"])) <= set(step["early_if_cost_only"]):
+                    continue
+                missing += self._next_cost(sim, view, step["building"]).get("carbonate", 0)
                 break
         if view["great_work"]["begun"]:
             missing += 4

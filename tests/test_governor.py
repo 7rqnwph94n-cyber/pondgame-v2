@@ -111,3 +111,33 @@ class GovernorTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GovernorV2AndSweepV3Tests(unittest.TestCase):
+    """Rich 2026-10-02T1746Z: test the four design changes; the instrument must adapt to quoted costs fairly."""
+
+    def _run(self, defs, version="v2", until=None):
+        from economy.engine.definitions import read_json
+        sim = Simulation(defs, {"id": "governor", "commands": []})
+        governor = Governor(read_json(f"economy/data/governors/reference_governor_{version}.json"))
+        sim.controllers.append(governor)
+        return sim, governor, sim.run(until=until)
+
+    def test_governor_v2_plays_the_unchanged_rules_exactly_like_v1(self):
+        _, g1, r1 = self._run(load_definitions(), "v1", until=3600)
+        _, g2, r2 = self._run(load_definitions(), "v2", until=3600)
+        self.assertEqual([(e["t"], e["command"]) for e in g1.log], [(e["t"], e["command"]) for e in g2.log])
+
+    def test_carbonate_only_first_cutter_is_built_early(self):
+        defs = load_definitions()
+        defs["buildings"]["carbonate_cutter"]["first_instance"] = {"cost": {"carbonate": 3}}
+        _, governor, _ = self._run(defs, until=900)
+        built = [e for e in governor.log if e["command"].get("do") == "construct" and e["command"]["building"] == "carbonate_cutter"]
+        self.assertTrue(built and built[0]["t"] < 600)
+
+    def test_level_criteria_override_widens_the_reef_window(self):
+        from economy.sweep import evaluate
+        summary = {"first_symbiotic": "90:00", "symbiotic_devolutions": 0, "devolutions": 0, "staple_shortage_minutes": 0,
+                   "upkeep_unpaid_minutes": 0, "reef_minutes": 140.0, "reef_completed_at": "140:00"}
+        self.assertIn("reef_too_late", evaluate(summary, {"reef_window_minutes": [100, 120]}))
+        self.assertEqual([], evaluate(summary, {"reef_window_minutes": [100, 150]}))
