@@ -1,0 +1,42 @@
+{
+  "_comment": "Presentation data only (Codex may edit): which blockout asset represents a domain building or residence tier. Missing entries fall back to a category placeholder. Values never affect gameplay. Asset files are read from ../assets/blockout/silica_street/<asset>.obj relative to the client project.",
+  "asset_dir": "../assets/blockout/silica_street",
+  "buildings": {
+    "general_store": "store_general_a",
+    "mineral_washery": "proc_mineral_washery_a",
+    "clean_flow_node": "service_clean_flow_a",
+    "waste_collector": "waste_collector",
+    "photosynthetic_field": "farm_photosynthetic_a",
+    "silicate_pit": "patch_silicate_a"
+  },
+  "residence_tiers": {
+    "shelter": "res_shelter_cluster_a"
+  },
+  "category_colours": {
+    "institution": "#3c6e71",
+    "logistics": "#5a7d8c",
+    "service": "#7fc8b8",
+    "food": "#6fae4f",
+    "extraction": "#b38b59",
+    "processing": "#c9a227",
+    "luxury": "#b56576",
+    "residence": "#2a9d8f",
+    "site": "#9aa5ab"
+  },
+  "status_colours": {
+    "running": "#4caf50",
+    "idle": "#9e9e9e",
+    "no_input": "#ffb300",
+    "no_workforce": "#e53935",
+    "environment": "#42a5f5",
+    "patch_depleted": "#6d4c41",
+    "morphology_missing": "#ab47bc",
+    "paused": "#455a64",
+    "awaiting_materials": "#ffb300",
+    "awaiting_labour": "#e53935",
+    "in_progress": "#4caf50",
+    "normal": "#4caf50",
+    "strained": "#ffb300",
+    "dormant": "#e53935"
+  }
+}
