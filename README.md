@@ -33,7 +33,7 @@ python3 -m economy.sweep economy/data/experiments/candidate_bootstrap_sweep.json
 ```
 
 - Architecture and contracts: `docs/ECONOMY_ENGINE.md`
-- Current balance evidence: `docs/milestone_a/HONEST_ECONOMY_FINDINGS.md`, then `docs/milestone_a/CANDIDATE_RULES_V1_RESULTS.md`
+- Current balance evidence: `docs/milestone_a/HONEST_ECONOMY_FINDINGS.md`, then `CANDIDATE_RULES_V1_RESULTS.md`, then `THROUGHPUT_SWEEP_V1_RESULTS.md` (all in `docs/milestone_a/`)
 - Definitions: `economy/data/verdant_v0_2.json`; reference plan: `economy/data/plans/verdant_reference_a.json`
 
 The legacy paper model above is kept unchanged as an arithmetic check.

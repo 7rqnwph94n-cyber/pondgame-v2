@@ -1,6 +1,6 @@
 {
   "id": "candidate_bootstrap_rules_v1",
-  "status": "CANDIDATE - Rich's preferred resolutions (AGENT_CHAT 2026-10-02T14:46Z). Not promoted into verdant_v0_2.json until results are reviewed.",
+  "status": "PROMOTED into verdant_v0_2.json on 2026-10-02 (AGENT_CHAT 15:18Z). Kept as the record of candidate v1; applying it to the current baseline changes nothing except restating values.",
   "description": "Rich's eight preferred bootstrap rules. The open numbers use the least generous value from the bounded sweep (candidate_bootstrap_sweep.json) wherever a more generous value made no material difference. No tested setting completes the Memory Reef.",
   "decisions": {
     "1_first_stable": "Nutrient Washer, Clean-Flow Node and a new basic Waste Collector use General labour. Channel Separator and Waste Digester stay Adapted.",
@@ -17,7 +17,7 @@
       {"id": "bloom", "start": 0, "end": 1080, "farm": 1.25, "filter": 0.80, "sediment": 0.75},
       {"id": "high_water", "start": 1080, "end": 2100, "farm": 1.00, "filter": 1.50, "sediment": 0.25},
       {"id": "recession", "start": 2100, "end": 3480, "farm": 1.10, "filter": 1.00, "sediment": 1.35},
-      {"id": "dry", "start": 3480, "end": 5401, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
+      {"id": "dry", "start": 3480, "end": 7201, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
     ],
     "workforce": {"job_priority": ["institution", "logistics", "service", "construction", "food", "extraction", "processing", "luxury", "research"]},
     "buildings": {

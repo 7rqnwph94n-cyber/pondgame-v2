@@ -173,6 +173,11 @@ class Diagnostics:
                            for r in sim.residences.values()},
             "maintenance_upkeep": sim.upkeep.state,
             "builders_wp": {d: round(v, 2) for d, v in sim.builder_wp.items()},
+            "builders": {d: {"state": sim.builder_state[d], "wp": round(sim.builder_wp[d], 2),
+                             "reason": sim.food_emergency.reason if sim.builder_state[d] == "preempted_food_emergency" else ""}
+                         for d in sim.districts},
+            "food_emergency": {"active": sim.food_emergency.active, "reason": sim.food_emergency.reason,
+                               "food_minutes": None if sim.food_emergency.food_minutes is None else round(sim.food_emergency.food_minutes, 1)},
             "services": {d: sorted(s) for d, s in sim.services.items()},
             "facilities": {f.id: {"status": f.status, "detail": f.status_detail, "staffing": round(f.staffing, 2)}
                            for f in sim.facilities.values() if f.recipe_id},
@@ -343,7 +348,8 @@ class Diagnostics:
                 "researched": {m: _fmt(s) for m, s in sim.researched.items()},
                 "births": self.births,
             },
-            "bottlenecks": self.bottlenecks()[:12],
+            "bottlenecks": (ranked := self.bottlenecks())[:12],
+            "blocked_entity_minutes_total": round(sum(b["blocked_entity_minutes"] for b in ranked), 1),
             "great_work_critical_path": self.critical_path(),
             "commands": {
                 "failed": failed,
@@ -361,6 +367,10 @@ class Diagnostics:
                 "working_below_class_wp_minutes": {k: round(v, 1) for k, v in self.below_class_wp_minutes.items() if v > EPS},
             },
             "population_growth_blocked_minutes": {k: round(v / 60, 1) for k, v in self.growth_block.items()},
+            "food_emergency": {
+                "episodes": sim.food_emergency.episodes,
+                "minutes_active": round(sim.food_emergency.seconds_active / 60, 1),
+            },
             "maintenance_upkeep": {
                 "enforced": sim.upkeep.enforced,
                 "state": sim.upkeep.state,

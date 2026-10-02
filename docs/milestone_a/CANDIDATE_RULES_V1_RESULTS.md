@@ -12,6 +12,8 @@ python3 -m economy.sweep economy/data/experiments/candidate_bootstrap_sweep.json
 python3 -m economy.sweep economy/data/experiments/candidate_lever_ladder.json
 ```
 
+> **Update 2026-10-02:** Rich promoted these rules into `verdant_v0_2.json` (AGENT_CHAT 15:18Z). Follow-up results: `THROUGHPUT_SWEEP_V1_RESULTS.md`. The commands above now run on the promoted 120-minute baseline, so their numbers differ from the tables below.
+
 ## Verdict
 
 - **All eight rules are encoded and remove every static deadlock** found in Milestone A. The bootstrap analyser reports the full tier ladder reachable.

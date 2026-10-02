@@ -3,20 +3,23 @@
   "notes": [
     "Milestone A honest-economy definitions. Recipe, season, residence-consumption and Great Work values are carried unchanged from verdant_v0_1.json.",
     "Construction costs, staffing, services, morphologies, trade and the starting colony come from ../design/VERDANT_VERTICAL_SLICE_ECONOMY.md (section references in each 'source').",
-    "Entries whose source is 'provisional' are NOT specified by any design document. They are placeholders so the model can run and must be confirmed by Rich."
+    "Entries whose source is 'provisional' are NOT specified by any design document. They are placeholders so the model can run and must be confirmed by Rich.",
+    "2026-10-02: Rich's bootstrap rules 1-8 promoted (AGENT_CHAT 15:18Z). The doc-faithful values remain runnable via economy/data/experiments/legacy_doc_faithful.json.",
+    "The scenario horizon is 120 minutes (first-success target 100-120). The design calendar ends at 90 minutes; the Dry Phase is extended to the horizon as the least generous assumption, pending Rich's decision."
   ],
   "scenario": {
     "id": "verdant_basin_v0_2",
-    "duration_seconds": 5400,
+    "duration_seconds": 7200,
+    "first_success_target_minutes": [100, 120],
     "step_seconds": 1,
     "seed": 1,
     "districts": ["core"]
   },
   "seasons": [
     {"id": "bloom", "start": 0, "end": 1080, "farm": 1.25, "filter": 0.80, "sediment": 0.75},
-    {"id": "high_water", "start": 1080, "end": 2100, "farm": 1.00, "filter": 1.50, "sediment": 0.00},
+    {"id": "high_water", "start": 1080, "end": 2100, "farm": 1.00, "filter": 1.50, "sediment": 0.25},
     {"id": "recession", "start": 2100, "end": 3480, "farm": 1.10, "filter": 1.00, "sediment": 1.35},
-    {"id": "dry", "start": 3480, "end": 5401, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
+    {"id": "dry", "start": 3480, "end": 7201, "farm": 0.65, "filter": 0.55, "sediment": 1.10}
   ],
   "resources": [
     "biomass", "staple", "phosphate_sediment", "suspended_nutrient",
@@ -69,12 +72,12 @@
     "min_staffing_fraction": 0.25,
     "construction_classes": ["general", "adapted"],
     "great_work_coordinator_class": "coordinator",
-    "job_priority": ["institution", "logistics", "service", "food", "extraction", "processing", "luxury", "research"],
+    "job_priority": ["institution", "logistics", "service", "construction", "food", "extraction", "processing", "luxury", "research"],
     "source": "§2.3, §10.1, §10.2"
   },
   "services": {
     "maintenance": {"provided_by": ["maintenance_organ"]},
-    "waste": {"provided_by": ["waste_digester"]},
+    "waste": {"provided_by": ["waste_digester", "waste_collector"]},
     "clean_flow": {"provided_by": ["clean_flow_node"]},
     "health": {"provided_by": ["detox_clinic"]},
     "distribution": {"provided_by": ["distribution_node"]},
@@ -89,25 +92,26 @@
     "distribution_node": {"category": "service", "cost": {"carbonate": 1, "woven_fibre": 1}, "work": 8, "jobs": {"general": 1}, "maintenance_weight": 0.5, "source": "§14.1 ('1 Fibre' read as Woven Fibre), §13"},
     "trade_landing": {"category": "logistics", "cost": {"carbonate": 5, "fired_ceramic": 3, "habitat_composite": 2}, "work": 30, "jobs": {"coordinator": 3}, "maintenance_weight": 1.5, "source": "§14.3, §12.3"},
     "maintenance_organ": {"category": "service", "cost": {"carbonate": 2, "biomass": 1}, "work": 10, "jobs": {"general": 2}, "maintenance_weight": 1.5, "source": "§14.1, §13"},
-    "clean_flow_node": {"category": "service", "cost": {"carbonate": 2, "biomass": 1}, "work": 10, "jobs": {"adapted": 1}, "maintenance_weight": 1.5, "source": "provisional cost/work; staffing §13"},
-    "detox_clinic": {"category": "service", "cost": {"fired_ceramic": 2, "habitat_composite": 1, "repair_enzyme": 1}, "work": 20, "jobs": {"adapted": 3}, "maintenance_weight": 1.5, "source": "§14.3, §13"},
-    "memory_circle": {"category": "service", "cost": {"fired_ceramic": 2, "habitat_composite": 2, "pigment_ornament": 2}, "work": 24, "jobs": {"coordinator": 3}, "maintenance_weight": 1.5, "source": "§14.3, §13"},
+    "clean_flow_node": {"category": "service", "cost": {"carbonate": 2, "biomass": 1}, "work": 10, "jobs": {"general": 1}, "maintenance_weight": 1.5, "source": "provisional cost/work; General staffing: candidate rule 1 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
+    "waste_collector": {"category": "service", "cost": {"carbonate": 2, "biomass": 1}, "work": 10, "jobs": {"general": 2}, "maintenance_weight": 1.0, "source": "provisional cost/work/staffing; basic Waste service: candidate rule 1 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
+    "detox_clinic": {"category": "service", "cost": {"fired_ceramic": 2, "habitat_composite": 1, "repair_enzyme": 1}, "work": 20, "jobs": {"adapted": 3}, "first_instance": {"cost": {"fired_ceramic": 2, "repair_enzyme": 1}}, "maintenance_weight": 1.5, "source": "§14.3, §13; first Clinic without Composite: candidate rule 2 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
+    "memory_circle": {"category": "service", "cost": {"fired_ceramic": 2, "habitat_composite": 2, "pigment_ornament": 2}, "work": 24, "jobs": {"coordinator": 3}, "first_instance": {"jobs": {"artisan": 3}}, "maintenance_weight": 1.5, "source": "§14.3, §13; first Circle Artisan-staffed: candidate rule 3 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
     "waste_digester": {"category": "service", "cost": {"carbonate": 3, "fired_ceramic": 2}, "work": 18, "jobs": {"adapted": 3}, "recipes": ["waste_digester"], "maintenance_weight": 1.5, "source": "§14.3, §7.3, §13"},
     "photosynthetic_field": {"category": "food", "cost": {"biomass": 1}, "work": 6, "jobs": {"general": 3}, "recipes": ["photosynthetic_field"], "patch": "sunlit_shelf", "maintenance_weight": 0.5, "source": "§14.1, §5.3"},
     "culture_bed": {"category": "food", "cost": {"carbonate": 1, "biomass": 1}, "work": 8, "jobs": {"general": 3}, "recipes": ["culture_bed"], "maintenance_weight": 1.0, "source": "§14.1, §7.1"},
-    "nutrient_washer": {"category": "food", "cost": {"carbonate": 3, "prepared_silica": 1}, "work": 14, "jobs": {"adapted": 3}, "recipes": ["nutrient_washer"], "maintenance_weight": 1.0, "source": "§14.2, §7.1"},
+    "nutrient_washer": {"category": "food", "cost": {"carbonate": 3, "prepared_silica": 1}, "work": 14, "jobs": {"general": 3}, "recipes": ["nutrient_washer"], "maintenance_weight": 1.0, "source": "§14.2, §7.1; General staffing: candidate rule 1 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
     "channel_separator": {"category": "food", "cost": {"carbonate": 3, "prepared_silica": 1}, "work": 14, "jobs": {"adapted": 2}, "recipes": ["channel_separator"], "maintenance_weight": 1.0, "source": "provisional cost/work (copied from washer); staffing §7.1"},
     "nutrient_kitchen": {"category": "food", "cost": {"fired_ceramic": 2, "woven_fibre": 1}, "work": 16, "jobs": {"artisan": 4}, "recipes": ["nutrient_kitchen"], "maintenance_weight": 1.5, "source": "§14.2, §7.1"},
-    "sediment_dredge": {"category": "extraction", "cost": {"carbonate": 2}, "work": 10, "jobs": {"general": 3}, "recipes": ["sediment_dredge"], "patch": "phosphate_bed", "morphology_modifier": {"morphology": "burrowing_limb", "without": 0.60}, "maintenance_weight": 1.0, "source": "§14.1, §6, §6.1 (extra +1 WP penalty not modelled)"},
+    "sediment_dredge": {"category": "extraction", "cost": {"carbonate": 2}, "work": 10, "jobs": {"general": 3}, "recipes": ["sediment_dredge"], "patch": "phosphate_bed", "morphology_modifier": {"morphology": "burrowing_limb", "without": 0.70}, "maintenance_weight": 1.0, "source": "§14.1, §6, §6.1 (extra +1 WP penalty not modelled); penalty softened 0.60 -> 0.70: candidate rule 6 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
     "filter_crown": {"category": "extraction", "cost": {"woven_fibre": 2, "cured_resin": 1}, "work": 12, "jobs": {"adapted": 3}, "recipes": ["filter_crown"], "patch": "nutrient_channel", "requires_morphology": "filter_crown", "maintenance_weight": 1.0, "source": "§14.2, §6, §6.1"},
-    "silicate_pit": {"category": "extraction", "cost": {"carbonate": 2, "repair_enzyme": 1}, "work": 14, "jobs": {"adapted": 4}, "recipes": ["silicate_pit"], "patch": "silicate_outcrop", "morphology_modifier": {"morphology": "mineral_jaw", "without": 0.50}, "maintenance_weight": 2.0, "source": "§14.2, §6, §6.1 (injury chance not modelled)"},
-    "carbonate_cutter": {"category": "extraction", "cost": {"prepared_silica": 2, "repair_enzyme": 1}, "work": 14, "jobs": {"adapted": 4}, "recipes": ["carbonate_cutter"], "patch": "carbonate_reef", "requires_morphology": "mineral_jaw", "maintenance_weight": 2.0, "source": "§14.2, §6, §6.1"},
+    "silicate_pit": {"category": "extraction", "cost": {"carbonate": 2, "repair_enzyme": 1}, "work": 14, "jobs": {"adapted": 4}, "recipes": ["silicate_pit"], "patch": "silicate_outcrop", "morphology_modifier": {"morphology": "mineral_jaw", "without": 0.50}, "first_instance": {"cost": {"carbonate": 2}}, "maintenance_weight": 2.0, "source": "§14.2, §6, §6.1 (injury chance not modelled); first Pit without Enzyme: candidate rule 4 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
+    "carbonate_cutter": {"category": "extraction", "cost": {"prepared_silica": 2, "repair_enzyme": 1}, "work": 14, "jobs": {"adapted": 4}, "recipes": ["carbonate_cutter"], "patch": "carbonate_reef", "morphology_modifier": {"morphology": "mineral_jaw", "without": 0.50}, "maintenance_weight": 2.0, "source": "§14.2, §6, §6.1; pre-Jaw cutting at 50%: candidate rule 5 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
     "anoxic_pump": {"category": "extraction", "cost": {"fired_ceramic": 2, "cured_resin": 2}, "work": 18, "jobs": {"adapted": 3}, "recipes": ["anoxic_pump"], "patch": "anoxic_basin", "morphology_modifier": {"morphology": "detox_sac", "without": 0.75, "without_by_season": {"dry": 0.40}}, "maintenance_weight": 2.0, "source": "§14.2, §6, §6.1"},
     "fibre_garden": {"category": "food", "cost": {"biomass": 1}, "work": 6, "jobs": {"general": 3}, "recipes": ["fibre_garden"], "patch": "sunlit_shelf", "maintenance_weight": 0.5, "source": "provisional cost/work (copied from Photosynthetic Field); staffing §5.3"},
     "resin_grove": {"category": "food", "cost": {"biomass": 1}, "work": 6, "jobs": {"general": 3}, "recipes": ["resin_grove"], "patch": "sunlit_shelf", "maintenance_weight": 0.5, "source": "provisional cost/work (copied from Photosynthetic Field); staffing §5.3"},
     "pigment_bed": {"category": "luxury", "cost": {"biomass": 1}, "work": 6, "jobs": {"general": 2}, "recipes": ["pigment_bed"], "patch": "pigment_shallows", "maintenance_weight": 0.5, "source": "provisional cost/work (copied from Photosynthetic Field); staffing §5.3"},
     "mineral_washery": {"category": "processing", "cost": {"carbonate": 3, "prepared_silica": 1}, "work": 14, "jobs": {"adapted": 3}, "recipes": ["mineral_washery"], "maintenance_weight": 1.0, "source": "§14.2, §7.2"},
-    "ceramic_kiln": {"category": "processing", "cost": {"carbonate": 4, "prepared_silica": 2}, "work": 20, "jobs": {"artisan": 4}, "recipes": ["ceramic_kiln", "ceramic_kiln_biofuel"], "maintenance_weight": 2.0, "source": "§14.2, §7.2, §7.4"},
+    "ceramic_kiln": {"category": "processing", "cost": {"carbonate": 4, "prepared_silica": 2}, "work": 20, "jobs": {"artisan": 4}, "recipes": ["ceramic_kiln", "ceramic_kiln_biofuel"], "first_instance": {"jobs": {"adapted": 4}}, "maintenance_weight": 2.0, "source": "§14.2, §7.2, §7.4; first Kiln Adapted-staffed: candidate rule 2 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)"},
     "retting_pool": {"category": "processing", "cost": {"carbonate": 2}, "work": 10, "jobs": {"adapted": 3}, "recipes": ["retting_pool"], "maintenance_weight": 1.0, "source": "§14.2, §7.2"},
     "resin_curing": {"category": "processing", "cost": {"carbonate": 2, "woven_fibre": 1}, "work": 12, "jobs": {"adapted": 3}, "recipes": ["resin_curing"], "maintenance_weight": 1.0, "source": "§14.2, §7.2"},
     "composite_workshop": {"category": "processing", "cost": {"fired_ceramic": 4, "woven_fibre": 2, "cured_resin": 2}, "work": 24, "jobs": {"artisan": 5}, "recipes": ["composite_workshop"], "maintenance_weight": 1.5, "source": "§14.2, §7.2"},
@@ -195,18 +199,20 @@
     "cancel_refund_delivered": 0.90,
     "demolish_refund_durable": 0.60,
     "diagnostic_nominal_crew_wp": 4,
-    "builder_wp": 0,
+    "builder_wp": 2,
     "builder_class": "general",
-    "source": "§21.3. Materials must be fully delivered before work starts. Delivery is instantaneous within a district in Milestone A (no carriers). builder_wp 0 means only unassigned General/Adapted workers build (§10.2)."
+    "food_emergency": {"good": "staple", "enter_below_minutes": 4, "exit_above_minutes": 8, "enter_on_residence_shortage": true},
+    "source": "§21.3. Materials must be fully delivered before work starts. Delivery is instantaneous within a district in Milestone A (no carriers). Protected Builder allocation of 2 WP ranked before food, pre-empted only by an explicit food emergency: candidate rule 7 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)."
   },
   "maintenance_upkeep": {
-    "enforced": false,
+    "enforced": true,
+    "grace_until_tier": "symbiotic",
     "service": "maintenance",
     "enzyme_per_weight_per_minute": 0.0125,
-    "source": "§13: 1 Repair Enzyme per 10 maintenance weight per 8 minutes. Not enforced in the doc-faithful baseline; reported as a risk only."
+    "source": "§13: 1 Repair Enzyme per 10 maintenance weight per 8 minutes. Enforced after an onboarding grace that ends at the first Symbiotic home; 1 starting Repair Enzyme: candidate rule 8 (promoted by Rich, AGENT_CHAT 2026-10-02T15:18Z)."
   },
   "starting_state": {
-    "inventory": {"biomass": 4, "staple": 8, "carbonate": 6, "prepared_silica": 2, "stored_value": 20},
+    "inventory": {"biomass": 4, "staple": 8, "carbonate": 6, "prepared_silica": 2, "repair_enzyme": 1, "stored_value": 20},
     "buildings": [
       {"id": "nursery_1", "building": "first_nursery", "district": "core"},
       {"id": "store_1", "building": "general_store", "district": "core"},

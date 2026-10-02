@@ -1,4 +1,4 @@
-"""Tests for the mechanics added for Rich's candidate bootstrap rules (AGENT_CHAT 2026-10-02T14:46Z)."""
+"""Tests for Rich's bootstrap rules, promoted into the v0.2 baseline (AGENT_CHAT 2026-10-02T14:46Z, 15:18Z)."""
 from __future__ import annotations
 
 import unittest
@@ -6,17 +6,17 @@ import unittest
 from economy.engine import Simulation, load_definitions, load_plan
 from economy.engine.bootstrap import analyse
 from economy.engine.simulation import GRACE, NOT_ENFORCED, PAID, UNPAID
-from economy.sweep import marginal_effects, set_path
+from economy.sweep import apply_level, evaluate, marginal_effects, set_path
 
 from tests.helpers import ROOT, make_defs, run_until
 
-CANDIDATE = ROOT / "economy" / "data" / "experiments" / "candidate_bootstrap_rules_v1.json"
 PLAN_B = ROOT / "economy" / "data" / "plans" / "verdant_reference_b.json"
 
 
 def candidate_defs(patch=None):
+    """The promoted v0.2 baseline (formerly candidate_bootstrap_rules_v1)."""
     from economy.engine.definitions import deep_merge
-    defs = load_definitions(overlays=[CANDIDATE])
+    defs = load_definitions()
     return deep_merge(defs, patch) if patch else defs
 
 
@@ -94,9 +94,44 @@ class BuilderTests(unittest.TestCase):
         self.assertEqual({"construction": 9, "research": 0}, sim.category_priority)
 
 
+class FoodEmergencyTests(unittest.TestCase):
+    def test_emergency_preempts_builders_then_restores_them(self):
+        from economy.engine.simulation import BUILDERS_PREEMPTED, BUILDERS_PROTECTED
+        # Food production stops; a construction site becomes ready just as food runs low.
+        sim = sim_with([
+            {"at": 0, "do": "pause", "target": "bed_1"},
+            {"at": 1000, "do": "construct", "building": "ceramic_kiln", "id": "kiln_1"},   # placed once food has run low
+        ], {"starting_state": {"inventory": {"staple": 12, "prepared_silica": 2}}})
+        while sim.builder_state["core"] != BUILDERS_PREEMPTED and sim.second < 3000:
+            sim.step()
+        self.assertEqual(BUILDERS_PREEMPTED, sim.builder_state["core"])
+        self.assertTrue(sim.food_emergency.active)
+        self.assertIn("staple", sim.food_emergency.reason)
+        self.assertIn("kiln_1", sim.sites)
+        snapshot_state = sim.diag.snapshot()["builders"]["core"]
+        self.assertEqual(BUILDERS_PREEMPTED, snapshot_state["state"])
+        self.assertTrue(snapshot_state["reason"])
+        # Resupply: emergency ends only above the exit threshold (hysteresis), then builders are protected again.
+        sim.facilities["bed_1"].paused = False
+        sim.store("core").put({"staple": 40})
+        run_until(sim, sim.second + 3)
+        self.assertFalse(sim.food_emergency.active)
+        self.assertEqual(BUILDERS_PROTECTED, sim.builder_state["core"])
+        self.assertEqual(1, sim.food_emergency.episodes)
+
+    def test_hysteresis_requires_exit_threshold(self):
+        sim = sim_with([], {"starting_state": {"inventory": {"staple": None}}})
+        sim.food_emergency.rules = dict(sim.food_emergency.rules, enter_below_minutes=4, exit_above_minutes=8)
+        run_until(sim, 1)
+        self.assertTrue(sim.food_emergency.active)        # ~1 min of buffered food
+        sim.store("core").put({"staple": 3})              # ~5 min of food: above enter, below exit
+        sim.step()
+        self.assertTrue(sim.food_emergency.active)
+
+
 class MaintenanceUpkeepTests(unittest.TestCase):
     def test_baseline_does_not_enforce_upkeep(self):
-        sim = Simulation(make_defs(), {"id": "t", "commands": []})
+        sim = Simulation(make_defs(), {"id": "t", "commands": []})   # legacy doc-faithful
         run_until(sim, 10)
         self.assertEqual(NOT_ENFORCED, sim.upkeep.state)
 
@@ -175,6 +210,17 @@ class ResidencePresentationTests(unittest.TestCase):
 
 
 class CandidateBootstrapTests(unittest.TestCase):
+    def test_candidate_overlay_is_a_no_op_on_the_promoted_baseline(self):
+        from economy.engine.definitions import deep_merge, read_json
+        overlay = read_json(ROOT / "economy" / "data" / "experiments" / "candidate_bootstrap_rules_v1.json")
+        base = load_definitions()
+        merged = deep_merge(base, overlay["patch"])
+        for key in ("seasons", "services", "construction_rules", "maintenance_upkeep", "starting_state", "workforce"):
+            self.assertEqual(base[key], merged[key], key)
+        for building in ("nutrient_washer", "clean_flow_node", "ceramic_kiln", "silicate_pit", "carbonate_cutter"):
+            for key in ("jobs", "first_instance", "morphology_modifier", "requires_morphology", "cost"):
+                self.assertEqual(base["buildings"][building].get(key), merged["buildings"][building].get(key), (building, key))
+
     def test_candidate_rules_remove_every_static_deadlock(self):
         result = analyse(candidate_defs())
         self.assertTrue(result["viable"], result["unreachable"])
@@ -192,14 +238,36 @@ class SweepToolTests(unittest.TestCase):
 
     def test_marginal_effects_average_over_other_parameters(self):
         runs = [{"setting": {"a": a, "b": b}, "final_population": 10 * a + b, "first_stable": "10:00",
-                 "first_symbiotic": None, "upkeep_unpaid_minutes": 0} for a in (1, 2) for b in (0, 2)]
+                 "first_symbiotic": None, "upkeep_unpaid_minutes": 0, "reef_minutes": None} for a in (1, 2) for b in (0, 2)]
         effects = marginal_effects(runs)
         self.assertEqual(11.0, effects["a"][1]["mean_final_population"])
         self.assertEqual(21.0, effects["a"][2]["mean_final_population"])
 
 
-class CandidateCharacterisationTests(unittest.TestCase):
-    """CHARACTERISATION of candidate_bootstrap_rules_v1 + plan B. Update with a chat entry when rules change."""
+class SweepLevelTests(unittest.TestCase):
+    def test_level_set_append_and_scale(self):
+        defs = candidate_defs()
+        apply_level(defs, {"set": {"population.migration_per_minute": 0.75},
+                           "append": {"starting_state.residences": [{"id": "home_0", "tier": "shelter", "population": 8, "district": "core"}]},
+                           "scale": {"great_work.stages.2.cost": 0.7}})
+        self.assertEqual(0.75, defs["population"]["migration_per_minute"])
+        self.assertEqual("home_0", defs["starting_state"]["residences"][-1]["id"])
+        self.assertEqual({"carbonate": 4, "fired_ceramic": 7, "habitat_composite": 10, "repair_enzyme": 6, "pigment_ornament": 4},
+                         defs["great_work"]["stages"][2]["cost"])
+
+    def test_acceptance_criteria(self):
+        criteria = {"require_symbiotic": True, "max_devolutions": 0, "max_staple_shortage_minutes": 5,
+                    "max_unpaid_minutes": 1, "reef_window_minutes": [100, 120]}
+        good = {"first_symbiotic": "50:00", "symbiotic_devolutions": 0, "devolutions": 0, "staple_shortage_minutes": 2,
+                "upkeep_unpaid_minutes": 0, "reef_minutes": 112.0, "reef_completed_at": "112:00"}
+        self.assertEqual([], evaluate(good, criteria))
+        self.assertEqual(["reef_too_late"], evaluate(dict(good, reef_minutes=121.0), criteria))
+        self.assertEqual(["food_not_solvent"], evaluate(dict(good, staple_shortage_minutes=9), criteria))
+        self.assertIn("reef_not_completed", evaluate(dict(good, reef_minutes=None, reef_completed_at=None), criteria))
+
+
+class BaselineCharacterisationTests(unittest.TestCase):
+    """CHARACTERISATION of the promoted v0.2 baseline + plan B (120 min). Update with a chat entry when rules change."""
 
     @classmethod
     def setUpClass(cls):
@@ -214,11 +282,42 @@ class CandidateCharacterisationTests(unittest.TestCase):
     def test_carbonate_still_leads_the_bottlenecks(self):
         keys = [b["key"] for b in self.report["bottlenecks"][:3]]
         self.assertEqual("goods:carbonate", keys[0])
-        self.assertIn("workforce:general", keys)
+        self.assertIn("labour:construction", keys)
 
     def test_upkeep_grace_lasts_until_symbiotic(self):
         self.assertEqual(GRACE, self.report["maintenance_upkeep"]["state"])
         self.assertEqual(0.0, self.report["maintenance_upkeep"]["unpaid_minutes"])
+
+
+class ThroughputSweepTests(unittest.TestCase):
+    PLAN_C = ROOT / "economy" / "data" / "plans" / "verdant_reference_c.json"
+    SPEC = ROOT / "economy" / "data" / "experiments" / "throughput_sweep_v1.json"
+
+    def test_every_sweep_level_produces_valid_definitions(self):
+        import json
+        from economy.engine import validate_definitions
+        from economy.sweep import parameter_levels
+        spec = json.loads(self.SPEC.read_text(encoding="utf-8"))
+        for parameter in spec["parameters"]:
+            for level in parameter_levels(parameter):
+                defs = candidate_defs()
+                apply_level(defs, level)
+                self.assertEqual([], validate_definitions(defs), (parameter["name"], level["label"]))
+
+    def test_food_minutes_trigger(self):
+        sim = sim_with([{"at": 0, "do": "pause", "target": "field_1", "when": {"food_minutes_below": 100}},
+                        {"at": 0, "do": "pause", "target": "bed_1", "when": {"food_minutes_above": 100}}])
+        run_until(sim, 2)
+        self.assertTrue(sim.facilities["field_1"].paused)
+        self.assertFalse(sim.facilities["bed_1"].paused)
+
+    def test_plan_c_characterisation_120_minutes(self):
+        """CHARACTERISATION (2026-10-02): plan C on the promoted baseline reaches Stable but not Symbiotic."""
+        report = Simulation(candidate_defs(), load_plan(self.PLAN_C)).run()
+        self.assertEqual(7200, report["meta"]["duration_seconds"])
+        self.assertIn("stable", report["outcome"]["tier_first_reached"])
+        self.assertNotIn("symbiotic", report["outcome"]["tier_first_reached"])
+        self.assertIsNone(report["outcome"]["great_work_completed_at"])
 
 
 if __name__ == "__main__":

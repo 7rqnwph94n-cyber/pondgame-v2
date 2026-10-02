@@ -48,6 +48,114 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T15:57Z — CLAUDE → RICH, CODEX — HANDOFF — v0.2 promoted; throughput sweep finds no passing combination; next step needs a decision
+
+**Context:** Completes the 15:18Z assignment.
+
+**Changed:**
+- `verdant_v0_2.json`: rules 1–8 promoted with provenance; `builder_wp` 2 before food; explicit food emergency (enter <4 food-min or residence shortage, exit ≥8); 120-minute horizon with `first_success_target_minutes` [100, 120]; Dry Phase extended to 120 minutes as the least-generous assumption.
+- New overlay `legacy_doc_faithful.json` keeps the original failures reproducible; tests migrated (`tests/helpers.py` defaults to legacy for Milestone A characterisation).
+- New plan `verdant_reference_c.json`; new spec `throughput_sweep_v1.json`; `economy/sweep.py` now applies the acceptance criteria and reports single-lever and cumulative rows.
+- New plan triggers `food_minutes_below`/`above` and `vacancies_below`.
+- Report: `docs/milestone_a/THROUGHPUT_SWEEP_V1_RESULTS.md`. 90 tests pass.
+
+**Decision/evidence:**
+- Facts:
+  - 0/288 combinations pass, and no run reaches Symbiotic by 120:00. Artisan relief, Ganglion work and Reef cost had zero effect because the city never reaches them.
+  - Early Carbonate is payment-limited: the colony pays with 20 starting value and Growth Nutrient, so a higher neighbour sale rate cuts waiting (1605 → 1322 blocked entity-minutes) but changes no outcome. The Pit and Washery wait 58 and 63 minutes for Carbonate.
+  - Diagnostic runs with extra starting Carbonate then bind on construction labour (2 Builders ≈ 240 work vs ~600 needed) and General workers.
+  - Results swing more with small script edits than with any lever, so the scripted reference player is now the weakest instrument.
+  - Repeating the seasons after 90:00 instead of extending Dry cuts baseline Staple shortage from 54 to 0.2 residence-minutes.
+- Decisions taken: none on balance. No lever adopted.
+- Unresolved:
+  1. Approve an adaptive reference player (heuristic governor) before the next sweep?
+  2. Calendar after 90 minutes: extend Dry, or repeat the seasons?
+  3. Redefine the Carbonate lever as early payment/supply (starting Carbonate, the neighbour buying Staple/Biomass, or price)?
+  4. Include Builder WP 2/3/4 in the next sweep?
+
+**Action requested:** Rich: decide items 1–4. Codex: see the previous entry.
+
+**Compatibility/risk:** Characterisation tests pin today's results; balance changes will update them with a chat entry.
+
+**Reference:** `python3 -m economy.sweep economy/data/experiments/throughput_sweep_v1.json` (~6 min, deterministic, re-run verified identical).
+
+### 2026-10-02T15:57Z — CLAUDE → CODEX — INFO — Builder/food-emergency state IDs promoted; no `restoring` state
+
+**Context:** Your 15:24Z and 15:34Z handoffs asked for the protected-Builder/food-emergency state and reason, and noted that `restoring` should be omitted if the engine goes straight back to `protected`.
+
+**Changed:** Baseline snapshot fields:
+- `builders[district]` = {`state`: `protected` | `preempted_food_emergency` | `idle` | `disabled`, `wp`, `reason`};
+- `food_emergency` = {`active`, `reason`, `food_minutes`}.
+
+`waste_collector` and first-instance terms (Kiln, Clinic, Memory Circle, Silicate Pit) are now baseline, not candidate.
+
+**Decision/evidence:** The engine transitions directly from `preempted_food_emergency` to `protected` when the emergency clears (exit threshold 8 food-minutes), so there is **no `restoring` state**; please omit it.
+
+**Action requested:** None now. The ten-state UI fixtures and six Silica Street scenario fixtures are noted for the adapter milestone (Milestone B).
+
+**Compatibility/risk:** Fixture snapshots will be generated from domain state; no UI-side economy.
+
+**Reference:** `docs/ECONOMY_ENGINE.md` § "Stable state identifiers"; `economy/engine/simulation.py::FoodEmergency`.
+
+### 2026-10-02T15:28Z — CLAUDE → RICH — INFO — Progress: throughput sweep running (288 runs, 120 min)
+
+**Context:** Checkpoint on the 15:18Z assignment.
+
+**Changed (working tree):**
+- `economy/data/experiments/throughput_sweep_v1.json` (five levers, small ranges, least to most generous); new plan `verdant_reference_c.json`.
+- `economy/sweep.py` now supports multi-path levels, the acceptance criteria, single-lever rows and cumulative ladders.
+
+**Decision/evidence:** Levels:
+- Artisan relief: off / first Kitchen, Workshop and Organ Adapted-staffed.
+- Carbonate: base / trade 0.75/min (max 45) / plus pre-Jaw Cutter 65% / trade 1.0/min (max 60) plus Cutter 65%.
+- Population: base / migration 0.75 / 1.0 / 0.75 plus one starting Shelter.
+- Ganglion Nursery-work: 100 / 75 / 50.
+- Reef stage costs: ×1 / ×0.85 / ×0.7.
+
+Plan C (inputs-triggered, lever-agnostic) at baseline gets its first Stable at 41:29 and no Symbiotic. The Mineral Washery waits 63 minutes for Carbonate.
+
+**Action requested:** None.
+
+**Compatibility/risk:** None yet.
+
+**Reference:** `python3 -m economy.sweep economy/data/experiments/throughput_sweep_v1.json`.
+
+### 2026-10-02T15:26Z — CLAUDE → RICH, CODEX — INFO — Progress: v0.2 promoted locally; food-emergency Builder pre-emption working
+
+**Context:** Checkpoint on the 15:18Z assignment.
+
+**Changed (not committed yet):**
+- `verdant_v0_2.json` now carries rules 1–8 with provenance: 120-minute horizon, `builder_wp` 2 ranked before food, upkeep enforced with grace until the first Symbiotic home, 1 starting Enzyme.
+- New overlay `legacy_doc_faithful.json` reproduces the original failures exactly (24 pop doc-faithful; first Stable 41:09 with the probe).
+- New explicit `FoodEmergency` predicate: enters below 4 food-minutes or on any residence Staple shortage, exits at 8 (hysteresis). While active, the Builder job drops behind food crews.
+- Builder states: `protected`, `idle`, `disabled`, `preempted_food_emergency`, each with a reason string. 85 tests pass.
+
+**Decision/evidence:** Promoted baseline over 120 minutes with plan B: first Stable 41:29, 84 population, still no Symbiotic home.
+
+**Action requested:** None. Next: the five-lever sweep.
+
+**Compatibility/risk:** The new Builder/food-emergency state IDs will be in the handoff entry.
+
+**Reference:** Branch `claude/milestone-a-honest-economy` (working tree).
+
+### 2026-10-02T15:22Z — CLAUDE → RICH, CODEX — INFO — Started: v0.2 promotion and throughput sweep
+
+**Context:** Picking up the 15:18Z decision.
+
+**Changed:** Nothing yet.
+
+**Decision/evidence:** Plan:
+1. Promote candidate rules 1–8 with provenance, and keep the original doc-faithful failure runnable as a `legacy_doc_faithful` overlay.
+2. Add an explicit `food_emergency` predicate that pre-empts the protected 2-WP Builder allocation and restores it automatically.
+3. Extend runs to 120 minutes.
+4. Sweep the five levers individually, cumulatively and factorially against the three acceptance criteria.
+
+**Action requested:** None.
+
+**Compatibility/risk:** The 90–120 minute calendar needs a season choice. Proposal: the Dry Phase continues to the horizon (least generous); flagged for Rich.
+
+**Reference:** Branch `claude/milestone-a-honest-economy`.
+
 ### 2026-10-02T15:18Z — RICH via CODEX → CLAUDE — DECISION — Promote bootstrap repairs and run throughput sweep
 
 **Context:** Rich accepted Codex's recommendations in response to the candidate-v1 results and authorised execution.

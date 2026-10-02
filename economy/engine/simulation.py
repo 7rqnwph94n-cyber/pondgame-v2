@@ -99,6 +99,66 @@ class UpkeepState:
                 self.unpaid_seconds += sim.dt
 
 
+# Builder allocation states (presentation/UI-facing, stable IDs)
+BUILDERS_DISABLED = "disabled"
+BUILDERS_IDLE = "idle"
+BUILDERS_PROTECTED = "protected"
+BUILDERS_PREEMPTED = "preempted_food_emergency"
+
+
+class FoodEmergency:
+    """Explicit food-emergency predicate (Rich, AGENT_CHAT 2026-10-02T15:18Z).
+
+    Food minutes = (food held in stores + residence need buffers) / settlement consumption per minute.
+    The emergency starts when food minutes fall below ``enter_below_minutes`` or (optionally) any residence
+    runs short of the food good; it ends only when food minutes reach ``exit_above_minutes`` with no
+    residence short (hysteresis, so the Builder allocation does not flicker).
+    """
+
+    def __init__(self, defs: dict[str, Any]):
+        self.rules = defs.get("construction_rules", {}).get("food_emergency")
+        self.active = False
+        self.reason = ""
+        self.food_minutes: float | None = None
+        self.since: int | None = None
+        self.seconds_active = 0.0
+        self.episodes = 0
+
+    def measure(self, sim: "Simulation") -> float | None:
+        """Current settlement food minutes (None when nobody eats the food good)."""
+        good = (self.rules or {}).get("good", "staple")
+        held = sum(store.get(good) for store in sim.stores.values())
+        held += sum(r.buffers.get(good, 0.0) for r in sim.residences.values())
+        demand = 0.0
+        for residence in sim.residences.values():
+            definition = residence.definition(sim.defs)
+            rate = definition["per_minute"].get(good, 0.0)
+            demand += rate * min(1.0, residence.population / definition["capacity"])
+        return held / demand if demand > EPS else None
+
+    def update(self, sim: "Simulation") -> None:
+        if not self.rules:
+            return
+        good = self.rules["good"]
+        self.food_minutes = self.measure(sim)
+        short = self.rules.get("enter_on_residence_shortage", True) and any(
+            r.short_this_step and r.buffers.get(good, 0.0) <= EPS and good in r.definition(sim.defs)["per_minute"]
+            for r in sim.residences.values())
+        minutes = float("inf") if self.food_minutes is None else self.food_minutes
+        if not self.active:
+            if short or minutes < self.rules["enter_below_minutes"]:
+                self.active, self.since = True, sim.second
+                self.episodes += 1
+                self.reason = (f"{good} shortage in a residence" if short
+                               else f"{good} {minutes:.1f} min < {self.rules['enter_below_minutes']} min")
+                sim.events.append(f"{stamp(sim.second)} FOOD EMERGENCY: builders pre-empted ({self.reason})")
+        elif not short and minutes >= self.rules["exit_above_minutes"]:
+            self.active, self.reason = False, ""
+            sim.events.append(f"{stamp(sim.second)} food emergency over: builder allocation restored")
+        if self.active:
+            self.seconds_active += sim.dt
+
+
 class GreatWorkState:
     def __init__(self) -> None:
         self.begun_at: int | None = None
@@ -148,6 +208,8 @@ class Simulation:
         self.category_priority: dict[str, int] = {}   # player overrides for "construction"/"research" job ranks
         self.builder_wp: dict[str, float] = {d: 0.0 for d in self.districts}
         self.upkeep = UpkeepState(defs)
+        self.food_emergency = FoodEmergency(defs)
+        self.builder_state: dict[str, str] = {d: BUILDERS_DISABLED for d in self.districts}
         self.growth_progress = 0.0
         self.nutrient_credit = 0.0
         self.food_positive_since: int | None = 0
@@ -339,6 +401,15 @@ class Simulation:
             if builder_need > EPS:
                 rules = self.defs.get("construction_rules", {})
                 rank = priorities.get("construction", len(priorities))
+                if self.food_emergency.active:
+                    # Pre-empted: food crews are staffed first; builders keep only what is left over.
+                    rank = max(rank, priorities.get("food", rank)) + 0.5
+                    self.builder_state[district] = BUILDERS_PREEMPTED
+                else:
+                    self.builder_state[district] = BUILDERS_PROTECTED
+            else:
+                self.builder_state[district] = BUILDERS_DISABLED if self.policies.get("builder_wp", 0.0) <= EPS else BUILDERS_IDLE
+            if builder_need > EPS:
                 jobs.append(Job(f"builders@{district}", f"builders@{district}", rules.get("builder_class", "general"),
                                 builder_need, rank, -1))
             allocation = allocate(self.workforce_supply(district), jobs, workforce["classes"], workforce["substitution_efficiency"])
@@ -511,6 +582,7 @@ class Simulation:
         self.env.step(self.second, self.dt)
         self._process_commands()
         self.upkeep.step(self)
+        self.food_emergency.update(self)
         self._allocate_workforce()
         self._residences_step()
         self._construction_step()

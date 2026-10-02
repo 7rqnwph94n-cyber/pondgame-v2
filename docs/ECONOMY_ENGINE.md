@@ -8,11 +8,13 @@ The legacy paper model (`economy/model.py`, `economy/simulate.py`, `verdant_v0_1
 ## Run it
 
 ```bash
-python3 -m economy.run                                    # doc-faithful definitions + reference plan
+python3 -m economy.run                                    # promoted v0.2 baseline (120 min) + reference plan A
+python3 -m economy.run --plan economy/data/plans/verdant_reference_c.json   # current reference plan
+python3 -m economy.run --overlay economy/data/experiments/legacy_doc_faithful.json   # original Milestone A failure
 python3 -m economy.run --overlay economy/data/experiments/probe_unblock_bootstrap.json
 python3 -m economy.run --bootstrap-only                   # static reachability/deadlock analysis
 python3 -m economy.run --json reports/honest_run.json     # full report incl. minute snapshots (gitignored)
-python3 -m economy.run --plan economy/data/plans/verdant_reference_b.json --overlay economy/data/experiments/candidate_bootstrap_rules_v1.json
+python3 -m economy.sweep economy/data/experiments/throughput_sweep_v1.json         # five-lever sweep with acceptance criteria (~6 min)
 python3 -m economy.sweep economy/data/experiments/candidate_bootstrap_sweep.json   # bounded comparison (~1 min, parallel)
 python3 -m economy.sweep economy/data/experiments/candidate_lever_ladder.json      # cumulative diagnostic levers
 python3 -m unittest discover -s tests -v
@@ -24,9 +26,10 @@ Python 3.10+ standard library only. A full 90-minute run takes about one second.
 
 | Path | Purpose |
 |---|---|
-| `economy/data/verdant_v0_2.json` | Schema-2 definitions. Recipes, seasons, residence needs and Great Work stages are copied unchanged from v0.1; everything else comes from the slice economy doc with a `source` on each building. |
+| `economy/data/verdant_v0_2.json` | Schema-2 definitions. Rich's bootstrap rules 1–8 were promoted on 2026-10-02 (provenance in each `source`); the horizon is 120 minutes. Recipes, seasons, residence needs and Great Work stages are copied unchanged from v0.1; everything else comes from the slice economy doc with a `source` on each building. |
 | `economy/data/plans/verdant_reference_a.json` | The reference city expressed only as player commands (doc-faithful rules and the probe). |
-| `economy/data/plans/verdant_reference_b.json` | The same city adapted to the candidate bootstrap rules (dredging through High Water, early Pit and pre-Jaw Cutter, housing and food that keep pace). |
+| `economy/data/plans/verdant_reference_b.json` | The same city adapted to the candidate bootstrap rules (record of candidate v1). |
+| `economy/data/plans/verdant_reference_c.json` | Current 120-minute reference plan: lever-agnostic triggers (inputs, food-minutes, housing, vacancies). |
 | `economy/data/experiments/*.json` | Overlays deep-merged onto the definitions. Experiments are not balance decisions. |
 | `economy/engine/` | Domain packages (below). No Godot or rendering imports. |
 | `economy/run.py` | CLI and text report. |
@@ -73,6 +76,7 @@ Python 3.10+ standard library only. A full 90-minute run takes about one second.
 - **Trade:** barter at doc values. Partner stock accrues at its per-minute rate up to the scenario maximum. Goods leave at departure; purchases and contract rewards arrive after the round trip (+30 s in Dry). Fertile Exchange applies its −15% Carbonate price.
 - **Great Work:** `begin_great_work` checks every §16.1 unlock condition and names each failure. Coordinators covering lower-class jobs count as available, because they can be recalled. Stages open one at a time as construction sites that also need Coordinator work.
 - **First-instance terms:** a building may define `first_instance.cost` / `first_instance.jobs`. They replace the defaults for the first site of that building placed in the settlement, and that facility keeps them for life. Cancelling that first site releases the terms.
+- **Food emergency:** `construction_rules.food_emergency` (`FoodEmergency` in `simulation.py`). Food minutes = food held in stores and residence buffers ÷ consumption per minute. It enters below `enter_below_minutes` or on any residence shortage, and exits at `exit_above_minutes` with no shortage. While active, the Builder job ranks after food crews (state `preempted_food_emergency`, with a reason), and it restores automatically.
 - **Builders:** `construction_rules.builder_wp` reserves that many WP of `builder_class` (higher classes substitute) at the `construction` rank in `workforce.job_priority`, only while a site has its materials and needs physical work. Player policy: `set_policy builder_wp`; rank override: `set_labour_priority target=builders`.
 - **Maintenance upkeep** (`maintenance_upkeep`, off in v0.2):
   - charges `enzyme_per_weight_per_minute` × maintenance weight, from the end of the grace period (`grace_until_tier`, `grace_until_building` or `grace_max_seconds`, whichever comes first);
@@ -84,7 +88,7 @@ Python 3.10+ standard library only. A full 90-minute run takes about one second.
 Each plan entry is `{"at": seconds, "do": <command>, ...}` with optional fields:
 
 - `retry: true`: retry every step until the end; `retry_until: seconds`: retry until that time.
-- `when`: conditions that must all hold before the first attempt. Keys: `built` (id or list), `tier` `[residence, tier]`, `researched`, `contract` `[id, statuses]`, `stock` `{resource: min}`, `stock_below` `{resource: max}`, `free_housing_below` `n`.
+- `when`: conditions that must all hold before the first attempt. Keys: `built` (id or list), `tier` `[residence, tier]`, `researched`, `contract` `[id, statuses]`, `stock` `{resource: min}`, `stock_below` `{resource: max}`, `free_housing_below` `n`, `food_minutes_below` / `food_minutes_above` `n`, `vacancies_below` `{class: wp}`.
 - `priority`: material/labour priority for sites and research (lower first, default 50).
 - `label`: free text shown in reports.
 
@@ -101,7 +105,9 @@ These strings are part of the contract for a future adapter and are listed in `d
 - residence state: `normal`, `strained`, `dormant`;
 - residence presentation view (`Residence.presentation_state`, in every snapshot): `tier`, `condition`, `population`, `capacity`, `need_buffer_minutes`, `services_for_next_tier`, `evolution` {`target_tier`, `sustain_progress` 0–1, `goods_reserved`, `blockers`}, `expressed_morphologies`;
 - maintenance upkeep: `not_enforced`, `grace`, `paid`, `unpaid` (snapshot `maintenance_upkeep`);
-- labour pseudo-jobs: `builders@<district>`, `great_work@<district>` (snapshot `builders_wp`).
+- labour pseudo-jobs: `builders@<district>`, `great_work@<district>` (snapshot `builders_wp`);
+- Builder allocation (snapshot `builders`): `protected`, `preempted_food_emergency`, `idle`, `disabled`, plus `wp` and `reason`;
+- food emergency (snapshot `food_emergency`): `active`, `reason`, `food_minutes`.
 
 ## Diagnostics
 

@@ -50,6 +50,8 @@ def unmet_conditions(sim: "Simulation", when: dict[str, Any]) -> list[str]:
     - contract: [contract id, [acceptable statuses]]
     - stock: {resource: minimum units in the first district store}
     - stock_below: {resource: units}; holds while the store has fewer than that many
+    - food_minutes_below / food_minutes_above: n (settlement food minutes, as the food-emergency predicate)
+    - vacancies_below: {class: wp}; holds while unfilled jobs of that class total less than wp
     - free_housing_below: n (empty homes plus homes under construction hold fewer than n organisms)
     """
     unmet: list[str] = []
@@ -76,6 +78,17 @@ def unmet_conditions(sim: "Simulation", when: dict[str, Any]) -> list[str]:
                     if s.active and s.kind == "building" and sim.defs["buildings"][s.target].get("residence_tier"))
         if free >= when["free_housing_below"]:
             unmet.append(f"free_housing:{free:.0f}>={when['free_housing_below']}")
+    if "food_minutes_below" in when or "food_minutes_above" in when:
+        minutes = sim.food_emergency.measure(sim)
+        minutes = float("inf") if minutes is None else minutes
+        if "food_minutes_below" in when and minutes >= when["food_minutes_below"]:
+            unmet.append(f"food_minutes<{when['food_minutes_below']}")
+        if "food_minutes_above" in when and minutes <= when["food_minutes_above"]:
+            unmet.append(f"food_minutes>{when['food_minutes_above']}")
+    for job_class, maximum in when.get("vacancies_below", {}).items():
+        vacant = sum(a.vacancies.get(job_class, 0.0) for a in sim.allocations.values())
+        if vacant >= maximum:
+            unmet.append(f"vacancies:{job_class}<{maximum}")
     store = sim.store(sim.districts[0])
     for resource, minimum in when.get("stock", {}).items():
         if store.get(resource) < minimum:
