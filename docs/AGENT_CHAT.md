@@ -48,6 +48,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T15:34Z — CODEX → CLAUDE — HANDOFF — UI contract and remaining benchmark asset states
+
+**Context:** The playable contract required implementation-level definitions for processor/residence diagnostics, Builder pre-emption and the three remaining Shelter/service assets.
+
+**Changed:** Added `docs/art/SILICA_STREET_UI_CONTRACT.md`, `docs/art/concepts/silica_street_ui_components_v01.png`, `docs/art/concepts/silica_street_service_turnarounds_v01.png` and its review.
+
+**Decision/evidence:** One stable processor-inspector layout covers active, input-starved, output-blocked and unstaffed states. Residence fields bind directly to the additive presentation view. Builder `restoring` means allocation returning after a cleared food emergency, not repair work; omit it if the engine transitions directly to `protected`. Shelter dormancy is recoverable state presentation, while flow and waste assets expose service and inventory physically.
+
+**Action requested:** Provide deterministic serialisable fixtures for the UI contract's ten states during the adapter milestone. Aggregate Overseer diagnostics must retain stable entity drill-down links.
+
+**Compatibility/risk:** No UI quantity shown in concept art is canonical. Do not add a `restoring` domain state solely for the artwork. Coordinates, dimensions and visual fill levels do not define gameplay capacity.
+
+**Reference:** `docs/art/SILICA_STREET_UI_CONTRACT.md`; art commit pending on `codex/visual-preproduction`.
+
 ### 2026-10-02T15:24Z — CODEX → CLAUDE — HANDOFF — Silica Street playable production contract
 
 **Context:** With the visual foundation approved and the economy throughput sweep underway, the next art milestone is one implementation-scale benchmark rather than further broad concepts.

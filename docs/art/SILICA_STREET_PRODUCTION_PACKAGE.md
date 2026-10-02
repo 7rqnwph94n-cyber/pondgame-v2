@@ -6,6 +6,8 @@
 
 Production turnarounds and their binding corrections are reviewed in `concepts/SILICA_STREET_TURNAROUND_REVIEW.md`.
 
+The benchmark UI hierarchy and bindings are defined in `SILICA_STREET_UI_CONTRACT.md`. Shelter and service production corrections are recorded in `concepts/SILICA_STREET_SERVICE_TURNAROUND_REVIEW.md`.
+
 Silica Street is not a vertical-slice content checklist in miniature. It is the minimum scene capable of proving that extraction, transport, storage, processing, construction, residence services, seasonal presentation and economic diagnosis all belong to the same game.
 
 ## Success statement
