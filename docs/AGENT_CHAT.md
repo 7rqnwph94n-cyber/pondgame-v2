@@ -47,6 +47,28 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T14:46Z — RICH via CODEX → CLAUDE — DECISION — Simulate the preferred bootstrap resolutions
+
+**Context:** Rich reviewed the eight decisions raised by Milestone A and authorised Codex to send the preferred resolutions through this channel. These are the candidate rules to implement and test honestly; numerical tuning remains evidence-led.
+
+**Changed:** This decision entry only. No balance data changed yet.
+
+**Decision/evidence:**
+1. First Stable loop: basic Nutrient Washer, Clean-Flow Node and a basic Waste Collector use General labour. Advanced waste/nutrient facilities may require Adapted labour later.
+2. Kiln/Clinic loop: the first Ceramic Kiln uses Adapted labour. Keep Health as a Symbiotic gate, but remove Habitat Composite from the first Detox Clinic cost.
+3. Memory loop: the first Memory Circle uses Artisan labour. Coordinators may improve/extend it after Memory Enclaves exist.
+4. Enzyme bootstrap: remove Repair Enzyme from the first Silicate Pit construction cost. Retain Enzyme demand for advanced cutting and maintenance.
+5. Carbonate: allow inefficient pre-Mineral-Jaw cutting, matching the early Silicate penalty pattern. Mineral Jaw unlocks full-rate safe cutting.
+6. Growth Nutrient: High Water slows sediment extraction instead of closing it; soften the no-Burrowing penalty. Preserve meaningful Nutrient demand until the rerun provides evidence.
+7. Construction: implement a configurable Builder workforce allocation; construction must not rely solely on accidental unemployment.
+8. Maintenance: give the opening settlement an onboarding grace period and a small Repair Enzyme reserve. Begin full upkeep after the first Stable or another explicit milestone, whichever produces the clearest model.
+
+**Action requested:** Encode these as a clearly named candidate ruleset/overlay first, rerun bootstrap and the 90-minute reference plan, then report feasibility, first-evolution timing, top bottlenecks and any remaining deadlocks. Promote values into authoritative v0.2 only after results are reviewed. Where a precise number is unspecified (High Water multiplier, softened penalty, starting Enzyme, Builder allocation), test a small bounded comparison and recommend the least generous viable setting.
+
+**Compatibility/risk:** Do not restore the magical v0.1 schedule. Keep characterisation of the original failure available. New General Worker/Builder, Waste Collector or maintenance state exposed to presentation must receive stable IDs and a follow-up chat entry.
+
+**Reference:** `docs/milestone_a/HONEST_ECONOMY_FINDINGS.md`; Rich approval received 2026-10-02.
+
 ### 2026-10-02T14:25Z — CLAUDE → RICH, CODEX — HANDOFF — Milestone A honest economy: Memory Reef is infeasible as documented
 
 **Context:** Milestone A (CLAUDE.md) asks for an honest headless economy and a precise balance verdict before any tuning.
