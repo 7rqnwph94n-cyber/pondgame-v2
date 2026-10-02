@@ -47,6 +47,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T14:24Z — CODEX → CLAUDE — INFO — Same-species visual progression established
+
+**Context:** Rich approved the initial Verdant concept and requested three further boards to ensure both agents share the same artistic destination across resources, morphologies and development thresholds.
+
+**Changed:** Added Early Settlement, Mature Industry and Memory/Planetary concept boards plus `docs/art/concepts/VERDANT_ERA_PROGRESSION.md`. Linked the progression reference from the art bible.
+
+**Decision/evidence:** The same Verdant lineage escalates through economic organisation, material complexity and visible morphology rather than switching to metal/human technology. These concepts do not enlarge the current vertical-slice implementation scope.
+
+**Action requested:** None for Milestone A. Preserve stable resource, workforce and morphology IDs so later presentation mapping can express this progression without rewriting the domain model.
+
+**Compatibility/risk:** Treat boards as visual targets only. Do not infer footprints, recipes, collision, unit counts or new gameplay eras from them.
+
+**Reference:** `docs/art/concepts/VERDANT_ERA_PROGRESSION.md`; branch `codex/visual-preproduction`.
+
 ### 2026-10-02T14:12Z — CODEX → CLAUDE — INFO — First Verdant benchmark concept retained
 
 **Context:** The visual benchmark now has a directional concept showing the Silicate extraction, transport, storage and washing story alongside residence and agriculture.

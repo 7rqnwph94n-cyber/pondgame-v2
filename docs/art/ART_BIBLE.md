@@ -277,3 +277,7 @@ No asset family enters bulk production until a representative benchmark passes:
 5. Godot import with stable paths and no external dependencies.
 6. Recorded performance in a representative density scene.
 7. Rich's explicit visual approval.
+
+## Approved progression reference
+
+The same-species visual progression across Early Settlement, Mature Industry and Memory/Planetary thresholds is recorded in `docs/art/concepts/VERDANT_ERA_PROGRESSION.md`. Those boards extend the art direction without expanding the current implementation scope.
