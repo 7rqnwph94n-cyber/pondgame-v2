@@ -18,6 +18,8 @@ The benchmark is one composed basin corner containing:
 
 It is a visual/integration test, not a complete gameplay scene.
 
+The implementation-ready scene envelope, coordinates, relative footprints and state-to-interface contract are defined in `SILICA_STREET_PRODUCTION_PACKAGE.md`. This document remains the visual QA specification.
+
 ## Story of the scene
 
 Raw glassy fragments are cut from a Silicate Outcrop at the darker edge of the basin. Carriers follow a low living route to an open General Store and Mineral Washery. The Washery takes cloudy fragments through porous membranes and deposits pale Prepared Silica. A nearby Shelter Cluster and Photosynthetic Field show the contrast between inhabited/agricultural and industrial space.

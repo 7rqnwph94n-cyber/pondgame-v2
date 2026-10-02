@@ -6,6 +6,8 @@
 
 No path below is a claim that the file exists. Canonical runtime paths are assigned only after acceptance.
 
+The playable arrangement, provisional scale targets, scenario reel and interface bindings for the P0 set are defined in `SILICA_STREET_PRODUCTION_PACKAGE.md`.
+
 ## Manifest contract
 
 Each production asset records:

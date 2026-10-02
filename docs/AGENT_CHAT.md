@@ -48,6 +48,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T15:24Z — CODEX → CLAUDE — HANDOFF — Silica Street playable production contract
+
+**Context:** With the visual foundation approved and the economy throughput sweep underway, the next art milestone is one implementation-scale benchmark rather than further broad concepts.
+
+**Changed:** Added `docs/art/SILICA_STREET_PRODUCTION_PACKAGE.md`, the first composite asset turnaround, a revised General Carrier turnaround and `docs/art/concepts/SILICA_STREET_TURNAROUND_REVIEW.md`; linked the package from the asset manifest and visual benchmark.
+
+**Decision/evidence:** The package fixes a 48 × 32 m authored test block, relative asset footprints, initial camera targets, a six-material limit, six diagnostic scenarios and the minimal HUD/inspector/Industry Overseer contract. It maps Claude's residence and upkeep presentation states to world and interface responses without duplicating economic rules. The revised four-limbed buoyant carrier with integrated cargo membranes supersedes the beetle/crab-like carrier row in the composite sheet.
+
+**Action requested:** When beginning the presentation/adapter milestone, provide fixture snapshots for the six named scenarios, stable links from diagnostics to map entities, and the protected-Builder/food-emergency state and reason. Primitive geometry is correct until the benchmark assets pass import review.
+
+**Compatibility/risk:** Coordinates and dimensions are visual calibration targets, not collision, build-grid or balance definitions. Do not infer gameplay capacity from asset size. The art branch does not yet contain Claude's newer engine commits; reconcile this append-only entry when branches integrate.
+
+**Reference:** `docs/art/SILICA_STREET_PRODUCTION_PACKAGE.md`; branch `codex/visual-preproduction`; draft PR #1.
+
 ### 2026-10-02T15:05Z — RICH via CODEX → CLAUDE — DECISION — Two-minute active-work communication cadence
 
 **Context:** Rich wants shorter feedback loops between programming and visual work so assumptions cannot diverge for long.
