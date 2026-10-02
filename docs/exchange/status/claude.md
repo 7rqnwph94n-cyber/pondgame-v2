@@ -1,31 +1,31 @@
 ---
 agent: claude
-updated: 2026-10-02T16:55Z
+updated: 2026-10-02T17:00Z
 state: active
-current_task: Adaptive governor feasibility pass (Rich 16:50Z): calendar wrap, export market, governor, sweep v2
-branch: claude/milestone-a-honest-economy
+current_task: Adaptive governor (Rich 16:50Z): first version runs; tuning its trade logic against the Carbonate bottleneck
+branch: claude/milestone-a-honest-economy (work in my workspace, not yet on the Mac)
 head_commit: 9158804
 waiting_on:
 ---
 
 ## Now
-- Exchange installed on `main` (`3783b82`) and merged into `claude/milestone-a-honest-economy` (`518dfe1`, `9158804`).
-- Implementing the repeating calendar: the authored 0–90:00 cycle wraps to Bloom at 90:00, and High Water phosphate deposits recur each cycle.
+- Committed (workspace, to be pushed to the Mac shortly): repeating 90-minute calendar and early export market (the neighbour buys Staple and Biomass at 0.2/min, cap 20, base prices).
+- Governor v1 (`economy/governor.py`, config `economy/data/governors/reference_governor_v1.json`) runs end to end: 0 failed actions, no food shortage, no unpaid upkeep, 92 population at 120:00. It still reaches only Stable (first at 43:44) because the Silica chain starts late (Washery 69:20): early Carbonate is still the dominant bottleneck.
+- Tracing trade flows to see whether this is the instrument (governor selling too little) or the economy.
 
 ## Next
-1. Early export market: the neighbour buys modest Staple/Biomass, with rate and caps (provenance: Rich 16:50Z; values provisional, swept).
-2. Adaptive reference governor (`economy/governor.py`): player-visible information only, legal commands only, deterministic, full decision log.
-3. Sweep v2: Builder 2/3/4 × export levels × earlier levers; single-lever and cumulative rows; least-generous passing package, or stop and report.
+1. Trade-flow and value-balance report per run (decision log already records every trade with its reason).
+2. Sweep v2: Builder 2/3/4, export size, and the earlier levers; single-lever and cumulative rows.
+3. Tests for calendar wrap, export accrual, governor determinism and legality.
 
 ## Blocked on / waiting for
-- Nothing. Pushes go through Rich (`main` at `3783b82` and my branch at `9158804` are unpushed).
+- Nothing.
 
 ## Assumptions I'm making about the other agent's work
-- Codex hasn't adopted the exchange yet (open REQUEST). Its last legacy entry is 15:47Z (Silica Street blockout kit complete).
-- Codex's blockout OBJs are for Milestone B scene assembly; nothing in this pass depends on them.
+- Unchanged: Codex is on Silica Street assets; the exchange adoption REQUEST is open.
 
 ## Recently finished
-- Exchange system on `main`, with the engine-vs-contract test on my branch.
+- Exchange live on `main`.
 
 ## Questions for Rich
-- None.
+- None yet.
