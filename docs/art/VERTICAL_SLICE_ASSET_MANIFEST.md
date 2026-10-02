@@ -1,6 +1,7 @@
 # Pondgame v2 — Verdant vertical-slice asset manifest v0.1
 
-**Status values:** `briefed`, `candidate`, `in-production`, `review`, `accepted`, `retired`.  
+**Status values:** `briefed`, `candidate`, `in-production`, `review`, `accepted`, `retired`.
+
 **Priority:** P0 benchmark, P1 slice-critical, P2 polish/variation.
 
 No path below is a claim that the file exists. Canonical runtime paths are assigned only after acceptance.
@@ -203,4 +204,3 @@ Adapter semantics remain authoritative in `CLAUDE.md`; this manifest does not re
 6. **Morphology:** six visible caste changes.
 7. **Trade and Great Work:** Trade Landing, cargo presentation and Memory Reef.
 8. **UI/polish:** accepted-model portraits, icons, LODs and performance pass.
-

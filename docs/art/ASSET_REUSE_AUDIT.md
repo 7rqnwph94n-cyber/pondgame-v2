@@ -1,6 +1,7 @@
 # Pondgame v2 — legacy asset reuse audit v0.1
 
-**Source reviewed:** `../art_exports/benchmark`, `../art_exports/biomes_v02`, `../art_exports/evolution_v03` and the former art-direction documents.  
+**Source reviewed:** `../art_exports/benchmark`, `../art_exports/biomes_v02`, `../art_exports/evolution_v03` and the former art-direction documents.
+
 **Classification:** REUSE, ADAPT, KITBASH, RETIRE or HOLD.
 
 This is a design/production audit, not an import approval. Every reused file must still pass provenance, Godot import, scale, material and camera checks inside v2.
@@ -216,4 +217,3 @@ Bring forward only what the first benchmark needs:
 - restrained caustic/light-shaft support.
 
 Everything else stays outside the v2 runtime until demanded by a tested mechanic.
-

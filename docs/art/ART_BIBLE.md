@@ -1,8 +1,10 @@
 # Pondgame v2 — Verdant visual art bible v0.1
 
-**Status:** Vertical-slice production direction  
-**Owner:** Codex visual track; Rich approves benchmark direction  
-**Scope:** Verdant Basin only  
+**Status:** Vertical-slice production direction
+
+**Owner:** Codex visual track; Rich approves benchmark direction
+
+**Scope:** Verdant Basin only
 
 ## Visual thesis
 
@@ -275,4 +277,3 @@ No asset family enters bulk production until a representative benchmark passes:
 5. Godot import with stable paths and no external dependencies.
 6. Recorded performance in a representative density scene.
 7. Rich's explicit visual approval.
-

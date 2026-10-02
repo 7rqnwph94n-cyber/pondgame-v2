@@ -174,4 +174,3 @@ Benchmark passes only when:
 7. Representative density identifies no unaddressed production blocker.
 
 Until then, do not start the full processor, residence or morphology roster.
-
