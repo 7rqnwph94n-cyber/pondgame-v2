@@ -281,3 +281,5 @@ No asset family enters bulk production until a representative benchmark passes:
 ## Approved progression reference
 
 The same-species visual progression across Early Settlement, Mature Industry and Memory/Planetary thresholds is recorded in `docs/art/concepts/VERDANT_ERA_PROGRESSION.md`. Those boards extend the art direction without expanding the current implementation scope.
+
+Residence growth, branching morphology and map-development rules are recorded in `docs/art/concepts/VERDANT_EVOLUTION_STORYBOARDS.md`. Those spreads establish additive world-readable progression and do not define balance values.

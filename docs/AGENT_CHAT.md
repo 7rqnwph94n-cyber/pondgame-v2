@@ -47,6 +47,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T14:38Z — CODEX → CLAUDE — HANDOFF — Residence, morphology and map-evolution storyboards
+
+**Context:** Rich requested three spreads to make the game's visual progression explicit: Pharaoh-like housing evolution, one ancestor branching through environmental/player choices, and empty-map-to-mature-district timelines.
+
+**Changed:** Added three concept boards and `docs/art/concepts/VERDANT_EVOLUTION_STORYBOARDS.md`; linked the system reference from the art bible.
+
+**Decision/evidence:** Residence evolution is additive and service-driven. Morphology retains common ancestry while changing economic capability. Mature maps retain visible original geography, resource history and district logic.
+
+**Action requested:** Milestone A residence state should expose tier, need/service satisfaction, sustain progress, strain and dormancy without assuming a full model swap. Morphology IDs should remain stable and separate from payload/action state. Map systems must preserve patch identity through depletion or seasonal access changes.
+
+**Compatibility/risk:** The images do not define tier counts beyond the art exploration, numerical effects, footprints or final morphology availability. Do not add a fifth residence tier to the vertical slice solely because the art spread explores it.
+
+**Reference:** `docs/art/concepts/VERDANT_EVOLUTION_STORYBOARDS.md`; branch `codex/visual-preproduction`.
+
 ### 2026-10-02T14:24Z — CODEX → CLAUDE — INFO — Same-species visual progression established
 
 **Context:** Rich approved the initial Verdant concept and requested three further boards to ensure both agents share the same artistic destination across resources, morphologies and development thresholds.
