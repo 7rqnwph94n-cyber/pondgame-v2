@@ -1,43 +1,47 @@
 ---
 agent: claude
-updated: 2026-10-02T18:02Z
-state: waiting
-current_task: Governor sweep v3 reported (0 of 243 pass; Carbonate fixed, labour pipeline now binds); waiting on Rich
+updated: 2026-10-02T18:09Z
+state: active
+current_task: Milestone B start (Rich 17:42Z item 6) — ADR and smallest Godot client shell for the playable Silica Street slice
 branch: claude/milestone-a-honest-economy
-head_commit: 0119aec
-waiting_on: Rich, who must choose the next step (see the sweep v3 REQUEST) and push main and the branch
+head_commit: 16455ef
+waiting_on: Rich, who must push main and the branch; a population or job-scale decision is needed for the Reef but does not block
 ---
 
 ## Now
 
-- **Sweep v3 is finished. 0 of 243 runs pass.** I stopped as instructed and have not expanded any range.
-- The Carbonate-only first Cutter is decisive: Symbiotic in 62% of runs, against 19% in v2. Even so, no run reaches Memory or opens the Reef within 180 minutes.
-- The next bottleneck is the workforce class pipeline (too few Stable evolutions; Adapted vacancies), followed by Repair Enzyme upkeep after Symbiotic.
-- Report: `docs/milestone_a/GOVERNOR_SWEEP_V3_RESULTS.md` (0119aec).
+- Milestone A balance passes are finished.
+  - Sweep v3: 0 of 243 pass.
+  - Sweep v4 (narrow 17:42Z package): 0 of 9 pass.
+  - Carbonate is solved. Labour supply against job count now binds (see 1806Z HANDOFF).
+- Starting Milestone B:
+  1. a Godot client ADR;
+  2. a client shell that loads the same definitions;
+  3. headless simulation stepping, placeholder entities through the presentation adapter, pause and speed controls, and one "why stalled" inspector.
 
 ## Next
 
-1. Once Rich chooses, overlay the chosen rule(s), re-run the bounded sweep and report.
-2. After a package passes: Milestone B fixtures for Codex (ten UI fixtures and six scenario fixtures against `presentation_states.json` v1).
+1. ADR: `docs/adr/0001-godot-client.md`. How the Python domain and the Godot client share rules and data.
+2. Client shell on `claude/milestone-b-client-shell`.
+3. Silica Street early loop using Codex's ten OBJ blockouts as replaceable wrappers.
 
 ## Blocked on / waiting for
 
-- Rich: push `main` and `claude/milestone-a-honest-economy`. I have no credentials.
+- Rich: push `main` and `claude/milestone-a-honest-economy`.
+- Godot is not available in my Mac VM. I will try a headless Godot in my workspace for tests; Rich will run the editor locally.
 
 ## Assumptions I'm making about the other agent's work
 
-- Codex treats `presentation_states.json` v1 as authoritative. The `restoring` Builder state has been dropped, which matches the engine.
-- Codex is not building gameplay-dependent assets beyond the Silica Street blockout until Milestone B imports.
+- Codex treats `presentation_states.json` v1 as authoritative, with no `restoring` Builder state.
+- Codex's ten Silica Street OBJ blockouts on `codex/visual-preproduction` (`4eac599`) are replaceable calibration geometry with no gameplay values.
+- Codex commits exchange changes with `tools/exchange.py commit` (1804Z REQUEST).
 
 ## Recently finished
 
-- 0119aec: governor v2, sweep v3 and its report (all four design changes).
-
-- 6a5f5e1: governor sweep v2 report.
-- d0de6d0: adaptive reference governor and sweep v2. It uses only the player view, logs every decision, is deterministic, and never touches Builders or the food-emergency predicate.
-- 110b7ae: repeating 90-minute calendar; neighbour buys Staple and Biomass.
-- I read Codex's 1706Z RESOLVED message and board. Codex's assumptions match my model.
+- 16455ef: candidate_playable_v1, governor v3, sweep v4 and its report.
+- 0119aec: governor v2, sweep v3 and its report.
+- 04d8deb and 1448433: safe exchange commit command, and repair of the stale-worktree reverts.
 
 ## Questions for Rich
 
-- Choose the next step. Four options are listed in the sweep v3 REQUEST.
+- Not blocking: choose a population or job-scale fix so the Reef becomes reachable. Options are in the 1806Z HANDOFF.
