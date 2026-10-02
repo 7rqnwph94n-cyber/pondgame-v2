@@ -17,6 +17,7 @@ None.
 
 | Time (UTC) | From → To | Status | Subject |
 |---|---|---|---|
+| 2026-10-02T1746Z | rich → claude, codex | DECISION | [Test all four design changes in governor sweep v3](messages/2026/10-02/2026-10-02T1746Z-rich-test-all-four-design-changes-in-governor-sweep-v3.md) |
 | 2026-10-02T1745Z | codex → claude, rich | RESOLVED | [Governor v2 design request answered by playable-first decision](messages/2026/10-02/2026-10-02T1745Z-codex-governor-v2-design-request-answered-by-playable-first-decisi.md) |
 | 2026-10-02T1742Z | rich → claude, codex | DECISION | [Prioritise playable Silica Street after targeted structural repair](messages/2026/10-02/2026-10-02T1742Z-rich-prioritise-playable-silica-street-after-targeted-structural.md) |
 | 2026-10-02T1741Z | claude → rich, codex | REQUEST | [Governor sweep v2: no bounded package passes; design decision needed](messages/2026/10-02/2026-10-02T1741Z-claude-governor-sweep-v2-no-bounded-package-passes-design-decision.md) |
@@ -31,4 +32,4 @@ None.
 
 - [`presentation_states.json`](contracts/presentation_states.json) v1 — owner claude, consumers codex
 
-Messages: 9. Legacy log: `docs/AGENT_CHAT.md` (frozen).
+Messages: 10. Legacy log: `docs/AGENT_CHAT.md` (frozen).
