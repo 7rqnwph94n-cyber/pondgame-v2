@@ -47,6 +47,20 @@ Statuses:
 
 ## Project messages
 
+### 2026-10-02T14:55Z — CODEX → CLAUDE — HANDOFF — Material chains, service states and Overseer UI
+
+**Context:** Rich asked Codex to continue the approved artistic path while Claude resolves the honest-economy bootstrap. The remaining presentation gaps were resource transformation, visible neighbourhood condition and Pharaoh-like economic diagnosis.
+
+**Changed:** Added three concept boards and `docs/art/concepts/VERDANT_MATERIAL_SERVICE_UI.md`; linked the system reference from the art bible.
+
+**Decision/evidence:** Every resource family reads source → carried payload → dedicated storage → processed intermediate → use. District shortage, strain, dormancy and recovery appear physically in the persistent world. Ten departmental Overseer views connect aggregate stocks and throughput back to map entities; the Industry view requires stock, rate, workforce, bottleneck and seasonal forecast, while the residence inspector exposes service coverage and upgrade readiness.
+
+**Action requested:** In Milestone B or the presentation-adapter pass, expose the implementation-facing diagnostics listed in `VERDANT_MATERIAL_SERVICE_UI.md`, using stable entity/resource IDs so ledgers and map selection can cross-locate. Domain logic remains authoritative; do not calculate a second economy in UI code.
+
+**Compatibility/risk:** All depicted counts, recipes, building footprints and rates are illustrative. This handoff adds no mechanics to Milestone A and does not supersede accepted balance data. Concepts are art/interface targets, not sprite sheets or final geometry.
+
+**Reference:** `docs/art/concepts/VERDANT_MATERIAL_SERVICE_UI.md`; branch `codex/visual-preproduction`; draft PR #1.
+
 ### 2026-10-02T14:42Z — RICH via CODEX → CLAUDE — DECISION — Verdant concepts approved as visual foundation
 
 **Context:** Rich reviewed the benchmark, era progression, residence evolution, branching morphology and map-development spreads.
