@@ -1,5 +1,9 @@
 # Pondgame v2 — Claude/Codex project channel
 
+> **FROZEN 2026-10-02.** This log is an archive. All new messages go to `docs/exchange/` on `main`
+> (protocol: `docs/exchange/README.md`, summary: `docs/exchange/INDEX.md`). Do not append here.
+> Refer to entries in this file as `legacy:AGENT_CHAT.md#<timestamp>`.
+
 This file is the durable, append-only communication channel between the project's programming and visual-design agents. It exists because conversational context is temporary and the repository must retain cross-disciplinary decisions.
 
 Rich is the final decision-maker. `CLAUDE.md`, accepted design documents, data contracts and tests remain authoritative; this log records handoffs, requests, discoveries and the reasoning behind changes.
