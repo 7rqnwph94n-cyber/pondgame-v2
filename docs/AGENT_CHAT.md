@@ -1,0 +1,76 @@
+# Pondgame v2 — Claude/Codex project channel
+
+This file is the durable, append-only communication channel between the project's programming and visual-design agents. It exists because conversational context is temporary and the repository must retain cross-disciplinary decisions.
+
+Rich is the final decision-maker. `CLAUDE.md`, accepted design documents, data contracts and tests remain authoritative; this log records handoffs, requests, discoveries and the reasoning behind changes.
+
+## Required protocol
+
+- Read the latest entries before beginning work.
+- Append new entries at the top of **Project messages**, immediately below the divider and above older entries.
+- Do not edit, reorder or delete another agent's entry.
+- Add an entry in the same commit as any design-document, schema, stable-ID, adapter or asset-facing state change.
+- Routine internal implementation does not need a message per file; summarise it at milestone or pull-request boundaries.
+- Link repository-relative files using backticks.
+- Include the commit or pull request when known.
+- Use one entry per coherent topic.
+- Mark a message `BLOCKED` only when the other agent or Rich must act before work can continue.
+
+## Entry template
+
+```markdown
+### YYYY-MM-DDTHH:MMZ — FROM → TO — STATUS — Short subject
+
+**Context:** Why this message exists.
+
+**Changed:** Files, schemas, interfaces or assets changed. Write “None” for a request-only message.
+
+**Decision/evidence:** What was decided or discovered, and why.
+
+**Action requested:** Exact response or work needed from the recipient. Write “None” for information-only messages.
+
+**Compatibility/risk:** Anything the recipient must avoid breaking or may need to migrate.
+
+**Reference:** Commit, branch, pull request, test command or relevant file.
+```
+
+Statuses:
+
+- `INFO` — no immediate response required;
+- `REQUEST` — response or work requested;
+- `DECISION` — accepted direction recorded;
+- `HANDOFF` — completed work ready for the other agent;
+- `BLOCKED` — progress requires an answer or dependency;
+- `RESOLVED` — closes an earlier request/blocker.
+
+---
+
+## Project messages
+
+### 2026-10-02T13:46Z — CODEX → CLAUDE — HANDOFF — Begin Milestone A: honest headless economy
+
+**Context:** Rich has approved starting programming in this repository. The existing simulator proves the paper recipe arithmetic but currently uses magical time-based facility/residence `set` events. It does not yet prove that the city can afford construction or staff its economy.
+
+**Changed:** Added root `CLAUDE.md` with project memory, technical boundaries, art-integration contract, collaboration rules and the complete Milestone A assignment. Added this project channel.
+
+**Decision/evidence:** Preserve the deterministic, data-driven headless model and strengthen it before creating the Godot client. The current reference completes the Memory Reef at 84:48 with ten passing tests, but that time is not sacred once construction and workforce become honest.
+
+**Action requested:** Implement Milestone A from `CLAUDE.md` on a focused branch. Report genuine infeasibility rather than weakening rules to preserve 84:48. Add a new entry here for any schema or adapter-facing change and at the review handoff.
+
+**Compatibility/risk:** Do not couple the domain model to Godot. Do not encode visual dimensions as gameplay collision or balance. Do not rename resource IDs without documenting migration impact.
+
+**Reference:** `CLAUDE.md`, `economy/data/verdant_v0_1.json`, `economy/model.py`, `tests/test_economy.py`; baseline command: `python3 -m unittest discover -s tests -v`.
+
+### 2026-10-02T13:40Z — CODEX → CLAUDE — INFO — Art direction that remains valid
+
+**Context:** The project has pivoted from the old three-resource prototype to a chemistry-driven city builder, but Rich wants to preserve and extend its successful visual identity.
+
+**Changed:** None in this repository yet.
+
+**Decision/evidence:** Retain the miniature living-glass/coral/shell/mineral thesis, Verdant teal/green/amber material language, rotating-camera readability, clustered environmental composition and staged organic construction. Treat the old fixed building/faction roster as reference rather than a requirement.
+
+**Action requested:** Keep presentation replaceable and use the adapter described in `CLAUDE.md`. Do not create final silhouettes in programmer art.
+
+**Compatibility/risk:** The revised asset manifest and chemistry-specific art bible are still pending. Placeholder scenes must tolerate later replacement without gameplay changes.
+
+**Reference:** `CLAUDE.md` section “Code/art integration contract”.
