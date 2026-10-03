@@ -1,5 +1,5 @@
 {
-  "asset": "silica_cliff_a",
+  "asset": "vegetation_mat_b",
   "units": "metres",
   "up_axis": "+Y",
   "ground_pivot": [
@@ -8,25 +8,20 @@
     0
   ],
   "anchors": {
-    "SnapLeft": [
-      -5.5,
+    "GroundPivot": [
+      0,
       0,
       0
-    ],
-    "SnapRight": [
-      5.5,
-      0,
-      0
-    ],
-    "ExtractionAnchor": [
-      0,
-      0,
-      -2.5
     ],
     "CameraAnchor": [
       0,
-      3.2,
+      1.2,
       0
+    ],
+    "WetEdge": [
+      0,
+      0,
+      -2.5
     ]
   }
 }

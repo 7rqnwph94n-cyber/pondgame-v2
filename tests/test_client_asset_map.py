@@ -37,6 +37,16 @@ class ClientAssetMapTests(unittest.TestCase):
         self.assertIn("output_blocked",manifest["icons"])
         self.assertIn("food_emergency",manifest["icons"])
 
+    def test_authored_terrain_texture_set_is_available(self):
+        texture_dir=(ROOT/"client"/self.data["terrain_texture_dir"]).resolve()
+        expected={
+            "wet_sediment_v01.png", "fertile_terrace_v01.png",
+            "silica_escarpment_v01.png", "methane_basin_v01.png",
+            "sulphur_crust_v01.png",
+        }
+        self.assertEqual({path.name for path in texture_dir.glob("*.png")},expected)
+        self.assertTrue(all((texture_dir/name).stat().st_size>100_000 for name in expected))
+
     def test_scenery_stays_outside_core_settlement_corridor(self):
         for item in self.data["environment"]["scenery"]:
             x,_,z=item["position"]

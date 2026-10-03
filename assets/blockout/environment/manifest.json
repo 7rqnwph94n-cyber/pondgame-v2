@@ -32,6 +32,9 @@
     "sulphur_vent_cluster_a",
     "terrain_sand_tile_a",
     "terrain_silt_tile_a",
-    "terrain_silt_tile_b"
+    "terrain_silt_tile_b",
+    "vegetation_mat_a",
+    "vegetation_mat_b",
+    "vegetation_mat_c"
   ]
 }

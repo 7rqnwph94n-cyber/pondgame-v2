@@ -2,6 +2,7 @@
   "_comment": "Presentation data only (Codex may edit): which blockout asset represents a domain building or residence tier. Missing entries fall back to a category placeholder. Values never affect gameplay. Asset files are read from ../assets/blockout/silica_street/<asset>.obj relative to the client project.",
   "asset_dir": "../assets/blockout/silica_street",
   "environment_dir": "../assets/blockout/environment",
+  "terrain_texture_dir": "../assets/textures/terrain",
   "icon_dir": "../assets/ui/icons",
   "buildings": {
     "general_store": "store_general_a",
@@ -44,9 +45,9 @@
       {"asset": "sulphur_vent_cluster_a", "position": [39, 0.12, -3], "rotation_y": 8, "scale": 1.65}
     ],
     "empty_features": [
-      {"asset": "silica_cliff_a", "position": [29, 0.1, -22], "rotation_y": 18, "scale": 1.55},
-      {"asset": "methane_seep_a", "position": [-34, 0.13, 19], "rotation_y": -12, "scale": 1.6},
-      {"asset": "sulphur_vent_cluster_a", "position": [42, 0.12, -1], "rotation_y": 8, "scale": 1.45}
+      {"asset": "silica_cliff_a", "position": [29, 0.1, -22], "rotation_y": 18, "scale": 1.25},
+      {"asset": "methane_seep_a", "position": [-34, 0.13, 19], "rotation_y": -12, "scale": 1.3},
+      {"asset": "sulphur_vent_cluster_a", "position": [42, 0.12, -1], "rotation_y": 8, "scale": 1.15}
     ],
     "scenery": [
       {"asset": "ledge_straight_a", "position": [25, 0.2, -25], "rotation_y": 18, "scale": 2.0},

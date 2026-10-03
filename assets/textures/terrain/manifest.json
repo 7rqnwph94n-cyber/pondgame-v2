@@ -1,0 +1,12 @@
+{
+  "generated_by": "OpenAI ImageGen",
+  "generated_on": "2026-10-03",
+  "pixel_size": [1254, 1254],
+  "assets": {
+    "fertile": "fertile_terrace_v01.png",
+    "wet": "wet_sediment_v01.png",
+    "mineral": "silica_escarpment_v01.png",
+    "methane": "methane_basin_v01.png",
+    "sulphur": "sulphur_crust_v01.png"
+  }
+}

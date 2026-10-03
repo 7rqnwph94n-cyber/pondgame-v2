@@ -14,17 +14,24 @@ OUT = ROOT / "assets" / "blockout" / "environment"
 MATERIALS = {
     "silt": (0.47, 0.40, 0.30),
     "sand": (0.62, 0.54, 0.39),
-    "rock": (0.20, 0.27, 0.27),
+    "rock": (0.31, 0.38, 0.37),
     "root": (0.22, 0.18, 0.12),
     "carbonate": (0.78, 0.72, 0.58),
     "route_membrane": (0.12, 0.42, 0.42),
     "flood_silt": (0.43, 0.42, 0.31),
     "water_dark": (0.06, 0.29, 0.33),
-    "silica": (0.32, 0.72, 0.75),
-    "methane": (0.10, 0.15, 0.19),
-    "methane_film": (0.24, 0.31, 0.37),
-    "sulphur": (0.62, 0.38, 0.12),
-    "living_green": (0.31, 0.55, 0.33),
+    "silica_matrix": (0.49, 0.57, 0.55),
+    "silica": (0.28, 0.58, 0.60),
+    "methane": (0.07, 0.16, 0.17),
+    "methane_film": (0.15, 0.27, 0.28),
+    "methane_rim": (0.37, 0.42, 0.36),
+    "sulphur": (0.57, 0.36, 0.13),
+    "sulphur_crust": (0.69, 0.52, 0.27),
+    "sulphur_bed": (0.43, 0.39, 0.27),
+    "living_green": (0.31, 0.52, 0.30),
+    "living_olive": (0.42, 0.48, 0.25),
+    "living_teal": (0.17, 0.43, 0.39),
+    "living_pale": (0.48, 0.62, 0.45),
 }
 
 
@@ -229,6 +236,32 @@ def plant_branch(name, height, arms):
     m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,height*.6,0]})
 
 
+def vegetation_mat(name, phase):
+    """One broad ecological mass: low microbial carpet plus varied filter organisms."""
+    m=Mesh(name)
+    for i,(x,z,rx,rz) in enumerate([(-2.2,-.7,2.6,1.7),(1.0,.3,3.0,1.9),(2.6,-1.1,1.9,1.3),(-.3,1.7,2.4,1.1)]):
+        material="living_olive" if i%2==0 else "living_green"
+        m.ellipsoid((x,0,z),(rx,.08,rz),material,f"mat_{i}",rings=3,segments=12)
+    for i in range(19):
+        angle=i*2.399+phase
+        radius=1.0+(i*7%15)*.27
+        x=math.cos(angle)*radius*.92
+        z=math.sin(angle)*radius*.58
+        height=.65+(i*5%9)*.14
+        lean=.18+.12*math.sin(i*1.7+phase)
+        top=(x+math.cos(angle)*lean,height,z+math.sin(angle)*lean)
+        material="living_teal" if i%3 else "living_pale"
+        m.cylinder((x,.06,z),top,.07 if i%4 else .095,material,f"filter_{i}",sides=6)
+        if i%3==0:
+            m.ellipsoid((top[0],top[1]-.08,top[2]),(.22,.13,.22),"living_pale",f"crown_{i}",rings=3,segments=7)
+        elif i%4==0:
+            side=(-1 if i%2 else 1)*.35
+            m.cylinder((x,height*.55,z),(x+side,height*.78,z+.12),.045,"living_teal",f"branch_{i}",sides=5)
+    for i,(x,z,r) in enumerate([(-2.8,1.1,.42),(-1.1,-1.4,.36),(.7,1.6,.5),(2.8,.9,.34)]):
+        m.ellipsoid((x,.06,z),(r,.18,r),"living_pale",f"filter_cup_{i}",rings=3,segments=8)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,1.2,0],"WetEdge":[0,0,-2.5]})
+
+
 def ground_detail(name, kind):
     m=Mesh(name)
     if kind=="ripples":
@@ -272,31 +305,37 @@ def floodplain_shelf():
 
 def silica_cliff():
     m=Mesh("silica_cliff_a")
-    for i,(x,z,rx,ry,rz) in enumerate([(-3.5,.7,2.2,1.5,2.1),(-1.2,.3,2.4,2.0,2.3),(1.3,.5,2.7,1.7,2.2),(3.5,.8,2.0,1.35,1.8)]):
-        m.ellipsoid((x,0,z),(rx,ry,rz),"rock",f"cliff_mass_{i}",rings=4,segments=9)
-    for i,(x,h,r) in enumerate([(-3.5,4.8,.55),(-2.1,6.1,.68),(-.4,4.2,.62),(1.1,6.8,.78),(2.8,5.4,.64),(3.7,3.7,.48)]):
-        m.cone((x,.7,-.35),h,r,.08,"silica",f"silica_spire_{i}",sides=7)
-        m.ellipsoid((x,.35,-1.15),(r*1.5,.3,r*1.1),"carbonate",f"spire_foot_{i}",rings=3,segments=7)
-    m.write({"SnapLeft":[-4.5,0,0],"SnapRight":[4.5,0,0],"ExtractionAnchor":[0,0,-2],"CameraAnchor":[0,4,0]})
+    shelves=[(-3.4,.4,2.8,.48,2.0,0),(-.8,-.1,3.3,.58,2.4,.38),(2.1,.3,3.0,.52,2.1,.85),(3.8,.7,1.9,.42,1.5,.3),(-1.5,.1,2.4,.45,1.7,1.2),(1.0,.2,2.1,.42,1.5,1.65)]
+    for i,(x,z,rx,ry,rz,y) in enumerate(shelves):
+        m.ellipsoid((x,y,z),(rx,ry,rz),"silica_matrix",f"laminated_shelf_{i}",rings=4,segments=12)
+    for i,(a,b,r) in enumerate([((-4.7,.62,-1.25),(-1.3,1.02,-1.55),.10),((-2.0,1.42,-1.05),(1.4,1.78,-1.28),.12),((.5,2.15,-.65),(3.4,2.34,-.82),.11)]):
+        m.cylinder(a,b,r,"silica",f"exposed_seam_{i}",sides=6)
+    for i,(x,z,h,r) in enumerate([(-3.2,-.2,1.8,.42),(-.5,.35,2.7,.52),(1.7,-.1,2.2,.46),(3.2,.65,1.5,.34)]):
+        m.cone((x,1.0+(i%2)*.45,z),h,r,.10,"silica",f"silica_growth_{i}",sides=7)
+    m.write({"SnapLeft":[-5.5,0,0],"SnapRight":[5.5,0,0],"ExtractionAnchor":[0,0,-2.5],"CameraAnchor":[0,3.2,0]})
 
 
 def methane_seep():
     m=Mesh("methane_seep_a")
-    for i,(x,z,rx,rz) in enumerate([(-2.5,-.5,2.5,1.7),(1.0,.7,3.0,2.1),(3.3,-1.4,1.7,1.25)]):
-        m.ellipsoid((x,0,z),(rx,.11,rz),"methane_film",f"seep_film_{i}",rings=3,segments=12)
-    for i,(x,z,h) in enumerate([(-3.2,-.7,1.3),(-.4,.5,.9),(1.5,.2,1.7),(3.5,-1.5,1.15)]):
-        m.cone((x,.08,z),h,.48,.16,"methane",f"gas_vent_{i}",sides=7)
-        m.ellipsoid((x,h+.18,z),(.32,.22,.32),"methane_film",f"gas_sac_{i}",rings=3,segments=7)
+    for i,(x,z,rx,rz) in enumerate([(-2.8,-.4,2.7,1.8),(.2,.7,3.4,2.2),(3.1,-1.2,2.0,1.45)]):
+        m.ellipsoid((x,0,z),(rx,.08,rz),"methane_film",f"seep_film_{i}",rings=3,segments=14)
+        m.ellipsoid((x+.25,.07,z-.12),(rx*.68,.10,rz*.62),"methane",f"anoxic_pool_{i}",rings=3,segments=13)
+    for i,(x,z,rx,rz) in enumerate([(-3.4,-.6,.7,.52),(-1.0,.7,.55,.42),(1.2,.25,.9,.62),(3.4,-1.25,.62,.48)]):
+        m.ellipsoid((x,.13,z),(rx,.32,rz),"methane_rim",f"gas_dome_{i}",rings=4,segments=9)
+        m.ellipsoid((x,.44,z),(rx*.42,.17,rz*.42),"methane_film",f"gas_eye_{i}",rings=3,segments=8)
     m.write({"GroundPivot":[0,0,0],"FilterAnchor":[0,.15,2.8],"HazardAnchor":[1,0,0]})
 
 
 def sulphur_vents():
     m=Mesh("sulphur_vent_cluster_a")
-    m.ellipsoid((0,0,0),(4.5,.35,3.4),"rock","vent_bed",rings=4,segments=12)
-    for i,(x,z,h,r) in enumerate([(-2.5,-1.0,3.6,.75),(-.8,1.1,5.2,1.0),(1.1,-.8,4.3,.85),(2.7,1.0,3.1,.65)]):
-        m.cone((x,.2,z),h,r,.28,"sulphur",f"vent_{i}",sides=8)
-        m.ellipsoid((x,h+.28,z),(.5,.32,.5),"carbonate",f"vent_crown_{i}",rings=3,segments=7)
-    m.write({"GroundPivot":[0,0,0],"ExtractionAnchor":[0,.4,-3],"CameraAnchor":[0,3,0]})
+    m.ellipsoid((0,0,0),(4.8,.18,3.6),"sulphur_bed","vent_bed",rings=4,segments=14)
+    for i,(x,z,rx,rz) in enumerate([(-2.8,1.1,1.8,1.15),(.3,-1.2,2.2,1.25),(2.8,.8,1.6,1.0)]):
+        m.ellipsoid((x,.14,z),(rx,.16,rz),"sulphur_crust",f"crust_plate_{i}",rings=3,segments=11)
+        m.ellipsoid((x+.15,.35,z-.1),(rx*.58,.09,rz*.55),"carbonate",f"carbonate_rim_{i}",rings=3,segments=10)
+    for i,(x,z,h,r) in enumerate([(-2.4,-.8,1.5,.78),(-.6,.9,2.2,.92),(1.3,-.6,1.8,.82),(2.8,1.0,1.25,.68)]):
+        m.cone((x,.28,z),h,r,.34,"sulphur",f"vent_{i}",sides=9)
+        m.ellipsoid((x,h+.22,z),(.46,.22,.46),"carbonate",f"vent_crown_{i}",rings=3,segments=8)
+    m.write({"GroundPivot":[0,0,0],"ExtractionAnchor":[0,.4,-3],"CameraAnchor":[0,2.7,0]})
 
 
 def delta_island(name, phase):
@@ -337,6 +376,9 @@ def main():
     plant_cup()
     plant_branch("plant_branch_a",1.55,4)
     plant_branch("plant_branch_b",2.1,6)
+    vegetation_mat("vegetation_mat_a",0.0)
+    vegetation_mat("vegetation_mat_b",1.8)
+    vegetation_mat("vegetation_mat_c",3.6)
     ground_detail("detail_ripple_a","ripples")
     ground_detail("detail_pebbles_a","pebbles")
     ground_detail("detail_scar_a","scar")

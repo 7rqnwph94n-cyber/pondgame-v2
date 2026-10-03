@@ -98,6 +98,7 @@ func _load_style() -> Dictionary:
 	var root := ProjectSettings.globalize_path("res://")
 	result["asset_root"] = root.path_join(result.get("asset_dir", "../assets/blockout/silica_street")).simplify_path()
 	result["environment_root"] = root.path_join(result.get("environment_dir", "../assets/blockout/environment")).simplify_path()
+	result["terrain_texture_root"] = root.path_join(result.get("terrain_texture_dir", "../assets/textures/terrain")).simplify_path()
 	result["icon_root"] = root.path_join(result.get("icon_dir", "../assets/ui/icons")).simplify_path()
 	return result
 
@@ -261,7 +262,7 @@ func _build_environment() -> void:
 	_sun.shadow_enabled = true
 	add_child(_sun)
 	_basin_terrain = BasinTerrainScript.new()
-	_basin_terrain.build()
+	_basin_terrain.build(style.get("terrain_texture_root", ""))
 	add_child(_basin_terrain)
 	_build_environment_assets()
 	_build_ecological_scatter()
@@ -420,28 +421,48 @@ func _build_environment_assets() -> void:
 
 func _build_ecological_scatter() -> void:
 	var root: String = style.get("environment_root", "")
-	var names := ["plant_fan_a", "plant_fan_b", "plant_ribbon_a", "plant_ribbon_b", "plant_branch_a", "plant_cup_a"]
 	var clusters := [Vector2(-43, -32), Vector2(-18, -10), Vector2(-2, 5), Vector2(20, 12), Vector2(29, 28)]
+	var mat_names := ["vegetation_mat_a", "vegetation_mat_b", "vegetation_mat_c"]
+	# Broad mats make the bank ecology read as habitat at strategy-camera scale.
 	for cluster_index in range(clusters.size()):
 		var centre: Vector2 = clusters[cluster_index]
-		for i in range(18):
-			var asset: String = names[(i + cluster_index * 2) % names.size()]
+		for i in range(5):
+			var asset: String = mat_names[(i + cluster_index) % mat_names.size()]
 			var mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(asset + ".obj"))
 			if mesh == null:
 				continue
 			var instance := MeshInstance3D.new()
 			instance.mesh = mesh
-			var angle := float(i) * 2.399 + float(cluster_index)
-			var radius := 2.0 + float((i * 7) % 13) * 0.62
+			var angle := float(i) * 2.399 + float(cluster_index) * 0.73
+			var radius := 2.5 + float((i * 7) % 8) * 0.74
 			var side := -1.0 if i % 2 == 0 else 1.0
-			var px := centre.x + cos(angle) * radius + side * 5.5
-			var pz := centre.y + sin(angle) * radius - side * 2.5
+			var px := centre.x + cos(angle) * radius + side * 6.2
+			var pz := centre.y + sin(angle) * radius - side * 2.1
 			instance.position = Vector3(px, _basin_terrain.height_at(px, pz) + 0.08, pz)
 			instance.rotation_degrees.y = float((i * 67 + cluster_index * 31) % 360)
-			instance.scale = Vector3.ONE * (1.2 + float(i % 7) * 0.16)
+			instance.scale = Vector3.ONE * (0.82 + float(i % 3) * 0.13)
+			add_child(instance)
+	# Taller individual organisms break up the mat silhouettes without becoming confetti.
+	var accent_names := ["plant_fan_b", "plant_ribbon_b", "plant_branch_b", "plant_cup_a"]
+	for cluster_index in range(clusters.size()):
+		var centre: Vector2 = clusters[cluster_index]
+		for i in range(5):
+			var asset: String = accent_names[(i + cluster_index) % accent_names.size()]
+			var mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(asset + ".obj"))
+			if mesh == null:
+				continue
+			var instance := MeshInstance3D.new()
+			instance.mesh = mesh
+			var angle := float(i) * 2.399 + float(cluster_index) * 0.61
+			var side := -1.0 if i % 2 == 0 else 1.0
+			var px := centre.x + cos(angle) * (4.5 + i) + side * 5.5
+			var pz := centre.y + sin(angle) * (3.5 + i * 0.7) - side * 2.0
+			instance.position = Vector3(px, _basin_terrain.height_at(px, pz) + 0.09, pz)
+			instance.rotation_degrees.y = float((i * 79 + cluster_index * 43) % 360)
+			instance.scale = Vector3.ONE * (1.15 + float(i % 3) * 0.18)
 			add_child(instance)
 	var rocks := ["boulder_a", "boulder_b", "boulder_c", "detail_pebbles_a"]
-	for i in range(34):
+	for i in range(24):
 		var rock_asset: String = rocks[i % rocks.size()]
 		var rock_mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(rock_asset + ".obj"))
 		if rock_mesh == null:
