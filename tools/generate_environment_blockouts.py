@@ -272,9 +272,10 @@ def floodplain_shelf():
 
 def silica_cliff():
     m=Mesh("silica_cliff_a")
-    m.box((0,1.15,.75),(9,2.3,3.2),"rock","cliff_mass")
+    for i,(x,z,rx,ry,rz) in enumerate([(-3.5,.7,2.2,1.5,2.1),(-1.2,.3,2.4,2.0,2.3),(1.3,.5,2.7,1.7,2.2),(3.5,.8,2.0,1.35,1.8)]):
+        m.ellipsoid((x,0,z),(rx,ry,rz),"rock",f"cliff_mass_{i}",rings=4,segments=9)
     for i,(x,h,r) in enumerate([(-3.5,4.8,.55),(-2.1,6.1,.68),(-.4,4.2,.62),(1.1,6.8,.78),(2.8,5.4,.64),(3.7,3.7,.48)]):
-        m.cone((x,1.5,-.35),h,r,.08,"silica",f"silica_spire_{i}",sides=7)
+        m.cone((x,.7,-.35),h,r,.08,"silica",f"silica_spire_{i}",sides=7)
         m.ellipsoid((x,.35,-1.15),(r*1.5,.3,r*1.1),"carbonate",f"spire_foot_{i}",rings=3,segments=7)
     m.write({"SnapLeft":[-4.5,0,0],"SnapRight":[4.5,0,0],"ExtractionAnchor":[0,0,-2],"CameraAnchor":[0,4,0]})
 

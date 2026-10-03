@@ -11,6 +11,7 @@ const WorldViewScript = preload("res://scripts/world_view.gd")
 const HudScript = preload("res://scripts/hud.gd")
 const CameraRigScript = preload("res://scripts/camera_rig.gd")
 const ObjLoaderScript = preload("res://scripts/obj_loader.gd")
+const BasinTerrainScript = preload("res://scripts/basin_terrain.gd")
 
 var bridge: Node
 var world: Node3D
@@ -46,6 +47,8 @@ func _parse_capture_args() -> void:
 			set_meta("select", arg.get_slice("=", 1))
 		elif arg == "--autoplay":
 			set_meta("autoplay", true)
+		elif arg == "--empty-map":
+			set_meta("empty_map", true)
 	if speed_index < 0:
 		speed_index = 1
 
@@ -56,6 +59,8 @@ func _ready() -> void:
 	_build_environment()
 	camera_rig = CameraRigScript.new()
 	add_child(camera_rig)
+	if has_meta("empty_map"):
+		return
 	world = WorldViewScript.new()
 	add_child(world)
 	hud = HudScript.new()
@@ -111,6 +116,12 @@ func _on_connected(reply: Dictionary) -> void:
 
 
 func _process(delta: float) -> void:
+	if has_meta("empty_map"):
+		if _capture_path != "":
+			_capture_clock += delta
+			if _capture_clock >= _capture_after:
+				_capture()
+		return
 	if not bridge or not bridge.is_ready:
 		return
 	_update_carrier_views(delta)
@@ -215,7 +226,8 @@ func _capture() -> void:
 	if image:
 		image.save_png(path)
 		print("captured %s at sim %s" % [path, view.get("time", "?")])
-	bridge.stop()
+	if bridge:
+		bridge.stop()
 	get_tree().quit()
 
 
@@ -223,6 +235,7 @@ func _capture() -> void:
 var _sun: DirectionalLight3D
 var _env: Environment
 var _ground_mat: StandardMaterial3D
+var _basin_terrain: Node3D
 const SEASON_TINTS := {
 	"bloom": Color(0.16, 0.42, 0.36), "high_water": Color(0.10, 0.33, 0.42),
 	"recession": Color(0.30, 0.38, 0.30), "dry": Color(0.42, 0.38, 0.26)}
@@ -235,7 +248,7 @@ func _build_environment() -> void:
 	_env.background_color = Color(0.03, 0.12, 0.14)
 	_env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	_env.ambient_light_color = Color(0.55, 0.75, 0.75)
-	_env.ambient_light_energy = 0.6
+	_env.ambient_light_energy = 0.32
 	_env.fog_enabled = true
 	_env.fog_light_color = Color(0.05, 0.22, 0.25)
 	_env.fog_density = 0.004
@@ -244,21 +257,17 @@ func _build_environment() -> void:
 	add_child(we)
 	_sun = DirectionalLight3D.new()
 	_sun.rotation_degrees = Vector3(-55, 35, 0)
+	_sun.light_energy = 1.15
 	_sun.shadow_enabled = true
 	add_child(_sun)
-	var ground := MeshInstance3D.new()
-	var plane := PlaneMesh.new()
-	plane.size = Vector2(120, 105)
-	ground.mesh = plane
-	_ground_mat = StandardMaterial3D.new()
-	_ground_mat.albedo_color = Color(map.get("base_colour", "#303f3b"))
-	_ground_mat.roughness = 0.92
-	ground.material_override = _ground_mat
-	add_child(ground)
-	_build_map_geography(map)
+	_basin_terrain = BasinTerrainScript.new()
+	_basin_terrain.build()
+	add_child(_basin_terrain)
 	_build_environment_assets()
-	_build_presentation_routes(map)
-	_load_carrier_route(map)
+	_build_ecological_scatter()
+	if not has_meta("empty_map"):
+		_build_presentation_routes(map)
+		_load_carrier_route(map)
 
 
 func _build_map_geography(map: Dictionary) -> void:
@@ -397,12 +406,49 @@ func _build_environment_assets() -> void:
 			for x in range(-6, 7):
 				var index: int = abs(x * 3 + z * 5) % tiles.size()
 				_add_environment_mesh(str(tiles[index]), Vector3(x * 8, 0.015, z * 8), 0.0, 1.0)
-	for item in environment.get("routes", []):
-		_add_environment_item(item)
-	for item in environment.get("features", []):
-		_add_environment_item(item)
-	for item in environment.get("scenery", []):
-		_add_environment_item(item)
+	if not has_meta("empty_map"):
+		for item in environment.get("routes", []):
+			_add_environment_item(item)
+		for item in environment.get("features", []):
+			_add_environment_item(item)
+		for item in environment.get("scenery", []):
+			_add_environment_item(item)
+
+
+func _build_ecological_scatter() -> void:
+	var root: String = style.get("environment_root", "")
+	var names := ["plant_fan_a", "plant_fan_b", "plant_ribbon_a", "plant_ribbon_b", "plant_branch_a", "plant_cup_a"]
+	for i in range(110):
+		var asset: String = names[i % names.size()]
+		var mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(asset + ".obj"))
+		if mesh == null:
+			continue
+		var instance := MeshInstance3D.new()
+		instance.mesh = mesh
+		var t := float(i) / 109.0
+		var x := lerpf(-50.0, 47.0, t)
+		var z := x * 0.78 + sin(float(i) * 1.7) * 7.0
+		var side := -1.0 if i % 2 == 0 else 1.0
+		var px := x + side * (8.0 + float(i % 3) * 2.2)
+		var pz := z - side * 5.0
+		instance.position = Vector3(px, _basin_terrain.height_at(px, pz) + 0.08, pz)
+		instance.rotation_degrees.y = float((i * 67) % 360)
+		instance.scale = Vector3.ONE * (1.25 + float(i % 7) * 0.14)
+		add_child(instance)
+	var rocks := ["boulder_a", "boulder_b", "boulder_c", "detail_pebbles_a"]
+	for i in range(34):
+		var rock_asset: String = rocks[i % rocks.size()]
+		var rock_mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(rock_asset + ".obj"))
+		if rock_mesh == null:
+			continue
+		var rock_instance := MeshInstance3D.new()
+		rock_instance.mesh = rock_mesh
+		var rock_x := 18.0 + float((i * 17) % 65)
+		var rock_z := -42.0 + float((i * 29) % 72)
+		rock_instance.position = Vector3(rock_x, _basin_terrain.height_at(rock_x, rock_z) + 0.06, rock_z)
+		rock_instance.rotation_degrees.y = float((i * 83) % 360)
+		rock_instance.scale = Vector3.ONE * (0.8 + float(i % 6) * 0.18)
+		add_child(rock_instance)
 
 
 func _build_carrier_views() -> void:
@@ -442,9 +488,10 @@ func _update_carrier_views(delta: float) -> void:
 			carrier.rotation.y = atan2(direction.x, direction.z)
 func _add_environment_item(item: Dictionary) -> void:
 	var p: Array = item.get("position", [0, 0, 0])
+	var terrain_y: float = _basin_terrain.height_at(float(p[0]), float(p[2])) if _basin_terrain else 0.0
 	_add_environment_mesh(
 		str(item.get("asset", "")),
-		Vector3(float(p[0]), float(p[1]), float(p[2])),
+		Vector3(float(p[0]), float(p[1]) + terrain_y, float(p[2])),
 		float(item.get("rotation_y", 0.0)),
 		float(item.get("scale", 1.0)))
 
@@ -467,4 +514,5 @@ func _add_environment_mesh(asset: String, position: Vector3, rotation_y: float, 
 
 
 func _apply_season(season: String) -> void:
-	_ground_mat.albedo_color = _ground_mat.albedo_color.lerp(SEASON_TINTS.get(season, SEASON_TINTS["bloom"]), 0.2)
+	if _ground_mat:
+		_ground_mat.albedo_color = _ground_mat.albedo_color.lerp(SEASON_TINTS.get(season, SEASON_TINTS["bloom"]), 0.2)

@@ -39,19 +39,9 @@
     },
     "terrain_tiles": [],
     "features": [
-      {"asset": "channel_bank_straight_a", "position": [-32, 0.1, -23], "rotation_y": 44, "scale": 1.4},
-      {"asset": "channel_bank_straight_a", "position": [-20, 0.1, -13], "rotation_y": 49, "scale": 1.35},
-      {"asset": "channel_bank_bend_a", "position": [-8, 0.1, -5], "rotation_y": 28, "scale": 1.35},
-      {"asset": "channel_bank_straight_a", "position": [5, 0.1, 3], "rotation_y": 55, "scale": 1.35},
-      {"asset": "channel_bank_straight_a", "position": [17, 0.1, 13], "rotation_y": 42, "scale": 1.35},
-      {"asset": "floodplain_shelf_a", "position": [-5, 0.12, 13], "rotation_y": 18, "scale": 1.45},
-      {"asset": "floodplain_shelf_a", "position": [8, 0.12, 10], "rotation_y": -16, "scale": 1.15},
       {"asset": "silica_cliff_a", "position": [25, 0.1, -22], "rotation_y": 18, "scale": 1.8},
-      {"asset": "silica_cliff_a", "position": [32, 0.1, -13], "rotation_y": 31, "scale": 1.5},
       {"asset": "methane_seep_a", "position": [-31, 0.13, 20], "rotation_y": -12, "scale": 1.8},
-      {"asset": "sulphur_vent_cluster_a", "position": [39, 0.12, -3], "rotation_y": 8, "scale": 1.65},
-      {"asset": "delta_island_a", "position": [29, 0.12, 22], "rotation_y": 29, "scale": 1.3},
-      {"asset": "delta_island_b", "position": [39, 0.12, 29], "rotation_y": 38, "scale": 1.1}
+      {"asset": "sulphur_vent_cluster_a", "position": [39, 0.12, -3], "rotation_y": 8, "scale": 1.65}
     ],
     "scenery": [
       {"asset": "ledge_straight_a", "position": [25, 0.2, -25], "rotation_y": 18, "scale": 2.0},

@@ -12,7 +12,8 @@ var _focus := Vector3(0, 0, 0)
 func _ready() -> void:
 	camera = Camera3D.new()
 	camera.far = 2000.0
-	camera.fov = 50.0
+	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
+	camera.size = 88.0
 	add_child(camera)
 	camera.current = true
 	_apply()
@@ -28,10 +29,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_pan(Vector2(-event.relative.x, -event.relative.y) * _distance * 0.002)
 	elif event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			_distance = max(15.0, _distance * 0.9)
+			camera.size = max(42.0, camera.size * 0.9)
 			_apply()
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			_distance = min(400.0, _distance * 1.1)
+			camera.size = min(118.0, camera.size * 1.1)
 			_apply()
 
 
