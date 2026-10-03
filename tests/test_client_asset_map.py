@@ -25,6 +25,7 @@ class ClientAssetMapTests(unittest.TestCase):
         names += [item["asset"] for item in self.data["environment"]["routes"]]
         names += [item["asset"] for item in self.data["environment"]["features"]]
         names += [item["asset"] for item in self.data["environment"]["empty_features"]]
+        names += [item["asset"] for item in self.data["environment"]["chemical_ecology"]]
         names += [item["asset"] for item in self.data["environment"]["scenery"]]
         for name in names:
             with self.subTest(asset=name):
@@ -42,7 +43,8 @@ class ClientAssetMapTests(unittest.TestCase):
         expected={
             "wet_sediment_v01.png", "fertile_terrace_v01.png",
             "silica_escarpment_v01.png", "methane_basin_v01.png",
-            "sulphur_crust_v01.png",
+            "sulphur_crust_v01.png", "carbonate_shelf_v01.png",
+            "carbon_clay_terrace_v01.png",
         }
         self.assertEqual({path.name for path in texture_dir.glob("*.png")},expected)
         self.assertTrue(all((texture_dir/name).stat().st_size>100_000 for name in expected))

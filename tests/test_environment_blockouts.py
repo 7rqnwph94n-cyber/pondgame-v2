@@ -13,8 +13,11 @@ EXPECTED={
     "plant_fan_a","plant_fan_b","plant_ribbon_a","plant_ribbon_b","plant_cup_a",
     "plant_branch_a","plant_branch_b","detail_ripple_a","detail_pebbles_a","detail_scar_a",
     "vegetation_mat_a","vegetation_mat_b","vegetation_mat_c",
+    "filter_grove_a","filter_grove_b","anoxic_colony_a","sulphur_colony_a",
+    "silica_lichen_a","carbonate_colony_a",
     "channel_bank_straight_a","channel_bank_bend_a","floodplain_shelf_a","silica_cliff_a",
     "methane_seep_a","sulphur_vent_cluster_a","delta_island_a","delta_island_b",
+    "silica_outcrop_b","methane_crater_b","sulphur_crust_b","carbonate_shelf_a",
 }
 
 

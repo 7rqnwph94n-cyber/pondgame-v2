@@ -7,6 +7,8 @@
     "wet": "wet_sediment_v01.png",
     "mineral": "silica_escarpment_v01.png",
     "methane": "methane_basin_v01.png",
-    "sulphur": "sulphur_crust_v01.png"
+    "sulphur": "sulphur_crust_v01.png",
+    "carbonate": "carbonate_shelf_v01.png",
+    "carbon_clay": "carbon_clay_terrace_v01.png"
   }
 }

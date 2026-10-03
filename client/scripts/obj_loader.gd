@@ -53,6 +53,7 @@ static func load_mesh(path: String) -> ArrayMesh:
 					st.add_vertex(positions[idx])
 		st.generate_normals()
 		var material := StandardMaterial3D.new()
+		material.resource_name = str(name)
 		material.albedo_color = materials.get(name, Color(0.6, 0.65, 0.65))
 		material.roughness = 0.55
 		material.cull_mode = BaseMaterial3D.CULL_DISABLED

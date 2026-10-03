@@ -118,3 +118,27 @@ Kd 0.48 0.62 0.45
 Ka 0.02 0.02 0.02
 Ks 0.04 0.04 0.04
 Ns 12
+
+newmtl living_methane
+Kd 0.24 0.34 0.43
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_sulphur
+Kd 0.59 0.45 0.2
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_silica
+Kd 0.35 0.6 0.56
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl carbonate_shadow
+Kd 0.54 0.54 0.48
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12

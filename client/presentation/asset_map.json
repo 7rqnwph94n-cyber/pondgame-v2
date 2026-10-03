@@ -41,13 +41,31 @@
     "terrain_tiles": [],
     "features": [
       {"asset": "silica_cliff_a", "position": [25, 0.1, -22], "rotation_y": 18, "scale": 1.8},
+      {"asset": "silica_outcrop_b", "position": [39, 0.1, -31], "rotation_y": -8, "scale": 1.15},
       {"asset": "methane_seep_a", "position": [-31, 0.13, 20], "rotation_y": -12, "scale": 1.8},
-      {"asset": "sulphur_vent_cluster_a", "position": [39, 0.12, -3], "rotation_y": 8, "scale": 1.65}
+      {"asset": "methane_crater_b", "position": [-47, 0.13, 28], "rotation_y": 24, "scale": 1.1},
+      {"asset": "sulphur_vent_cluster_a", "position": [39, 0.12, -3], "rotation_y": 8, "scale": 1.65},
+      {"asset": "sulphur_crust_b", "position": [52, 0.12, 7], "rotation_y": -17, "scale": 1.15},
+      {"asset": "carbonate_shelf_a", "position": [-49, 0.1, -29], "rotation_y": 13, "scale": 1.35}
     ],
     "empty_features": [
       {"asset": "silica_cliff_a", "position": [29, 0.1, -22], "rotation_y": 18, "scale": 1.25},
+      {"asset": "silica_outcrop_b", "position": [42, 0.1, -32], "rotation_y": -8, "scale": 1.0},
       {"asset": "methane_seep_a", "position": [-34, 0.13, 19], "rotation_y": -12, "scale": 1.3},
-      {"asset": "sulphur_vent_cluster_a", "position": [42, 0.12, -1], "rotation_y": 8, "scale": 1.15}
+      {"asset": "methane_crater_b", "position": [-48, 0.13, 29], "rotation_y": 24, "scale": 1.0},
+      {"asset": "sulphur_vent_cluster_a", "position": [42, 0.12, -1], "rotation_y": 8, "scale": 1.15},
+      {"asset": "sulphur_crust_b", "position": [53, 0.12, 8], "rotation_y": -17, "scale": 1.0},
+      {"asset": "carbonate_shelf_a", "position": [-49, 0.1, -29], "rotation_y": 13, "scale": 1.25}
+    ],
+    "chemical_ecology": [
+      {"asset": "anoxic_colony_a", "position": [-40, 0.08, 14], "rotation_y": 18, "scale": 1.05},
+      {"asset": "anoxic_colony_a", "position": [-28, 0.08, 29], "rotation_y": -34, "scale": 0.78},
+      {"asset": "sulphur_colony_a", "position": [35, 0.08, -7], "rotation_y": 24, "scale": 0.92},
+      {"asset": "sulphur_colony_a", "position": [50, 0.08, 9], "rotation_y": -19, "scale": 0.72},
+      {"asset": "silica_lichen_a", "position": [24, 0.08, -31], "rotation_y": 11, "scale": 0.88},
+      {"asset": "silica_lichen_a", "position": [42, 0.08, -18], "rotation_y": -27, "scale": 0.68},
+      {"asset": "carbonate_colony_a", "position": [-53, 0.08, -25], "rotation_y": -14, "scale": 0.82},
+      {"asset": "carbonate_colony_a", "position": [-41, 0.08, -36], "rotation_y": 31, "scale": 0.64}
     ],
     "scenery": [
       {"asset": "ledge_straight_a", "position": [25, 0.2, -25], "rotation_y": 18, "scale": 2.0},

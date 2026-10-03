@@ -1,6 +1,6 @@
 # Verdant Carbon Basin terrain materials
 
-Five authored colour textures drive the continuous terrain shader. They are intentionally presentation-only: biome weights come from map geography, not the economy simulation.
+Seven authored colour textures drive the continuous terrain shader. They are intentionally presentation-only: biome weights come from map geography, not the economy simulation.
 
 | File | Geography | Visual job |
 |---|---|---|
@@ -9,8 +9,10 @@ Five authored colour textures drive the continuous terrain shader. They are inte
 | `silica_escarpment_v01.png` | eastern ridge | laminated stone and glassy silica seams |
 | `methane_basin_v01.png` | north-west depression | anoxic sediment, seep traces and microbial film |
 | `sulphur_crust_v01.png` | eastern vent field | ochre crust, carbonate rims and vent residue |
+| `carbonate_shelf_v01.png` | south-west evaporite shelf | pale precipitation plates and carbon inclusions |
+| `carbon_clay_terrace_v01.png` | stable construction terrace | mauve carbon clay, dark nodules and mineral veins |
 
-All five source bitmaps were generated with OpenAI ImageGen on 2026-10-03 for Pondgame v2, then copied into the repository unchanged at 1254 x 1254 pixels. The originals remain in Codex's generated-image store. They contain no third-party source artwork.
+All seven source bitmaps were generated with OpenAI ImageGen on 2026-10-03 for Pondgame v2, then copied into the repository unchanged at 1254 x 1254 pixels. The originals remain in Codex's generated-image store. They contain no third-party source artwork.
 
 ## Prompt recipe
 

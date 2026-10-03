@@ -16,7 +16,6 @@ func build(texture_root: String = "") -> void:
 	_smooth_channel = _sample_channel()
 	_textures = _load_terrain_textures(texture_root)
 	add_child(_terrain_mesh())
-	add_child(_shoreline_mesh())
 	add_child(_water_mesh())
 
 
@@ -44,12 +43,20 @@ func height_at(x: float, z: float) -> float:
 func _terrain_weights(x: float, z: float) -> Color:
 	var point := Vector2(x, z)
 	var d := _distance_to_path(point)
-	var wet := (1.0 - smoothstep(5.4, 18.0, d)) * 0.92
+	var bank_variation := sin(x * 0.31 + z * 0.19) * 0.9 + cos(z * 0.39 - x * 0.11) * 0.6
+	var wet := (1.0 - smoothstep(5.4, 13.5 + bank_variation, d)) * 0.94
 	var mineral := smoothstep(10.0, 42.0, x) * (1.0 - smoothstep(-24.0, 16.0, z))
 	mineral *= 0.88
 	var methane := exp(-pow((x + 36.0) / 18.0, 2.0) - pow((z - 21.0) / 16.0, 2.0)) * 0.96
 	var sulphur := exp(-pow((x - 44.0) / 15.0, 2.0) - pow((z + 2.0) / 19.0, 2.0)) * 0.96
 	return Color(wet, mineral, methane, sulphur)
+
+
+func _secondary_weights(x: float, z: float) -> Vector2:
+	# Extra province weights travel in UV2: carbonate shelf, then stable carbon-clay terrace.
+	var carbonate := exp(-pow((x + 49.0) / 20.0, 2.0) - pow((z + 29.0) / 17.0, 2.0)) * 0.96
+	var carbon_clay := exp(-pow((x + 18.0) / 35.0, 2.0) - pow((z + 7.0) / 27.0, 2.0)) * 0.82
+	return Vector2(carbonate, carbon_clay)
 
 
 func _terrain_mesh() -> MeshInstance3D:
@@ -77,6 +84,8 @@ uniform sampler2D wet_texture : source_color, repeat_enable, filter_linear_mipma
 uniform sampler2D mineral_texture : source_color, repeat_enable, filter_linear_mipmap;
 uniform sampler2D methane_texture : source_color, repeat_enable, filter_linear_mipmap;
 uniform sampler2D sulphur_texture : source_color, repeat_enable, filter_linear_mipmap;
+uniform sampler2D carbonate_texture : source_color, repeat_enable, filter_linear_mipmap;
+uniform sampler2D carbon_clay_texture : source_color, repeat_enable, filter_linear_mipmap;
 varying vec3 world_position;
 void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz; }
 void fragment() {
@@ -87,10 +96,15 @@ void fragment() {
 	vec3 mineral = mix(texture(mineral_texture, terrain_uv).rgb, texture(mineral_texture, broken_uv).rgb, 0.12);
 	vec3 methane = mix(texture(methane_texture, terrain_uv).rgb, texture(methane_texture, broken_uv).rgb, 0.10);
 	vec3 sulphur = mix(texture(sulphur_texture, terrain_uv).rgb, texture(sulphur_texture, broken_uv).rgb, 0.12);
+	vec3 carbonate = mix(texture(carbonate_texture, terrain_uv).rgb, texture(carbonate_texture, broken_uv).rgb, 0.11);
+	vec3 carbon_clay = mix(texture(carbon_clay_texture, terrain_uv).rgb, texture(carbon_clay_texture, broken_uv).rgb, 0.14);
 	vec4 weights = max(COLOR, vec4(0.0));
-	float fertile_weight = max(0.08, 1.0 - dot(weights, vec4(1.0)));
-	float total = fertile_weight + dot(weights, vec4(1.0));
+	vec2 secondary = max(UV2, vec2(0.0));
+	float all_weights = dot(weights, vec4(1.0)) + secondary.x + secondary.y;
+	float fertile_weight = max(0.06, 1.0 - all_weights);
+	float total = fertile_weight + all_weights;
 	vec3 surface = fertile * fertile_weight + wet * weights.r + mineral * weights.g + methane * weights.b + sulphur * weights.a;
+	surface += carbonate * secondary.x + carbon_clay * secondary.y;
 	float broad = sin(world_position.x * 0.071) * cos(world_position.z * 0.063);
 	ALBEDO = surface / total * (0.92 + broad * 0.055);
 	ROUGHNESS = mix(0.91, 0.72, weights.b * 0.45 + weights.r * 0.2);
@@ -98,7 +112,7 @@ void fragment() {
 """
 	var material := ShaderMaterial.new()
 	material.shader = shader
-	for texture_name in ["fertile", "wet", "mineral", "methane", "sulphur"]:
+	for texture_name in ["fertile", "wet", "mineral", "methane", "sulphur", "carbonate", "carbon_clay"]:
 		if _textures.has(texture_name):
 			material.set_shader_parameter(texture_name + "_texture", _textures[texture_name])
 	st.set_material(material)
@@ -112,58 +126,8 @@ func _add_ground_vertex(st: SurfaceTool, x: float, z: float) -> void:
 	var height := height_at(x, z)
 	st.set_color(_terrain_weights(x, z))
 	st.set_uv(Vector2(x, z) / 25.0)
+	st.set_uv2(_secondary_weights(x, z))
 	st.add_vertex(Vector3(x, height, z))
-
-
-func _shoreline_mesh() -> MeshInstance3D:
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for side_value in [-1.0, 1.0]:
-		var side: float = side_value
-		var inner: Array[Vector3] = []
-		var outer: Array[Vector3] = []
-		for i in range(_smooth_channel.size()):
-			var previous: Vector2 = _smooth_channel[max(0, i - 1)]
-			var following: Vector2 = _smooth_channel[min(_smooth_channel.size() - 1, i + 1)]
-			var direction: Vector2 = (following - previous).normalized()
-			var normal: Vector2 = Vector2(-direction.y, direction.x) * side
-			var point: Vector2 = _smooth_channel[i]
-			var bank_wobble := sin(float(i) * 1.73 + side) * 0.65 + cos(float(i) * 0.57) * 0.35
-			var inner_2d: Vector2 = point + normal * (5.0 + bank_wobble * 0.18)
-			var outer_2d: Vector2 = point + normal * (8.5 + bank_wobble * 0.82)
-			inner.append(Vector3(inner_2d.x, height_at(inner_2d.x, inner_2d.y) + 0.055, inner_2d.y))
-			outer.append(Vector3(outer_2d.x, height_at(outer_2d.x, outer_2d.y) + 0.045, outer_2d.y))
-		for i in range(_smooth_channel.size() - 1):
-			for vertex in [inner[i], outer[i + 1], inner[i + 1], inner[i], outer[i], outer[i + 1]]:
-				st.add_vertex(vertex)
-	st.generate_normals()
-	var shader := Shader.new()
-	shader.code = """
-shader_type spatial;
-uniform sampler2D wet_texture : source_color, repeat_enable, filter_linear_mipmap;
-uniform sampler2D fertile_texture : source_color, repeat_enable, filter_linear_mipmap;
-varying vec3 world_position;
-void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz; }
-void fragment() {
-	vec2 bank_uv = world_position.xz / 17.0;
-	vec3 wet = texture(wet_texture, bank_uv).rgb;
-	vec3 fertile = texture(fertile_texture, bank_uv * 0.81 + vec2(0.17, -0.23)).rgb;
-	float deposit = sin(world_position.x * 0.44 + world_position.z * 0.31) * 0.5 + 0.5;
-	ALBEDO = mix(wet * 0.79, fertile * 0.76, deposit * 0.23);
-	ROUGHNESS = 0.78;
-}
-"""
-	var material := ShaderMaterial.new()
-	material.shader = shader
-	if _textures.has("wet"):
-		material.set_shader_parameter("wet_texture", _textures["wet"])
-	if _textures.has("fertile"):
-		material.set_shader_parameter("fertile_texture", _textures["fertile"])
-	st.set_material(material)
-	var instance := MeshInstance3D.new()
-	instance.mesh = st.commit()
-	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	return instance
 
 
 func _water_mesh() -> MeshInstance3D:
@@ -244,6 +208,10 @@ func _sample_channel() -> Array[Vector2]:
 	return result
 
 
+func material_texture(texture_name: String) -> Texture2D:
+	return _textures.get(texture_name)
+
+
 func _load_terrain_textures(texture_root: String) -> Dictionary:
 	var result := {}
 	if texture_root == "":
@@ -254,6 +222,8 @@ func _load_terrain_textures(texture_root: String) -> Dictionary:
 		"mineral": "silica_escarpment_v01.png",
 		"methane": "methane_basin_v01.png",
 		"sulphur": "sulphur_crust_v01.png",
+		"carbonate": "carbonate_shelf_v01.png",
+		"carbon_clay": "carbon_clay_terrace_v01.png",
 	}
 	for texture_name in files:
 		var path: String = texture_root.path_join(files[texture_name])

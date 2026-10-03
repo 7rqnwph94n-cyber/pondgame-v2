@@ -32,6 +32,10 @@ MATERIALS = {
     "living_olive": (0.42, 0.48, 0.25),
     "living_teal": (0.17, 0.43, 0.39),
     "living_pale": (0.48, 0.62, 0.45),
+    "living_methane": (0.24, 0.34, 0.43),
+    "living_sulphur": (0.59, 0.45, 0.20),
+    "living_silica": (0.35, 0.60, 0.56),
+    "carbonate_shadow": (0.54, 0.54, 0.48),
 }
 
 
@@ -262,6 +266,72 @@ def vegetation_mat(name, phase):
     m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,1.2,0],"WetEdge":[0,0,-2.5]})
 
 
+def filter_grove(name, phase):
+    """A taller river-edge family with branching filter crowns and a broken footprint."""
+    m=Mesh(name)
+    for i,(x,z,rx,rz) in enumerate([(-1.8,-.6,1.9,1.0),(.4,.5,2.2,1.25),(2.1,-.4,1.45,.9)]):
+        m.ellipsoid((x,0,z),(rx,.055,rz),"living_green",f"substrate_{i}",rings=3,segments=11)
+    for i in range(13):
+        angle=phase+i*2.399
+        radius=.7+(i*5%11)*.28
+        x=math.cos(angle)*radius
+        z=math.sin(angle)*radius*.58
+        height=1.25+(i*7%9)*.24
+        lean=.28*math.sin(angle*1.7)
+        top=(x+lean,height,z+.2*math.cos(angle))
+        m.cylinder((x,.06,z),top,.085 if i%4 else .12,"living_teal",f"stem_{i}",sides=7)
+        for arm in (-1,1):
+            branch_y=height*(.5+.12*(arm+1))
+            end=(x+arm*(.32+.05*(i%3)),branch_y+.24,z+.14*math.sin(i+arm))
+            m.cylinder((x,branch_y,z),end,.045,"living_silica",f"arm_{i}_{arm}",sides=5)
+            m.ellipsoid(end,(.14,.18,.09),"living_pale",f"filter_{i}_{arm}",rings=3,segments=6)
+        if i%3==0:
+            m.ellipsoid((top[0],top[1]-.10,top[2]),(.26,.15,.26),"living_pale",f"crown_{i}",rings=3,segments=7)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,1.8,0],"WetEdge":[0,0,-2]})
+
+
+def chemical_colony(name, kind):
+    """Chemistry-specific life with a silhouette that stays distinct at map scale."""
+    m=Mesh(name)
+    if kind=="methane":
+        for i,(x,z,rx,rz) in enumerate([(-1.7,-.2,1.8,1.1),(.6,.5,2.1,1.25),(2.2,-.6,1.2,.8)]):
+            m.ellipsoid((x,0,z),(rx,.055,rz),"methane_film",f"film_{i}",rings=3,segments=12)
+        for i,(x,z,r) in enumerate([(-2.0,-.3,.38),(-.8,.7,.28),(.25,-.4,.46),(1.25,.55,.34),(2.25,-.5,.3)]):
+            m.ellipsoid((x,.06,z),(r,.55+r*.35,r),"living_methane",f"bladder_{i}",rings=5,segments=9)
+            m.cylinder((x,.08,z),(x,.35,z),r*.12,"methane_rim",f"root_{i}",sides=6)
+    elif kind=="sulphur":
+        for i,(x,z,rx,rz) in enumerate([(-1.8,.1,1.9,1.05),(.4,-.5,2.2,1.2),(2.1,.55,1.35,.82)]):
+            m.ellipsoid((x,0,z),(rx,.06,rz),"sulphur_crust",f"crust_{i}",rings=3,segments=12)
+        for i in range(11):
+            angle=i*2.399+.5
+            radius=.6+(i*5%9)*.31
+            x=math.cos(angle)*radius; z=math.sin(angle)*radius*.58
+            height=.45+(i*3%7)*.16
+            m.cone((x,.08,z),height,.20+.03*(i%3),.08,"living_sulphur",f"feeder_{i}",sides=7)
+            if i%3==0:
+                m.ellipsoid((x,height+.05,z),(.18,.10,.18),"carbonate",f"crown_{i}",rings=3,segments=7)
+    elif kind=="silica":
+        for i,(x,z,rx,rz) in enumerate([(-1.6,-.3,1.7,.95),(.5,.5,2.0,1.15),(2.0,-.5,1.25,.75)]):
+            m.ellipsoid((x,0,z),(rx,.05,rz),"silica_matrix",f"lichen_plate_{i}",rings=3,segments=12)
+        for i in range(12):
+            angle=i*2.399+1.1
+            radius=.55+(i*7%10)*.28
+            x=math.cos(angle)*radius; z=math.sin(angle)*radius*.55
+            height=.45+(i*4%7)*.14
+            m.cylinder((x,.06,z),(x+.12*math.cos(angle),height,z+.12*math.sin(angle)),.055,"living_silica",f"glass_lichen_{i}",sides=6)
+            m.ellipsoid((x,height-.08,z),(.12,.18,.07),"living_pale",f"blade_{i}",rings=3,segments=6)
+    else:
+        for i,(x,z,rx,rz) in enumerate([(-1.8,-.2,1.9,1.1),(.4,.5,2.2,1.3),(2.0,-.6,1.35,.85)]):
+            m.ellipsoid((x,0,z),(rx,.07,rz),"carbonate",f"carbonate_mat_{i}",rings=3,segments=12)
+        for i in range(9):
+            angle=i*2.399+.9; radius=.7+(i*5%8)*.34
+            x=math.cos(angle)*radius; z=math.sin(angle)*radius*.6
+            height=.35+(i*3%6)*.15
+            m.cylinder((x,.06,z),(x,height,z),.10,"carbonate_shadow",f"tube_{i}",sides=7)
+            m.ellipsoid((x,height-.07,z),(.20,.10,.20),"living_pale",f"rim_{i}",rings=3,segments=7)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,1,0]})
+
+
 def ground_detail(name, kind):
     m=Mesh(name)
     if kind=="ripples":
@@ -338,6 +408,40 @@ def sulphur_vents():
     m.write({"GroundPivot":[0,0,0],"ExtractionAnchor":[0,.4,-3],"CameraAnchor":[0,2.7,0]})
 
 
+def secondary_outcrops():
+    m=Mesh("silica_outcrop_b")
+    for i,(x,z,rx,ry,rz,y) in enumerate([(-1.8,.2,2.2,.32,1.4,0),(.2,-.1,2.5,.38,1.55,.35),(2.0,.35,1.8,.29,1.15,.72)]):
+        m.ellipsoid((x,y,z),(rx,ry,rz),"silica_matrix",f"shelf_{i}",rings=4,segments=11)
+    for i,(a,b) in enumerate([((-2.6,.7,-.75),(.1,1.0,-.9)),((-.4,1.25,-.55),(2.1,1.38,-.65))]):
+        m.cylinder(a,b,.09,"silica",f"seam_{i}",sides=6)
+    m.write({"GroundPivot":[0,0,0],"ExtractionAnchor":[0,.2,-1.5]})
+
+    m=Mesh("methane_crater_b")
+    m.ellipsoid((0,0,0),(3.2,.06,2.2),"methane","pool",rings=3,segments=14)
+    for i in range(9):
+        angle=2*math.pi*i/9
+        x=math.cos(angle)*2.7; z=math.sin(angle)*1.8
+        m.ellipsoid((x,.04,z),(.75,.26,.58),"methane_rim",f"rim_{i}",rings=4,segments=8)
+    for i,(x,z,r) in enumerate([(-.9,.2,.32),(.5,-.4,.42),(1.25,.55,.27)]):
+        m.ellipsoid((x,.08,z),(r,.38,r),"living_methane",f"dome_{i}",rings=4,segments=8)
+    m.write({"GroundPivot":[0,0,0],"HazardAnchor":[0,0,0]})
+
+    m=Mesh("sulphur_crust_b")
+    for i,(x,z,rx,rz) in enumerate([(-1.7,.1,2.0,1.25),(.5,-.5,2.4,1.4),(2.2,.55,1.3,.9)]):
+        m.ellipsoid((x,0,z),(rx,.13,rz),"sulphur_crust",f"plate_{i}",rings=3,segments=12)
+        m.ellipsoid((x+.1,.2,z),(rx*.6,.06,rz*.57),"carbonate",f"rim_{i}",rings=3,segments=10)
+    for i,(x,z,h) in enumerate([(-.8,.2,1.15),(1.2,-.35,.8)]):
+        m.cone((x,.24,z),h,.5,.18,"sulphur",f"vent_{i}",sides=8)
+    m.write({"GroundPivot":[0,0,0],"ExtractionAnchor":[0,.2,-1.5]})
+
+    m=Mesh("carbonate_shelf_a")
+    for i,(x,z,rx,ry,rz,y) in enumerate([(-2.2,.1,2.5,.20,1.6,0),(.2,-.35,2.9,.23,1.8,.22),(2.3,.4,1.8,.18,1.25,.43),(-.7,.55,1.8,.16,1.0,.52)]):
+        m.ellipsoid((x,y,z),(rx,ry,rz),"carbonate",f"precipitate_shelf_{i}",rings=4,segments=13)
+    for i,(x,z,r) in enumerate([(-2.8,-.7,.34),(-1.2,.8,.26),(.6,-.8,.42),(2.1,.65,.30)]):
+        m.ellipsoid((x,.1,z),(r,.32,r),"carbonate_shadow",f"carbon_inclusion_{i}",rings=4,segments=8)
+    m.write({"GroundPivot":[0,0,0],"ExtractionAnchor":[0,.2,-1.8]})
+
+
 def delta_island(name, phase):
     m=Mesh(name)
     m.ellipsoid((0,0,0),(5.5,.24,2.4),"flood_silt","island",rings=4,segments=14)
@@ -379,6 +483,12 @@ def main():
     vegetation_mat("vegetation_mat_a",0.0)
     vegetation_mat("vegetation_mat_b",1.8)
     vegetation_mat("vegetation_mat_c",3.6)
+    filter_grove("filter_grove_a",.4)
+    filter_grove("filter_grove_b",2.2)
+    chemical_colony("anoxic_colony_a","methane")
+    chemical_colony("sulphur_colony_a","sulphur")
+    chemical_colony("silica_lichen_a","silica")
+    chemical_colony("carbonate_colony_a","carbonate")
     ground_detail("detail_ripple_a","ripples")
     ground_detail("detail_pebbles_a","pebbles")
     ground_detail("detail_scar_a","scar")
@@ -388,6 +498,7 @@ def main():
     silica_cliff()
     methane_seep()
     sulphur_vents()
+    secondary_outcrops()
     delta_island("delta_island_a",0.0)
     delta_island("delta_island_b",1.7)
     assets=[p.stem for p in sorted(OUT.glob("*.obj"))]

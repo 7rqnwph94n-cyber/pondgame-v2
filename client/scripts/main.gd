@@ -33,6 +33,7 @@ var _capture_clock := 0.0
 var _carrier_views: Array[MeshInstance3D] = []
 var _carrier_phase := 0.0
 var _carrier_route: Array[Vector3] = []
+var _environment_materials: Dictionary = {}
 
 
 func _parse_capture_args() -> void:
@@ -417,12 +418,14 @@ func _build_environment_assets() -> void:
 			_add_environment_item(item)
 		for item in environment.get("scenery", []):
 			_add_environment_item(item)
+	for item in environment.get("chemical_ecology", []):
+		_add_environment_item(item)
 
 
 func _build_ecological_scatter() -> void:
 	var root: String = style.get("environment_root", "")
 	var clusters := [Vector2(-43, -32), Vector2(-18, -10), Vector2(-2, 5), Vector2(20, 12), Vector2(29, 28)]
-	var mat_names := ["vegetation_mat_a", "vegetation_mat_b", "vegetation_mat_c"]
+	var mat_names := ["vegetation_mat_a", "filter_grove_a", "vegetation_mat_b", "filter_grove_b", "vegetation_mat_c"]
 	# Broad mats make the bank ecology read as habitat at strategy-camera scale.
 	for cluster_index in range(clusters.size()):
 		var centre: Vector2 = clusters[cluster_index]
@@ -441,6 +444,7 @@ func _build_ecological_scatter() -> void:
 			instance.position = Vector3(px, _basin_terrain.height_at(px, pz) + 0.08, pz)
 			instance.rotation_degrees.y = float((i * 67 + cluster_index * 31) % 360)
 			instance.scale = Vector3.ONE * (0.82 + float(i % 3) * 0.13)
+			_texture_environment_surfaces(instance)
 			add_child(instance)
 	# Taller individual organisms break up the mat silhouettes without becoming confetti.
 	var accent_names := ["plant_fan_b", "plant_ribbon_b", "plant_branch_b", "plant_cup_a"]
@@ -474,6 +478,7 @@ func _build_ecological_scatter() -> void:
 		rock_instance.position = Vector3(rock_x, _basin_terrain.height_at(rock_x, rock_z) + 0.06, rock_z)
 		rock_instance.rotation_degrees.y = float((i * 83) % 360)
 		rock_instance.scale = Vector3.ONE * (0.8 + float(i % 6) * 0.18)
+		_texture_environment_surfaces(rock_instance)
 		add_child(rock_instance)
 
 
@@ -536,7 +541,57 @@ func _add_environment_mesh(asset: String, position: Vector3, rotation_y: float, 
 	instance.rotation_degrees.y = rotation_y
 	instance.scale = Vector3.ONE * uniform_scale
 	instance.set_meta("asset", asset)
+	_texture_environment_surfaces(instance)
 	add_child(instance)
+
+
+func _texture_environment_surfaces(instance: MeshInstance3D) -> void:
+	# Texture exposed substrate in world space so vertical faces and ground share geology.
+	var surface_textures := {
+		"rock": "mineral", "silica_matrix": "mineral", "carbonate": "carbonate",
+		"carbonate_shadow": "carbon_clay", "methane": "methane", "methane_film": "methane",
+		"methane_rim": "wet", "sulphur_bed": "sulphur", "sulphur_crust": "sulphur",
+		"sulphur": "sulphur", "living_green": "fertile", "living_olive": "fertile",
+	}
+	for surface_index in range(instance.mesh.get_surface_count()):
+		var original := instance.mesh.surface_get_material(surface_index) as StandardMaterial3D
+		if original == null or not surface_textures.has(original.resource_name):
+			continue
+		if _environment_materials.has(original.resource_name):
+			instance.set_surface_override_material(surface_index, _environment_materials[original.resource_name])
+			continue
+		var texture: Texture2D = _basin_terrain.material_texture(surface_textures[original.resource_name])
+		if texture == null:
+			continue
+		var shader := Shader.new()
+		shader.code = """
+shader_type spatial;
+render_mode cull_disabled;
+uniform sampler2D ground_texture : source_color, repeat_enable, filter_linear_mipmap;
+uniform vec4 surface_tint : source_color;
+varying vec3 world_position;
+varying vec3 world_normal;
+void vertex() {
+	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	world_normal = normalize(MODEL_NORMAL_MATRIX * NORMAL);
+}
+void fragment() {
+	vec3 blend = pow(abs(normalize(world_normal)), vec3(4.0));
+	blend /= max(0.001, blend.x + blend.y + blend.z);
+	vec3 p = world_position / 8.0;
+	vec3 colour = texture(ground_texture, p.zy).rgb * blend.x;
+	colour += texture(ground_texture, p.xz).rgb * blend.y;
+	colour += texture(ground_texture, p.xy).rgb * blend.z;
+	ALBEDO = mix(colour, surface_tint.rgb, 0.16);
+	ROUGHNESS = 0.92;
+}
+"""
+		var material := ShaderMaterial.new()
+		material.shader = shader
+		material.set_shader_parameter("ground_texture", texture)
+		material.set_shader_parameter("surface_tint", original.albedo_color)
+		_environment_materials[original.resource_name] = material
+		instance.set_surface_override_material(surface_index, material)
 
 
 func _apply_season(season: String) -> void:
