@@ -10,6 +10,8 @@ EXPECTED={
     "terrain_silt_tile_a","terrain_silt_tile_b","terrain_sand_tile_a",
     "ledge_straight_a","ledge_corner_a","boulder_a","boulder_b","boulder_c",
     "root_arch_a","route_flow_straight_a","route_flow_corner_a","route_flow_junction_a",
+    "plant_fan_a","plant_fan_b","plant_ribbon_a","plant_ribbon_b","plant_cup_a",
+    "plant_branch_a","plant_branch_b","detail_ripple_a","detail_pebbles_a","detail_scar_a",
 }
 
 

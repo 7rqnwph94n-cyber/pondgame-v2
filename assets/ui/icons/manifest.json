@@ -1,0 +1,24 @@
+{
+  "generated_by": "tools/generate_ui_icons.py",
+  "view_box": "0 0 64 64",
+  "icons": [
+    "builder",
+    "clean_flow",
+    "culture",
+    "dormant",
+    "food_emergency",
+    "health",
+    "nutrition",
+    "output_blocked",
+    "prepared_silica",
+    "raw_silicate",
+    "repair_enzyme",
+    "season_bloom",
+    "season_dry",
+    "staple_food",
+    "strained",
+    "unstaffed",
+    "waiting_input",
+    "waste"
+  ]
+}

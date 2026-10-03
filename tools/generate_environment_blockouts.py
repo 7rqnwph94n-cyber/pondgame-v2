@@ -161,6 +161,69 @@ def route(name, kind):
     m.write(anchors)
 
 
+def plant_fan(name, width, height, blades):
+    m=Mesh(name)
+    m.ellipsoid((0,0,0),(.42,.16,.42),"root","holdfast",rings=3,segments=7)
+    for i in range(blades):
+        t=-.85+1.7*i/max(1,blades-1)
+        x=width*math.sin(t)*.5
+        top=(x,height*(.82+.18*math.cos(t)),.12*math.sin(i*1.7))
+        m.cylinder((0,.14,0),top,.055,"route_membrane",f"blade_{i}",sides=6)
+        m.ellipsoid((top[0],top[1]-.12,top[2]),(.12,.2,.045),"route_membrane",f"blade_tip_{i}",rings=3,segments=6)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,height*.6,0]})
+
+
+def plant_ribbon(name, height, strands):
+    m=Mesh(name)
+    m.ellipsoid((0,0,0),(.38,.13,.38),"root","holdfast",rings=3,segments=7)
+    for i in range(strands):
+        angle=2*math.pi*i/strands
+        base=(.18*math.cos(angle),.12,.18*math.sin(angle))
+        mid=(.32*math.cos(angle+.35),height*.5,.32*math.sin(angle+.35))
+        top=(.48*math.cos(angle+.7),height,.48*math.sin(angle+.7))
+        m.cylinder(base,mid,.045,"route_membrane",f"ribbon_{i}",sides=5)
+        m.cylinder(mid,top,.035,"route_membrane",f"ribbon_{i}",sides=5)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,height*.55,0]})
+
+
+def plant_cup():
+    m=Mesh("plant_cup_a")
+    m.ellipsoid((0,0,0),(.45,.15,.45),"root","holdfast",rings=3,segments=8)
+    for i in range(7):
+        t=2*math.pi*i/7
+        stem=(.34*math.cos(t),.85,.34*math.sin(t))
+        m.cylinder((0,.12,0),stem,.05,"root",f"stem_{i}",sides=6)
+        m.ellipsoid(stem,(.3,.12,.3),"route_membrane",f"cup_{i}",rings=3,segments=7)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,.7,0]})
+
+
+def plant_branch(name, height, arms):
+    m=Mesh(name)
+    m.cylinder((0,.11,0),(0,height,0),.11,"root","trunk",sides=7)
+    for i in range(arms):
+        y=.35+height*.55*i/max(1,arms-1)
+        side=-1 if i%2 else 1
+        end=(side*(.45+.09*i),y+.32,.12*math.sin(i))
+        m.cylinder((0,y,0),end,.07,"root",f"branch_{i}",sides=6)
+        m.ellipsoid(end,(.16,.2,.08),"route_membrane",f"polyp_{i}",rings=3,segments=6)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,height*.6,0]})
+
+
+def ground_detail(name, kind):
+    m=Mesh(name)
+    if kind=="ripples":
+        for i in range(3):
+            z=-.55+i*.55
+            m.cylinder((-1.2,.025,z),(1.2,.025,z),.025,"sand","ripple",sides=5)
+    elif kind=="pebbles":
+        for i,(x,z,r) in enumerate([(-.8,-.3,.22),(-.25,.2,.16),(.22,-.15,.19),(.7,.25,.25),(.05,.55,.12)]):
+            m.ellipsoid((x,0,z),(r,r*.45,r*.8),"rock",f"pebble_{i}",rings=3,segments=6)
+    else:
+        for i,(a,b) in enumerate([((-1.2,.05,-.5),(1.1,.05,.45)),((-.9,.05,.6),(.65,.05,-.65)),((-.3,.05,.75),(.2,.05,-.75))]):
+            m.cylinder(a,b,.035,"organic_dark" if "organic_dark" in MATERIALS else "rock","scar",sides=5)
+    m.write({"GroundPivot":[0,0,0]})
+
+
 def write_materials():
     OUT.mkdir(parents=True,exist_ok=True)
     lines=["# Environment blockout materials"]
@@ -182,6 +245,16 @@ def main():
     route("route_flow_straight_a","straight")
     route("route_flow_corner_a","corner")
     route("route_flow_junction_a","junction")
+    plant_fan("plant_fan_a",1.2,1.35,5)
+    plant_fan("plant_fan_b",1.7,1.8,7)
+    plant_ribbon("plant_ribbon_a",1.6,5)
+    plant_ribbon("plant_ribbon_b",2.25,7)
+    plant_cup()
+    plant_branch("plant_branch_a",1.55,4)
+    plant_branch("plant_branch_b",2.1,6)
+    ground_detail("detail_ripple_a","ripples")
+    ground_detail("detail_pebbles_a","pebbles")
+    ground_detail("detail_scar_a","scar")
     assets=[p.stem for p in sorted(OUT.glob("*.obj"))]
     (OUT/"manifest.json").write_text(json.dumps({"generated_by":"tools/generate_environment_blockouts.py","units":"metres","up_axis":"+Y","assets":assets},indent=2)+"\n")
     print(f"Generated {len(assets)} environment assets in {OUT}")

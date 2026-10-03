@@ -1,0 +1,22 @@
+{
+  "asset": "plant_fan_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      0.81,
+      0
+    ]
+  }
+}
