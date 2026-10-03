@@ -141,6 +141,7 @@ func complete_as(new_kind: String) -> void:
 # ------------------------------------------------------------------ internals
 func set_selected(selected: bool) -> void:
 	_label.modulate = Color(1, 0.95, 0.5) if selected else Color(1, 1, 1)
+	_label.visible = selected or kind == "site"
 
 
 func _process(delta: float) -> void:
@@ -152,6 +153,7 @@ func _process(delta: float) -> void:
 func _refresh_label() -> void:
 	if _label:
 		_label.text = "%s\n%s" % [definition_id.replace("_", " "), state_id.replace("_", " ")]
+		_label.visible = kind == "site"
 
 
 func _rebuild_body() -> void:

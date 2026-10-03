@@ -24,12 +24,19 @@ func configure(asset_style: Dictionary, hello: Dictionary) -> void:
 func slot_for(entity_id: String, band: String) -> Vector3:
 	if _slots.has(entity_id):
 		return _slots[entity_id]
-	var row: int = BANDS.find(band)
-	if row < 0:
-		row = BANDS.size() - 1
-	var column: int = _band_counts.get(band, 0)
-	_band_counts[band] = column + 1
-	var position := Vector3((column - 4) * SPACING, 0, (row - 3) * SPACING * 1.2)
+	var map: Dictionary = style.get("environment", {}).get("map", {})
+	var centres: Dictionary = map.get("district_centres", {})
+	var fallback_row: int = BANDS.find(band)
+	if fallback_row < 0:
+		fallback_row = BANDS.size() - 1
+	var pair: Array = centres.get(band, [0, (fallback_row - 3) * SPACING])
+	var centre := Vector3(float(pair[0]), 0, float(pair[1]))
+	var index: int = _band_counts.get(band, 0)
+	_band_counts[band] = index + 1
+	var ring: int = index / 6
+	var angle := float(index % 6) / 6.0 * TAU + float(ring) * 0.35
+	var radius := 3.4 + float(ring) * 5.8
+	var position := centre + Vector3(cos(angle) * radius, 0, sin(angle) * radius)
 	_slots[entity_id] = position
 	return position
 

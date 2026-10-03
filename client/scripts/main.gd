@@ -31,9 +31,7 @@ var _capture_after := 0.0
 var _capture_clock := 0.0
 var _carrier_views: Array[MeshInstance3D] = []
 var _carrier_phase := 0.0
-const CARRIER_ROUTE := [
-	Vector3(-14, 0.25, 2), Vector3(-8, 0.25, 2), Vector3(-4, 0.25, 2),
-	Vector3(0, 0.25, 2), Vector3(4, 0.25, 2), Vector3(4, 0.25, 10)]
+var _carrier_route: Array[Vector3] = []
 
 
 func _parse_capture_args() -> void:
@@ -231,6 +229,7 @@ const SEASON_TINTS := {
 
 
 func _build_environment() -> void:
+	var map: Dictionary = style.get("environment", {}).get("map", {})
 	_env = Environment.new()
 	_env.background_mode = Environment.BG_COLOR
 	_env.background_color = Color(0.03, 0.12, 0.14)
@@ -249,13 +248,143 @@ func _build_environment() -> void:
 	add_child(_sun)
 	var ground := MeshInstance3D.new()
 	var plane := PlaneMesh.new()
-	plane.size = Vector2(260, 260)
+	plane.size = Vector2(120, 105)
 	ground.mesh = plane
 	_ground_mat = StandardMaterial3D.new()
-	_ground_mat.albedo_color = SEASON_TINTS["bloom"]
+	_ground_mat.albedo_color = Color(map.get("base_colour", "#303f3b"))
+	_ground_mat.roughness = 0.92
 	ground.material_override = _ground_mat
 	add_child(ground)
+	_build_map_geography(map)
 	_build_environment_assets()
+	_build_presentation_routes(map)
+	_load_carrier_route(map)
+
+
+func _build_map_geography(map: Dictionary) -> void:
+	var channel := _points_from_pairs(map.get("channel", []), 0.08)
+	_add_band(channel, 18.0, Color(map.get("floodplain_colour", "#7f7958")), 0.025)
+	_add_band(channel, 7.0, Color(map.get("water_colour", "#176b73")), 0.07)
+
+	# Stable start, chemical frontiers and the distant Great Work shelf.
+	_add_patch(Vector3(-18, 0.045, -8), Vector2(17, 12), Color(map.get("terrace_colour", "#596c57")), 0.7)
+	_add_patch(Vector3(-31, 0.05, 20), Vector2(14, 12), Color(map.get("methane_colour", "#27343f")), 1.9)
+	_add_patch(Vector3(39, 0.05, -3), Vector2(11, 18), Color(map.get("sulphur_colour", "#7d6235")), 3.1)
+	_add_patch(Vector3(29, 0.04, -18), Vector2(16, 24), Color(map.get("carbonate_colour", "#9d9981")), 4.4)
+	_add_patch(Vector3(-35, 0.04, -29), Vector2(13, 9), Color(map.get("carbonate_colour", "#9d9981")), 5.6)
+
+	# Delta fingers make the downstream end read as deposition rather than a road.
+	var water := Color(map.get("water_colour", "#176b73"))
+	_add_band(_points_from_pairs([[22, 17], [31, 21], [43, 20]], 0.075), 3.2, water, 0.075)
+	_add_band(_points_from_pairs([[22, 17], [29, 28], [40, 36]], 0.075), 3.0, water, 0.075)
+	_add_band(_points_from_pairs([[25, 19], [36, 28], [47, 30]], 0.075), 2.4, water, 0.075)
+
+	# Low, non-interactive landmark masses establish the map's long-term goals.
+	_add_memory_reef(Vector3(-35, 0.35, -29))
+	_add_vent_field(Vector3(40, 0.1, -3))
+
+
+func _build_presentation_routes(map: Dictionary) -> void:
+	var route := _points_from_pairs(map.get("carrier_route", []), 0.13)
+	_add_band(route, 1.35, Color("#315f5e"), 0.13)
+	# The residence service loop gives the settlement a Pharaoh-like neighbourhood centre.
+	var loop := _points_from_pairs([[-25, -12], [-18, -16], [-10, -11], [-10, -4], [-18, 0], [-26, -5], [-25, -12]], 0.135)
+	_add_band(loop, 1.0, Color("#426d66"), 0.135)
+
+
+func _load_carrier_route(map: Dictionary) -> void:
+	_carrier_route = _points_from_pairs(map.get("carrier_route", []), 0.3)
+
+
+func _points_from_pairs(pairs: Array, height: float) -> Array[Vector3]:
+	var points: Array[Vector3] = []
+	for pair in pairs:
+		if pair is Array and pair.size() >= 2:
+			points.append(Vector3(float(pair[0]), height, float(pair[1])))
+	return points
+
+
+func _add_band(points: Array[Vector3], width: float, colour: Color, height: float) -> void:
+	for i in range(points.size() - 1):
+		var a := points[i]
+		var b := points[i + 1]
+		var delta := b - a
+		var segment := MeshInstance3D.new()
+		var box := BoxMesh.new()
+		box.size = Vector3(width, 0.08, delta.length() + width * 0.45)
+		segment.mesh = box
+		segment.position = (a + b) * 0.5
+		segment.position.y = height
+		segment.rotation.y = atan2(delta.x, delta.z)
+		segment.material_override = _material(colour, 0.82)
+		add_child(segment)
+
+
+func _add_patch(center: Vector3, radii: Vector2, colour: Color, phase: float) -> void:
+	var zone := MeshInstance3D.new()
+	var vertices := PackedVector3Array([Vector3.ZERO])
+	var normals := PackedVector3Array([Vector3.UP])
+	var indices := PackedInt32Array()
+	var edge_count := 18
+	for i in range(edge_count):
+		var angle := float(i) / float(edge_count) * TAU
+		var variation := 0.88 + 0.12 * sin(angle * 3.0 + phase) + 0.06 * cos(angle * 7.0 - phase)
+		vertices.append(Vector3(cos(angle) * radii.x * variation, 0, sin(angle) * radii.y * variation))
+		normals.append(Vector3.UP)
+	for i in range(edge_count):
+		indices.append_array(PackedInt32Array([0, i + 1, (i + 1) % edge_count + 1]))
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_INDEX] = indices
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	zone.mesh = mesh
+	zone.position = center
+	zone.material_override = _material(colour, 0.9)
+	add_child(zone)
+
+
+func _add_memory_reef(center: Vector3) -> void:
+	for i in range(7):
+		var rib := MeshInstance3D.new()
+		var prism := CylinderMesh.new()
+		prism.top_radius = 0.35
+		prism.bottom_radius = 0.9
+		prism.height = 4.0 + float(i % 3)
+		prism.radial_segments = 6
+		rib.mesh = prism
+		var angle := float(i) / 7.0 * TAU
+		rib.position = center + Vector3(cos(angle) * 5.0, prism.height * 0.5, sin(angle) * 5.0)
+		rib.rotation_degrees.z = 12.0
+		rib.material_override = _material(Color("#77729c"), 0.45)
+		add_child(rib)
+
+
+func _add_vent_field(center: Vector3) -> void:
+	for offset in [Vector3(-4, 0, -5), Vector3(2, 0, -2), Vector3(-1, 0, 5), Vector3(5, 0, 4)]:
+		var vent := MeshInstance3D.new()
+		var cone := CylinderMesh.new()
+		cone.top_radius = 0.35
+		cone.bottom_radius = 1.8
+		cone.height = 4.5
+		cone.radial_segments = 8
+		vent.mesh = cone
+		vent.position = center + offset + Vector3(0, cone.height * 0.5, 0)
+		vent.material_override = _material(Color("#9b7438"), 0.75, Color("#f0a23a"))
+		add_child(vent)
+
+
+func _material(colour: Color, roughness: float, emission: Color = Color.BLACK) -> StandardMaterial3D:
+	var material := StandardMaterial3D.new()
+	material.albedo_color = colour
+	material.roughness = roughness
+	if emission != Color.BLACK:
+		material.emission_enabled = true
+		material.emission = emission
+		material.emission_energy_multiplier = 0.35
+	return material
 
 
 func _build_environment_assets() -> void:
@@ -290,7 +419,7 @@ func _build_carrier_views() -> void:
 
 
 func _update_carrier_views(delta: float) -> void:
-	if _carrier_views.is_empty() or view.is_empty():
+	if _carrier_views.is_empty() or view.is_empty() or _carrier_route.size() < 2:
 		return
 	var active := false
 	for facility in view.get("facilities", {}).values():
@@ -301,11 +430,11 @@ func _update_carrier_views(delta: float) -> void:
 	_carrier_phase = fmod(_carrier_phase + delta * speed, 1.0)
 	for carrier in _carrier_views:
 		var t: float = fmod(_carrier_phase + float(carrier.get_meta("phase_offset")), 1.0)
-		var scaled := t * (CARRIER_ROUTE.size() - 1)
-		var segment: int = min(int(floor(scaled)), CARRIER_ROUTE.size() - 2)
+		var scaled := t * (_carrier_route.size() - 1)
+		var segment: int = min(int(floor(scaled)), _carrier_route.size() - 2)
 		var local_t: float = scaled - segment
-		var a: Vector3 = CARRIER_ROUTE[segment]
-		var b: Vector3 = CARRIER_ROUTE[segment + 1]
+		var a: Vector3 = _carrier_route[segment]
+		var b: Vector3 = _carrier_route[segment + 1]
 		carrier.position = a.lerp(b, local_t)
 		var direction := b - a
 		if direction.length_squared() > 0.001:

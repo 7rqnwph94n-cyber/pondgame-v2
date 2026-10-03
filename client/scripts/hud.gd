@@ -29,6 +29,7 @@ var _auto: CheckBox
 var _event_lines: PackedStringArray = []
 var _style: Dictionary = {}
 var _headline_values: Dictionary = {}
+var _inspector_panel: PanelContainer
 
 
 func configure_style(style: Dictionary) -> void:
@@ -79,17 +80,17 @@ func _ready() -> void:
 	_resource_chip(resources, "builder", "Builders")
 	show_speed(1, 1)
 
-	var left := _panel(root, Vector2(10, 112), Vector2(300, 712))
+	var left := _panel(root, Vector2(10, 112), Vector2(270, 710))
 	var lbox := VBoxContainer.new()
 	left.add_child(lbox)
 	lbox.add_child(_heading("Store"))
 	_store = RichTextLabel.new()
-	_store.custom_minimum_size = Vector2(280, 300)
+	_store.custom_minimum_size = Vector2(250, 150)
 	_store.bbcode_enabled = true
 	lbox.add_child(_store)
 	lbox.add_child(_heading("Build (double-click)"))
 	_build_list = ItemList.new()
-	_build_list.custom_minimum_size = Vector2(280, 330)
+	_build_list.custom_minimum_size = Vector2(250, 455)
 	_build_list.item_activated.connect(func(index): build_requested.emit(_build_list.get_item_metadata(index)))
 	lbox.add_child(_build_list)
 	var reef := Button.new()
@@ -98,8 +99,10 @@ func _ready() -> void:
 	lbox.add_child(reef)
 
 	var right := _panel(root, Vector2(1240, 112), Vector2(350, 520))
+	_inspector_panel = right
 	right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_KEEP_SIZE, 10)
 	right.position.y = 112
+	right.visible = false
 	var rbox := VBoxContainer.new()
 	right.add_child(rbox)
 	_inspector_title = _heading("Inspector: click anything")
@@ -111,11 +114,11 @@ func _ready() -> void:
 	_actions = HBoxContainer.new()
 	rbox.add_child(_actions)
 
-	var bottom := _panel(root, Vector2(320, 720), Vector2(900, 170))
-	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_KEEP_SIZE, 10)
-	bottom.position.x = 320
+	var bottom := _panel(root, Vector2(890, 770), Vector2(700, 120))
+	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_KEEP_SIZE, 10)
+	bottom.position.y = 770
 	_events = RichTextLabel.new()
-	_events.custom_minimum_size = Vector2(880, 150)
+	_events.custom_minimum_size = Vector2(680, 100)
 	_events.scroll_following = true
 	bottom.add_child(_events)
 
@@ -239,6 +242,7 @@ func _set_headline(key: String, amount: int) -> void:
 
 
 func clear_inspection() -> void:
+	_inspector_panel.visible = false
 	_inspector_title.text = "Inspector: click anything"
 	_inspector_body.text = ""
 	for c in _actions.get_children():
@@ -247,6 +251,7 @@ func clear_inspection() -> void:
 
 
 func show_inspection(reply: Dictionary) -> void:
+	_inspector_panel.visible = true
 	if not reply.get("ok", false):
 		_inspector_body.text = "[color=#ff8a80]%s[/color]" % ", ".join(PackedStringArray(reply.get("reasons", [])))
 		return
