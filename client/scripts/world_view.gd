@@ -6,6 +6,7 @@ extends Node3D
 
 const SPACING := 10.0
 const BANDS := ["residence", "food", "extraction", "processing", "service", "logistics", "institution", "luxury", "other"]
+const EntityViewScript = preload("res://scripts/entity_view.gd")
 
 var style: Dictionary = {}
 var building_categories: Dictionary = {}     # building id -> category (from hello)
@@ -68,10 +69,10 @@ func sync(view: Dictionary) -> void:
 			views.erase(id)
 
 
-func _ensure(id: String, kind: String, definition: String, category: String) -> EntityView:
+func _ensure(id: String, kind: String, definition: String, category: String) -> Node3D:
 	if views.has(id):
 		return views[id]
-	var v := EntityView.new()
+	var v: Node3D = EntityViewScript.new()
 	v.setup(kind, style)
 	v.set_category(category)
 	v.set_entity_identity(id, definition)

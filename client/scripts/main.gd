@@ -6,11 +6,16 @@ extends Node3D
 
 const SPEEDS := [0, 1, 2, 4, 8, 16, 32]           # simulated seconds per real second
 const INSPECT_INTERVAL := 0.5
+const SimBridgeScript = preload("res://scripts/sim_bridge.gd")
+const WorldViewScript = preload("res://scripts/world_view.gd")
+const HudScript = preload("res://scripts/hud.gd")
+const CameraRigScript = preload("res://scripts/camera_rig.gd")
+const ObjLoaderScript = preload("res://scripts/obj_loader.gd")
 
-var bridge: SimBridge
-var world: WorldView
-var hud: Hud
-var camera_rig: CameraRig
+var bridge: Node
+var world: Node3D
+var hud: CanvasLayer
+var camera_rig: Node3D
 var hello: Dictionary = {}
 var view: Dictionary = {}
 var speed_index := 1
@@ -51,11 +56,11 @@ func _ready() -> void:
 	_parse_capture_args()
 	style = _load_style()
 	_build_environment()
-	camera_rig = CameraRig.new()
+	camera_rig = CameraRigScript.new()
 	add_child(camera_rig)
-	world = WorldView.new()
+	world = WorldViewScript.new()
 	add_child(world)
-	hud = Hud.new()
+	hud = HudScript.new()
 	hud.configure_style(style)
 	add_child(hud)
 	_build_carrier_views()
@@ -64,7 +69,7 @@ func _ready() -> void:
 	hud.build_requested.connect(_on_build_requested)
 	hud.action_requested.connect(_on_action_requested)
 	hud.inspect_requested.connect(_select)
-	bridge = SimBridge.new()
+	bridge = SimBridgeScript.new()
 	_apply_settings(bridge)
 	add_child(bridge)
 	bridge.connected.connect(_on_connected)
@@ -73,7 +78,7 @@ func _ready() -> void:
 	bridge.start()
 
 
-func _apply_settings(b: SimBridge) -> void:
+func _apply_settings(b: Node) -> void:
 	var config := ConfigFile.new()
 	if config.load("res://settings.cfg") == OK:
 		b.python = config.get_value("bridge", "python", b.python)
@@ -160,9 +165,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _pick(screen_position: Vector2) -> String:
-	var camera := camera_rig.camera
-	var from := camera.project_ray_origin(screen_position)
-	var to := from + camera.project_ray_normal(screen_position) * 1000.0
+	var camera: Camera3D = camera_rig.camera
+	var from: Vector3 = camera.project_ray_origin(screen_position)
+	var to: Vector3 = from + camera.project_ray_normal(screen_position) * 1000.0
 	var query := PhysicsRayQueryParameters3D.create(from, to)
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
 	if hit and hit.collider and hit.collider.has_meta("entity_view"):
@@ -202,6 +207,11 @@ func _on_command_reply(reply: Dictionary) -> void:
 func _capture() -> void:
 	var path := _capture_path
 	_capture_path = ""
+	if DisplayServer.get_name() == "headless":
+		push_warning("Capture requested with the dummy headless renderer; run without --headless to render pixels")
+		bridge.stop()
+		get_tree().quit()
+		return
 	await RenderingServer.frame_post_draw
 	var image := get_viewport().get_texture().get_image()
 	if image:
@@ -257,7 +267,7 @@ func _build_environment_assets() -> void:
 	if not tiles.is_empty():
 		for z in range(-5, 6):
 			for x in range(-6, 7):
-				var index := abs(x * 3 + z * 5) % tiles.size()
+				var index: int = abs(x * 3 + z * 5) % tiles.size()
 				_add_environment_mesh(str(tiles[index]), Vector3(x * 8, 0.015, z * 8), 0.0, 1.0)
 	for item in environment.get("routes", []):
 		_add_environment_item(item)
@@ -266,7 +276,7 @@ func _build_environment_assets() -> void:
 
 
 func _build_carrier_views() -> void:
-	var mesh := ObjLoader.load_mesh(str(style.get("asset_root", "")).path_join("unit_general_carrier_a.obj"))
+	var mesh: ArrayMesh = ObjLoaderScript.load_mesh(str(style.get("asset_root", "")).path_join("unit_general_carrier_a.obj"))
 	if mesh == null:
 		return
 	for i in range(3):
@@ -292,8 +302,8 @@ func _update_carrier_views(delta: float) -> void:
 	for carrier in _carrier_views:
 		var t: float = fmod(_carrier_phase + float(carrier.get_meta("phase_offset")), 1.0)
 		var scaled := t * (CARRIER_ROUTE.size() - 1)
-		var segment := min(int(floor(scaled)), CARRIER_ROUTE.size() - 2)
-		var local_t := scaled - segment
+		var segment: int = min(int(floor(scaled)), CARRIER_ROUTE.size() - 2)
+		var local_t: float = scaled - segment
 		var a: Vector3 = CARRIER_ROUTE[segment]
 		var b: Vector3 = CARRIER_ROUTE[segment + 1]
 		carrier.position = a.lerp(b, local_t)
@@ -313,7 +323,7 @@ func _add_environment_mesh(asset: String, position: Vector3, rotation_y: float, 
 	if asset == "":
 		return
 	var root: String = style.get("environment_root", "")
-	var mesh := ObjLoader.load_mesh(root.path_join(asset + ".obj"))
+	var mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(asset + ".obj"))
 	if mesh == null:
 		push_warning("Missing environment asset: %s" % asset)
 		return

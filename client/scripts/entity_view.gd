@@ -7,6 +7,8 @@ extends Node3D
 
 signal picked(entity_id: String)
 
+const ObjLoaderScript = preload("res://scripts/obj_loader.gd")
+
 var entity_id := ""
 var definition_id := ""
 var kind := ""                     # facility | site | residence
@@ -33,9 +35,9 @@ func setup(entity_kind: String, style: Dictionary) -> void:
 	add_child(_lamp)
 	_label = Label3D.new()
 	_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_label.font_size = 42
-	_label.pixel_size = 0.018
-	_label.outline_size = 10
+	_label.font_size = 48
+	_label.pixel_size = 0.026
+	_label.outline_size = 12
 	_label.position = Vector3(0, 5.7, 0)
 	_label.width = 240
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -162,7 +164,7 @@ func _rebuild_body() -> void:
 	else:
 		asset = _style.get("buildings", {}).get(definition_id, "")
 	if asset != "":
-		mesh = ObjLoader.load_mesh(_style.get("asset_root", "").path_join(asset + ".obj"))
+		mesh = ObjLoaderScript.load_mesh(_style.get("asset_root", "").path_join(asset + ".obj"))
 	var instance := MeshInstance3D.new()
 	if mesh:
 		instance.mesh = mesh

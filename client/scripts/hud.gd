@@ -9,6 +9,8 @@ signal build_requested(building: String)
 signal action_requested(cmd: Dictionary)
 signal inspect_requested(entity_id: String)
 
+const IconLoader = preload("res://scripts/icon_loader.gd")
+
 var _clock: Label
 var _colony: Label
 var _status: Label

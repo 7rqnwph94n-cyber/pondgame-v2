@@ -22,6 +22,7 @@ var _next_id := 1
 var _callbacks := {}                   # request id -> Callable(reply: Dictionary)
 var _connecting := false
 var _elapsed := 0.0
+var _retry_elapsed := 0.0
 var _hello_sent := false
 var is_ready := false
 
@@ -44,6 +45,7 @@ func start() -> void:
 			return
 	_connecting = true
 	_elapsed = 0.0
+	_retry_elapsed = 0.0
 	_peer.connect_to_host("127.0.0.1", port)
 
 
@@ -89,17 +91,23 @@ func poll(delta: float) -> void:
 	var status := _peer.get_status()
 	if _connecting:
 		_elapsed += delta
+		_retry_elapsed += delta
 		if status == StreamPeerTCP.STATUS_CONNECTED:
 			_connecting = false
 			if not _hello_sent:
 				_hello_sent = true
 				request("hello", {}, _on_hello)
-		elif status == StreamPeerTCP.STATUS_ERROR or status == StreamPeerTCP.STATUS_NONE:
-			if _elapsed > connect_timeout_s:
-				_connecting = false
-				failed.emit("no bridge on 127.0.0.1:%d after %.0f s" % [port, connect_timeout_s])
-				return
-			_peer = StreamPeerTCP.new()          # the server may not be listening yet: retry
+		elif _elapsed > connect_timeout_s:
+			_connecting = false
+			failed.emit("no bridge on 127.0.0.1:%d after %.0f s" % [port, connect_timeout_s])
+			return
+		elif _retry_elapsed >= 0.25:
+			# A connection started just before the child begins listening can remain in
+			# STATUS_CONNECTING for an OS-level timeout. Retry promptly instead of
+			# leaving the client on its startup screen indefinitely.
+			_retry_elapsed = 0.0
+			_peer.disconnect_from_host()
+			_peer = StreamPeerTCP.new()
 			_peer.connect_to_host("127.0.0.1", port)
 		return
 	if status != StreamPeerTCP.STATUS_CONNECTED:
