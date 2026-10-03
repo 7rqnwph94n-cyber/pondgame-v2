@@ -33,10 +33,12 @@ func setup(entity_kind: String, style: Dictionary) -> void:
 	add_child(_lamp)
 	_label = Label3D.new()
 	_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_label.font_size = 48
-	_label.pixel_size = 0.03
-	_label.outline_size = 12
-	_label.position = Vector3(0, 6.4, 0)
+	_label.font_size = 42
+	_label.pixel_size = 0.018
+	_label.outline_size = 10
+	_label.position = Vector3(0, 5.7, 0)
+	_label.width = 240
+	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(_label)
 	var area := StaticBody3D.new()
 	var shape := CollisionShape3D.new()

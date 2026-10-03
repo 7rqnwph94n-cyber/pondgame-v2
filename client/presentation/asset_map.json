@@ -1,6 +1,8 @@
 {
   "_comment": "Presentation data only (Codex may edit): which blockout asset represents a domain building or residence tier. Missing entries fall back to a category placeholder. Values never affect gameplay. Asset files are read from ../assets/blockout/silica_street/<asset>.obj relative to the client project.",
   "asset_dir": "../assets/blockout/silica_street",
+  "environment_dir": "../assets/blockout/environment",
+  "icon_dir": "../assets/ui/icons",
   "buildings": {
     "general_store": "store_general_a",
     "mineral_washery": "proc_mineral_washery_a",
@@ -12,6 +14,32 @@
   "residence_tiers": {
     "shelter": "res_shelter_cluster_a"
   },
+  "environment": {
+    "terrain_tiles": ["terrain_silt_tile_a", "terrain_silt_tile_b", "terrain_sand_tile_a"],
+    "scenery": [
+      {"asset": "ledge_straight_a", "position": [-28, 0, -28], "rotation_y": 18, "scale": 1.4},
+      {"asset": "ledge_corner_a", "position": [31, 0, -24], "rotation_y": -12, "scale": 1.3},
+      {"asset": "root_arch_a", "position": [-30, 0, 13], "rotation_y": 38, "scale": 1.35},
+      {"asset": "boulder_a", "position": [-24, 0, 28], "rotation_y": 10, "scale": 1.4},
+      {"asset": "boulder_b", "position": [27, 0, 25], "rotation_y": 35, "scale": 1.25},
+      {"asset": "boulder_c", "position": [35, 0, 3], "rotation_y": -20, "scale": 1.5},
+      {"asset": "plant_fan_b", "position": [-33, 0, -5], "rotation_y": 22, "scale": 1.25},
+      {"asset": "plant_ribbon_b", "position": [33, 0, -11], "rotation_y": -18, "scale": 1.2},
+      {"asset": "plant_cup_a", "position": [-21, 0, 32], "rotation_y": 15, "scale": 1.1},
+      {"asset": "plant_branch_b", "position": [20, 0, 32], "rotation_y": -25, "scale": 1.2},
+      {"asset": "plant_fan_a", "position": [-36, 0, 25], "rotation_y": 45, "scale": 1.0},
+      {"asset": "plant_ribbon_a", "position": [37, 0, 19], "rotation_y": -40, "scale": 1.0}
+    ],
+    "routes": [
+      {"asset": "route_flow_straight_a", "position": [-12, 0.08, 2], "rotation_y": 0},
+      {"asset": "route_flow_straight_a", "position": [-8, 0.08, 2], "rotation_y": 0},
+      {"asset": "route_flow_junction_a", "position": [-4, 0.08, 2], "rotation_y": 0},
+      {"asset": "route_flow_straight_a", "position": [0, 0.08, 2], "rotation_y": 0},
+      {"asset": "route_flow_corner_a", "position": [4, 0.08, 2], "rotation_y": 0},
+      {"asset": "route_flow_straight_a", "position": [4, 0.08, 6], "rotation_y": 90},
+      {"asset": "route_flow_straight_a", "position": [4, 0.08, 10], "rotation_y": 90}
+    ]
+  },
   "category_colours": {
     "institution": "#3c6e71",
     "logistics": "#5a7d8c",
@@ -21,7 +49,13 @@
     "processing": "#c9a227",
     "luxury": "#b56576",
     "residence": "#2a9d8f",
-    "site": "#9aa5ab"
+    "site": "#9aa5ab",
+    "terrain_silt": "#77664d",
+    "panel": "#102f33",
+    "panel_border": "#e8dfc4",
+    "focus": "#78d6dc",
+    "attention": "#f0a23a",
+    "failure": "#dc5a4b"
   },
   "status_colours": {
     "running": "#4caf50",

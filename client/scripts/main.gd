@@ -82,6 +82,8 @@ func _load_style() -> Dictionary:
 	var result: Dictionary = data if typeof(data) == TYPE_DICTIONARY else {}
 	var root := ProjectSettings.globalize_path("res://")
 	result["asset_root"] = root.path_join(result.get("asset_dir", "../assets/blockout/silica_street")).simplify_path()
+	result["environment_root"] = root.path_join(result.get("environment_dir", "../assets/blockout/environment")).simplify_path()
+	result["icon_root"] = root.path_join(result.get("icon_dir", "../assets/ui/icons")).simplify_path()
 	return result
 
 
@@ -235,6 +237,50 @@ func _build_environment() -> void:
 	_ground_mat.albedo_color = SEASON_TINTS["bloom"]
 	ground.material_override = _ground_mat
 	add_child(ground)
+	_build_environment_assets()
+
+
+func _build_environment_assets() -> void:
+	var root: String = style.get("environment_root", "")
+	if root == "":
+		return
+	var environment: Dictionary = style.get("environment", {})
+	var tiles: Array = environment.get("terrain_tiles", [])
+	if not tiles.is_empty():
+		for z in range(-5, 6):
+			for x in range(-6, 7):
+				var index := abs(x * 3 + z * 5) % tiles.size()
+				_add_environment_mesh(str(tiles[index]), Vector3(x * 8, 0.015, z * 8), 0.0, 1.0)
+	for item in environment.get("routes", []):
+		_add_environment_item(item)
+	for item in environment.get("scenery", []):
+		_add_environment_item(item)
+
+
+func _add_environment_item(item: Dictionary) -> void:
+	var p: Array = item.get("position", [0, 0, 0])
+	_add_environment_mesh(
+		str(item.get("asset", "")),
+		Vector3(float(p[0]), float(p[1]), float(p[2])),
+		float(item.get("rotation_y", 0.0)),
+		float(item.get("scale", 1.0)))
+
+
+func _add_environment_mesh(asset: String, position: Vector3, rotation_y: float, uniform_scale: float) -> void:
+	if asset == "":
+		return
+	var root: String = style.get("environment_root", "")
+	var mesh := ObjLoader.load_mesh(root.path_join(asset + ".obj"))
+	if mesh == null:
+		push_warning("Missing environment asset: %s" % asset)
+		return
+	var instance := MeshInstance3D.new()
+	instance.mesh = mesh
+	instance.position = position
+	instance.rotation_degrees.y = rotation_y
+	instance.scale = Vector3.ONE * uniform_scale
+	instance.set_meta("asset", asset)
+	add_child(instance)
 
 
 func _apply_season(season: String) -> void:
