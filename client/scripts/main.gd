@@ -30,6 +30,9 @@ var style: Dictionary = {}
 var _capture_path := ""
 var _capture_after := 0.0
 var _capture_clock := 0.0
+var _capture_focus := Vector2.ZERO
+var _capture_zoom := 88.0
+var _capture_view_override := false
 var _carrier_views: Array[MeshInstance3D] = []
 var _carrier_phase := 0.0
 var _carrier_route: Array[Vector3] = []
@@ -44,6 +47,14 @@ func _parse_capture_args() -> void:
 			_capture_after = arg.get_slice("=", 1).to_float()
 		elif arg.begins_with("--capture-speed="):
 			speed_index = SPEEDS.find(arg.get_slice("=", 1).to_int())
+		elif arg.begins_with("--camera-focus="):
+			var pair := arg.get_slice("=", 1).split(",")
+			if pair.size() == 2:
+				_capture_focus = Vector2(pair[0].to_float(), pair[1].to_float())
+				_capture_view_override = true
+		elif arg.begins_with("--camera-zoom="):
+			_capture_zoom = arg.get_slice("=", 1).to_float()
+			_capture_view_override = true
 		elif arg.begins_with("--select="):
 			set_meta("select", arg.get_slice("=", 1))
 		elif arg == "--autoplay":
@@ -60,9 +71,14 @@ func _ready() -> void:
 	_build_environment()
 	camera_rig = CameraRigScript.new()
 	add_child(camera_rig)
+	if _capture_path != "":
+		camera_rig.set_capture_locked(true)
+	if _capture_view_override:
+		camera_rig.set_review_view(_capture_focus, _capture_zoom)
 	if has_meta("empty_map"):
 		return
 	world = WorldViewScript.new()
+	world.configure_terrain(_basin_terrain)
 	add_child(world)
 	hud = HudScript.new()
 	hud.configure_style(style)
@@ -420,6 +436,8 @@ func _build_environment_assets() -> void:
 			_add_environment_item(item)
 	for item in environment.get("chemical_ecology", []):
 		_add_environment_item(item)
+	for item in environment.get("shore_habitat", []):
+		_add_environment_item(item)
 
 
 func _build_ecological_scatter() -> void:
@@ -552,6 +570,7 @@ func _texture_environment_surfaces(instance: MeshInstance3D) -> void:
 		"carbonate_shadow": "carbon_clay", "methane": "methane", "methane_film": "methane",
 		"methane_rim": "wet", "sulphur_bed": "sulphur", "sulphur_crust": "sulphur",
 		"sulphur": "sulphur", "living_green": "fertile", "living_olive": "fertile",
+		"flood_silt": "wet",
 	}
 	for surface_index in range(instance.mesh.get_surface_count()):
 		var original := instance.mesh.surface_get_material(surface_index) as StandardMaterial3D

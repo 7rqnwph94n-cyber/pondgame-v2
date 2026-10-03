@@ -30,6 +30,10 @@ var _event_lines: PackedStringArray = []
 var _style: Dictionary = {}
 var _headline_values: Dictionary = {}
 var _inspector_panel: PanelContainer
+var _build_panel: PanelContainer
+var _event_panel: PanelContainer
+var _build_toggle: Button
+var _event_toggle: Button
 
 
 func configure_style(style: Dictionary) -> void:
@@ -70,6 +74,18 @@ func _ready() -> void:
 	auto.tooltip_text = "Let the reference governor play (a balance aid, not game AI)"
 	auto.toggled.connect(func(on): autoplay_toggled.emit(on))
 	bar.add_child(auto)
+	_build_toggle = Button.new()
+	_build_toggle.text = "Build (B)"
+	_build_toggle.toggle_mode = true
+	_build_toggle.tooltip_text = "Open the build catalogue"
+	_build_toggle.toggled.connect(func(open): _build_panel.visible = open)
+	bar.add_child(_build_toggle)
+	_event_toggle = Button.new()
+	_event_toggle.text = "Log (L)"
+	_event_toggle.toggle_mode = true
+	_event_toggle.tooltip_text = "Open recent events"
+	_event_toggle.toggled.connect(func(open): _event_panel.visible = open)
+	bar.add_child(_event_toggle)
 	var resources := HBoxContainer.new()
 	resources.add_theme_constant_override("separation", 18)
 	top_stack.add_child(resources)
@@ -81,6 +97,8 @@ func _ready() -> void:
 	show_speed(1, 1)
 
 	var left := _panel(root, Vector2(10, 112), Vector2(270, 710))
+	_build_panel = left
+	left.visible = false
 	var lbox := VBoxContainer.new()
 	left.add_child(lbox)
 	lbox.add_child(_heading("Store"))
@@ -115,6 +133,8 @@ func _ready() -> void:
 	rbox.add_child(_actions)
 
 	var bottom := _panel(root, Vector2(890, 770), Vector2(700, 120))
+	_event_panel = bottom
+	bottom.visible = false
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_KEEP_SIZE, 10)
 	bottom.position.y = 770
 	_events = RichTextLabel.new()
@@ -129,6 +149,14 @@ func _ready() -> void:
 	_flash = Label.new()
 	_flash.position = Vector2(330, 60)
 	root.add_child(_flash)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_B:
+			_build_toggle.button_pressed = not _build_toggle.button_pressed
+		elif event.keycode == KEY_L:
+			_event_toggle.button_pressed = not _event_toggle.button_pressed
 
 
 func _panel(parent: Control, pos: Vector2, size: Vector2) -> PanelContainer:

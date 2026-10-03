@@ -16,6 +16,7 @@ func build(texture_root: String = "") -> void:
 	_smooth_channel = _sample_channel()
 	_textures = _load_terrain_textures(texture_root)
 	add_child(_terrain_mesh())
+	add_child(_deposition_marks())
 	add_child(_water_mesh())
 
 
@@ -38,6 +39,16 @@ func height_at(x: float, z: float) -> float:
 	height += exp(-pow((x + 19.0) / 19.0, 2.0) - pow((z + 6.0) / 14.0, 2.0)) * 1.1
 	height -= exp(-pow((x + 36.0) / 15.0, 2.0) - pow((z - 21.0) / 13.0, 2.0)) * 1.2
 	return height
+
+
+func has_dry_footprint_at(x: float, z: float) -> bool:
+	# Presentation placement only. Keep a full building footprint off the channel;
+	# simulation legality and resource access remain the domain's responsibility.
+	for offset in [Vector2.ZERO, Vector2(-3.5, -3.5), Vector2(3.5, -3.5),
+			Vector2(-3.5, 3.5), Vector2(3.5, 3.5)]:
+		if _distance_to_path(Vector2(x, z) + offset) < 7.0:
+			return false
+	return true
 
 
 func _terrain_weights(x: float, z: float) -> Color:
@@ -130,16 +141,67 @@ func _add_ground_vertex(st: SurfaceTool, x: float, z: float) -> void:
 	st.add_vertex(Vector3(x, height, z))
 
 
+func _deposition_marks() -> MeshInstance3D:
+	# Short, terrain-conforming retreat lines. Breaks in the lines keep the bank organic.
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for side_value in [-1.0, 1.0]:
+		var side: float = side_value
+		for i in range(3, _smooth_channel.size() - 3):
+			if (i + (2 if side > 0.0 else 0)) % 11 > 2:
+				continue
+			var start: Vector2 = _smooth_channel[i]
+			var finish: Vector2 = _smooth_channel[i + 1]
+			var before: Vector2 = _smooth_channel[i - 1]
+			var after: Vector2 = _smooth_channel[i + 2]
+			var tangent_a := (finish - before).normalized()
+			var tangent_b := (after - start).normalized()
+			var normal_a := Vector2(-tangent_a.y, tangent_a.x) * side
+			var normal_b := Vector2(-tangent_b.y, tangent_b.x) * side
+			var offset := 8.0 + sin(float(i) * 0.47) * 0.7
+			var a := start + normal_a * offset
+			var b := finish + normal_b * offset
+			var width := 0.14 + 0.055 * sin(float(i) * 0.23 + side)
+			var quad := [a - normal_a * width, b - normal_b * width, b + normal_b * width,
+				a - normal_a * width, b + normal_b * width, a + normal_a * width]
+			for p in quad:
+				st.add_vertex(Vector3(p.x, height_at(p.x, p.y) + 0.065, p.y))
+	st.generate_normals()
+	var shader := Shader.new()
+	shader.code = """
+shader_type spatial;
+render_mode blend_mix, cull_disabled;
+uniform sampler2D carbonate_texture : source_color, repeat_enable, filter_linear_mipmap;
+varying vec3 world_position;
+void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz; }
+void fragment() {
+	vec3 sediment = texture(carbonate_texture, world_position.xz / 12.0).rgb;
+	ALBEDO = sediment * vec3(0.25, 0.32, 0.29);
+	ROUGHNESS = 0.98;
+	ALPHA = 0.45;
+}
+"""
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	if _textures.has("carbonate"):
+		material.set_shader_parameter("carbonate_texture", _textures["carbonate"])
+	st.set_material(material)
+	var instance := MeshInstance3D.new()
+	instance.mesh = st.commit()
+	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	return instance
+
+
 func _water_mesh() -> MeshInstance3D:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var half_width := 5.15
 	var left: Array[Vector3] = []
 	var right: Array[Vector3] = []
 	for i in range(_smooth_channel.size()):
 		var previous: Vector2 = _smooth_channel[max(0, i - 1)]
 		var following: Vector2 = _smooth_channel[min(_smooth_channel.size() - 1, i + 1)]
 		var direction := (following - previous).normalized()
+		var half_width := 5.15 + sin(float(i) * 0.23) * 0.55 + cos(float(i) * 0.59) * 0.16
 		var normal := Vector2(-direction.y, direction.x) * half_width
 		var point: Vector2 = _smooth_channel[i]
 		left.append(Vector3(point.x + normal.x, -1.45, point.y + normal.y))
@@ -165,12 +227,16 @@ void vertex() {
 void fragment() {
 	float small_ripple = sin(world_position.x * 0.58 + world_position.z * 0.33 + TIME * 0.52) * 0.5 + 0.5;
 	float long_flow = sin(UV.x * 3.7 - TIME * 0.36 + sin(UV.x * 0.7) * 1.8) * 0.5 + 0.5;
+	float flow_filament = sin(UV.y * 22.0 + sin(UV.x * 2.3 - TIME * 0.27) * 1.2);
+	flow_filament = smoothstep(0.86, 0.99, flow_filament) * smoothstep(0.10, 0.68, long_flow);
 	float edge = 1.0 - smoothstep(0.0, 0.17, min(UV.y, 1.0 - UV.y));
 	vec3 deep = vec3(0.015, 0.12, 0.16);
 	vec3 shallow = vec3(0.035, 0.27, 0.29);
 	vec3 bank_reflection = vec3(0.16, 0.29, 0.27);
 	ALBEDO = mix(deep, shallow, 0.22 + small_ripple * 0.18 + long_flow * 0.10);
 	ALBEDO = mix(ALBEDO, bank_reflection, edge * (0.25 + small_ripple * 0.10));
+	ALBEDO += vec3(0.018, 0.034, 0.032) * flow_filament;
+	ALBEDO += vec3(0.025, 0.045, 0.035) * edge * smoothstep(0.78, 1.0, small_ripple);
 	METALLIC = 0.08;
 	ROUGHNESS = mix(0.24, 0.38, edge);
 	ALPHA = 0.94;

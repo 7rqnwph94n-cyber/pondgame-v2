@@ -1,0 +1,27 @@
+{
+  "asset": "biomass_bower_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      4.1,
+      0
+    ],
+    "HarvestAnchor": [
+      0,
+      0,
+      -3.2
+    ]
+  }
+}

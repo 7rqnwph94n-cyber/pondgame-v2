@@ -7,6 +7,7 @@ var _yaw := deg_to_rad(35.0)
 var _pitch := deg_to_rad(-49.0)
 var _distance := 105.0
 var _focus := Vector3(0, 0, 0)
+var _capture_locked := false
 
 
 func _ready() -> void:
@@ -19,7 +20,19 @@ func _ready() -> void:
 	_apply()
 
 
+func set_review_view(focus: Vector2, zoom: float) -> void:
+	_focus = Vector3(focus.x, 0.0, focus.y)
+	camera.size = clampf(zoom, 42.0, 118.0)
+	_apply()
+
+
+func set_capture_locked(locked: bool) -> void:
+	_capture_locked = locked
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if _capture_locked:
+		return
 	if event is InputEventMouseMotion:
 		if event.button_mask & MOUSE_BUTTON_MASK_RIGHT:
 			_yaw -= event.relative.x * 0.005
@@ -37,6 +50,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	if _capture_locked:
+		return
 	var move := Vector2.ZERO
 	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP): move.y -= 1
 	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN): move.y += 1

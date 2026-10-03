@@ -67,6 +67,15 @@
       {"asset": "carbonate_colony_a", "position": [-53, 0.08, -25], "rotation_y": -14, "scale": 0.82},
       {"asset": "carbonate_colony_a", "position": [-41, 0.08, -36], "rotation_y": 31, "scale": 0.64}
     ],
+    "shore_habitat": [
+      {"asset": "biomass_bower_a", "position": [7, 0.08, 25], "rotation_y": 18, "scale": 1.13},
+      {"asset": "biomass_bower_b", "position": [13, 0.08, 32], "rotation_y": -31, "scale": 0.91},
+      {"asset": "biomass_bower_b", "position": [9, 0.08, 36], "rotation_y": 47, "scale": 0.78},
+      {"asset": "biomass_bower_c", "position": [-53, 0.08, -28], "rotation_y": 42, "scale": 0.92},
+      {"asset": "river_debris_a", "position": [12, 0.07, 18], "rotation_y": 12, "scale": 1.05},
+      {"asset": "river_debris_a", "position": [3, 0.07, 14], "rotation_y": -22, "scale": 0.77},
+      {"asset": "river_debris_a", "position": [-45, 0.07, -28], "rotation_y": 31, "scale": 0.83}
+    ],
     "scenery": [
       {"asset": "ledge_straight_a", "position": [25, 0.2, -25], "rotation_y": 18, "scale": 2.0},
       {"asset": "ledge_straight_a", "position": [31, 0.2, -18], "rotation_y": 28, "scale": 1.8},

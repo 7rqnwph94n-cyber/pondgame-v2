@@ -14,6 +14,7 @@ EXPECTED={
     "plant_branch_a","plant_branch_b","detail_ripple_a","detail_pebbles_a","detail_scar_a",
     "vegetation_mat_a","vegetation_mat_b","vegetation_mat_c",
     "filter_grove_a","filter_grove_b","anoxic_colony_a","sulphur_colony_a",
+    "biomass_bower_a","biomass_bower_b","biomass_bower_c","river_debris_a",
     "silica_lichen_a","carbonate_colony_a",
     "channel_bank_straight_a","channel_bank_bend_a","floodplain_shelf_a","silica_cliff_a",
     "methane_seep_a","sulphur_vent_cluster_a","delta_island_a","delta_island_b",
@@ -65,6 +66,7 @@ class EnvironmentBlockoutTests(unittest.TestCase):
             "methane_seep_a":"HazardAnchor",
             "sulphur_vent_cluster_a":"ExtractionAnchor",
             "delta_island_a":"DepositAnchor",
+            "biomass_bower_a":"HarvestAnchor",
         }
         for name,anchor in required.items():
             data=json.loads((ASSETS/f"{name}.anchors.json").read_text())

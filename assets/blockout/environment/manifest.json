@@ -4,6 +4,9 @@
   "up_axis": "+Y",
   "assets": [
     "anoxic_colony_a",
+    "biomass_bower_a",
+    "biomass_bower_b",
+    "biomass_bower_c",
     "boulder_a",
     "boulder_b",
     "boulder_c",
@@ -30,6 +33,7 @@
     "plant_fan_b",
     "plant_ribbon_a",
     "plant_ribbon_b",
+    "river_debris_a",
     "root_arch_a",
     "route_flow_corner_a",
     "route_flow_junction_a",

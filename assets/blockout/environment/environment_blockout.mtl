@@ -142,3 +142,27 @@ Kd 0.54 0.54 0.48
 Ka 0.02 0.02 0.02
 Ks 0.04 0.04 0.04
 Ns 12
+
+newmtl bower_stem
+Kd 0.17 0.28 0.23
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl bower_canopy
+Kd 0.2 0.41 0.31
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl bower_fan
+Kd 0.43 0.62 0.43
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl bower_spore
+Kd 0.72 0.65 0.31
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12

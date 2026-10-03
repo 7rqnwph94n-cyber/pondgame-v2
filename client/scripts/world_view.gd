@@ -13,6 +13,11 @@ var building_categories: Dictionary = {}     # building id -> category (from hel
 var views: Dictionary = {}                   # entity id -> EntityView
 var _slots: Dictionary = {}                  # entity id -> Vector3
 var _band_counts: Dictionary = {}
+var terrain: Node3D
+
+
+func configure_terrain(value: Node3D) -> void:
+	terrain = value
 
 
 func configure(asset_style: Dictionary, hello: Dictionary) -> void:
@@ -32,11 +37,25 @@ func slot_for(entity_id: String, band: String) -> Vector3:
 	var pair: Array = centres.get(band, [0, (fallback_row - 3) * SPACING])
 	var centre := Vector3(float(pair[0]), 0, float(pair[1]))
 	var index: int = _band_counts.get(band, 0)
-	_band_counts[band] = index + 1
-	var ring: int = index / 6
-	var angle := float(index % 6) / 6.0 * TAU + float(ring) * 0.35
-	var radius := 3.4 + float(ring) * 5.8
-	var position := centre + Vector3(cos(angle) * radius, 0, sin(angle) * radius)
+	var position := centre
+	for attempt in range(120):
+		var ring: int = index / 6
+		var angle := float(index % 6) / 6.0 * TAU + float(ring) * 0.35
+		var radius := 3.4 + float(ring) * 5.8
+		position = centre + Vector3(cos(angle) * radius, 0, sin(angle) * radius)
+		index += 1
+		if terrain != null and not terrain.has_dry_footprint_at(position.x, position.z):
+			continue
+		var clear := true
+		for previous in _slots.values():
+			if Vector2(position.x, position.z).distance_to(Vector2(previous.x, previous.z)) < 8.0:
+				clear = false
+				break
+		if clear:
+			break
+	_band_counts[band] = index
+	if terrain != null:
+		position.y = terrain.height_at(position.x, position.z) + 0.05
 	_slots[entity_id] = position
 	return position
 

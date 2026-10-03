@@ -36,6 +36,10 @@ MATERIALS = {
     "living_sulphur": (0.59, 0.45, 0.20),
     "living_silica": (0.35, 0.60, 0.56),
     "carbonate_shadow": (0.54, 0.54, 0.48),
+    "bower_stem": (0.17, 0.28, 0.23),
+    "bower_canopy": (0.20, 0.41, 0.31),
+    "bower_fan": (0.43, 0.62, 0.43),
+    "bower_spore": (0.72, 0.65, 0.31),
 }
 
 
@@ -106,6 +110,21 @@ class Mesh:
         for i in range(sides):
             nxt=(i+1)%sides
             self.face([bottom[i],bottom[nxt],top[nxt],top[i]],material,group)
+
+    def frond(self, base, tip, width, material, group):
+        """A broad curved leaf with a raised midrib, readable from the oblique game camera."""
+        bx,by,bz=base; tx,ty,tz=tip
+        dx,dz=tx-bx,tz-bz
+        length=math.hypot(dx,dz)
+        side_x,side_z=-dz/length,dx/length
+        mid=((bx+tx)*.5,(by+ty)*.5+.24,(bz+tz)*.5)
+        root=self.vertex(base)
+        left=self.vertex((mid[0]+side_x*width,mid[1],mid[2]+side_z*width))
+        ridge=self.vertex((mid[0],mid[1]+width*.20,mid[2]))
+        right=self.vertex((mid[0]-side_x*width,mid[1],mid[2]-side_z*width))
+        point=self.vertex(tip)
+        for triangle in ((root,left,ridge),(root,ridge,right),(left,point,ridge),(ridge,point,right)):
+            self.face(triangle,material,group)
 
     def terrain_grid(self, size, divisions, material, group, phase=0.0):
         rows=[]
@@ -288,6 +307,46 @@ def filter_grove(name, phase):
         if i%3==0:
             m.ellipsoid((top[0],top[1]-.10,top[2]),(.26,.15,.26),"living_pale",f"crown_{i}",rings=3,segments=7)
     m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,1.8,0],"WetEdge":[0,0,-2]})
+
+
+def biomass_bower(name, phase, stature):
+    """A harvestable-looking bank thicket with a legible tall canopy and spore crowns."""
+    m=Mesh(name)
+    stems=[(-2.2,-.4,4.6),(-.9,.8,5.6),(.7,-.5,5.1),(2.1,.6,4.2)]
+    for i,(sx,sz,raw_height) in enumerate(stems):
+        height=raw_height*stature*(.94+.06*math.sin(phase+i))
+        lean=.22*math.sin(phase+i*1.37)
+        m.ellipsoid((sx,0,sz),(.42,.14,.4),"bower_stem",f"holdfast_{i}",rings=3,segments=8)
+        m.cylinder((sx,.12,sz),(sx+lean,height,sz+.12*lean),.16 if i%2 else .21,"bower_stem",f"trunk_{i}",sides=9)
+        for j in range(7):
+            angle=phase+i*.92+j*2*math.pi/7
+            spread=1.4+.35*(j%3)+.17*i
+            base=(sx+lean*.70,height*.69,sz+.12*lean)
+            tip=(sx+math.cos(angle)*spread,height*(.75+.10*math.sin(j+i)),sz+math.sin(angle)*spread)
+            material="bower_fan" if (i+j)%3 else "bower_canopy"
+            m.frond(base,tip,.47+.07*(j%2),material,f"frond_{i}_{j}")
+            m.cylinder(base,tip,.035,"bower_stem",f"vein_{i}_{j}",sides=5)
+        m.ellipsoid((sx+lean,height+.1,sz),(.50,.18,.47),"bower_spore",f"spore_head_{i}",rings=4,segments=10)
+        for j in range(5):
+            angle=phase+j*2*math.pi/5
+            m.ellipsoid((sx+lean+math.cos(angle)*.42,height+.13,sz+math.sin(angle)*.38),(.16,.08,.15),"bower_spore",f"spore_rim_{i}_{j}",rings=3,segments=7)
+    for i in range(12):
+        angle=phase+i*2.399
+        radius=1.4+(i*7%11)*.35
+        x=math.cos(angle)*radius; z=math.sin(angle)*radius*.48
+        m.cone((x,.04,z),.45+.12*(i%4),.16,.06,"living_teal",f"new_growth_{i}",sides=6)
+    m.write({"GroundPivot":[0,0,0],"CameraAnchor":[0,4.1,0],"HarvestAnchor":[0,0,-3.2]})
+
+
+def river_debris():
+    m=Mesh("river_debris_a")
+    for i,(x,z,rx,rz) in enumerate([(-1.8,-.2,1.5,.55),(.5,.3,1.8,.7),(2.1,-.45,1.1,.48)]):
+        m.ellipsoid((x,0,z),(rx,.045,rz),"flood_silt",f"silt_lobe_{i}",rings=3,segments=10)
+    for i,(a,b,r) in enumerate([((-2.9,.14,-.55),(-.7,.15,-.34),.08),((-.5,.16,.3),(1.8,.17,.52),.10),((1.0,.14,-.2),(2.5,.15,-.55),.07)]):
+        m.cylinder(a,b,r,"root",f"stranded_fibre_{i}",sides=6)
+    for i,(x,z,r) in enumerate([(-1.35,.45,.16),(.2,-.5,.22),(1.7,.55,.13)]):
+        m.ellipsoid((x,.03,z),(r,.07,r*.72),"carbonate",f"grain_{i}",rings=3,segments=7)
+    m.write({"GroundPivot":[0,0,0],"WetEdge":[0,0,-.6]})
 
 
 def chemical_colony(name, kind):
@@ -485,6 +544,10 @@ def main():
     vegetation_mat("vegetation_mat_c",3.6)
     filter_grove("filter_grove_a",.4)
     filter_grove("filter_grove_b",2.2)
+    biomass_bower("biomass_bower_a",.2,1.0)
+    biomass_bower("biomass_bower_b",1.7,.84)
+    biomass_bower("biomass_bower_c",3.1,1.12)
+    river_debris()
     chemical_colony("anoxic_colony_a","methane")
     chemical_colony("sulphur_colony_a","sulphur")
     chemical_colony("silica_lichen_a","silica")

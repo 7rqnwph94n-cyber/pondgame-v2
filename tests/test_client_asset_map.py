@@ -26,6 +26,7 @@ class ClientAssetMapTests(unittest.TestCase):
         names += [item["asset"] for item in self.data["environment"]["features"]]
         names += [item["asset"] for item in self.data["environment"]["empty_features"]]
         names += [item["asset"] for item in self.data["environment"]["chemical_ecology"]]
+        names += [item["asset"] for item in self.data["environment"]["shore_habitat"]]
         names += [item["asset"] for item in self.data["environment"]["scenery"]]
         for name in names:
             with self.subTest(asset=name):

@@ -58,6 +58,23 @@ func test_layout_is_deterministic_and_stable() -> void:
 		check(a.slot_for(id, "food") == b.slot_for(id, "food"), "layout is deterministic for " + id)
 	check(a.slot_for("x1", "processing") == a.slot_for("x1", "food"), "an entity keeps its slot")
 	check(a.slot_for("x2", "food") != a.slot_for("x3", "food"), "entities in a band do not overlap")
+	var terrain := BasinTerrain.new()
+	terrain.build()
+	var land_view := WorldView.new()
+	land_view.configure(_style(), {})
+	land_view.configure_terrain(terrain)
+	var placed: Array[Vector3] = []
+	for band in ["residence", "food", "service", "logistics", "processing", "extraction"]:
+		for n in range(3):
+			var slot := land_view.slot_for("%s_%d" % [band, n], band)
+			check(terrain.has_dry_footprint_at(slot.x, slot.z), "%s slot has dry building footprint" % band)
+			check(absf(slot.y - terrain.height_at(slot.x, slot.z)) < 0.1, "%s slot follows terrain" % band)
+			for previous in placed:
+				check(Vector2(slot.x, slot.z).distance_to(Vector2(previous.x, previous.z)) >= 8.0,
+					"%s slot clears existing buildings" % band)
+			placed.append(slot)
+	land_view.free()
+	terrain.free()
 	a.free()
 	b.free()
 	completed.append("layout")
