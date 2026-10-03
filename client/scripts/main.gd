@@ -249,7 +249,7 @@ func _build_environment() -> void:
 	_env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	_env.ambient_light_color = Color(0.55, 0.75, 0.75)
 	_env.ambient_light_energy = 0.32
-	_env.fog_enabled = true
+	_env.fog_enabled = not has_meta("empty_map")
 	_env.fog_light_color = Color(0.05, 0.22, 0.25)
 	_env.fog_density = 0.004
 	var we := WorldEnvironment.new()
@@ -406,7 +406,10 @@ func _build_environment_assets() -> void:
 			for x in range(-6, 7):
 				var index: int = abs(x * 3 + z * 5) % tiles.size()
 				_add_environment_mesh(str(tiles[index]), Vector3(x * 8, 0.015, z * 8), 0.0, 1.0)
-	if not has_meta("empty_map"):
+	if has_meta("empty_map"):
+		for item in environment.get("empty_features", []):
+			_add_environment_item(item)
+	else:
 		for item in environment.get("routes", []):
 			_add_environment_item(item)
 		for item in environment.get("features", []):
@@ -418,23 +421,25 @@ func _build_environment_assets() -> void:
 func _build_ecological_scatter() -> void:
 	var root: String = style.get("environment_root", "")
 	var names := ["plant_fan_a", "plant_fan_b", "plant_ribbon_a", "plant_ribbon_b", "plant_branch_a", "plant_cup_a"]
-	for i in range(110):
-		var asset: String = names[i % names.size()]
-		var mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(asset + ".obj"))
-		if mesh == null:
-			continue
-		var instance := MeshInstance3D.new()
-		instance.mesh = mesh
-		var t := float(i) / 109.0
-		var x := lerpf(-50.0, 47.0, t)
-		var z := x * 0.78 + sin(float(i) * 1.7) * 7.0
-		var side := -1.0 if i % 2 == 0 else 1.0
-		var px := x + side * (8.0 + float(i % 3) * 2.2)
-		var pz := z - side * 5.0
-		instance.position = Vector3(px, _basin_terrain.height_at(px, pz) + 0.08, pz)
-		instance.rotation_degrees.y = float((i * 67) % 360)
-		instance.scale = Vector3.ONE * (1.25 + float(i % 7) * 0.14)
-		add_child(instance)
+	var clusters := [Vector2(-43, -32), Vector2(-18, -10), Vector2(-2, 5), Vector2(20, 12), Vector2(29, 28)]
+	for cluster_index in range(clusters.size()):
+		var centre: Vector2 = clusters[cluster_index]
+		for i in range(18):
+			var asset: String = names[(i + cluster_index * 2) % names.size()]
+			var mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(asset + ".obj"))
+			if mesh == null:
+				continue
+			var instance := MeshInstance3D.new()
+			instance.mesh = mesh
+			var angle := float(i) * 2.399 + float(cluster_index)
+			var radius := 2.0 + float((i * 7) % 13) * 0.62
+			var side := -1.0 if i % 2 == 0 else 1.0
+			var px := centre.x + cos(angle) * radius + side * 5.5
+			var pz := centre.y + sin(angle) * radius - side * 2.5
+			instance.position = Vector3(px, _basin_terrain.height_at(px, pz) + 0.08, pz)
+			instance.rotation_degrees.y = float((i * 67 + cluster_index * 31) % 360)
+			instance.scale = Vector3.ONE * (1.2 + float(i % 7) * 0.16)
+			add_child(instance)
 	var rocks := ["boulder_a", "boulder_b", "boulder_c", "detail_pebbles_a"]
 	for i in range(34):
 		var rock_asset: String = rocks[i % rocks.size()]

@@ -4,7 +4,7 @@ extends Node3D
 
 var camera: Camera3D
 var _yaw := deg_to_rad(35.0)
-var _pitch := deg_to_rad(-55.0)
+var _pitch := deg_to_rad(-49.0)
 var _distance := 105.0
 var _focus := Vector3(0, 0, 0)
 

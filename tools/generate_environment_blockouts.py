@@ -14,7 +14,7 @@ OUT = ROOT / "assets" / "blockout" / "environment"
 MATERIALS = {
     "silt": (0.47, 0.40, 0.30),
     "sand": (0.62, 0.54, 0.39),
-    "rock": (0.12, 0.15, 0.16),
+    "rock": (0.20, 0.27, 0.27),
     "root": (0.22, 0.18, 0.12),
     "carbonate": (0.78, 0.72, 0.58),
     "route_membrane": (0.12, 0.42, 0.42),

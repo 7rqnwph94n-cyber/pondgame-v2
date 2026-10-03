@@ -3,8 +3,8 @@ extends Node3D
 ## Continuous presentation terrain for the Verdant Carbon Basin.
 ## It is deliberately independent of simulation legality and yields.
 
-const SIZE := 190.0
-const CELLS := 160
+const SIZE := 260.0
+const CELLS := 192
 const CHANNEL := [
 	Vector2(-62, -47), Vector2(-46, -38), Vector2(-36, -19), Vector2(-14, -15),
 	Vector2(-4, 5), Vector2(18, 8), Vector2(25, 29), Vector2(55, 43)]
@@ -27,8 +27,11 @@ func height_at(x: float, z: float) -> float:
 	elif channel_distance < 17.0:
 		height -= 0.45 * (1.0 - smoothstep(6.2, 17.0, channel_distance))
 	# Silica escarpment: a broad geological rise, not an isolated prop platform.
-	var ridge: float = clampf((x - 15.0) / 24.0, 0.0, 1.0) * clampf((-z + 4.0) / 35.0, 0.0, 1.0)
-	height += ridge * 8.5
+	var ridge_face := smoothstep(13.0, 24.0, x)
+	var ridge_reach := 1.0 - smoothstep(-34.0, 10.0, z)
+	var ridge: float = ridge_face * ridge_reach
+	height += ridge * 10.5
+	height += ridge * (sin(z * 0.22) * 0.7 + cos(x * 0.31) * 0.35)
 	# Sheltered settlement terrace and methane depression.
 	height += exp(-pow((x + 19.0) / 19.0, 2.0) - pow((z + 6.0) / 14.0, 2.0)) * 1.1
 	height -= exp(-pow((x + 36.0) / 15.0, 2.0) - pow((z - 21.0) / 13.0, 2.0)) * 1.2
@@ -119,11 +122,25 @@ func _water_mesh() -> MeshInstance3D:
 		for vertex in [left[i], right[i + 1], left[i + 1], left[i], right[i], right[i + 1]]:
 			st.add_vertex(vertex)
 	st.generate_normals()
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(0.08, 0.43, 0.47, 0.9)
-	material.metallic = 0.12
-	material.roughness = 0.2
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	var shader := Shader.new()
+	shader.code = """
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled;
+varying vec3 world_position;
+void vertex() {
+	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	VERTEX.y += sin(VERTEX.x * 0.21 + TIME * 0.35) * 0.045 + cos(VERTEX.z * 0.18 - TIME * 0.23) * 0.035;
+}
+void fragment() {
+	float ripple = sin(world_position.x * 0.42 + world_position.z * 0.19 + TIME * 0.45) * 0.5 + 0.5;
+	ALBEDO = mix(vec3(0.035, 0.24, 0.27), vec3(0.08, 0.48, 0.51), ripple * 0.35);
+	METALLIC = 0.12;
+	ROUGHNESS = 0.22;
+	ALPHA = 0.92;
+}
+"""
+	var material := ShaderMaterial.new()
+	material.shader = shader
 	st.set_material(material)
 	var instance := MeshInstance3D.new()
 	instance.mesh = st.commit()
