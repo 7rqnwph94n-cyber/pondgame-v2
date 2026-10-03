@@ -40,6 +40,16 @@ class ClientAssetMapTests(unittest.TestCase):
             x,_,z=item["position"]
             self.assertGreaterEqual(max(abs(x),abs(z)),20)
 
+    def test_client_wires_environment_icons_and_carriers(self):
+        main=(ROOT/"client"/"scripts"/"main.gd").read_text()
+        hud=(ROOT/"client"/"scripts"/"hud.gd").read_text()
+        icon_loader=(ROOT/"client"/"scripts"/"icon_loader.gd").read_text()
+        self.assertIn('environment.get("scenery", [])',main)
+        self.assertIn('unit_general_carrier_a.obj',main)
+        self.assertIn('_update_carrier_views(delta)',main)
+        self.assertIn('IconLoader.load_svg',hud)
+        self.assertIn('load_svg_from_buffer',icon_loader)
+
 
 if __name__=="__main__":
     unittest.main()

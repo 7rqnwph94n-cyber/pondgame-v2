@@ -24,6 +24,11 @@ var style: Dictionary = {}
 var _capture_path := ""
 var _capture_after := 0.0
 var _capture_clock := 0.0
+var _carrier_views: Array[MeshInstance3D] = []
+var _carrier_phase := 0.0
+const CARRIER_ROUTE := [
+	Vector3(-14, 0.25, 2), Vector3(-8, 0.25, 2), Vector3(-4, 0.25, 2),
+	Vector3(0, 0.25, 2), Vector3(4, 0.25, 2), Vector3(4, 0.25, 10)]
 
 
 func _parse_capture_args() -> void:
@@ -51,7 +56,9 @@ func _ready() -> void:
 	world = WorldView.new()
 	add_child(world)
 	hud = Hud.new()
+	hud.configure_style(style)
 	add_child(hud)
+	_build_carrier_views()
 	hud.speed_selected.connect(_on_speed_selected)
 	hud.autoplay_toggled.connect(func(on): bridge.request("autoplay", {"enabled": on}, func(_r): pass))
 	hud.build_requested.connect(_on_build_requested)
@@ -103,6 +110,7 @@ func _on_connected(reply: Dictionary) -> void:
 func _process(delta: float) -> void:
 	if not bridge or not bridge.is_ready:
 		return
+	_update_carrier_views(delta)
 	_accumulated += delta * SPEEDS[speed_index]
 	if not _advance_in_flight and (_accumulated >= 1.0 or SPEEDS[speed_index] == 0):
 		var seconds := int(min(floor(_accumulated), 600))
@@ -257,6 +265,41 @@ func _build_environment_assets() -> void:
 		_add_environment_item(item)
 
 
+func _build_carrier_views() -> void:
+	var mesh := ObjLoader.load_mesh(str(style.get("asset_root", "")).path_join("unit_general_carrier_a.obj"))
+	if mesh == null:
+		return
+	for i in range(3):
+		var carrier := MeshInstance3D.new()
+		carrier.mesh = mesh
+		carrier.scale = Vector3.ONE * 0.9
+		carrier.set_meta("asset", "unit_general_carrier_a")
+		carrier.set_meta("phase_offset", float(i) / 3.0)
+		add_child(carrier)
+		_carrier_views.append(carrier)
+
+
+func _update_carrier_views(delta: float) -> void:
+	if _carrier_views.is_empty() or view.is_empty():
+		return
+	var active := false
+	for facility in view.get("facilities", {}).values():
+		if facility.get("building", "") in ["silicate_pit", "mineral_washery"] and facility.get("status", "") == "running":
+			active = true
+			break
+	var speed := 0.055 if active else 0.012
+	_carrier_phase = fmod(_carrier_phase + delta * speed, 1.0)
+	for carrier in _carrier_views:
+		var t: float = fmod(_carrier_phase + float(carrier.get_meta("phase_offset")), 1.0)
+		var scaled := t * (CARRIER_ROUTE.size() - 1)
+		var segment := min(int(floor(scaled)), CARRIER_ROUTE.size() - 2)
+		var local_t := scaled - segment
+		var a: Vector3 = CARRIER_ROUTE[segment]
+		var b: Vector3 = CARRIER_ROUTE[segment + 1]
+		carrier.position = a.lerp(b, local_t)
+		var direction := b - a
+		if direction.length_squared() > 0.001:
+			carrier.rotation.y = atan2(direction.x, direction.z)
 func _add_environment_item(item: Dictionary) -> void:
 	var p: Array = item.get("position", [0, 0, 0])
 	_add_environment_mesh(

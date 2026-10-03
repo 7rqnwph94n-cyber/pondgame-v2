@@ -25,6 +25,12 @@ var _buildings: Dictionary = {}
 var _last_inspection: Dictionary = {}
 var _auto: CheckBox
 var _event_lines: PackedStringArray = []
+var _style: Dictionary = {}
+var _headline_values: Dictionary = {}
+
+
+func configure_style(style: Dictionary) -> void:
+	_style = style
 
 
 func _ready() -> void:
@@ -33,10 +39,13 @@ func _ready() -> void:
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
 
-	var top := _panel(root, Vector2(10, 10), Vector2(1100, 44))
+	var top := _panel(root, Vector2(10, 10), Vector2(1580, 92))
+	var top_stack := VBoxContainer.new()
+	top_stack.add_theme_constant_override("separation", 3)
+	top.add_child(top_stack)
 	var bar := HBoxContainer.new()
 	bar.add_theme_constant_override("separation", 14)
-	top.add_child(bar)
+	top_stack.add_child(bar)
 	_clock = Label.new()
 	_clock.custom_minimum_size = Vector2(250, 0)
 	bar.add_child(_clock)
@@ -58,9 +67,17 @@ func _ready() -> void:
 	auto.tooltip_text = "Let the reference governor play (a balance aid, not game AI)"
 	auto.toggled.connect(func(on): autoplay_toggled.emit(on))
 	bar.add_child(auto)
+	var resources := HBoxContainer.new()
+	resources.add_theme_constant_override("separation", 18)
+	top_stack.add_child(resources)
+	_resource_chip(resources, "raw_silicate", "Raw Silicate")
+	_resource_chip(resources, "prepared_silica", "Prepared Silica")
+	_resource_chip(resources, "staple", "Staple")
+	_resource_chip(resources, "repair_enzyme", "Repair Enzyme")
+	_resource_chip(resources, "builder", "Builders")
 	show_speed(1, 1)
 
-	var left := _panel(root, Vector2(10, 64), Vector2(300, 760))
+	var left := _panel(root, Vector2(10, 112), Vector2(300, 712))
 	var lbox := VBoxContainer.new()
 	left.add_child(lbox)
 	lbox.add_child(_heading("Store"))
@@ -78,9 +95,9 @@ func _ready() -> void:
 	reef.pressed.connect(func(): inspect_requested.emit("great_work"))
 	lbox.add_child(reef)
 
-	var right := _panel(root, Vector2(1240, 64), Vector2(350, 520))
+	var right := _panel(root, Vector2(1240, 112), Vector2(350, 520))
 	right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_KEEP_SIZE, 10)
-	right.position.y = 64
+	right.position.y = 112
 	var rbox := VBoxContainer.new()
 	right.add_child(rbox)
 	_inspector_title = _heading("Inspector: click anything")
@@ -123,6 +140,24 @@ func _heading(text: String) -> Label:
 	l.text = text
 	l.add_theme_font_size_override("font_size", 18)
 	return l
+
+
+func _resource_chip(parent: Container, icon: String, label_text: String) -> void:
+	var chip := HBoxContainer.new()
+	chip.add_theme_constant_override("separation", 5)
+	var image := TextureRect.new()
+	image.custom_minimum_size = Vector2(26, 26)
+	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var icon_name := icon if icon != "staple" else "staple_food"
+	image.texture = IconLoader.load_svg(str(_style.get("icon_root", "")).path_join(icon_name + ".svg"), 0.6)
+	chip.add_child(image)
+	var value := Label.new()
+	value.text = "%s  –" % label_text
+	value.custom_minimum_size = Vector2(130 if icon != "builder" else 150, 0)
+	chip.add_child(value)
+	_headline_values[icon] = value
+	parent.add_child(chip)
 
 
 # ------------------------------------------------------------------ updates
@@ -174,6 +209,12 @@ func show_view(view: Dictionary) -> void:
 		" (EMERGENCY)" if view.get("food_emergency", false) else "", str(view.get("builders", "")).replace("_", " "),
 		str(view.get("maintenance_upkeep", ""))]
 	var store: Dictionary = view.get("store", {})
+	_set_headline("raw_silicate", int(store.get("raw_silicate", 0)))
+	_set_headline("prepared_silica", int(store.get("prepared_silica", 0)))
+	_set_headline("staple", int(store.get("staple", 0)))
+	_set_headline("repair_enzyme", int(store.get("repair_enzyme", 0)))
+	if _headline_values.has("builder"):
+		_headline_values["builder"].text = "Builders  %s" % str(view.get("builders", "idle")).replace("_", " ")
 	var keys := store.keys()
 	keys.sort()
 	var text := ""
@@ -186,6 +227,13 @@ func show_view(view: Dictionary) -> void:
 	if _event_lines.size() > 60:
 		_event_lines = _event_lines.slice(_event_lines.size() - 60)
 	_events.text = "\n".join(_event_lines)
+
+
+func _set_headline(key: String, amount: int) -> void:
+	if _headline_values.has(key):
+		var label: Label = _headline_values[key]
+		var title := str(label.text).split("  ")[0]
+		label.text = "%s  %d" % [title, amount]
 
 
 func clear_inspection() -> void:
