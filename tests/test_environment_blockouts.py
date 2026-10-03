@@ -12,6 +12,8 @@ EXPECTED={
     "root_arch_a","route_flow_straight_a","route_flow_corner_a","route_flow_junction_a",
     "plant_fan_a","plant_fan_b","plant_ribbon_a","plant_ribbon_b","plant_cup_a",
     "plant_branch_a","plant_branch_b","detail_ripple_a","detail_pebbles_a","detail_scar_a",
+    "channel_bank_straight_a","channel_bank_bend_a","floodplain_shelf_a","silica_cliff_a",
+    "methane_seep_a","sulphur_vent_cluster_a","delta_island_a","delta_island_b",
 }
 
 
@@ -50,6 +52,19 @@ class EnvironmentBlockoutTests(unittest.TestCase):
         for name,count in required.items():
             data=json.loads((ASSETS/f"{name}.anchors.json").read_text())
             self.assertEqual(len(data["anchors"]),count)
+
+    def test_basin_landmarks_have_functional_anchors(self):
+        required={
+            "channel_bank_straight_a":"FlowAnchor",
+            "floodplain_shelf_a":"CultivationAnchor",
+            "silica_cliff_a":"ExtractionAnchor",
+            "methane_seep_a":"HazardAnchor",
+            "sulphur_vent_cluster_a":"ExtractionAnchor",
+            "delta_island_a":"DepositAnchor",
+        }
+        for name,anchor in required.items():
+            data=json.loads((ASSETS/f"{name}.anchors.json").read_text())
+            self.assertIn(anchor,data["anchors"])
 
 
 if __name__=="__main__":

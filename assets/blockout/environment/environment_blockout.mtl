@@ -34,3 +34,45 @@ Kd 0.12 0.42 0.42
 Ka 0.02 0.02 0.02
 Ks 0.04 0.04 0.04
 Ns 12
+
+newmtl flood_silt
+Kd 0.43 0.42 0.31
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl water_dark
+Kd 0.06 0.29 0.33
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl silica
+Kd 0.32 0.72 0.75
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl methane
+Kd 0.1 0.15 0.19
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl methane_film
+Kd 0.24 0.31 0.37
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl sulphur
+Kd 0.62 0.38 0.12
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_green
+Kd 0.31 0.55 0.33
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12

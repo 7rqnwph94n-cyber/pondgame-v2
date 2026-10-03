@@ -18,6 +18,13 @@ MATERIALS = {
     "root": (0.22, 0.18, 0.12),
     "carbonate": (0.78, 0.72, 0.58),
     "route_membrane": (0.12, 0.42, 0.42),
+    "flood_silt": (0.43, 0.42, 0.31),
+    "water_dark": (0.06, 0.29, 0.33),
+    "silica": (0.32, 0.72, 0.75),
+    "methane": (0.10, 0.15, 0.19),
+    "methane_film": (0.24, 0.31, 0.37),
+    "sulphur": (0.62, 0.38, 0.12),
+    "living_green": (0.31, 0.55, 0.33),
 }
 
 
@@ -75,6 +82,19 @@ class Mesh:
         for i in range(sides):
             n=(i+1)%sides
             self.face([ra[i],ra[n],rb[n],rb[i]],material,group)
+
+    def cone(self, center, height, bottom_radius, top_radius, material, group, sides=8):
+        cx, cy, cz = center
+        bottom=[]; top=[]
+        for i in range(sides):
+            angle=2*math.pi*i/sides
+            bottom.append(self.vertex((cx+math.cos(angle)*bottom_radius,cy,cz+math.sin(angle)*bottom_radius)))
+            top.append(self.vertex((cx+math.cos(angle)*top_radius,cy+height,cz+math.sin(angle)*top_radius)))
+        self.face(bottom[::-1],material,group)
+        self.face(top,material,group)
+        for i in range(sides):
+            nxt=(i+1)%sides
+            self.face([bottom[i],bottom[nxt],top[nxt],top[i]],material,group)
 
     def terrain_grid(self, size, divisions, material, group, phase=0.0):
         rows=[]
@@ -224,6 +244,70 @@ def ground_detail(name, kind):
     m.write({"GroundPivot":[0,0,0]})
 
 
+def channel_bank(name, bend=False):
+    m=Mesh(name)
+    if not bend:
+        for side in (-1,1):
+            m.box((side*3.25,.22,0),(2.1,.44,8),"flood_silt",f"bank_{side}")
+            for z in (-3,-1,1,3):
+                m.ellipsoid((side*2.35,.25,z),(1.35,.18,1.45),"flood_silt",f"bank_lip_{side}_{z}",rings=3,segments=8)
+        anchors={"SnapNorth":[0,0,-4],"SnapSouth":[0,0,4],"FlowAnchor":[0,.05,0]}
+    else:
+        m.box((-2.8,.22,-1.5),(2.2,.44,5),"flood_silt","outer_bank_a")
+        m.box((-1.5,.22,-2.8),(5,.44,2.2),"flood_silt","outer_bank_b")
+        m.ellipsoid((1.8,.18,1.8),(2.2,.16,2.2),"flood_silt","inner_deposit",rings=3,segments=9)
+        anchors={"SnapWest":[-4,0,0],"SnapNorth":[0,0,-4],"FlowAnchor":[0,.05,0]}
+    m.write(anchors)
+
+
+def floodplain_shelf():
+    m=Mesh("floodplain_shelf_a")
+    m.ellipsoid((0,0,0),(5.8,.28,3.8),"flood_silt","shelf",rings=4,segments=14)
+    for z in (-2.1,-.7,.7,2.1):
+        m.cylinder((-4.5,.31,z),(4.4,.31,z+.22),.055,"carbonate","deposition_ripple",sides=6)
+    for x in (-3.4,0,3.0):
+        m.ellipsoid((x,.28,-2.6),(.5,.16,.75),"living_green","edge_growth",rings=3,segments=7)
+    m.write({"GroundPivot":[0,0,0],"CultivationAnchor":[0,.3,0],"WetEdge":[0,.1,3.5]})
+
+
+def silica_cliff():
+    m=Mesh("silica_cliff_a")
+    m.box((0,1.15,.75),(9,2.3,3.2),"rock","cliff_mass")
+    for i,(x,h,r) in enumerate([(-3.5,4.8,.55),(-2.1,6.1,.68),(-.4,4.2,.62),(1.1,6.8,.78),(2.8,5.4,.64),(3.7,3.7,.48)]):
+        m.cone((x,1.5,-.35),h,r,.08,"silica",f"silica_spire_{i}",sides=7)
+        m.ellipsoid((x,.35,-1.15),(r*1.5,.3,r*1.1),"carbonate",f"spire_foot_{i}",rings=3,segments=7)
+    m.write({"SnapLeft":[-4.5,0,0],"SnapRight":[4.5,0,0],"ExtractionAnchor":[0,0,-2],"CameraAnchor":[0,4,0]})
+
+
+def methane_seep():
+    m=Mesh("methane_seep_a")
+    for i,(x,z,rx,rz) in enumerate([(-2.5,-.5,2.5,1.7),(1.0,.7,3.0,2.1),(3.3,-1.4,1.7,1.25)]):
+        m.ellipsoid((x,0,z),(rx,.11,rz),"methane_film",f"seep_film_{i}",rings=3,segments=12)
+    for i,(x,z,h) in enumerate([(-3.2,-.7,1.3),(-.4,.5,.9),(1.5,.2,1.7),(3.5,-1.5,1.15)]):
+        m.cone((x,.08,z),h,.48,.16,"methane",f"gas_vent_{i}",sides=7)
+        m.ellipsoid((x,h+.18,z),(.32,.22,.32),"methane_film",f"gas_sac_{i}",rings=3,segments=7)
+    m.write({"GroundPivot":[0,0,0],"FilterAnchor":[0,.15,2.8],"HazardAnchor":[1,0,0]})
+
+
+def sulphur_vents():
+    m=Mesh("sulphur_vent_cluster_a")
+    m.ellipsoid((0,0,0),(4.5,.35,3.4),"rock","vent_bed",rings=4,segments=12)
+    for i,(x,z,h,r) in enumerate([(-2.5,-1.0,3.6,.75),(-.8,1.1,5.2,1.0),(1.1,-.8,4.3,.85),(2.7,1.0,3.1,.65)]):
+        m.cone((x,.2,z),h,r,.28,"sulphur",f"vent_{i}",sides=8)
+        m.ellipsoid((x,h+.28,z),(.5,.32,.5),"carbonate",f"vent_crown_{i}",rings=3,segments=7)
+    m.write({"GroundPivot":[0,0,0],"ExtractionAnchor":[0,.4,-3],"CameraAnchor":[0,3,0]})
+
+
+def delta_island(name, phase):
+    m=Mesh(name)
+    m.ellipsoid((0,0,0),(5.5,.24,2.4),"flood_silt","island",rings=4,segments=14)
+    for i in range(7):
+        x=-3.8+i*1.25
+        z=.5*math.sin(i*1.8+phase)
+        m.cylinder((x,.22,z),(x+.18,.85+.18*math.cos(i),z+.12),.06,"living_green",f"filter_stalk_{i}",sides=6)
+    m.write({"GroundPivot":[0,0,0],"DepositAnchor":[0,.25,0],"FlowLeft":[-5.5,0,0],"FlowRight":[5.5,0,0]})
+
+
 def write_materials():
     OUT.mkdir(parents=True,exist_ok=True)
     lines=["# Environment blockout materials"]
@@ -255,6 +339,14 @@ def main():
     ground_detail("detail_ripple_a","ripples")
     ground_detail("detail_pebbles_a","pebbles")
     ground_detail("detail_scar_a","scar")
+    channel_bank("channel_bank_straight_a")
+    channel_bank("channel_bank_bend_a",bend=True)
+    floodplain_shelf()
+    silica_cliff()
+    methane_seep()
+    sulphur_vents()
+    delta_island("delta_island_a",0.0)
+    delta_island("delta_island_b",1.7)
     assets=[p.stem for p in sorted(OUT.glob("*.obj"))]
     (OUT/"manifest.json").write_text(json.dumps({"generated_by":"tools/generate_environment_blockouts.py","units":"metres","up_axis":"+Y","assets":assets},indent=2)+"\n")
     print(f"Generated {len(assets)} environment assets in {OUT}")

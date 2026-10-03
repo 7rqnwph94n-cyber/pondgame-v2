@@ -23,6 +23,7 @@ class ClientAssetMapTests(unittest.TestCase):
         env_dir=(ROOT/"client"/self.data["environment_dir"]).resolve()
         names=list(self.data["environment"]["terrain_tiles"])
         names += [item["asset"] for item in self.data["environment"]["routes"]]
+        names += [item["asset"] for item in self.data["environment"]["features"]]
         names += [item["asset"] for item in self.data["environment"]["scenery"]]
         for name in names:
             with self.subTest(asset=name):
@@ -45,6 +46,7 @@ class ClientAssetMapTests(unittest.TestCase):
         hud=(ROOT/"client"/"scripts"/"hud.gd").read_text()
         icon_loader=(ROOT/"client"/"scripts"/"icon_loader.gd").read_text()
         self.assertIn('environment.get("scenery", [])',main)
+        self.assertIn('environment.get("features", [])',main)
         self.assertIn('unit_general_carrier_a.obj',main)
         self.assertIn('_update_carrier_views(delta)',main)
         self.assertIn('IconLoader.load_svg',hud)

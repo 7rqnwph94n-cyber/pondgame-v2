@@ -21,6 +21,7 @@ var _lamp: MeshInstance3D
 var _label: Label3D
 var _style: Dictionary = {}
 var _pulse := 0.0
+var _selected := false
 
 
 func setup(entity_kind: String, style: Dictionary) -> void:
@@ -140,8 +141,9 @@ func complete_as(new_kind: String) -> void:
 
 # ------------------------------------------------------------------ internals
 func set_selected(selected: bool) -> void:
+	_selected = selected
 	_label.modulate = Color(1, 0.95, 0.5) if selected else Color(1, 1, 1)
-	_label.visible = selected or kind == "site"
+	_label.visible = selected
 
 
 func _process(delta: float) -> void:
@@ -153,7 +155,7 @@ func _process(delta: float) -> void:
 func _refresh_label() -> void:
 	if _label:
 		_label.text = "%s\n%s" % [definition_id.replace("_", " "), state_id.replace("_", " ")]
-		_label.visible = kind == "site"
+		_label.visible = _selected
 
 
 func _rebuild_body() -> void:

@@ -1,0 +1,27 @@
+{
+  "asset": "sulphur_vent_cluster_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "ExtractionAnchor": [
+      0,
+      0.4,
+      -3
+    ],
+    "CameraAnchor": [
+      0,
+      3,
+      0
+    ]
+  }
+}

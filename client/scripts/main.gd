@@ -281,7 +281,6 @@ func _build_map_geography(map: Dictionary) -> void:
 
 	# Low, non-interactive landmark masses establish the map's long-term goals.
 	_add_memory_reef(Vector3(-35, 0.35, -29))
-	_add_vent_field(Vector3(40, 0.1, -3))
 
 
 func _build_presentation_routes(map: Dictionary) -> void:
@@ -399,6 +398,8 @@ func _build_environment_assets() -> void:
 				var index: int = abs(x * 3 + z * 5) % tiles.size()
 				_add_environment_mesh(str(tiles[index]), Vector3(x * 8, 0.015, z * 8), 0.0, 1.0)
 	for item in environment.get("routes", []):
+		_add_environment_item(item)
+	for item in environment.get("features", []):
 		_add_environment_item(item)
 	for item in environment.get("scenery", []):
 		_add_environment_item(item)

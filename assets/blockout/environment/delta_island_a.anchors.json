@@ -1,0 +1,32 @@
+{
+  "asset": "delta_island_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "DepositAnchor": [
+      0,
+      0.25,
+      0
+    ],
+    "FlowLeft": [
+      -5.5,
+      0,
+      0
+    ],
+    "FlowRight": [
+      5.5,
+      0,
+      0
+    ]
+  }
+}
