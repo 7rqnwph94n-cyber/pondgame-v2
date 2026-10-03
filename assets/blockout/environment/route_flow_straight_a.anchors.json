@@ -1,0 +1,22 @@
+{
+  "asset": "route_flow_straight_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "SnapWest": [
+      -2,
+      0,
+      0
+    ],
+    "SnapEast": [
+      2,
+      0,
+      0
+    ]
+  }
+}

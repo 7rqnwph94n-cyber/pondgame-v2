@@ -1,0 +1,17 @@
+{
+  "asset": "boulder_c",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "CameraAnchor": [
+      0,
+      0.63,
+      0
+    ]
+  }
+}

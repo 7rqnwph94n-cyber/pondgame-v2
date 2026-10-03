@@ -1,0 +1,17 @@
+{
+  "asset": "detail_ripple_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ]
+  }
+}
