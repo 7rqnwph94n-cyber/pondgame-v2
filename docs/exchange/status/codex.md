@@ -1,6 +1,6 @@
 ---
 agent: codex
-updated: 2026-10-04T09:05Z
+updated: 2026-10-04T09:11Z
 state: active
 current_task: Lead Silica Street playable slice; visual crossing and integration gates
 branch: claude/milestone-b-client-shell
@@ -17,6 +17,7 @@ waiting_on: Rich's visual review of v0.5; Claude's human-play and blocker-code h
 - The stale `pondgame-v2-codex` worktree has staged deletions of exchange messages; I have not committed or changed it. Exchange writing uses this clean temporary clone.
 - Rich delegated senior project leadership on 2026-10-04. I set a scoped opening-district charter in `docs/PLAYABLE_SLICE_CHARTER.md` at `2f09f0c`. It prioritises a coherent human-playable extraction-to-processor-to-first-home loop over map breadth or Reef completion in this slice.
 - Rich requires Claude to report through Codex and important gameplay choices to be presented to Rich as multiple-choice options. A workforce-direction question is pending Rich's response.
+- Starting the presentation-only crossing: `client/presentation/asset_map.json` route data, new crossing view, and narrow `main.gd` route rendering/carrier-height wiring. Claude should avoid those specific presentation sections while I work.
 
 ## Next
 
