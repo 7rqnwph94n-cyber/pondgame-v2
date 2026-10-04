@@ -60,6 +60,7 @@ func _ready() -> void:
 	bar.add_child(_clock)
 	_colony = Label.new()
 	_colony.custom_minimum_size = Vector2(430, 0)
+	_colony.mouse_filter = Control.MOUSE_FILTER_PASS
 	bar.add_child(_colony)
 	var labels := ["II", "1×", "2×", "4×", "8×", "16×", "32×"]
 	for i in labels.size():
@@ -94,6 +95,8 @@ func _ready() -> void:
 	_resource_chip(resources, "raw_silicate", "Raw Silicate")
 	_resource_chip(resources, "prepared_silica", "Prepared Silica")
 	_resource_chip(resources, "staple", "Staple")
+	_resource_chip(resources, "carbonate", "Carbonate")
+	_resource_chip(resources, "biomass", "Biomass")
 	_resource_chip(resources, "repair_enzyme", "Repair Enzyme")
 	_resource_chip(resources, "builder", "Builders")
 	show_speed(1, 1)
@@ -239,14 +242,19 @@ func show_view(view: Dictionary) -> void:
 	_clock.text = "%s   %s → %s in %d:%02d" % [view.get("time", "--:--"), str(view.get("season", "")).replace("_", " "),
 		str(view.get("next_season", "")).replace("_", " "), to_next / 60, to_next % 60]
 	var food = view.get("food_minutes")
-	_colony.text = "Pop %s · Food %s min%s · Builders %s · Upkeep %s" % [
-		str(view.get("population", 0)), "–" if food == null else "%.1f" % food,
+	var growth_blockers: Array = view.get("colony_blockers", [])
+	var growth_marker := " !" if not growth_blockers.is_empty() else ""
+	_colony.text = "Pop %s%s · Food %s min%s · Builders %s · Upkeep %s" % [
+		str(view.get("population", 0)), growth_marker, "–" if food == null else "%.1f" % food,
 		" (EMERGENCY)" if view.get("food_emergency", false) else "", str(view.get("builders", "")).replace("_", " "),
 		str(view.get("maintenance_upkeep", ""))]
+	_colony.tooltip_text = "Population growth: %s" % str(growth_blockers[0].get("text", "stalled")) if not growth_blockers.is_empty() else "Population growth is not blocked"
 	var store: Dictionary = view.get("store", {})
 	_set_headline("raw_silicate", int(store.get("raw_silicate", 0)))
 	_set_headline("prepared_silica", int(store.get("prepared_silica", 0)))
 	_set_headline("staple", int(store.get("staple", 0)))
+	_set_headline("carbonate", int(store.get("carbonate", 0)))
+	_set_headline("biomass", int(store.get("biomass", 0)))
 	_set_headline("repair_enzyme", int(store.get("repair_enzyme", 0)))
 	if _headline_values.has("builder"):
 		_headline_values["builder"].text = "Builders  %s" % str(view.get("builders", "idle")).replace("_", " ")
@@ -292,7 +300,7 @@ func show_inspection(reply: Dictionary) -> void:
 	match kind:
 		"facility":
 			lines.append("Building: %s" % reply.get("building"))
-			lines.append("Status: [b]%s[/b] %s" % [reply.get("status"), reply.get("detail", "")])
+			lines.append("Status: [b]%s[/b] %s" % [_facility_status_copy(reply), reply.get("detail", "")])
 			lines.append("Staffing: %d%%" % int(round(float(reply.get("staffing", 0)) * 100)))
 			if reply.get("cycle_progress") != null:
 				lines.append("Cycle: %d%%" % int(round(float(reply["cycle_progress"]) * 100)))
@@ -306,6 +314,11 @@ func show_inspection(reply: Dictionary) -> void:
 		"residence":
 			lines.append("Tier: [b]%s[/b] · %s" % [reply.get("tier"), reply.get("condition")])
 			lines.append("Population %s / %s" % [str(reply.get("population")), str(reply.get("capacity"))])
+			if reply.get("next_tier") != null:
+				lines.append("Next tier: %s" % str(reply["next_tier"]).capitalize())
+				var workforce_change := _workforce_change_copy(reply.get("evolution_workforce_change", {}))
+				if workforce_change != "":
+					lines.append("[color=#ffcc80]On evolution: %s[/color]" % workforce_change)
 			var services: Dictionary = reply.get("services_for_next_tier", {})
 			for s in services:
 				lines.append("  %s %s" % ["✔" if services[s] else "✘", s])
@@ -313,7 +326,10 @@ func show_inspection(reply: Dictionary) -> void:
 			lines.append("Memory Reef: %s, stage %d" % ["begun" if reply.get("begun") else "not begun", int(reply.get("stage", 0))])
 	var reasons: Array = reply.get("reasons", [])
 	if reasons.is_empty():
-		lines.append("\n[color=#a5d6a7]Nothing is blocking this.[/color]")
+		if kind == "facility" and reply.get("status") == "idle":
+			lines.append("\nNo current task; assigned workers remain occupied here.")
+		else:
+			lines.append("\n[color=#a5d6a7]Nothing is blocking this.[/color]")
 	else:
 		lines.append("\n[b]Why it is not progressing:[/b]")
 		for r in reasons:
@@ -323,6 +339,23 @@ func show_inspection(reply: Dictionary) -> void:
 			or _last_inspection.get("labour_priority_overridden") != reply.get("labour_priority_overridden"):
 		_rebuild_actions(kind, entity, reply)
 	_last_inspection = reply
+
+
+func _facility_status_copy(reply: Dictionary) -> String:
+	if reply.get("status", "") == "idle":
+		return "Idle · workers assigned" if float(reply.get("staffing", 0.0)) > 0.0 else "Idle · unstaffed"
+	return str(reply.get("status", "")).replace("_", " ").capitalize()
+
+
+func _workforce_change_copy(change: Dictionary) -> String:
+	var classes := change.keys()
+	classes.sort()
+	var parts := PackedStringArray()
+	for worker_class in classes:
+		var amount := int(change[worker_class])
+		if amount != 0:
+			parts.append("%s%d %s" % ["+" if amount > 0 else "", amount, str(worker_class).capitalize()])
+	return ", ".join(parts)
 
 
 func _rebuild_actions(kind: String, entity: String, reply: Dictionary) -> void:
@@ -342,14 +375,17 @@ func _rebuild_actions(kind: String, entity: String, reply: Dictionary) -> void:
 		"site":
 			_action("Cancel", {"do": "cancel", "target": entity})
 		"residence":
-			_action("Evolve", {"do": "evolve", "residence": entity})
+			var workforce_change := _workforce_change_copy(reply.get("evolution_workforce_change", {}))
+			_action("Evolve", {"do": "evolve", "residence": entity},
+				"Workforce on evolution: %s" % workforce_change if workforce_change != "" else "")
 		"great_work":
 			if not reply.get("begun", false):
 				_action("Begin", {"do": "begin_great_work", "priority": 5})
 
 
-func _action(text: String, cmd: Dictionary) -> void:
+func _action(text: String, cmd: Dictionary, tooltip: String = "") -> void:
 	var b := Button.new()
 	b.text = text
+	b.tooltip_text = tooltip
 	b.pressed.connect(func(): action_requested.emit(cmd))
 	_actions.add_child(b)

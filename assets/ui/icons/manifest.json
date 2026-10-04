@@ -2,7 +2,9 @@
   "generated_by": "tools/generate_ui_icons.py",
   "view_box": "0 0 64 64",
   "icons": [
+    "biomass",
     "builder",
+    "carbonate",
     "clean_flow",
     "culture",
     "dormant",

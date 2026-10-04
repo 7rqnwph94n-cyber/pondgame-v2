@@ -7,7 +7,7 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "bridge"]
 const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
@@ -34,6 +34,7 @@ func _run() -> void:
 	test_layout_is_deterministic_and_stable()
 	test_crossing_is_the_only_water_route()
 	await test_inspector_staff_first_action()
+	await test_opening_hud_legibility()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -161,6 +162,39 @@ func test_inspector_staff_first_action() -> void:
 	check(sent.size() == 2 and sent[1].get("value") == null, "Normal priority clears the override")
 	hud.queue_free()
 	completed.append("staff_first")
+
+
+func test_opening_hud_legibility() -> void:
+	var hud = preload("res://scripts/hud.gd").new()
+	root.add_child(hud)
+	await process_frame
+	hud.show_view({"time": "05:00", "season": "bloom", "next_season": "dry", "seconds_to_next_season": 300,
+		"population": 24, "food_minutes": 20.0, "builders": "idle", "maintenance_upkeep": "grace",
+		"store": {"carbonate": 7, "biomass": 5, "staple": 8},
+		"colony_blockers": [{"code": "growth_blocked", "params": {"reason": "no_free_capacity"},
+			"text": "no free housing: build a home"}]})
+	check(hud._headline_values.has("carbonate") and hud._headline_values["carbonate"].text.contains("7"),
+		"Carbonate stock is visible in the opening strip")
+	check(hud._headline_values.has("biomass") and hud._headline_values["biomass"].text.contains("5"),
+		"Biomass stock is visible in the opening strip")
+	check(hud._colony.text.contains("Pop 24 !") and hud._colony.tooltip_text.contains("no free housing"),
+		"population chip identifies a growth stall and explains it on hover")
+	var home := {"ok": true, "kind": "residence", "entity": "home_1", "tier": "shelter", "condition": "normal",
+		"population": 8, "capacity": 8, "next_tier": "stable", "services_for_next_tier": {},
+		"evolution_workforce_change": {"general": -6, "adapted": 8}, "reasons": []}
+	hud.show_inspection(home)
+	check(hud._inspector_body.text.contains("-6 General") and hud._inspector_body.text.contains("+8 Adapted"),
+		"home inspector warns of the workforce class change before Evolve")
+	var buttons := _action_buttons(hud)
+	check(buttons.has("Evolve") and buttons["Evolve"].tooltip_text.contains("-6 General"),
+		"Evolve action repeats the workforce consequence on hover")
+	var service := {"ok": true, "kind": "facility", "entity": "maintenance_1", "building": "maintenance_organ",
+		"status": "idle", "staffing": 1.0, "reasons": []}
+	hud.show_inspection(service)
+	check(hud._inspector_body.text.contains("workers assigned"),
+		"idle facility explains that it still occupies workers")
+	hud.queue_free()
+	completed.append("opening_hud")
 
 
 func test_bridge_round_trip() -> void:

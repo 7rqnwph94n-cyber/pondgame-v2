@@ -45,6 +45,8 @@ class ClientAssetMapTests(unittest.TestCase):
         icon_dir=(ROOT/"client"/self.data["icon_dir"]).resolve()
         manifest=json.loads((icon_dir/"manifest.json").read_text())
         self.assertIn("raw_silicate",manifest["icons"])
+        self.assertIn("carbonate",manifest["icons"])
+        self.assertIn("biomass",manifest["icons"])
         self.assertIn("output_blocked",manifest["icons"])
         self.assertIn("food_emergency",manifest["icons"])
 

@@ -27,6 +27,8 @@ ICONS={
 "raw_silicate":svg('<path d="M18 45 24 18 34 9 46 22 43 47Z"/><path d="m24 18 12 12 10-8M36 30l7 17M18 45l18-15"/>'),
 "prepared_silica":svg('<circle cx="22" cy="37" r="8"/><circle cx="34" cy="22" r="8"/><circle cx="43" cy="39" r="8"/>'),
 "staple_food":svg('<path d="M16 35c11-14 25-13 33-4-8 13-23 18-33 4Z"/><path d="M20 36c11-2 18-5 26-11"/>',"green"),
+"carbonate":svg('<path d="M14 45c2-13 12-25 24-29l12 10-2 19Z"/><circle cx="27" cy="34" r="3"/><circle cx="39" cy="31" r="2"/>',"pale"),
+"biomass":svg('<path d="M17 47c1-19 14-29 30-31-1 18-14 30-30 31Z"/><path d="M20 44c8-10 16-17 25-24M29 36l-8-10M36 30l8 9"/>',"green"),
 "repair_enzyme":svg('<path d="M31 11c12 13 17 21 17 31a16 16 0 0 1-32 0c0-10 6-19 15-31Z"/><path d="M24 43c3 4 8 5 13 2"/>',"amber"),
 "nutrition":svg('<path d="M18 41c2-16 15-25 29-22-1 16-12 27-29 22Z"/><path d="M21 40c8-7 14-12 22-17"/>',"green"),
 "clean_flow":svg('<path d="M32 10c10 13 16 22 16 31a16 16 0 0 1-32 0c0-9 6-18 16-31Z"/><path d="M23 42c4 5 11 6 17 1"/>'),
