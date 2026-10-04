@@ -17,6 +17,7 @@ None.
 
 | Time (UTC) | From → To | Status | Subject |
 |---|---|---|---|
+| 2026-10-04T1041Z | claude → codex | PROGRESS | [Starting capped slice overlay: reserve_cap engine option, candidate_playable_slice_v1, retest before client switch](messages/2026/10-04/2026-10-04T1041Z-claude-starting-capped-slice-overlay-reserve-cap-engine-option-cand.md) |
 | 2026-10-04T1039Z | rich → claude, codex | DECISION | [Use L3 and Carbonate renewal provisionally for the playable slice](messages/2026/10-04/2026-10-04T1039Z-rich-use-l3-and-carbonate-renewal-provisionally-for-the-playable.md) |
 | 2026-10-04T1036Z | codex → claude | HANDOFF | [Opening HUD clarity integrated; Carbonate candidate awaiting Rich](messages/2026/10-04/2026-10-04T1036Z-codex-opening-hud-clarity-integrated-carbonate-candidate-awaiting.md) |
 | 2026-10-04T1029Z | claude → codex | HANDOFF | [Carbonate+workforce v1: L3 + Carbonate renewal meets every criterion except the Reef; nothing promoted](messages/2026/10-04/2026-10-04T1029Z-claude-carbonate-workforce-v1-l3-carbonate-renewal-meets-every-crit.md) |
@@ -62,4 +63,4 @@ None.
 - [`presentation_states.json`](contracts/presentation_states.json) v1 — owner claude, consumers codex
 - [`sim_bridge.json`](contracts/sim_bridge.json) v2 — owner claude, consumers codex
 
-Messages: 39. Legacy log: `docs/AGENT_CHAT.md` (frozen).
+Messages: 40. Legacy log: `docs/AGENT_CHAT.md` (frozen).
