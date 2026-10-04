@@ -18,6 +18,10 @@ EXPECTED = {
     "service_clean_flow_a": {"max_x": 3.2, "max_z": 3.2, "anchors": {"WorkerAnchor_1", "ServiceAnchor", "InputAnchor_clean_flow", "OutputAnchor_clean_flow"}},
     "waste_collector": {"max_x": 4.2, "max_z": 4.2, "anchors": {"WorkerAnchor_1", "ServiceAnchor", "InputAnchor_waste"}},
     "farm_photosynthetic_a": {"max_x": 9.0, "max_z": 6.2, "anchors": {"WorkerAnchor_1", "OutputAnchor_photosynthetic_food", "ServiceAnchor"}},
+    "civic_first_nursery_a": {"max_x": 5.8, "max_z": 5.8, "anchors": {"WorkerAnchor_1", "BroodAnchor", "CameraAnchor"}},
+    "service_maintenance_organ_a": {"max_x": 4.8, "max_z": 4.8, "anchors": {"WorkerAnchor_1", "ServiceAnchor", "CameraAnchor"}},
+    "civic_survey_organ_a": {"max_x": 4.0, "max_z": 4.0, "anchors": {"WorkerAnchor_1", "SurveyAnchor", "CameraAnchor"}},
+    "farm_culture_bed_a": {"max_x": 5.6, "max_z": 4.2, "anchors": {"WorkerAnchor_1", "OutputAnchor_staple", "CameraAnchor"}},
 }
 
 
