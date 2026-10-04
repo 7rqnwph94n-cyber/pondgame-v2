@@ -9,7 +9,15 @@ const CHANNEL := [
 	Vector2(-62, -47), Vector2(-46, -38), Vector2(-36, -19), Vector2(-14, -15),
 	Vector2(-4, 5), Vector2(18, 8), Vector2(25, 29), Vector2(55, 43)]
 var _smooth_channel: Array[Vector2] = []
+var _channel_points: Array[Vector2] = []
 var _textures: Dictionary = {}
+
+
+func configure_layout(map: Dictionary) -> void:
+	_channel_points.clear()
+	for pair in map.get("channel", []):
+		if pair is Array and pair.size() >= 2:
+			_channel_points.append(Vector2(float(pair[0]), float(pair[1])))
 
 
 func build(texture_root: String = "") -> void:
@@ -261,16 +269,21 @@ func _distance_to_path(point: Vector2) -> float:
 	return nearest
 
 
+func channel_distance_at(point: Vector2) -> float:
+	return _distance_to_path(point)
+
+
 func _sample_channel() -> Array[Vector2]:
 	var result: Array[Vector2] = []
-	for i in range(CHANNEL.size() - 1):
-		var before: Vector2 = CHANNEL[max(0, i - 1)]
-		var start: Vector2 = CHANNEL[i]
-		var finish: Vector2 = CHANNEL[i + 1]
-		var after: Vector2 = CHANNEL[min(CHANNEL.size() - 1, i + 2)]
+	var points: Array = _channel_points if _channel_points.size() >= 2 else CHANNEL
+	for i in range(points.size() - 1):
+		var before: Vector2 = points[max(0, i - 1)]
+		var start: Vector2 = points[i]
+		var finish: Vector2 = points[i + 1]
+		var after: Vector2 = points[min(points.size() - 1, i + 2)]
 		for step in range(12):
 			result.append(start.cubic_interpolate(finish, before, after, float(step) / 12.0))
-	result.append(CHANNEL[-1])
+	result.append(points[-1])
 	return result
 
 

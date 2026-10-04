@@ -7,7 +7,8 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "bridge"]
+const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
 func _initialize() -> void:
@@ -31,6 +32,7 @@ func _style() -> Dictionary:
 func _run() -> void:
 	test_obj_loader()
 	test_layout_is_deterministic_and_stable()
+	test_crossing_is_the_only_water_route()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -78,6 +80,45 @@ func test_layout_is_deterministic_and_stable() -> void:
 	a.free()
 	b.free()
 	completed.append("layout")
+
+
+func test_crossing_is_the_only_water_route() -> void:
+	var data = JSON.parse_string(FileAccess.get_file_as_string("res://presentation/map_layout.json"))
+	check(data is Dictionary, "presentation map layout parses")
+	if not data is Dictionary:
+		return
+	var terrain := BasinTerrain.new()
+	terrain.configure_layout(data)
+	terrain.build()
+	var crossing: Dictionary = data["crossing"]
+	var west := Vector2(float(crossing["west_landing"][0]), float(crossing["west_landing"][1]))
+	var east := Vector2(float(crossing["east_landing"][0]), float(crossing["east_landing"][1]))
+	check(terrain.channel_distance_at(west) >= 7.0 and terrain.channel_distance_at(east) >= 7.0,
+		"crossing landings are on dry banks (%.1f, %.1f m from centre)" % [
+			terrain.channel_distance_at(west), terrain.channel_distance_at(east)])
+	var crossings := 0
+	var pairs: Array = data["carrier_route"]
+	for i in range(pairs.size() - 1):
+		var a := Vector2(float(pairs[i][0]), float(pairs[i][1]))
+		var b := Vector2(float(pairs[i + 1][0]), float(pairs[i + 1][1]))
+		var bridge_segment: bool = (a == west and b == east) or (a == east and b == west)
+		if bridge_segment:
+			crossings += 1
+			continue
+		var dry := true
+		for step in range(21):
+			if terrain.channel_distance_at(a.lerp(b, float(step) / 20.0)) < 6.0:
+				dry = false
+				break
+		check(dry, "carrier route segment %d stays out of open water" % i)
+	check(crossings == 2, "carriers cross the same authored bridge in both directions")
+	check(terrain.channel_distance_at(west.lerp(east, 0.5)) < 5.2, "bridge spans the channel")
+	var bridge := CrossingViewScript.new()
+	bridge.build(terrain, west, east, float(crossing["width"]))
+	check(bridge.height_at_fraction(0.5) > -1.45, "bridge deck clears water surface")
+	bridge.free()
+	terrain.free()
+	completed.append("crossing")
 
 
 func test_bridge_round_trip() -> void:

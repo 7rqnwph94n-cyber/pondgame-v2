@@ -12,6 +12,7 @@ const HudScript = preload("res://scripts/hud.gd")
 const CameraRigScript = preload("res://scripts/camera_rig.gd")
 const ObjLoaderScript = preload("res://scripts/obj_loader.gd")
 const BasinTerrainScript = preload("res://scripts/basin_terrain.gd")
+const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 var bridge: Node
 var world: Node3D
@@ -36,6 +37,7 @@ var _capture_view_override := false
 var _carrier_views: Array[MeshInstance3D] = []
 var _carrier_phase := 0.0
 var _carrier_route: Array[Vector3] = []
+var _crossing_view: Node3D
 var _environment_materials: Dictionary = {}
 
 
@@ -112,6 +114,12 @@ func _load_style() -> Dictionary:
 	var text := FileAccess.get_file_as_string("res://presentation/asset_map.json")
 	var data = JSON.parse_string(text)
 	var result: Dictionary = data if typeof(data) == TYPE_DICTIONARY else {}
+	var map: Dictionary = result.get("environment", {}).get("map", {})
+	var layout_path := "res://presentation/" + str(map.get("layout_file", "map_layout.json"))
+	var layout_data = JSON.parse_string(FileAccess.get_file_as_string(layout_path))
+	if layout_data is Dictionary:
+		for key in layout_data:
+			map[key] = layout_data[key]
 	var root := ProjectSettings.globalize_path("res://")
 	result["asset_root"] = root.path_join(result.get("asset_dir", "../assets/blockout/silica_street")).simplify_path()
 	result["environment_root"] = root.path_join(result.get("environment_dir", "../assets/blockout/environment")).simplify_path()
@@ -279,6 +287,7 @@ func _build_environment() -> void:
 	_sun.shadow_enabled = true
 	add_child(_sun)
 	_basin_terrain = BasinTerrainScript.new()
+	_basin_terrain.configure_layout(map)
 	_basin_terrain.build(style.get("terrain_texture_root", ""))
 	add_child(_basin_terrain)
 	_build_environment_assets()
@@ -311,15 +320,79 @@ func _build_map_geography(map: Dictionary) -> void:
 
 
 func _build_presentation_routes(map: Dictionary) -> void:
-	var route := _points_from_pairs(map.get("carrier_route", []), 0.13)
-	_add_band(route, 1.35, Color("#315f5e"), 0.13)
-	# The residence service loop gives the settlement a Pharaoh-like neighbourhood centre.
-	var loop := _points_from_pairs([[-25, -12], [-18, -16], [-10, -11], [-10, -4], [-18, 0], [-26, -5], [-25, -12]], 0.135)
-	_add_band(loop, 1.0, Color("#426d66"), 0.135)
+	var crossing: Dictionary = map.get("crossing", {})
+	if crossing.has("west_landing") and crossing.has("east_landing"):
+		_crossing_view = CrossingViewScript.new()
+		add_child(_crossing_view)
+		var west: Array = crossing["west_landing"]
+		var east: Array = crossing["east_landing"]
+		_crossing_view.build(_basin_terrain, Vector2(float(west[0]), float(west[1])),
+			Vector2(float(east[0]), float(east[1])), float(crossing.get("width", 2.8)))
+	_add_ground_route(map)
 
 
 func _load_carrier_route(map: Dictionary) -> void:
-	_carrier_route = _points_from_pairs(map.get("carrier_route", []), 0.3)
+	_carrier_route.clear()
+	var pairs: Array = map.get("carrier_route", [])
+	for i in range(pairs.size() - 1):
+		var a := Vector2(float(pairs[i][0]), float(pairs[i][1]))
+		var b := Vector2(float(pairs[i + 1][0]), float(pairs[i + 1][1]))
+		var steps := maxi(1, ceili(a.distance_to(b) / 1.4))
+		for step in range(steps):
+			var t := float(step) / float(steps)
+			var flat := a.lerp(b, t)
+			var height: float = _basin_terrain.height_at(flat.x, flat.y) + 0.32
+			if _crossing_view != null and _is_bridge_segment(a, b, map):
+				var west: Array = map["crossing"]["west_landing"]
+				var west_point := Vector2(float(west[0]), float(west[1]))
+				height = _crossing_view.height_at_fraction(t if a.distance_to(west_point) < 0.1 else 1.0 - t) + 0.32
+			_carrier_route.append(Vector3(flat.x, height, flat.y))
+	if not pairs.is_empty():
+		var last: Array = pairs[-1]
+		var flat := Vector2(float(last[0]), float(last[1]))
+		_carrier_route.append(Vector3(flat.x, _basin_terrain.height_at(flat.x, flat.y) + 0.32, flat.y))
+
+
+func _is_bridge_segment(a: Vector2, b: Vector2, map: Dictionary) -> bool:
+	var crossing: Dictionary = map.get("crossing", {})
+	if not crossing.has("west_landing") or not crossing.has("east_landing"):
+		return false
+	var west: Array = crossing["west_landing"]
+	var east: Array = crossing["east_landing"]
+	var w := Vector2(float(west[0]), float(west[1]))
+	var e := Vector2(float(east[0]), float(east[1]))
+	return (a.distance_to(w) < 0.1 and b.distance_to(e) < 0.1) or (a.distance_to(e) < 0.1 and b.distance_to(w) < 0.1)
+
+
+func _add_ground_route(map: Dictionary) -> void:
+	var pairs: Array = map.get("carrier_route", [])
+	var drawn := {}
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i in range(pairs.size() - 1):
+		var a := Vector2(float(pairs[i][0]), float(pairs[i][1]))
+		var b := Vector2(float(pairs[i + 1][0]), float(pairs[i + 1][1]))
+		if _is_bridge_segment(a, b, map):
+			continue
+		var key := "%s/%s" % [str(a), str(b)]
+		var reverse_key := "%s/%s" % [str(b), str(a)]
+		if drawn.has(key) or drawn.has(reverse_key):
+			continue
+		drawn[key] = true
+		var direction := (b - a).normalized()
+		var side := Vector2(-direction.y, direction.x) * 0.95
+		var steps := maxi(1, ceili(a.distance_to(b) / 1.4))
+		for step in range(steps):
+			var p := a.lerp(b, float(step) / float(steps))
+			var q := a.lerp(b, float(step + 1) / float(steps))
+			for flat in [p + side, q - side, q + side, p + side, p - side, q - side]:
+				st.add_vertex(Vector3(flat.x, _basin_terrain.height_at(flat.x, flat.y) + 0.055, flat.y))
+	st.generate_normals()
+	st.set_material(_material(Color("#365f59"), 0.94))
+	var route := MeshInstance3D.new()
+	route.mesh = st.commit()
+	route.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(route)
 
 
 func _points_from_pairs(pairs: Array, height: float) -> Array[Vector3]:

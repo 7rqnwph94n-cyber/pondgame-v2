@@ -24,7 +24,6 @@
       "methane_colour": "#24373a",
       "sulphur_colour": "#554a34",
       "carbonate_colour": "#52605a",
-      "channel": [[-43, -32], [-31, -22], [-20, -13], [-8, -5], [3, 1], [13, 8], [22, 17], [36, 29]],
       "district_centres": {
         "residence": [-18, -8],
         "food": [-5, 13],
@@ -36,7 +35,7 @@
         "luxury": [-8, -18],
         "other": [5, 7]
       },
-      "carrier_route": [[-13, -5], [-6, -2], [2, -1], [10, -5], [18, -10], [25, -15], [18, -10], [10, -5], [2, -1], [-2, 8], [-5, 15]]
+      "layout_file": "map_layout.json"
     },
     "terrain_tiles": [],
     "features": [

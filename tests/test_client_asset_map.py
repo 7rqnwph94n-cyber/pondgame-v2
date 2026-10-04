@@ -50,6 +50,19 @@ class ClientAssetMapTests(unittest.TestCase):
         self.assertEqual({path.name for path in texture_dir.glob("*.png")},expected)
         self.assertTrue(all((texture_dir/name).stat().st_size>100_000 for name in expected))
 
+    def test_presentation_layout_has_one_river_crossing(self):
+        layout_path=MAP_PATH.parent/self.data["environment"]["map"]["layout_file"]
+        layout=json.loads(layout_path.read_text())
+        self.assertGreaterEqual(len(layout["channel"]),4)
+        route=layout["carrier_route"]
+        crossing=layout["crossing"]
+        west=crossing["west_landing"]
+        east=crossing["east_landing"]
+        self.assertIn(west,route)
+        self.assertIn(east,route)
+        self.assertTrue(any(a==west and b==east or a==east and b==west
+                            for a,b in zip(route,route[1:])))
+
     def test_scenery_stays_outside_core_settlement_corridor(self):
         for item in self.data["environment"]["scenery"]:
             x,_,z=item["position"]
