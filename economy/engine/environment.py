@@ -10,6 +10,9 @@ class Environment:
     If ``scenario.calendar_cycle_seconds`` is set, the authored season list (which must cover exactly one
     cycle) repeats: at each multiple of the cycle the calendar wraps back to the first season, and seasonal
     deposits recur each cycle. Without it, the last season simply continues.
+
+    A patch may renew (``renewal_per_minute``). An optional ``reserve_cap`` stops renewal at that level, so
+    an unharvested patch cannot accumulate without limit; seasonal deposits are not capped.
     """
 
     def __init__(self, defs: dict[str, Any]):
@@ -48,7 +51,11 @@ class Environment:
         for patch_id, patch in self.patch_defs.items():
             renewal = patch.get("renewal_per_minute")
             if renewal and self.reserves[patch_id] is not None:
-                self.reserves[patch_id] += float(renewal) * dt / 60.0
+                renewed = self.reserves[patch_id] + float(renewal) * dt / 60.0
+                cap = patch.get("reserve_cap")   # optional: renewal never raises a reserve above its cap
+                if cap is not None and self.reserves[patch_id] <= float(cap):
+                    renewed = min(renewed, float(cap))
+                self.reserves[patch_id] = renewed
 
     def available(self, patch_id: str | None, quantity: float) -> bool:
         if patch_id is None:

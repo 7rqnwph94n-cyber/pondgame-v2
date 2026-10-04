@@ -1,12 +1,13 @@
-"""Replay the 2026-10-04 human opening (no Autoplay) through the bridge:  python3 tools/replay_human_opening.py <until_second>"""
+"""Replay the 2026-10-04 human opening (no Autoplay) through the bridge:  python3 tools/replay_human_opening.py <until_second> [overlay] [plan]"""
 import json, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from economy.bridge import Session, handle
-PLAN = json.load(open(ROOT / 'docs/milestone_b/human_opening_2026-10-04.plan.json'))   # [[second, cmd], ...]
+PLAN = json.load(open(ROOT / (sys.argv[3] if len(sys.argv) > 3 else 'docs/milestone_b/human_opening_2026-10-04.plan.json')))   # [[second, cmd], ...]
 until = int(sys.argv[1])
-s = Session([str(ROOT / 'economy/data/experiments/candidate_playable_v1.json')])
+overlay = sys.argv[2] if len(sys.argv) > 2 else 'economy/data/experiments/candidate_playable_v1.json'   # the plan was recorded on this package
+s = Session([str(ROOT / overlay)])
 log = []
 t = 1
 for at, cmd in PLAN + [[until, None]]:

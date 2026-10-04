@@ -183,6 +183,11 @@ def validate_definitions(defs: dict[str, Any]) -> list[str]:
         errors.append("seasons do not cover the full scenario")
 
     for patch_id, patch in defs.get("patches", {}).items():
+        if patch.get("reserve_cap") is not None:
+            if patch.get("renewable"):
+                errors.append(f"patch {patch_id}: reserve_cap needs a finite reserve")
+            elif float(patch["reserve_cap"]) < float(patch.get("reserve", 0)):
+                errors.append(f"patch {patch_id}: reserve_cap {patch['reserve_cap']} is below its starting reserve")
         for season_id in patch.get("season_deposits", {}):
             if season_id not in {s["id"] for s in defs["seasons"]}:
                 errors.append(f"patch {patch_id}: unknown deposit season {season_id}")

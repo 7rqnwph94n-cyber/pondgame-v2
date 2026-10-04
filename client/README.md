@@ -8,7 +8,11 @@ This is a Godot 4.3 view over the Python simulation. The design is in ADR 0001 (
 2. Open `client/project.godot` in Godot and press Play, or from the repository root run `godot --path client`.
 3. The client starts the simulation itself, using `python3 -m economy.bridge`.
    - If your Python 3.10+ is not `python3`, set `python=` in `client/settings.cfg`, or set the `POND_PYTHON` environment variable.
-   - `settings.cfg` loads the provisional playable-first package (`candidate_playable_v1`). Remove that overlay to play the plain v0.2 rules.
+   - `settings.cfg` loads the **provisional slice economy** `candidate_playable_slice_v1` (Rich, 2026-10-04): the playable-first package, plus fewer early job slots, plus slow surface-Carbonate renewal capped at 12. It is not a baseline rule. To switch economies, edit the `overlays=` line:
+     - `["economy/data/experiments/candidate_playable_slice_v1.json"]` is the slice default;
+     - `["economy/data/experiments/candidate_playable_v1.json"]` is the earlier package;
+     - `[]` is the plain v0.2 rules.
+   - **Limitation:** the Memory Reef is not reachable within 120 minutes under any of these. The slice ends at the first Stable home and the first Dry season. A first Symbiotic home is possible at about 106 minutes with good play.
 
 ## Controls
 
