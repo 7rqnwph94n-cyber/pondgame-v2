@@ -1,50 +1,41 @@
 ---
 agent: codex
-updated: 2026-10-04T09:11Z
+updated: 2026-10-04T09:32Z
 state: active
-current_task: Lead Silica Street playable slice; visual crossing and integration gates
+current_task: Lead Silica Street playable slice; integrate the visual crossing and review human opening
 branch: claude/milestone-b-client-shell
-head_commit: 2f09f0c
-waiting_on: Rich's visual review of v0.5; Claude's human-play and blocker-code handoff
+head_commit: 5523dbe
+waiting_on: Claude's human-opening/bridge-blocker handoff; Rich's workforce-scale choice and visual review
 ---
 
 ## Now
 
-- One fuller riverbank habitat is integrated: three biomass bower forms, stranded-bank debris, terrain-conforming sediment marks, variable water width and subtle flow lines.
-- The playable HUD is compact by default. Presentation-only building slots keep a dry footprint and sit on terrain, without changing simulation legality.
-- Reviewed empty, close-detail and playable captures in `docs/art/EMPTY_MAP_REVIEW_V05.md`. 11 asset/reference tests and 212 Godot assertions pass. Visual acceptance remains open.
-- Merged main at `f37da9e` contains both histories. I read Claude's 1804Z safe-commit request, 1832Z bridge contract and 0844Z resolution. I am acknowledging/adopting both in the exchange.
-- The stale `pondgame-v2-codex` worktree has staged deletions of exchange messages; I have not committed or changed it. Exchange writing uses this clean temporary clone.
-- Rich delegated senior project leadership on 2026-10-04. I set a scoped opening-district charter in `docs/PLAYABLE_SLICE_CHARTER.md` at `2f09f0c`. It prioritises a coherent human-playable extraction-to-processor-to-first-home loop over map breadth or Reef completion in this slice.
-- Rich requires Claude to report through Codex and important gameplay choices to be presented to Rich as multiple-choice options. A workforce-direction question is pending Rich's response.
-- Starting the presentation-only crossing: `client/presentation/asset_map.json` route data, new crossing view, and narrow `main.gd` route rendering/carrier-height wiring. Claude should avoid those specific presentation sections while I work.
+- River crossing is pushed at `5523dbe`. It is one authored, two-way causeway with dry approaches and terrain-conforming carrier visuals. Geometry is in `client/presentation/map_layout.json` and remains presentation-only.
+- Evidence: `docs/milestone_b/captures/verdant_playable_v21_crossing.png` and `verdant_crossing_detail_v05.png`; review in `docs/art/SILICA_STREET_CROSSING_REVIEW.md`. On the Mac's normal Metal renderer, the route no longer passes unexplained through the channel.
+- Checks: 230 Godot client assertions; 12 Python asset/layout tests. No simulation or bridge contract changed.
+- The playable-slice charter remains `docs/PLAYABLE_SLICE_CHARTER.md` at `2f09f0c`. I am the single contact with Rich; gameplay decisions go to him as multiple-choice options and are relayed to Claude verbatim.
 
 ## Next
 
-1. Author a presentation-only river crossing aligned to `BasinTerrain.CHANNEL`, then verify a gameplay-camera capture has no unexplained route across open water.
-2. Review the human opening loop and normal-zoom Silica Street readability with Claude's diagnosis changes; fix critical visual defects before adding content breadth.
-3. Keep the Memory Reef balance target as a separate, evidence-led research track.
+1. Read Claude's bridge/command/inspector and human-opening report; reproduce the first confusing interaction in the playable camera.
+2. Complete the five-second production-chain read and normal-zoom presentation review, addressing critical defects before expanding the map.
+3. Keep the Reef's 100–120-minute balance target separate from opening-slice acceptance.
 
 ## Blocked on / waiting for
 
-- No implementation blocker. Rich's visual acceptance of the empty map remains outstanding.
-- Exchange work uses a clean temporary clone of main because existing local main worktrees contain unrelated pending changes. Those worktrees were left intact.
-- No blocker on the bridge or exchange protocol. As operational project lead I adopt Claude's proposed client ownership split, subject to Rich's override; no gameplay rule is promoted by this decision.
+- No implementation blocker. Rich's visual acceptance is open. Workforce-scale direction has been asked as a multiple-choice question; no rule changes before it is answered and tested.
+- Exchange work uses this clean temporary main clone. The older `pondgame-v2-codex` worktree contains stale staged exchange deletions and must not be committed as-is.
 
 ## Assumptions I'm making about the other agent's work
 
-- `sim_bridge.json` v1 and `presentation_states.json` v1 are the authoritative client data surfaces. Economy, inspector content and commands remain Claude-owned.
-- Chemical colonies, carbonate outcrops and the bower `HarvestAnchor` are visual representations, not newly implemented gathering rules.
-- Claude's last published board is dated 2026-10-02; I do not infer current progress from that stale board.
+- Claude owns simulation, bridge, commands and inspector content; I own terrain, map, assets, placement, camera and HUD look. Shared `main.gd`, `hud.gd` and `world_view.gd` changes are announced first.
+- `sim_bridge.json` v1 and `presentation_states.json` v1 remain authoritative until Claude publishes a versioned change. The map layout does not create spatial logistics rules.
 
 ## Recently finished
 
-- `ddad78c`: initial authored terrain materials and broad bank ecology, pushed.
-- `9add589`: v14 diversity pass, pushed; docs/art/EMPTY_MAP_REVIEW_V04.md and docs/milestone_b/captures/verdant_empty_map_v14_ecological_diversity.png.
-- `d8c867a`: riverbank habitat v0.5, dry presentation placement, compact HUD and reproducible captures, pushed.
-- `f37da9e`: merged exchange main, read 2026-10-04. No client/economy code changes in this block.
-- `2f09f0c`: playable slice charter and operational ownership split, pushed.
+- `2f09f0c`: playable-slice charter and operational ownership split.
+- `5523dbe`: authored causeway, route geometry, geometric tests and camera evidence, pushed on the client branch.
 
 ## Questions for Rich
 
-- Rich may amend the charter or ownership split. I have asked a multiple-choice question on the first workforce-scale direction. No rule will be promoted before evidence and a subsequent decision.
+- Which first workforce-scale comparison should Claude test: fewer early job slots, more people through shelter capacity/migration, or faster/cheaper home evolution? A multiple-choice prompt is pending.
