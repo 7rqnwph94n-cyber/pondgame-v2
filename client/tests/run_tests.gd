@@ -7,7 +7,7 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "crossing", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "bridge"]
 const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
@@ -33,6 +33,7 @@ func _run() -> void:
 	test_obj_loader()
 	test_layout_is_deterministic_and_stable()
 	test_crossing_is_the_only_water_route()
+	await test_inspector_staff_first_action()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -119,6 +120,47 @@ func test_crossing_is_the_only_water_route() -> void:
 	bridge.free()
 	terrain.free()
 	completed.append("crossing")
+
+
+func _action_buttons(hud) -> Dictionary:
+	var found := {}
+	for b in hud._actions.get_children():
+		if not b.is_queued_for_deletion():
+			found[b.text] = b
+	return found
+
+
+func test_inspector_staff_first_action() -> void:
+	var hud = preload("res://scripts/hud.gd").new()
+	root.add_child(hud)
+	await process_frame
+	var sent := []
+	hud.action_requested.connect(func(cmd): sent.append(cmd))
+	var starved := {"ok": true, "kind": "facility", "entity": "dredge_1", "building": "sediment_dredge", "status": "running",
+		"staffing": 0.33, "labour_priority": 5, "labour_priority_overridden": false,
+		"blockers": [{"code": "unstaffed", "params": {"staffing": 0.33, "jobs": {"general": 3}, "labour_priority": 5,
+			"can_raise_priority": true}, "text": "staffed 33% of 3 general"}], "reasons": ["staffed 33% of 3 general"]}
+	hud.show_inspection(starved)
+	var buttons := _action_buttons(hud)
+	check(buttons.has("Staff first"), "a starved facility offers Staff first")
+	check(not buttons.has("Normal priority"), "no reset offered before an override")
+	if buttons.has("Staff first"):
+		buttons["Staff first"].pressed.emit()
+	check(sent.size() == 1 and sent[0].get("do") == "set_labour_priority" and sent[0].get("target") == "dredge_1"
+		and sent[0].get("value") == hud.STAFF_FIRST_RANK, "Staff first sends set_labour_priority %s" % str(sent))
+	var raised := starved.duplicate(true)
+	raised["labour_priority"] = 3
+	raised["labour_priority_overridden"] = true
+	raised["blockers"] = []
+	raised["reasons"] = []
+	hud.show_inspection(raised)
+	buttons = _action_buttons(hud)
+	check(buttons.has("Normal priority") and not buttons.has("Staff first"), "after the override the inspector offers a reset instead")
+	if buttons.has("Normal priority"):
+		buttons["Normal priority"].pressed.emit()
+	check(sent.size() == 2 and sent[1].get("value") == null, "Normal priority clears the override")
+	hud.queue_free()
+	completed.append("staff_first")
 
 
 func test_bridge_round_trip() -> void:

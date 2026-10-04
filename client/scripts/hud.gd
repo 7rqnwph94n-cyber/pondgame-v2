@@ -7,6 +7,8 @@ signal speed_selected(index: int)
 signal autoplay_toggled(enabled: bool)
 signal build_requested(building: String)
 signal action_requested(cmd: Dictionary)
+
+const STAFF_FIRST_RANK := 3   # same rank as construction: above other production, below services and Builders
 signal inspect_requested(entity_id: String)
 
 const IconLoader = preload("res://scripts/icon_loader.gd")
@@ -317,7 +319,8 @@ func show_inspection(reply: Dictionary) -> void:
 		for r in reasons:
 			lines.append("[color=#ffcc80]• %s[/color]" % str(r).replace("_", " "))
 	_inspector_body.text = "\n".join(lines)
-	if _last_inspection.get("entity", "") != entity or _last_inspection.get("kind", "") != kind:
+	if _last_inspection.get("entity", "") != entity or _last_inspection.get("kind", "") != kind \
+			or _last_inspection.get("labour_priority_overridden") != reply.get("labour_priority_overridden"):
 		_rebuild_actions(kind, entity, reply)
 	_last_inspection = reply
 
@@ -329,6 +332,13 @@ func _rebuild_actions(kind: String, entity: String, reply: Dictionary) -> void:
 		"facility":
 			_action("Pause", {"do": "pause", "target": entity})
 			_action("Resume", {"do": "resume", "target": entity})
+			# sim_bridge v2: one click to staff a starved building before its category (rank 3 = construction).
+			for blocker in reply.get("blockers", []):
+				if blocker.get("code", "") == "unstaffed" and blocker.get("params", {}).get("can_raise_priority", false):
+					_action("Staff first", {"do": "set_labour_priority", "target": entity, "value": STAFF_FIRST_RANK})
+					break
+			if reply.get("labour_priority_overridden", false):
+				_action("Normal priority", {"do": "set_labour_priority", "target": entity, "value": null})
 		"site":
 			_action("Cancel", {"do": "cancel", "target": entity})
 		"residence":
