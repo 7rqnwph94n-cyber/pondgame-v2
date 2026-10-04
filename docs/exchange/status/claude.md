@@ -1,40 +1,34 @@
 ---
 agent: claude
-updated: 2026-10-04T08:44Z
-state: waiting
-current_task: Exchange re-synced (local and GitHub main merged); answered Codex's 1833Z; waiting on Rich's client ownership decision and Reef population/job-scale choice
+updated: 2026-10-04T09:09Z
+state: active
+current_task: Slice work block (Codex 0907Z) — verify bridge/commands/inspector on 2f09f0c; human opening without Autoplay; sim_bridge v2 structured blockers
 branch: claude/milestone-b-client-shell
 head_commit: d8c867a
-waiting_on: Rich (client ownership, Reef fix); Codex (acknowledge sim_bridge v1 and safe commit, author the river crossing)
+waiting_on: Rich (via Codex) for the first workforce-scale test direction
 ---
 
 ## Now
 
-- `main` was split: Codex's 3 October messages were on GitHub, and my 2 October messages were only local. They are now merged (`67437ed`) and pushed.
-- I answered Codex's 1833Z: `sim_bridge` v1 is published, the safe-commit command is documented, and the route crossing is Codex's (presentation only).
+- Codex leads the slice (Rich 0907Z). I report to Codex in the exchange. Charter: `docs/PLAYABLE_SLICE_CHARTER.md` (`2f09f0c`).
+- Work block, in this order:
+  1. Bridge, commands and inspector verification on `2f09f0c`, then a short human opening without Autoplay.
+  2. `sim_bridge` v2 structured blockers (draft ready and tested, not yet committed), plus Dredge labour priority made legible.
+  3. Bounds for the workforce-scale comparison, held until Rich chooses.
 
 ## Next
 
-1. After Rich decides client ownership: integrate on top of Codex's `d8c867a` (bridge-facing work only).
-2. Economy: Reef reachability once Rich picks a population or job-scale fix (1809Z).
-3. Later: spatial logistics. Positions and routes become domain data, consuming Codex's crossing anchors through a contract change.
+- HANDOFF to Codex with the verification results, the first confusing interaction, and the v2 contract.
 
 ## Blocked on / waiting for
 
-- Rich: client file ownership (0826Z proposal); a population or job-scale fix for the Reef (1809Z).
-- Codex: acknowledge the 1832Z CONTRACT and the 1804Z REQUEST.
+- Rich (via Codex): first workforce-scale direction.
 
 ## Assumptions I'm making about the other agent's work
 
-- Codex's client commits up to `d8c867a` change presentation only: no economy, bridge protocol or stable IDs. I verified this against the diff.
-- Codex publishes the exchange from a clean temporary clone of GitHub `main`. I fetch before reading the exchange.
+- Codex owns terrain, map, assets, placement, camera and HUD look. Edits to the shared files `main.gd`, `hud.gd` and `world_view.gd` are announced first.
+- Map geometry and `HarvestAnchor` are presentation-only until Rich decides otherwise.
 
 ## Recently finished
 
-- `67437ed`: merged the GitHub and local exchange histories.
-- `70f9b7a`: client shell, bridge, ADR 0001. `16455ef`: candidate_playable_v1, governor v3, sweep v4. `0119aec`: sweep v3. `04d8deb`: safe exchange commit.
-
-## Questions for Rich
-
-- Client file ownership (0826Z).
-- Not blocking: a Reef population or job-scale fix (1809Z).
+- `67437ed`: merged the exchange histories. `70f9b7a`: client shell, bridge, ADR 0001. `16455ef`: sweep v4.
