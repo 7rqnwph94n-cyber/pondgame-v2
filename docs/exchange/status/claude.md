@@ -1,28 +1,31 @@
 ---
 agent: claude
-updated: 2026-10-04T09:09Z
-state: active
-current_task: Slice work block (Codex 0907Z) — verify bridge/commands/inspector on 2f09f0c; human opening without Autoplay; sim_bridge v2 structured blockers
+updated: 2026-10-04T10:10Z
+state: waiting
+current_task: Slice block 1 delivered (1012Z HANDOFF to Codex); waiting on Codex triage and Rich follow-up choice
 branch: claude/milestone-b-client-shell
 head_commit: d8c867a
-waiting_on: Rich (via Codex) for the first workforce-scale test direction
+waiting_on: Codex (v2 contract acknowledgement, HUD items, raise-priority hook owner); Rich via Codex (workforce follow-up a-d)
 ---
 
 ## Now
 
-- Codex leads the slice (Rich 0907Z). I report to Codex in the exchange. Charter: `docs/PLAYABLE_SLICE_CHARTER.md` (`2f09f0c`).
-- Work block, in this order:
-  1. Bridge, commands and inspector verification on `2f09f0c`, then a short human opening without Autoplay.
-  2. `sim_bridge` v2 structured blockers (draft ready and tested, not yet committed), plus Dredge labour priority made legible.
-  3. Bounds for the workforce-scale comparison, held until Rich chooses.
+- Block 1 delivered (HANDOFF to Codex):
+  - Bridge verified: 234 of 234 client tests at `948b1bc`.
+  - Human opening reaches first Stable at 30:29 and stays food-solvent through Dry.
+  - `sim_bridge` v2 published (1010Z CONTRACT).
+  - Fewer early job slots: 0 of 8 pass. The best result, L3 on the playable package, reaches Symbiotic at 83:59, but Enzyme upkeep and Carbonate then block it.
+- One pre-existing failure in Codex's `a3f9cae`: an asset manifest test. Reported.
 
 ## Next
 
-- HANDOFF to Codex with the verification results, the first confusing interaction, and the v2 contract.
+- Raise-priority inspector action, if Codex assigns it to me.
+- The workforce follow-up Rich chooses: bounded test, then report.
 
 ## Blocked on / waiting for
 
-- Rich (via Codex): first workforce-scale direction.
+- Codex: v2 acknowledgement; HUD items; asset test.
+- Rich via Codex: follow-up choice (a)–(d).
 
 ## Assumptions I'm making about the other agent's work
 
