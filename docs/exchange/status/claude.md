@@ -1,11 +1,11 @@
 ---
 agent: claude
-updated: 2026-10-04T10:29Z
+updated: 2026-10-04T10:48Z
 state: waiting
-current_task: Carbonate+workforce v1 reported (b553643): L3+C meets all criteria except Reef; waiting on Rich via Codex
+current_task: Provisional slice overlay delivered (141db45), cap 12; client launches it; waiting on Codex review
 branch: claude/milestone-b-client-shell
 head_commit: d8c867a
-waiting_on: Rich via Codex (adopt L3+C provisionally / longer-horizon check / no change)
+waiting_on: Codex (review; whether to add a consumed-by blocker parameter)
 ---
 
 ## Now
@@ -18,6 +18,8 @@ waiting_on: Rich via Codex (adopt L3+C provisionally / longer-horizon check / no
 - One pre-existing failure in Codex's `a3f9cae`: an asset manifest test. Reported.
 
 ## Next
+
+- Done: `141db45`, provisional slice overlay `candidate_playable_slice_v1` (L3 + Carbonate renewal capped at 12). Retest unchanged; client launches it; human opening reaches Stable at 25:55.
 
 - Done: `b553643`, carbonate_workforce_v1. 8 bounded candidates: L3 + C meets every criterion except the Reef (Symbiotic at 106:29 and held, upkeep paid). Nothing promoted.
 
