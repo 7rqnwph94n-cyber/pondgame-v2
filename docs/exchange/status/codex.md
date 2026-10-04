@@ -1,11 +1,11 @@
 ---
 agent: codex
-updated: 2026-10-04T10:25Z
+updated: 2026-10-04T10:35Z
 state: active
-current_task: Lead Silica Street playable slice; integrate sim_bridge v2 and human-opening UI findings
+current_task: Lead Silica Street playable slice; review Carbonate candidate and HUD clarity
 branch: claude/milestone-b-client-shell
-head_commit: dd7fda3
-waiting_on: Claude's bounded Carbonate plus workforce/evolution comparison; Rich's visual review
+head_commit: d162922
+waiting_on: Rich's next economy choice and visual review
 ---
 
 ## Now
@@ -20,16 +20,18 @@ waiting_on: Claude's bounded Carbonate plus workforce/evolution comparison; Rich
 - `sim_bridge` v2 is additive to wire protocol 1. I own the HUD/presentation response; Claude is assigned the narrow raise-priority inspector action. My asset manifest mismatch is fixed at `5e904e2`; 162 Python tests pass, 2 skipped.
 - Claude completed the narrow inspector action at `dd7fda3`: “Staff first” / “Normal priority”, 240/240 client tests. I accepted the handoff and will style the buttons in the HUD pass.
 - Rich replied “1 and 3” to the next economy options. I interpret that as testing Carbonate availability plus modest population and evolution levers, each separately and in a small combination. This is a diagnostic pass only; no rule promotion or Enzyme-upkeep relief authorised.
+- Claude completed the eight-candidate comparison at `b553643`. L3+C (fewer early jobs plus 0.2/min surface Carbonate renewal) reaches Symbiotic at 106:29 and holds food and upkeep solvency through 120:00. It still does not open the Reef. Renewal is uncapped and the post-Symbiotic observation is short, so I asked Rich whether to cap/test longer, provisionally use the overlay, or keep current rules.
+- HUD response `d162922` is pushed: Carbonate/Biomass chips; growth-stall tooltip; home workforce-change warning; accurate staffed-idle wording. Normal-renderer capture `verdant_playable_v23_hud_clarity.png`; 247 Godot assertions and 162 Python tests pass (2 skipped).
 
 ## Next
 
-1. Bind `sim_bridge` v2 blocker codes and human-opening feedback in the HUD without changing gameplay rules.
-2. Complete the five-second production-chain read and normal-zoom presentation review, addressing critical defects before expanding the map.
-3. Review Claude's bounded Carbonate plus workforce/evolution comparison when it lands; keep Reef balance separate from opening-slice acceptance.
+1. Relay Rich's next economy choice to Claude, without baseline promotion before evidence and decision.
+2. Complete code-specific blocker icon/fallback handling and the five-second production-chain read at normal zoom.
+3. Review Rich's empty-map visual sign-off gate and keep Reef balance separate from opening-slice acceptance.
 
 ## Blocked on / waiting for
 
-- No implementation blocker. Rich's visual acceptance is open. The next economy experiment is authorised as a bounded test, with no candidate promoted.
+- No implementation blocker. Rich's visual acceptance is open. L3+C remains an experiment overlay, not baseline; next action depends on Rich's pending multiple-choice answer.
 - Exchange work uses this clean temporary main clone. The older `pondgame-v2-codex` worktree contains stale staged exchange deletions and must not be committed as-is.
 
 ## Assumptions I'm making about the other agent's work
@@ -44,7 +46,8 @@ waiting_on: Claude's bounded Carbonate plus workforce/evolution comparison; Rich
 - `a3f9cae`: four starting-facility silhouettes and camera review, pushed on the client branch.
 - `2f3be04` and `948b1bc` (Claude): bridge v2, human-opening evidence and job-slot comparison. `5e904e2` (Codex): asset contract fix, full Python suite green.
 - `dd7fda3` (Claude): one-click priority inspector action, handed off and accepted.
+- `b553643` (Claude): eight Carbonate/workforce candidates, L3+C slice-relevant but Reef still blocked. `d162922` (Codex): HUD opening clarity and camera evidence.
 
 ## Questions for Rich
 
-- No immediate choice pending. Rich chose 1 and 3 from the next-direction options; I will bring him the bounded results and any further material choice.
+- Pending: capped longer verification vs provisional slice overlay vs no economy change. I recommend capped longer verification.
