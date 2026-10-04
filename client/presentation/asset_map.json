@@ -5,7 +5,11 @@
   "terrain_texture_dir": "../assets/textures/terrain",
   "icon_dir": "../assets/ui/icons",
   "buildings": {
+    "first_nursery": "civic_first_nursery_a",
     "general_store": "store_general_a",
+    "maintenance_organ": "service_maintenance_organ_a",
+    "survey_organ": "civic_survey_organ_a",
+    "culture_bed": "farm_culture_bed_a",
     "mineral_washery": "proc_mineral_washery_a",
     "clean_flow_node": "service_clean_flow_a",
     "waste_collector": "waste_collector",

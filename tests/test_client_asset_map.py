@@ -19,6 +19,15 @@ class ClientAssetMapTests(unittest.TestCase):
                 with self.subTest(domain_id=domain_id):
                     self.assertTrue((asset_dir/f"{asset}.obj").is_file())
 
+    def test_every_starting_facility_has_a_distinct_asset(self):
+        from economy.bridge import Session
+
+        initial=Session().view()["facilities"]
+        buildings={facility["building"] for facility in initial.values()}
+        mapped=[self.data["buildings"].get(building) for building in buildings]
+        self.assertNotIn(None,mapped)
+        self.assertEqual(len(mapped),len(set(mapped)))
+
     def test_environment_references_exist(self):
         env_dir=(ROOT/"client"/self.data["environment_dir"]).resolve()
         names=list(self.data["environment"]["terrain_tiles"])

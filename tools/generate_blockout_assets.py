@@ -251,6 +251,70 @@ def photosynthetic_field():
     m.write({"WorkerAnchor_1": [-3.5,0,-3.0], "WorkerAnchor_2": [0,0,-3.0], "WorkerAnchor_3": [3.5,0,-3.0], "OutputAnchor_photosynthetic_food": [4.45,.2,0], "ServiceAnchor": [-4.45,.1,0], "LabelAnchor": [0,1.4,0], "CameraAnchor": [0,.8,0]})
 
 
+def first_nursery():
+    """A sheltered radial brood bowl, taller and calmer than the working farms."""
+    m = Mesh("civic_first_nursery_a")
+    m.ellipsoid((0, 0, 0), (2.8, .28, 2.8), "carbonate", "porous_foot", rings=4, segments=14)
+    m.ellipsoid((0, .22, 0), (2.1, .45, 2.1), "shell_teal", "brood_bowl", rings=4, segments=14)
+    for i in range(7):
+        t = 2 * math.pi * i / 7
+        x, z = 1.15 * math.cos(t), 1.15 * math.sin(t)
+        m.ellipsoid((x, .55, z), (.36, .38, .36), "membrane", f"brood_vesicle_{i}", rings=4, segments=8)
+        m.cylinder_between((2.55*math.cos(t), .12, 2.55*math.sin(t)),
+                           (1.7*math.cos(t), 2.5, 1.7*math.sin(t)),
+                           .105, "carbonate", f"canopy_rib_{i}")
+    m.ellipsoid((0, 1.1, 0), (.34, .34, .34), "active_amber", "nursery_organ", rings=4, segments=9)
+    m.write({"WorkerAnchor_1": [0, 0, -2.9], "BroodAnchor": [0, .8, 0],
+             "LabelAnchor": [0, 3.2, 0], "CameraAnchor": [0, 1.5, 0]})
+
+
+def maintenance_organ():
+    """A low three-armed repair node with a visibly protected enzyme core."""
+    m = Mesh("service_maintenance_organ_a")
+    m.ellipsoid((0, 0, 0), (1.65, .35, 1.65), "shell_teal", "base", rings=4, segments=11)
+    m.ellipsoid((0, .42, 0), (.72, .78, .72), "carbonate", "enzyme_vault", rings=5, segments=9)
+    m.ellipsoid((0, 1.2, 0), (.31, .22, .31), "active_amber", "repair_organ", rings=3, segments=8)
+    for i in range(3):
+        t = 2 * math.pi * i / 3
+        inner = (.55*math.cos(t), .64, .55*math.sin(t))
+        outer = (2.3*math.cos(t), .2, 2.3*math.sin(t))
+        m.cylinder_between(inner, outer, .21, "carbonate", f"repair_arm_{i}", sides=7)
+        m.ellipsoid(outer, (.52, .18, .4), "membrane", f"enzyme_pad_{i}", rings=3, segments=8)
+    m.write({"WorkerAnchor_1": [-2.2, 0, -1.5], "WorkerAnchor_2": [2.2, 0, -1.5],
+             "ServiceAnchor": [0, .2, 2.3], "LabelAnchor": [0, 2.4, 0], "CameraAnchor": [0, 1.1, 0]})
+
+
+def survey_organ():
+    """A tall branching sensor mast; its silhouette cannot be mistaken for a home."""
+    m = Mesh("civic_survey_organ_a")
+    m.ellipsoid((0, 0, 0), (1.8, .28, 1.55), "host_rock", "foot", rings=4, segments=11)
+    m.cylinder_between((0, .25, 0), (0, 3.8, 0), .38, "carbonate", "sensor_stem", sides=8)
+    for i in range(3):
+        t = 2 * math.pi * i / 3 + .25
+        tip = (1.7*math.cos(t), 3.1 + .28*i, 1.7*math.sin(t))
+        m.cylinder_between((0, 2.4, 0), tip, .15, "shell_teal", f"sensor_branch_{i}", sides=7)
+        m.ellipsoid(tip, (.5, .18, .5), "membrane", f"sensor_cup_{i}", rings=3, segments=9)
+    m.ellipsoid((0, 3.75, 0), (.42, .36, .42), "active_amber", "survey_eye", rings=4, segments=9)
+    m.write({"WorkerAnchor_1": [0, 0, -1.9], "SurveyAnchor": [0, 3.8, 0],
+             "LabelAnchor": [0, 4.8, 0], "CameraAnchor": [0, 2.5, 0]})
+
+
+def culture_bed():
+    """Three compact fermentation troughs, distinct from broad sunlit fields."""
+    m = Mesh("farm_culture_bed_a")
+    for i, z in enumerate((-1.5, 0, 1.5)):
+        m.ellipsoid((0, 0, z), (2.75, .23, .58), "organic_dark", f"trough_{i}", rings=3, segments=11)
+        m.ellipsoid((0, .23, z), (2.45, .12, .43), "membrane", f"culture_surface_{i}", rings=3, segments=10)
+        for x in (-1.75, -.55, .65, 1.8):
+            m.ellipsoid((x, .35, z), (.23, .17 + .04 * i, .2), "shell_teal",
+                        f"culture_bud_{i}_{x}", rings=3, segments=7)
+    m.cylinder_between((-2.85, .12, -1.5), (-2.85, .12, 1.5), .11,
+                       "carbonate", "feed_spine", sides=6)
+    m.write({"WorkerAnchor_1": [-3.0, 0, 0], "WorkerAnchor_2": [3.0, 0, -1.5],
+             "OutputAnchor_staple": [2.9, .2, 0], "LabelAnchor": [0, 1.3, 0],
+             "CameraAnchor": [0, .7, 0]})
+
+
 def write_materials():
     OUT.mkdir(parents=True, exist_ok=True)
     lines = ["# Silica Street blockout materials"]
@@ -261,14 +325,16 @@ def write_materials():
 
 def main():
     write_materials()
-    for fn in (payload_raw, payload_prepared, outcrop, carrier, store, washery, shelter, clean_flow, waste_collector, photosynthetic_field):
+    for fn in (payload_raw, payload_prepared, outcrop, carrier, store, washery, shelter,
+               clean_flow, waste_collector, photosynthetic_field, first_nursery,
+               maintenance_organ, survey_organ, culture_bed):
         fn()
     manifest = {
         "generated_by": "tools/generate_blockout_assets.py",
         "units": "metres",
         "up_axis": "+Y",
         "format": "Wavefront OBJ blockout source",
-        "assets": ["payload_raw_silicate_a", "payload_prepared_silica_a", "patch_silicate_a", "unit_general_carrier_a", "store_general_a", "proc_mineral_washery_a", "res_shelter_cluster_a", "service_clean_flow_a", "waste_collector", "farm_photosynthetic_a"],
+        "assets": ["payload_raw_silicate_a", "payload_prepared_silica_a", "patch_silicate_a", "unit_general_carrier_a", "store_general_a", "proc_mineral_washery_a", "res_shelter_cluster_a", "service_clean_flow_a", "waste_collector", "farm_photosynthetic_a", "civic_first_nursery_a", "service_maintenance_organ_a", "civic_survey_organ_a", "farm_culture_bed_a"],
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"Generated {len(manifest['assets'])} assets in {OUT}")

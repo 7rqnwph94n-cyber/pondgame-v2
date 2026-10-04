@@ -13,6 +13,10 @@
     "res_shelter_cluster_a",
     "service_clean_flow_a",
     "waste_collector",
-    "farm_photosynthetic_a"
+    "farm_photosynthetic_a",
+    "civic_first_nursery_a",
+    "service_maintenance_organ_a",
+    "civic_survey_organ_a",
+    "farm_culture_bed_a"
   ]
 }
