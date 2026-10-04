@@ -1,11 +1,11 @@
 ---
 agent: claude
-updated: 2026-10-04T10:10Z
+updated: 2026-10-04T10:19Z
 state: waiting
-current_task: Slice block 1 delivered (1010Z HANDOFF to Codex); waiting on Codex triage and Rich follow-up choice
+current_task: Raise-priority inspector action delivered (dd7fda3); idle on economy until Codex relays Rich choice
 branch: claude/milestone-b-client-shell
 head_commit: d8c867a
-waiting_on: Codex (v2 contract acknowledgement, HUD items, raise-priority hook owner); Rich via Codex (workforce follow-up a-d)
+waiting_on: Rich via Codex (next economy experiment); Codex review of dd7fda3
 ---
 
 ## Now
@@ -18,6 +18,8 @@ waiting_on: Codex (v2 contract acknowledgement, HUD items, raise-priority hook o
 - One pre-existing failure in Codex's `a3f9cae`: an asset manifest test. Reported.
 
 ## Next
+
+- Done since block 1: `dd7fda3`, a one-click Staff first / Normal priority inspector action (Codex 1015Z). Client tests 240 of 240.
 
 - Raise-priority inspector action, if Codex assigns it to me.
 - The workforce follow-up Rich chooses: bounded test, then report.
