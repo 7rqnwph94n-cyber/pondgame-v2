@@ -1,11 +1,11 @@
 ---
 agent: codex
-updated: 2026-10-04T10:38Z
+updated: 2026-10-04T10:53Z
 state: active
-current_task: Lead Silica Street playable slice; review Carbonate candidate and HUD clarity
+current_task: Lead Silica Street playable slice; accept provisional overlay and improve opening blocker clarity
 branch: claude/milestone-b-client-shell
-head_commit: d162922
-waiting_on: Claude's capped provisional-slice integration; Rich's visual review
+head_commit: 141db45
+waiting_on: Claude's additive Biomass consumer blocker pass; Rich's visual review
 ---
 
 ## Now
@@ -23,16 +23,17 @@ waiting_on: Claude's capped provisional-slice integration; Rich's visual review
 - Claude completed the eight-candidate comparison at `b553643`. L3+C (fewer early jobs plus 0.2/min surface Carbonate renewal) reaches Symbiotic at 106:29 and holds food and upkeep solvency through 120:00. It still does not open the Reef. Renewal is uncapped and the post-Symbiotic observation is short, so I asked Rich whether to cap/test longer, provisionally use the overlay, or keep current rules.
 - HUD response `d162922` is pushed: Carbonate/Biomass chips; growth-stall tooltip; home workforce-change warning; accurate staffed-idle wording. Normal-renderer capture `verdant_playable_v23_hud_clarity.png`; 247 Godot assertions and 162 Python tests pass (2 skipped).
 - Rich replied “2” to the next options: provisional use of L3+C for the playable slice. I interpret this as a named candidate overlay with a finite Carbonate renewal cap verified before client default wiring; baseline and Reef target remain untouched. Claude owns conditional economy/config integration.
+- Claude delivered and pushed `141db45`: `candidate_playable_slice_v1` is now the Godot launch overlay, with L3 and 0.2/min surface Carbonate renewal capped at the starting reserve of 12. Its 120-minute retest still reaches and holds Symbiotic at 106:29 with food and upkeep solvent, no devolution; it does not open the Reef. Human opening reaches Stable at 25:55, no Autoplay. I independently ran all eight new overlay tests; they pass. I accepted this provisionally and requested an additive bridge/inspector explanation of the Biomass consumer behind the shelter-site stall.
 
 ## Next
 
-1. Review Claude's capped provisional overlay, 120-minute metrics, human opening and client wiring when ready; reject or report if the cap invalidates the result.
+1. Review Claude's next additive bridge/inspector blocker handoff; style the HUD portion without changing simulation rules.
 2. Complete code-specific blocker icon/fallback handling and the five-second production-chain read at normal zoom.
 3. Review Rich's empty-map visual sign-off gate and keep Reef balance separate from opening-slice acceptance.
 
 ## Blocked on / waiting for
 
-- No implementation blocker. Rich's visual acceptance is open. L3+C is authorised provisionally for the slice, conditional on a finite cap and verification; the v0.2 baseline remains intact.
+- No implementation blocker. Rich's visual acceptance is open. L3+C with the finite cap is verified and now launches provisionally; the v0.2 baseline remains intact and the Reef is not reachable in 120 minutes.
 - Exchange work uses this clean temporary main clone. The older `pondgame-v2-codex` worktree contains stale staged exchange deletions and must not be committed as-is.
 
 ## Assumptions I'm making about the other agent's work
@@ -48,6 +49,7 @@ waiting_on: Claude's capped provisional-slice integration; Rich's visual review
 - `2f3be04` and `948b1bc` (Claude): bridge v2, human-opening evidence and job-slot comparison. `5e904e2` (Codex): asset contract fix, full Python suite green.
 - `dd7fda3` (Claude): one-click priority inspector action, handed off and accepted.
 - `b553643` (Claude): eight Carbonate/workforce candidates, L3+C slice-relevant but Reef still blocked. `d162922` (Codex): HUD opening clarity and camera evidence.
+- `141db45` (Claude): capped provisional slice overlay, 120-minute and human-opening retests, launch configuration; accepted by Codex with Reef caveat.
 
 ## Questions for Rich
 
