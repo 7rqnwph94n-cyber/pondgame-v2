@@ -1,0 +1,32 @@
+{
+ "id": "carbonate_workforce_v1",
+ "description": "Rich 2026-10-04T1026Z chose '1 and 3' (relayed by Codex): test Carbonate availability together with modest population-supply and evolution-pacing levers, separately and in small combinations with L3 (fewer early job slots). At most eight candidate runs; two controls and the L3 anchor are re-run in the same harness. Candidate only. Repair Enzyme relief is NOT a lever; unpaid upkeep stays a failure metric.",
+ "governor": "economy/data/governors/reference_governor_v3.json",
+ "criteria_from": "economy/data/experiments/governor_sweep_v2.json",
+ "levers": {
+  "L3": {"why": "Fewer early job slots (workforce_scale_v1 level L3): outputs unchanged, crews of 3-4 lose one slot.",
+         "from_spec": "economy/data/experiments/workforce_scale_v1_playable.json", "level": "L3_+food_-1"},
+  "C": {"why": "Carbonate precipitates slowly in the calcifying shallows, so surface Carbonate renews like the Anoxic Basin does (existing renewal_per_minute mechanic). 0.2/min is below the gleaners' full-crew yield, so it slows exhaustion instead of gifting stock.",
+        "set": {"patches.surface_carbonate.renewal_per_minute": 0.2}},
+  "P": {"why": "Modest population supply: migration 0.5 -> 0.75 per minute (+50%; the value tested in governor sweep v2). Needs Growth Nutrient and free housing as before.",
+        "set": {"population.migration_per_minute": 0.75}},
+  "E": {"why": "Modest evolution cost: a Stable home needs 1 Growth Nutrient instead of 2 (services and the 90 s sustain are unchanged).",
+        "set": {"residences.stable.evolution.goods": {"growth_nutrient": 1}}}
+ },
+ "controls": [
+  {"label": "control: v0.2 baseline", "base_overlays": [], "levers": []},
+  {"label": "control: playable package", "base_overlays": ["economy/data/experiments/candidate_playable_v1.json"], "levers": []},
+  {"label": "anchor: playable + L3", "base_overlays": ["economy/data/experiments/candidate_playable_v1.json"], "levers": ["L3"]}
+ ],
+ "candidates": [
+  {"label": "C", "levers": ["C"]},
+  {"label": "P", "levers": ["P"]},
+  {"label": "E", "levers": ["E"]},
+  {"label": "L3+C", "levers": ["L3", "C"]},
+  {"label": "L3+C+P", "levers": ["L3", "C", "P"]},
+  {"label": "L3+C+E", "levers": ["L3", "C", "E"]},
+  {"label": "C+P+E", "levers": ["C", "P", "E"]},
+  {"label": "L3+C+P+E", "levers": ["L3", "C", "P", "E"]}
+ ],
+ "candidate_base_overlays": ["economy/data/experiments/candidate_playable_v1.json"]
+}
