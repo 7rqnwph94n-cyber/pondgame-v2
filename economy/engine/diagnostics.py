@@ -118,6 +118,7 @@ class Diagnostics:
 
     def record_growth_block(self, reason: str) -> None:
         self.growth_block[reason] += self.sim.dt
+        self.growth_block_now = (reason, self.sim.second)   # player-visible: why the colony is not growing now
 
     def maintenance_weight(self) -> float:
         sim = self.sim

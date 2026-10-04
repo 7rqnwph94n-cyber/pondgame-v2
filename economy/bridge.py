@@ -30,7 +30,7 @@ from .engine import Simulation, load_definitions
 from .engine.definitions import read_json
 from .player_view import observe
 
-PROTOCOL = 1
+PROTOCOL = 1          # wire protocol; contract sim_bridge v2 adds fields only
 DEFAULT_PORT = 47615
 MAX_ADVANCE = 600
 ROOT = Path(__file__).resolve().parents[1]
@@ -81,9 +81,20 @@ class Session:
         view["population"] = round(sum(r.population for r in self.sim.residences.values()), 2)
         view["maintenance_upkeep"] = self.sim.upkeep.state
         view["autoplay"] = self.governor is not None
+        reason, at = getattr(self.sim.diag, "growth_block_now", (None, -1))
+        view["colony_blockers"] = ([_blocker("growth_blocked", "population not growing: " + GROWTH_TEXT.get(reason, reason), reason=reason)]
+                                   if reason and at >= self.sim.second - 1 else [])
         for site_id, site in view["sites"].items():
             built = self.sim.sites[site_id]
             site["progress"] = round(built.physical_done / built.physical_work, 3) if built.physical_work else 0.0
+            site["blockers"] = site_blockers(self.sim, built)
+        for fid, facility in view["facilities"].items():
+            built = self.sim.facilities[fid]
+            facility["blockers"] = facility_blockers(self.sim, built)
+            facility["labour_priority"] = labour_rank(self.sim, built)
+            facility["labour_priority_overridden"] = built.labour_priority is not None
+        for rid, residence in view["residences"].items():
+            residence["blockers"] = residence_blockers(self.sim, self.sim.residences[rid])
         new_events = self.sim.events[self.events_sent:]
         self.events_sent = len(self.sim.events)
         view["events"] = new_events
@@ -114,60 +125,142 @@ class Session:
 
 
 # ---------------------------------------------------------------------- stall inspector
+# Stable blocker codes (sim_bridge contract v2). Presentation binds icons to codes; `text` is the tooltip.
+# Ordered most actionable first. `output_blocked` is reserved: storage capacity is not enforced yet.
+BLOCKER_CODES = ("paused", "unstaffed", "waiting_input", "food_emergency", "morphology_missing", "environment",
+                 "patch_depleted", "output_blocked", "strained", "dormant", "low_need", "missing_service",
+                 "evolution_blocked", "great_work_blocked", "growth_blocked")
+GROWTH_TEXT = {"no_free_capacity": "no free housing: build a home",
+               "basic_needs_unsupplied": "a home is strained or dormant",
+               "growth_nutrient_unavailable": "no Growth Nutrient in store for migrants"}
+
+
+def _blocker(code: str, text: str, **params: Any) -> dict[str, Any]:
+    assert code in BLOCKER_CODES, code
+    return {"code": code, "params": params, "text": text}
+
+
+def labour_rank(sim: Simulation, f) -> int:
+    """Effective staffing rank (lower is staffed first): the player override or the category default."""
+    order = sim.defs["workforce"]["job_priority"]
+    return f.labour_priority if f.labour_priority is not None else (order.index(f.category) if f.category in order else len(order))
+
+
+def facility_blockers(sim: Simulation, f) -> list[dict[str, Any]]:
+    out = []
+    if f.paused:
+        out.append(_blocker("paused", "paused by the player"))
+    jobs = f.definition.get("jobs", {})
+    if jobs and f.staffing < 1.0 - 1e-6 and not f.paused:
+        rank = labour_rank(sim, f)
+        text = f"staffed {f.staffing:.0%} of {', '.join(f'{n} {c}' for c, n in jobs.items())}"
+        if rank > 0:
+            text += f" (labour priority {rank}: raise it to staff this first)"
+        out.append(_blocker("unstaffed", text, staffing=round(f.staffing, 2), jobs=dict(jobs), labour_priority=rank,
+                            can_raise_priority=rank > 0))
+    recipe = sim.defs["recipes"].get(f.recipe_id) if f.recipe_id else None
+    store = sim.store(f.district).counts
+    missing = {r: q - store.get(r, 0) for r, q in (recipe or {}).get("inputs", {}).items() if store.get(r, 0) < q}
+    if missing and f.cycle_remaining is None:
+        out.append(_blocker("waiting_input", "needs inputs " + ", ".join(f"{q} {r}" for r, q in sorted(missing.items())),
+                            goods=missing))
+    if f.status == "morphology_missing":
+        out.append(_blocker("morphology_missing", f"needs morphology {f.status_detail}", morphology=f.status_detail))
+    elif f.status == "environment":
+        out.append(_blocker("environment", f"environment: {f.status_detail}", detail=f.status_detail))
+    elif f.status == "patch_depleted":
+        out.append(_blocker("patch_depleted", f"patch depleted: {f.status_detail}", patch=f.status_detail))
+    return out
+
+
+def site_blockers(sim: Simulation, s) -> list[dict[str, Any]]:
+    out = []
+    missing = s.missing()
+    if missing:
+        out.append(_blocker("waiting_input", ", ".join(f"waiting for {q} {r}" for r, q in sorted(missing.items())),
+                            goods=dict(missing)))
+    if s.state == "awaiting_labour":
+        if sim.builder_state.get(s.district) == "preempted_food_emergency":
+            out.append(_blocker("food_emergency", "Builders are farming: food emergency", reason=sim.food_emergency.reason))
+        else:
+            out.append(_blocker("unstaffed", "waiting for Builders (construction labour)", labour="builders"))
+    return out
+
+
+def residence_blockers(sim: Simulation, r, state: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    state = state or r.presentation_state(sim.defs, sim.services.get(r.district, set()))
+    out = []
+    if state["condition"] in ("strained", "dormant"):
+        out.append(_blocker(state["condition"], f"condition {state['condition']}"))
+    for good, minutes in sorted(state["need_buffer_minutes"].items()):
+        if minutes < 3:
+            out.append(_blocker("low_need", f"low {good}: {minutes:.1f} min", good=good, minutes=minutes))
+    for service, ok in state["services_for_next_tier"].items():
+        if not ok:
+            out.append(_blocker("missing_service", f"next tier needs service: {service}", service=service))
+    next_tier = sim.defs["residences"][r.tier].get("next")
+    if next_tier and not state["evolution"] and all(state["services_for_next_tier"].values()):
+        need = sim.defs["residences"][next_tier]["evolution"].get("goods", {})
+        store = sim.store(r.district).counts
+        short = {g: q - store.get(g, 0) for g, q in need.items() if store.get(g, 0) < q}
+        if short:
+            out.append(_blocker("waiting_input", "to evolve, needs in store: " + ", ".join(f"{q} {g}" for g, q in sorted(short.items())),
+                                goods=short, purpose="evolution"))
+    if state["evolution"]:
+        missing = {f"service:{b['params']['service']}" for b in out if b["code"] == "missing_service"}
+        for b in state["evolution"]["blockers"]:
+            if b in missing:
+                continue   # already reported as missing_service
+            out.append(_blocker("evolution_blocked", f"evolution blocked: {b}", blocker=b))
+    return out
+
+
 def explain(sim: Simulation, target: str) -> dict[str, Any]:
-    """A player-readable answer to 'why is this not progressing?' for one entity."""
+    """A player-readable answer to 'why is this not progressing?' for one entity.
+
+    `blockers` is the ordered, structured list (contract v2); `reasons` keeps the plain text (v1).
+    """
+    def reply(kind: str, blockers: list[dict[str, Any]], blocked: bool, **fields: Any) -> dict[str, Any]:
+        return {"ok": True, "kind": kind, "entity": target, **fields, "blocked": blocked,
+                "blockers": blockers, "reasons": [b["text"] for b in blockers]}
+
     if target == "great_work":
-        blockers = sim.great_work_blockers() if sim.great_work.begun_at is None else []
-        return {"ok": True, "kind": "great_work", "entity": target, "begun": sim.great_work.begun_at is not None,
-                "stage": sim.great_work.stage_index, "blocked": bool(blockers), "reasons": blockers}
+        raw = sim.great_work_blockers() if sim.great_work.begun_at is None else []
+        blockers = [_blocker("great_work_blocked", b, blocker=b) for b in raw]
+        return reply("great_work", blockers, bool(blockers), begun=sim.great_work.begun_at is not None,
+                     stage=sim.great_work.stage_index)
     if target in sim.facilities:
         f = sim.facilities[target]
-        reasons = []
-        if f.paused:
-            reasons.append("paused by the player")
-        if f.status not in ("running",) and f.status_detail:
-            reasons.append(f"{f.status}: {f.status_detail}")
-        elif f.status not in ("running",):
-            reasons.append(f.status)
         recipe = sim.defs["recipes"].get(f.recipe_id) if f.recipe_id else None
-        store = sim.store(f.district).counts
-        missing_inputs = {r: q - store.get(r, 0) for r, q in (recipe or {}).get("inputs", {}).items() if store.get(r, 0) < q}
-        if missing_inputs and f.cycle_remaining is None:
-            reasons.append("needs inputs " + ", ".join(f"{q} {r}" for r, q in sorted(missing_inputs.items())))
-        jobs = f.definition.get("jobs", {})
-        if jobs and f.staffing < 1.0 - 1e-6:
-            reasons.append(f"staffed {f.staffing:.0%} of {', '.join(f'{n} {c}' for c, n in jobs.items())}")
-        return {"ok": True, "kind": "facility", "entity": target, "building": f.building_id, "status": f.status,
-                "detail": f.status_detail, "staffing": round(f.staffing, 2), "recipe": f.recipe_id,
-                "cycle_progress": None if f.cycle_remaining is None or not recipe else
-                round(1 - f.cycle_remaining / recipe["cycle_seconds"], 3),
-                "blocked": f.status != "running", "reasons": reasons}
+        blockers = facility_blockers(sim, f)
+        if f.status not in ("running", "idle") and not blockers:   # never leave a stall unexplained
+            blockers = [_blocker("environment", f"{f.status}: {f.status_detail}", detail=f"{f.status}:{f.status_detail}")]
+        return reply("facility", blockers, f.status != "running", building=f.building_id, status=f.status,
+                     labour_priority=labour_rank(sim, f), labour_priority_overridden=f.labour_priority is not None,
+                     detail=f.status_detail, staffing=round(f.staffing, 2), recipe=f.recipe_id,
+                     cycle_progress=None if f.cycle_remaining is None or not recipe else
+                     round(1 - f.cycle_remaining / recipe["cycle_seconds"], 3))
     if target in sim.sites:
         s = sim.sites[target]
-        missing = s.missing()
-        reasons = [f"waiting for {q} {r}" for r, q in sorted(missing.items())]
-        if s.state == "awaiting_labour":
-            reasons.append("waiting for Builders (construction labour)")
         waits = {k: round(v / 60, 1) for k, v in sorted(sim.diag.site_wait.get(s.id, {}).items(), key=lambda i: -i[1])}
         total = s.physical_work or 1.0
-        return {"ok": True, "kind": "site", "entity": target, "builds": s.target, "state": s.state, "missing": missing,
-                "work_progress": round(s.physical_done / total, 3), "waited_minutes": waits,
-                "blocked": s.state in ("awaiting_materials", "awaiting_labour"), "reasons": reasons}
+        return reply("site", site_blockers(sim, s), s.state in ("awaiting_materials", "awaiting_labour"),
+                     builds=s.target, state=s.state, missing=s.missing(),
+                     work_progress=round(s.physical_done / total, 3), waited_minutes=waits)
     if target in sim.residences:
         r = sim.residences[target]
         state = r.presentation_state(sim.defs, sim.services.get(r.district, set()))
-        reasons = []
-        if state["condition"] != "normal":
-            reasons.append(f"condition {state['condition']}")
-        low = {g: m for g, m in state["need_buffer_minutes"].items() if m < 3}
-        if low:
-            reasons.append("low needs: " + ", ".join(f"{g} {m:.1f} min" for g, m in sorted(low.items())))
-        missing_services = [s for s, ok in state["services_for_next_tier"].items() if not ok]
-        if missing_services:
-            reasons.append("next tier needs services: " + ", ".join(missing_services))
-        if state["evolution"] and state["evolution"]["blockers"]:
-            reasons.append("evolution blocked: " + ", ".join(state["evolution"]["blockers"]))
-        return {"ok": True, "kind": "residence", "entity": target, **state, "blocked": bool(reasons), "reasons": reasons}
+        blockers = residence_blockers(sim, r, state)
+        defs = sim.defs["residences"]
+        next_tier = defs[r.tier].get("next")
+        change = None
+        if next_tier:
+            now, then = defs[r.tier], defs[next_tier]
+            change = {now["class"]: -now["workforce"]}
+            change[then["class"]] = change.get(then["class"], 0) + then["workforce"]
+        ready = bool(next_tier) and not state["evolution"] and not blockers
+        return reply("residence", blockers, bool(blockers), **state, next_tier=next_tier, evolution_ready=ready,
+                     evolution_workforce_change=change)
     return {"ok": False, "reasons": [f"unknown_target:{target}"]}
 
 
