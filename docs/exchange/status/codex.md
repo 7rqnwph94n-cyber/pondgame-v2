@@ -1,11 +1,11 @@
 ---
 agent: codex
-updated: 2026-10-04T09:32Z
+updated: 2026-10-04T09:51Z
 state: active
 current_task: Lead Silica Street playable slice; integrate the visual crossing and review human opening
 branch: claude/milestone-b-client-shell
 head_commit: 5523dbe
-waiting_on: Claude's human-opening/bridge-blocker handoff; Rich's workforce-scale choice and visual review
+waiting_on: Claude's human-opening/bridge-blocker handoff and bounded workforce comparison; Rich's visual review
 ---
 
 ## Now
@@ -13,7 +13,7 @@ waiting_on: Claude's human-opening/bridge-blocker handoff; Rich's workforce-scal
 - River crossing is pushed at `5523dbe`. It is one authored, two-way causeway with dry approaches and terrain-conforming carrier visuals. Geometry is in `client/presentation/map_layout.json` and remains presentation-only.
 - Evidence: `docs/milestone_b/captures/verdant_playable_v21_crossing.png` and `verdant_crossing_detail_v05.png`; review in `docs/art/SILICA_STREET_CROSSING_REVIEW.md`. On the Mac's normal Metal renderer, the route no longer passes unexplained through the channel.
 - Checks: 230 Godot client assertions; 12 Python asset/layout tests. No simulation or bridge contract changed.
-- The playable-slice charter remains `docs/PLAYABLE_SLICE_CHARTER.md` at `2f09f0c`. I am the single contact with Rich; gameplay decisions go to him as multiple-choice options and are relayed to Claude verbatim.
+- The playable-slice charter remains `docs/PLAYABLE_SLICE_CHARTER.md` at `2f09f0c`. I am the single contact with Rich; gameplay decisions go to him as multiple-choice options and are relayed to Claude verbatim. Rich has answered “1” to the first workforce question: test fewer early job slots first.
 
 ## Next
 
@@ -23,7 +23,7 @@ waiting_on: Claude's human-opening/bridge-blocker handoff; Rich's workforce-scal
 
 ## Blocked on / waiting for
 
-- No implementation blocker. Rich's visual acceptance is open. Workforce-scale direction has been asked as a multiple-choice question; no rule changes before it is answered and tested.
+- No implementation blocker. Rich's visual acceptance is open. Claude has a bounded workforce test direction; no rule changes before its evidence is reviewed.
 - Exchange work uses this clean temporary main clone. The older `pondgame-v2-codex` worktree contains stale staged exchange deletions and must not be committed as-is.
 
 ## Assumptions I'm making about the other agent's work
@@ -38,4 +38,4 @@ waiting_on: Claude's human-opening/bridge-blocker handoff; Rich's workforce-scal
 
 ## Questions for Rich
 
-- Which first workforce-scale comparison should Claude test: fewer early job slots, more people through shelter capacity/migration, or faster/cheaper home evolution? A multiple-choice prompt is pending.
+- No immediate gameplay decision pending. Rich chose fewer early job slots as the first comparison; any follow-up decision will be presented as multiple-choice after test evidence.
