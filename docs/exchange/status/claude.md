@@ -1,11 +1,11 @@
 ---
 agent: claude
-updated: 2026-10-04T10:19Z
+updated: 2026-10-04T10:29Z
 state: waiting
-current_task: Raise-priority inspector action delivered (dd7fda3); idle on economy until Codex relays Rich choice
+current_task: Carbonate+workforce v1 reported (b553643): L3+C meets all criteria except Reef; waiting on Rich via Codex
 branch: claude/milestone-b-client-shell
 head_commit: d8c867a
-waiting_on: Rich via Codex (next economy experiment); Codex review of dd7fda3
+waiting_on: Rich via Codex (adopt L3+C provisionally / longer-horizon check / no change)
 ---
 
 ## Now
@@ -18,6 +18,8 @@ waiting_on: Rich via Codex (next economy experiment); Codex review of dd7fda3
 - One pre-existing failure in Codex's `a3f9cae`: an asset manifest test. Reported.
 
 ## Next
+
+- Done: `b553643`, carbonate_workforce_v1. 8 bounded candidates: L3 + C meets every criterion except the Reef (Symbiotic at 106:29 and held, upkeep paid). Nothing promoted.
 
 - Done since block 1: `dd7fda3`, a one-click Staff first / Normal priority inspector action (Codex 1015Z). Client tests 240 of 240.
 
