@@ -1,47 +1,40 @@
 ---
 agent: claude
-updated: 2026-10-02T18:32Z
+updated: 2026-10-04T08:44Z
 state: waiting
-current_task: Milestone B client shell delivered (Godot 4.3 over the Python bridge); waiting for Rich to push and play, and for Codex's import review
+current_task: Exchange re-synced (local and GitHub main merged); answered Codex's 1833Z; waiting on Rich's client ownership decision and Reef population/job-scale choice
 branch: claude/milestone-b-client-shell
-head_commit: 70f9b7a
-waiting_on: Rich, who must push three branches and try the client; Codex, for import review and adoption of sim_bridge v1
+head_commit: d8c867a
+waiting_on: Rich (client ownership, Reef fix); Codex (acknowledge sim_bridge v1 and safe commit, author the river crossing)
 ---
 
 ## Now
 
-- The **client shell runs** (`70f9b7a` on `claude/milestone-b-client-shell`). It has:
-  - Codex's blockouts at runtime;
-  - pause and speed controls (1–32×);
-  - a build list;
-  - a stall inspector with actions;
-  - Autoplay.
-- Captures are in `docs/milestone_b/captures/`.
-- Contract `sim_bridge` v1 is published (1832Z CONTRACT). ADR 0001 is in `docs/adr/`.
+- `main` was split: Codex's 3 October messages were on GitHub, and my 2 October messages were only local. They are now merged (`67437ed`) and pushed.
+- I answered Codex's 1833Z: `sim_bridge` v1 is published, the safe-commit command is documented, and the route crossing is Codex's (presentation only).
 
 ## Next
 
-1. Fix whatever Rich hits on first run on his Mac (Python path, Godot 4.3 import).
-2. Fold in Codex's import-review fixes through `client/presentation/asset_map.json` and `EntityView`.
-3. Economy: once Rich chooses a population or job-scale fix (1809Z HANDOFF), the Reef can become reachable.
-4. Then spatial placement and logistics: positions become domain state (ADR 0001, point 7).
+1. After Rich decides client ownership: integrate on top of Codex's `d8c867a` (bridge-facing work only).
+2. Economy: Reef reachability once Rich picks a population or job-scale fix (1809Z).
+3. Later: spatial logistics. Positions and routes become domain data, consuming Codex's crossing anchors through a contract change.
 
 ## Blocked on / waiting for
 
-- Rich: push `main`, `claude/milestone-a-honest-economy` and `claude/milestone-b-client-shell`, then open `client/project.godot` in Godot 4.3.
-- Codex: import review at the shell camera; adopt `sim_bridge` v1; use `tools/exchange.py commit` (1804Z REQUEST).
+- Rich: client file ownership (0826Z proposal); a population or job-scale fix for the Reef (1809Z).
+- Codex: acknowledge the 1832Z CONTRACT and the 1804Z REQUEST.
 
 ## Assumptions I'm making about the other agent's work
 
-- Codex's blockouts stay at `assets/blockout/silica_street/<asset>.obj` with `silica_street_blockout.mtl`, in metres, +Y up and ground pivot. The client reads them at runtime.
-- Codex owns `client/presentation/asset_map.json` (presentation data only).
+- Codex's client commits up to `d8c867a` change presentation only: no economy, bridge protocol or stable IDs. I verified this against the diff.
+- Codex publishes the exchange from a clean temporary clone of GitHub `main`. I fetch before reading the exchange.
 
 ## Recently finished
 
-- 70f9b7a: Milestone B client shell, `economy/bridge.py`, `economy/player_view.py`, ADR 0001, bridge and client tests.
-- 16455ef: `candidate_playable_v1`, governor v3 and sweep v4.
-- 04d8deb and 1448433: safe exchange commit, and repair of the stale-worktree reverts.
+- `67437ed`: merged the GitHub and local exchange histories.
+- `70f9b7a`: client shell, bridge, ADR 0001. `16455ef`: candidate_playable_v1, governor v3, sweep v4. `0119aec`: sweep v3. `04d8deb`: safe exchange commit.
 
 ## Questions for Rich
 
-- Not blocking: choose a population or job-scale fix for the Reef (1809Z HANDOFF).
+- Client file ownership (0826Z).
+- Not blocking: a Reef population or job-scale fix (1809Z).
