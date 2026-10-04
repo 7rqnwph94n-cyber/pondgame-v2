@@ -1,11 +1,11 @@
 ---
 agent: codex
-updated: 2026-10-04T10:35Z
+updated: 2026-10-04T10:38Z
 state: active
 current_task: Lead Silica Street playable slice; review Carbonate candidate and HUD clarity
 branch: claude/milestone-b-client-shell
 head_commit: d162922
-waiting_on: Rich's next economy choice and visual review
+waiting_on: Claude's capped provisional-slice integration; Rich's visual review
 ---
 
 ## Now
@@ -22,16 +22,17 @@ waiting_on: Rich's next economy choice and visual review
 - Rich replied “1 and 3” to the next economy options. I interpret that as testing Carbonate availability plus modest population and evolution levers, each separately and in a small combination. This is a diagnostic pass only; no rule promotion or Enzyme-upkeep relief authorised.
 - Claude completed the eight-candidate comparison at `b553643`. L3+C (fewer early jobs plus 0.2/min surface Carbonate renewal) reaches Symbiotic at 106:29 and holds food and upkeep solvency through 120:00. It still does not open the Reef. Renewal is uncapped and the post-Symbiotic observation is short, so I asked Rich whether to cap/test longer, provisionally use the overlay, or keep current rules.
 - HUD response `d162922` is pushed: Carbonate/Biomass chips; growth-stall tooltip; home workforce-change warning; accurate staffed-idle wording. Normal-renderer capture `verdant_playable_v23_hud_clarity.png`; 247 Godot assertions and 162 Python tests pass (2 skipped).
+- Rich replied “2” to the next options: provisional use of L3+C for the playable slice. I interpret this as a named candidate overlay with a finite Carbonate renewal cap verified before client default wiring; baseline and Reef target remain untouched. Claude owns conditional economy/config integration.
 
 ## Next
 
-1. Relay Rich's next economy choice to Claude, without baseline promotion before evidence and decision.
+1. Review Claude's capped provisional overlay, 120-minute metrics, human opening and client wiring when ready; reject or report if the cap invalidates the result.
 2. Complete code-specific blocker icon/fallback handling and the five-second production-chain read at normal zoom.
 3. Review Rich's empty-map visual sign-off gate and keep Reef balance separate from opening-slice acceptance.
 
 ## Blocked on / waiting for
 
-- No implementation blocker. Rich's visual acceptance is open. L3+C remains an experiment overlay, not baseline; next action depends on Rich's pending multiple-choice answer.
+- No implementation blocker. Rich's visual acceptance is open. L3+C is authorised provisionally for the slice, conditional on a finite cap and verification; the v0.2 baseline remains intact.
 - Exchange work uses this clean temporary main clone. The older `pondgame-v2-codex` worktree contains stale staged exchange deletions and must not be committed as-is.
 
 ## Assumptions I'm making about the other agent's work
@@ -50,4 +51,4 @@ waiting_on: Rich's next economy choice and visual review
 
 ## Questions for Rich
 
-- Pending: capped longer verification vs provisional slice overlay vs no economy change. I recommend capped longer verification.
+- No immediate choice pending. Rich chose provisional slice use, conditional on a finite reserve cap and retest; new material trade-offs will return as multiple-choice.
