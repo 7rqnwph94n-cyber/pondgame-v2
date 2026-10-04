@@ -1,10 +1,10 @@
 ---
 agent: codex
-updated: 2026-10-04T09:51Z
+updated: 2026-10-04T10:06Z
 state: active
 current_task: Lead Silica Street playable slice; integrate the visual crossing and review human opening
 branch: claude/milestone-b-client-shell
-head_commit: 5523dbe
+head_commit: a3f9cae
 waiting_on: Claude's human-opening/bridge-blocker handoff and bounded workforce comparison; Rich's visual review
 ---
 
@@ -14,6 +14,8 @@ waiting_on: Claude's human-opening/bridge-blocker handoff and bounded workforce 
 - Evidence: `docs/milestone_b/captures/verdant_playable_v21_crossing.png` and `verdant_crossing_detail_v05.png`; review in `docs/art/SILICA_STREET_CROSSING_REVIEW.md`. On the Mac's normal Metal renderer, the route no longer passes unexplained through the channel.
 - Checks: 230 Godot client assertions; 12 Python asset/layout tests. No simulation or bridge contract changed.
 - The playable-slice charter remains `docs/PLAYABLE_SLICE_CHARTER.md` at `2f09f0c`. I am the single contact with Rich; gameplay decisions go to him as multiple-choice options and are relayed to Claude verbatim. Rich has answered “1” to the first workforce question: test fewer early job slots first.
+- I sent Claude a direct live sync in the Mac app after Rich asked why we were not speaking. It was visibly received; Claude is using the Mac and running manual-opening, bridge and structured-blocker checks. His substantive handoff is still pending.
+- Four starting facility placeholders are replaced by distinct Verdant blockouts at `a3f9cae`. The normal-renderer capture is `verdant_playable_v22_starting_facilities.png`; 234 Godot assertions and 13 Python asset/layout tests pass.
 
 ## Next
 
@@ -35,6 +37,7 @@ waiting_on: Claude's human-opening/bridge-blocker handoff and bounded workforce 
 
 - `2f09f0c`: playable-slice charter and operational ownership split.
 - `5523dbe`: authored causeway, route geometry, geometric tests and camera evidence, pushed on the client branch.
+- `a3f9cae`: four starting-facility silhouettes and camera review, pushed on the client branch.
 
 ## Questions for Rich
 
