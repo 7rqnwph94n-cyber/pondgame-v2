@@ -21,3 +21,9 @@ The reference governor reaches Symbiotic at 106:29. Food remains solvent through
 ## Preservation
 
 The original `pondlife/game` prototype is clean at `73df57b` and its complete Git history is archived in `archives/pondlife-prototype-2026-10-05/prototype.bundle`, with restore instructions. The v2 development branches remain recoverable in Git history.
+
+## Player controls review, 2026-10-05
+
+Rich’s first click-through rejected the hidden build catalogue, wordy HUD, camera controls and unselectable carriers. The new client has a persistent left icon build rail, category flyouts with single-click construction and cost/workforce hover help, a compact icon resource strip and full-stock panel, a short inspector with expandable details, and building/site/home right-click actions. Zoom supports buttons, wheel, trackpad scroll/pinch and +/−; Home resets the camera. Q/E or Alt-middle-drag rotate, freeing right-click for options. Carriers can be selected, highlighted, inspected and followed; they freeze with pause and manual panning cancels follow. Construction auto-selects its new site.
+
+Native Mac QA verified the build rail, resource strip, hover help, zoom button, building context menu, carrier selection/Inspect/Follow and the construction inspector. Automated client tests cover zoom inputs and bounds, menu actions, single-click build requests, compact inspection and carrier picking/pause. Carriers remain visual representations with no simulated cargo or individual orders; construction still uses district placement. Economy, bridge contracts and provisional launch defaults are unchanged.

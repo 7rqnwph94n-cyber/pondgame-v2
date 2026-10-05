@@ -111,15 +111,17 @@ func _ready() -> void:
 	for i in labels.size():
 		var b := Button.new()
 		b.text = labels[i]
+		b.focus_mode = Control.FOCUS_NONE
 		if i == 0: b.icon = Glyph.texture("pause")
 		b.expand_icon = true
 		b.custom_minimum_size = Vector2(34, 30)
 		b.toggle_mode = true
 		b.tooltip_text = "Pause / resume (Space)" if i == 0 else "Speed %s (key %d)" % [labels[i], i]
-		b.pressed.connect(func(): speed_selected.emit(i))
+		b.pressed.connect(func(): speed_selected.emit((0 if b.button_pressed else 1) if i == 0 else i))
 		bar.add_child(b)
 		_speed_buttons.append(b)
 	_auto = CheckBox.new()
+	_auto.focus_mode = Control.FOCUS_NONE
 	_auto.icon = Glyph.texture("play")
 	_auto.expand_icon = true
 	_auto.custom_minimum_size = Vector2(48, 32)
@@ -512,7 +514,7 @@ func show_inspection(reply: Dictionary) -> void:
 	_inspector_body.text = "\n".join(lines)
 	if _last_inspection.get("entity", "") != entity or _last_inspection.get("kind", "") != kind \
 			or _last_inspection.get("labour_priority_overridden") != reply.get("labour_priority_overridden") \
-			or (_last_inspection.get("status") == "paused") != (reply.get("status") == "paused") \
+			or _last_inspection.get("status") != reply.get("status") \
 			or _consumer_ids(_last_inspection) != _consumer_ids(reply):
 		_rebuild_actions(kind, entity, reply)
 	_last_inspection = reply.duplicate(true)

@@ -276,6 +276,13 @@ func test_player_controls() -> void:
 	hud.configure({"resources": ["biomass", "fired_ceramic"], "buildings": {
 		"culture_bed": {"category": "food", "cost": {"biomass": 2}, "jobs": {"general": 3}},
 		"shelter": {"category": "residence", "cost": {"biomass": 1}}}})
+	var speeds: Array = []
+	hud.speed_selected.connect(func(index): speeds.append(index))
+	hud._speed_buttons[0].button_pressed = true
+	hud._speed_buttons[0].pressed.emit()
+	hud._speed_buttons[0].button_pressed = false
+	hud._speed_buttons[0].pressed.emit()
+	check(speeds == [0, 1], "pause icon toggles both pause and resume")
 	check(hud._category_buttons.size() == 8, "eight persistent build categories are available")
 	hud.open_build_category("food")
 	await process_frame
