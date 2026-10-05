@@ -1,16 +1,18 @@
 ---
 agent: codex
 updated: 2026-10-05T17:45Z
-state: active
-current_task: Rework player controls and icon HUD after Rich click-through
-branch: codex/player-controls
-head_commit: 61926cd
+state: idle
+current_task: Player controls integrated after Claude review; awaiting Rich click-through acceptance
+branch: main
+head_commit: 37adb0e
 waiting_on: Rich's playable opening review
 ---
 
 ## Now
 
-- New controls implementation passes 273 Godot assertions. Native QA confirms left icon build catalogue, building right-click menu, zoom button, selectable carrier ring and carrier right-click Inspect/Follow. Compact HUD runs on the desktop launcher. Completing final construction/tooltip QA and pushing the branch for Claude review.
+- Claude independently passed 273 assertions on the first UI branch and found click-priority and context-evolution warning gaps. These are fixed, with toolbar Space focus, Mac trackpad pan/pinch/Shift-zoom/Alt-rotate, distinct stock/Reef glyphs, category deselection and readable high-speed carriers. Final client suite passes 281 assertions. Integrated to main at 37adb0e. Runtime needs a normal game restart for the latest review corrections; do not reset Rich’s ongoing click-through while he is using it.
+
+- New controls implementation passes 281 Godot assertions. Native QA confirms left icon build catalogue, building right-click menu, zoom button, selectable carrier ring and carrier right-click Inspect/Follow. Compact HUD runs on the desktop launcher. Native construction inspection and hover help also verified. Branch 497fc0a is pushed; Claude is independently reviewing it. Final small correction makes the pause icon resume too and prevents toolbar focus swallowing Space.
 
 - Rich rejected the wordy controls/HUD. Editing main.gd, hud.gd and camera_rig.gd: right-click actions, visible left build bar, icon tooltips, trackpad and button zoom, selectable carriers. Simulation and contracts remain unchanged; Claude should avoid these shared client files during this block.
 
