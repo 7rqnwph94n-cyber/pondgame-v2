@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-05T16:35Z
+updated: 2026-10-05T17:14Z
 state: idle
-current_task: Early capacity comparison independently verified; remains research with sensitivity and Gel limits
+current_task: Desktop launcher installed and verified; all completed work integrated and pushed
 branch: main
-head_commit: fd59c43
-waiting_on: Rich's next work instruction and visual acceptance
+head_commit: 2986480
+waiting_on: Rich's playable opening review
 ---
 
 ## Now
+
+- `2986480`: Play Pondlife.app, custom icon and desktop installer. Installed on Rich’s desktop and launched through native macOS UI; verified rendered basin, live simulation, resource HUD and Space pause. Shell syntax, installer idempotency and diff checks pass. No gameplay or overlay edits. Launcher docs are in client/README.md.
 
 - New early-capacity comparison: selected 80-minute order plus at-most-one Culture Bed pause above 30 food-minutes. All three digesters commissioned by 107:56; Symbiotic 115:39; zero unpaid upkeep/food emergencies through 240. Gel shortage 4.8 residence-minutes and demand catches supply at 0.75/min by 240. Claude reproduced --check and confirmed all figures; delayed-grace zeros marked as timing failures, nearby sensitivity and player forecast remain open. No default adoption.
 
