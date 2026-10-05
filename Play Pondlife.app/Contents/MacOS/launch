@@ -1,0 +1,31 @@
+#!/bin/zsh
+set -eu
+launcher_dir="$(cd "$(dirname "$0")" && pwd -P)"
+project_dir="$(cd "$launcher_dir/../../.." && pwd -P)"
+export PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+log_dir="$HOME/Library/Logs/Pondlife"
+mkdir -p "$log_dir"
+exec >> "$log_dir/launch.log" 2>&1
+print "Starting Pondlife at $(date)"
+python_path="$(command -v python3 || true)"
+if [[ -z "$python_path" ]]; then
+  print "Python 3 is missing. See client/README.md."
+  exit 1
+fi
+export POND_PYTHON="$python_path"
+godot_path=""
+for candidate in /Applications/Godot.app/Contents/MacOS/Godot "$HOME/Applications/Godot.app/Contents/MacOS/Godot" "$HOME/Downloads/Godot.app/Contents/MacOS/Godot"; do
+  if [[ -x "$candidate" ]]; then godot_path="$candidate"; break; fi
+done
+if [[ -z "$godot_path" ]]; then godot_path="$(command -v godot || true)"; fi
+if [[ -z "$godot_path" ]]; then
+  print "Godot is missing. See client/README.md."
+  exit 1
+fi
+# Repeated clicks must not launch another simulation on the same bridge port.
+if /usr/sbin/lsof -n -iTCP:47615 -sTCP:LISTEN >/dev/null 2>&1; then
+  print "A Pondlife bridge is already running; close the existing game before starting again."
+  exit 0
+fi
+cd "$project_dir"
+exec "$godot_path" --path "$project_dir/client"

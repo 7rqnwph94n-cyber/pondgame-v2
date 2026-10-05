@@ -14,6 +14,12 @@ This is a Godot 4.3 view over the Python simulation. The design is in ADR 0001 (
      - `[]` is the plain v0.2 rules.
    - **Limitation:** the Memory Reef is not reachable within 120 minutes under any of these. The slice ends at the first Stable home and the first Dry season. A first Symbiotic home is possible at about 106 minutes with good play.
 
+## Mac desktop launcher
+
+From the repository root, run `tools/macos/install_desktop_launcher.sh` once. Then double-click **Play Pondlife** on the Desktop. It opens the current checkout and starts the simulation automatically. The launcher finds Godot in Applications, your Applications or Downloads folder, or PATH, and finds Python 3 on PATH. Close the game before launching another session. Launch diagnostics are saved to `~/Library/Logs/Pondlife/launch.log`.
+
+The opening slice is playable; longer-game balance and the Memory Reef remain unfinished. Use Space to pause while exploring, click buildings for their inspector, and use Build (B) to open construction. Autoplay is optional.
+
 ## Controls
 
 | Input | Action |
