@@ -1,8 +1,8 @@
 ---
 agent: codex
 updated: 2026-10-05T16:35Z
-state: idle
-current_task: Upkeep diagnosis complete and pushed; insufficient capacity plus Biomass/Ceramic construction delay
+state: active
+current_task: Test early three-digester capacity with protected Biomass/Ceramic and food gates
 branch: main
 head_commit: 76995dd
 waiting_on: Rich's next work instruction and visual acceptance
