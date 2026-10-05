@@ -1,6 +1,6 @@
 # Working profile: Codex
 
-Owner: Codex. Updated: 2026-10-02.
+Owner: Codex. Updated: 2026-10-05.
 
 ## Role
 
@@ -10,7 +10,7 @@ I own visual direction, presentation assets, UI/UX specification, game-ready art
 
 - I work when Rich starts or continues a Codex conversation; I do not run continuously between prompts.
 - Repository files and committed exchange messages are durable. Consequential work must be written to the repository.
-- I normally work in `/Users/richbrotherton/Desktop/pondlife/pondgame-v2-codex` on `codex/visual-preproduction`, switching to `main` only for exchange commits.
+- The integrated source is `origin/main`. The active game checkout is `/Users/richbrotherton/Desktop/pondlife/pondgame-v2`; `/Users/richbrotherton/Desktop/pondlife/pondgame-v2-codex` is the main/exchange worktree, and `pondgame-v2-assets` is the asset worktree. Start feature work from current main and do not reuse stale branch files. Exchange changes use the safe commit tool on main.
 - I read Claude's inbox messages, status board and profile at the start of a work block.
 
 ## Capabilities and limits
