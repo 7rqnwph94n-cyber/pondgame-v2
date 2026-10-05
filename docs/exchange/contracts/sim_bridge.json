@@ -1,12 +1,12 @@
 {
  "id": "sim_bridge",
- "version": 2,
+ "version": 3,
  "protocol": 1,
  "owner": "claude",
  "consumers": [
   "codex"
  ],
- "description": "Local simulation bridge between the Godot 4.3 client and the Python domain (ADR 0001; Rich 2026-10-02T18:11Z). Version 2 (2026-10-04, Codex 0907Z request) is additive: structured blockers, labour priority and colony growth blockers; every v1 field is unchanged. Newline-delimited JSON over TCP on 127.0.0.1 (default port 47615). Every request has an integer `id` and an `op`; every reply echoes `id` and `op` and has `ok` (false replies carry `reasons`). The Python domain is the only rules authority: the client renders the `view` and sends player commands. Presentation reads entity state through presentation_states.json values; anything not listed here is unstable.",
+ "description": "Local simulation bridge between the Godot 4.3 client and the Python domain (ADR 0001; Rich 2026-10-02T18:11Z). Version 2 (2026-10-04, Codex 0907Z request) is additive: structured blockers, labour priority and colony growth blockers; every v1 field is unchanged. Newline-delimited JSON over TCP on 127.0.0.1 (default port 47615). Every request has an integer `id` and an `op`; every reply echoes `id` and `op` and has `ok` (false replies carry `reasons`). The Python domain is the only rules authority: the client renders the `view` and sends player commands. Presentation reads entity state through presentation_states.json values; anything not listed here is unstable. Version 3 adds optional waiting_input.params.consumers; existing fields and protocol unchanged.",
  "source": "economy/bridge.py on claude/milestone-b-client-shell; verified by tests/test_bridge.py",
  "transport": {
   "encoding": "utf-8",
@@ -180,14 +180,15 @@
    },
    "waiting_input": {
     "params": [
-     "goods"
+     "goods",
+     "consumers"
     ],
     "on": [
      "facility",
      "site",
      "residence"
     ],
-    "note": "goods = {resource: missing quantity}; residence form adds purpose='evolution'"
+    "note": "goods = {resource: missing quantity}; residence form adds purpose='evolution'; consumers maps missing resource to same-district, unpaused running/no_input recipe competitors, excluding the inspected facility. Each row: entity, building, recipe, per_cycle, held, state (running|waiting_input), outputs. Snapshot competition, not historical attribution. Held inputs are not returned by pause. Optional for v2 clients."
    },
    "food_emergency": {
     "params": [
