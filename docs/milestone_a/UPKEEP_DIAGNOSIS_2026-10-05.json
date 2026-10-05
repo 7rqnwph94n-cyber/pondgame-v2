@@ -1,0 +1,5229 @@
+[
+  {
+    "label": "reference",
+    "actions": [],
+    "first_unpaid_second": 8189,
+    "nominal_demand_after_grace": 70.59,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "106:29",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 9,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 124.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 54.7,
+      "blocked_entity_minutes": 1137.9,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 1923.0,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "digester_state_seconds": {
+      "waste_digester_1:no_workforce": 1,
+      "waste_digester_1:running": 10241
+    },
+    "snapshots": [
+      {
+        "second": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 0,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 1,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 5,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 6,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 12,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 8,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 18,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 14,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 25,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 17,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 31,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 22,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 23,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 0.6666666666666666,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 27,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 9,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "no_workforce",
+            "paused": false,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 34,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 36,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "maintenance_weight": 37.5,
+        "demand_per_minute": 0.46875,
+        "enzyme_stock": 6,
+        "organic_waste_stock": 42,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6390,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 44,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 46,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 1,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 55,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 6,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 2,
+        "organic_waste_stock": 61,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 11,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8189,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 67,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 14,
+        "upkeep_unpaid_minutes": 0.02,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 72,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 15,
+        "upkeep_unpaid_minutes": 1.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 78,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 18,
+        "upkeep_unpaid_minutes": 6.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 87,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 20,
+        "upkeep_unpaid_minutes": 11.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 93,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 23,
+        "upkeep_unpaid_minutes": 16.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 100,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 25,
+        "upkeep_unpaid_minutes": 21.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "maintenance_weight": 42.0,
+        "demand_per_minute": 0.525,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 108,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 28,
+        "upkeep_unpaid_minutes": 26.92,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 118,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 30,
+        "upkeep_unpaid_minutes": 32.07,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 126,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 33,
+        "upkeep_unpaid_minutes": 37.87,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 137,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 35,
+        "upkeep_unpaid_minutes": 43.35,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 148,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 38,
+        "upkeep_unpaid_minutes": 49.2,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 159,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 40,
+        "upkeep_unpaid_minutes": 54.68,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      }
+    ],
+    "sites": {
+      "home_4": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_1": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_gleaning_site_1": {
+        "target": "carbonate_gleaning_site",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_washer_1": {
+        "target": "nutrient_washer",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_1": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_collector_1": {
+        "target": "waste_collector",
+        "state": "complete",
+        "missing": {}
+      },
+      "clean_flow_node_1": {
+        "target": "clean_flow_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "silicate_pit_1": {
+        "target": "silicate_pit",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_5": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "mineral_washery_1": {
+        "target": "mineral_washery",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_cutter_1": {
+        "target": "carbonate_cutter",
+        "state": "complete",
+        "missing": {}
+      },
+      "ceramic_kiln_1": {
+        "target": "ceramic_kiln",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_6": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_digester_1": {
+        "target": "waste_digester",
+        "state": "complete",
+        "missing": {}
+      },
+      "fibre_garden_1": {
+        "target": "fibre_garden",
+        "state": "complete",
+        "missing": {}
+      },
+      "retting_pool_1": {
+        "target": "retting_pool",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_1": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_7": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_2": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_2": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_8": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "distribution_node_1": {
+        "target": "distribution_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "detox_clinic_1": {
+        "target": "detox_clinic",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_9": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_kitchen_1": {
+        "target": "nutrient_kitchen",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_grove_1": {
+        "target": "resin_grove",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_curing_1": {
+        "target": "resin_curing",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_2": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "composite_workshop_1": {
+        "target": "composite_workshop",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_10": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_11": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_12": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "pigment_bed_1": {
+        "target": "pigment_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "artisan_organ_1": {
+        "target": "artisan_organ",
+        "state": "complete",
+        "missing": {}
+      },
+      "anoxic_pump_1": {
+        "target": "anoxic_pump",
+        "state": "awaiting_materials",
+        "missing": {
+          "fired_ceramic": 2
+        }
+      },
+      "home_13": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_14": {
+        "target": "shelter",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      },
+      "memory_circle_1": {
+        "target": "memory_circle",
+        "state": "awaiting_materials",
+        "missing": {
+          "fired_ceramic": 2
+        }
+      },
+      "photosynthetic_field_3": {
+        "target": "photosynthetic_field",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      }
+    },
+    "upkeep_events": [
+      "106:30 maintenance upkeep begins",
+      "136:29 maintenance upkeep UNPAID: service suspended",
+      "137:20 maintenance upkeep restored",
+      "139:20 maintenance upkeep UNPAID: service suspended",
+      "141:20 maintenance upkeep restored",
+      "143:20 maintenance upkeep UNPAID: service suspended",
+      "145:20 maintenance upkeep restored",
+      "147:20 maintenance upkeep UNPAID: service suspended",
+      "149:20 maintenance upkeep restored",
+      "151:20 maintenance upkeep UNPAID: service suspended",
+      "153:20 maintenance upkeep restored",
+      "155:20 maintenance upkeep UNPAID: service suspended",
+      "157:20 maintenance upkeep restored",
+      "159:20 maintenance upkeep UNPAID: service suspended",
+      "161:20 maintenance upkeep restored",
+      "163:20 maintenance upkeep UNPAID: service suspended",
+      "165:20 maintenance upkeep restored",
+      "167:20 maintenance upkeep UNPAID: service suspended",
+      "169:20 maintenance upkeep restored",
+      "171:20 maintenance upkeep UNPAID: service suspended",
+      "173:20 maintenance upkeep restored",
+      "175:20 maintenance upkeep UNPAID: service suspended",
+      "177:20 maintenance upkeep restored",
+      "179:20 maintenance upkeep UNPAID: service suspended",
+      "181:20 maintenance upkeep restored",
+      "183:18 maintenance upkeep UNPAID: service suspended",
+      "185:20 maintenance upkeep restored",
+      "187:18 maintenance upkeep UNPAID: service suspended",
+      "189:20 maintenance upkeep restored",
+      "191:15 maintenance upkeep UNPAID: service suspended",
+      "193:20 maintenance upkeep restored",
+      "195:10 maintenance upkeep UNPAID: service suspended",
+      "197:20 maintenance upkeep restored",
+      "199:07 maintenance upkeep UNPAID: service suspended",
+      "201:20 maintenance upkeep restored",
+      "203:07 maintenance upkeep UNPAID: service suspended",
+      "205:20 maintenance upkeep restored",
+      "207:04 maintenance upkeep UNPAID: service suspended",
+      "209:20 maintenance upkeep restored",
+      "211:04 maintenance upkeep UNPAID: service suspended",
+      "213:20 maintenance upkeep restored",
+      "215:04 maintenance upkeep UNPAID: service suspended",
+      "217:20 maintenance upkeep restored",
+      "219:04 maintenance upkeep UNPAID: service suspended",
+      "221:20 maintenance upkeep restored",
+      "223:04 maintenance upkeep UNPAID: service suspended",
+      "225:20 maintenance upkeep restored",
+      "227:04 maintenance upkeep UNPAID: service suspended",
+      "229:20 maintenance upkeep restored",
+      "231:04 maintenance upkeep UNPAID: service suspended",
+      "233:20 maintenance upkeep restored",
+      "235:04 maintenance upkeep UNPAID: service suspended",
+      "237:20 maintenance upkeep restored",
+      "239:04 maintenance upkeep UNPAID: service suspended"
+    ],
+    "kiln_governor_actions": [
+      {
+        "t": 2110,
+        "rule": "build_order",
+        "command": {
+          "do": "construct",
+          "building": "ceramic_kiln",
+          "id": "ceramic_kiln_1",
+          "priority": 27
+        },
+        "reason": "first Kiln (Adapted crew): Ceramic",
+        "ok": true,
+        "result": "site ceramic_kiln_1 placed"
+      },
+      {
+        "t": 3050,
+        "rule": "kiln_fuel",
+        "command": {
+          "do": "set_recipe",
+          "target": "ceramic_kiln_1",
+          "recipe": "ceramic_kiln_biofuel"
+        },
+        "reason": "no Anoxic Organics: biomass fuel",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 4450,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input prepared_silica for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 5810,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input prepared_silica)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6180,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6350,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6720,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11130,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11500,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11830,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 12200,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      }
+    ]
+  },
+  {
+    "label": "staff existing digester first",
+    "actions": [
+      {
+        "second": 7200,
+        "command": {
+          "do": "set_labour_priority",
+          "target": "waste_digester_1",
+          "value": 3
+        },
+        "ok": true,
+        "result": ""
+      }
+    ],
+    "first_unpaid_second": 8189,
+    "nominal_demand_after_grace": 70.59,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "106:29",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 9,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 124.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 54.7,
+      "blocked_entity_minutes": 1137.9,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 1923.0,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "digester_state_seconds": {
+      "waste_digester_1:no_workforce": 1,
+      "waste_digester_1:running": 10241
+    },
+    "snapshots": [
+      {
+        "second": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 0,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 1,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 5,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 6,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 12,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 8,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 18,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 14,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 25,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 17,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 31,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 22,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 23,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 0.6666666666666666,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 27,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 9,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "no_workforce",
+            "paused": false,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 34,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 36,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "maintenance_weight": 37.5,
+        "demand_per_minute": 0.46875,
+        "enzyme_stock": 6,
+        "organic_waste_stock": 42,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6390,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 44,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 46,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 1,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 55,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 6,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 2,
+        "organic_waste_stock": 61,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 11,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8189,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 67,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 14,
+        "upkeep_unpaid_minutes": 0.02,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 72,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 15,
+        "upkeep_unpaid_minutes": 1.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 78,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 18,
+        "upkeep_unpaid_minutes": 6.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 87,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 20,
+        "upkeep_unpaid_minutes": 11.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 93,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 23,
+        "upkeep_unpaid_minutes": 16.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 100,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 25,
+        "upkeep_unpaid_minutes": 21.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "maintenance_weight": 42.0,
+        "demand_per_minute": 0.525,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 108,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 28,
+        "upkeep_unpaid_minutes": 26.92,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 118,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 30,
+        "upkeep_unpaid_minutes": 32.07,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 126,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 33,
+        "upkeep_unpaid_minutes": 37.87,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 137,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 35,
+        "upkeep_unpaid_minutes": 43.35,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 148,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 38,
+        "upkeep_unpaid_minutes": 49.2,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 159,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 40,
+        "upkeep_unpaid_minutes": 54.68,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      }
+    ],
+    "sites": {
+      "home_4": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_1": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_gleaning_site_1": {
+        "target": "carbonate_gleaning_site",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_washer_1": {
+        "target": "nutrient_washer",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_1": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_collector_1": {
+        "target": "waste_collector",
+        "state": "complete",
+        "missing": {}
+      },
+      "clean_flow_node_1": {
+        "target": "clean_flow_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "silicate_pit_1": {
+        "target": "silicate_pit",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_5": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "mineral_washery_1": {
+        "target": "mineral_washery",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_cutter_1": {
+        "target": "carbonate_cutter",
+        "state": "complete",
+        "missing": {}
+      },
+      "ceramic_kiln_1": {
+        "target": "ceramic_kiln",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_6": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_digester_1": {
+        "target": "waste_digester",
+        "state": "complete",
+        "missing": {}
+      },
+      "fibre_garden_1": {
+        "target": "fibre_garden",
+        "state": "complete",
+        "missing": {}
+      },
+      "retting_pool_1": {
+        "target": "retting_pool",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_1": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_7": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_2": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_2": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_8": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "distribution_node_1": {
+        "target": "distribution_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "detox_clinic_1": {
+        "target": "detox_clinic",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_9": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_kitchen_1": {
+        "target": "nutrient_kitchen",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_grove_1": {
+        "target": "resin_grove",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_curing_1": {
+        "target": "resin_curing",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_2": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "composite_workshop_1": {
+        "target": "composite_workshop",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_10": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_11": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_12": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "pigment_bed_1": {
+        "target": "pigment_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "artisan_organ_1": {
+        "target": "artisan_organ",
+        "state": "complete",
+        "missing": {}
+      },
+      "anoxic_pump_1": {
+        "target": "anoxic_pump",
+        "state": "awaiting_materials",
+        "missing": {
+          "fired_ceramic": 2
+        }
+      },
+      "home_13": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_14": {
+        "target": "shelter",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      },
+      "memory_circle_1": {
+        "target": "memory_circle",
+        "state": "awaiting_materials",
+        "missing": {
+          "fired_ceramic": 2
+        }
+      },
+      "photosynthetic_field_3": {
+        "target": "photosynthetic_field",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      }
+    },
+    "upkeep_events": [
+      "106:30 maintenance upkeep begins",
+      "136:29 maintenance upkeep UNPAID: service suspended",
+      "137:20 maintenance upkeep restored",
+      "139:20 maintenance upkeep UNPAID: service suspended",
+      "141:20 maintenance upkeep restored",
+      "143:20 maintenance upkeep UNPAID: service suspended",
+      "145:20 maintenance upkeep restored",
+      "147:20 maintenance upkeep UNPAID: service suspended",
+      "149:20 maintenance upkeep restored",
+      "151:20 maintenance upkeep UNPAID: service suspended",
+      "153:20 maintenance upkeep restored",
+      "155:20 maintenance upkeep UNPAID: service suspended",
+      "157:20 maintenance upkeep restored",
+      "159:20 maintenance upkeep UNPAID: service suspended",
+      "161:20 maintenance upkeep restored",
+      "163:20 maintenance upkeep UNPAID: service suspended",
+      "165:20 maintenance upkeep restored",
+      "167:20 maintenance upkeep UNPAID: service suspended",
+      "169:20 maintenance upkeep restored",
+      "171:20 maintenance upkeep UNPAID: service suspended",
+      "173:20 maintenance upkeep restored",
+      "175:20 maintenance upkeep UNPAID: service suspended",
+      "177:20 maintenance upkeep restored",
+      "179:20 maintenance upkeep UNPAID: service suspended",
+      "181:20 maintenance upkeep restored",
+      "183:18 maintenance upkeep UNPAID: service suspended",
+      "185:20 maintenance upkeep restored",
+      "187:18 maintenance upkeep UNPAID: service suspended",
+      "189:20 maintenance upkeep restored",
+      "191:15 maintenance upkeep UNPAID: service suspended",
+      "193:20 maintenance upkeep restored",
+      "195:10 maintenance upkeep UNPAID: service suspended",
+      "197:20 maintenance upkeep restored",
+      "199:07 maintenance upkeep UNPAID: service suspended",
+      "201:20 maintenance upkeep restored",
+      "203:07 maintenance upkeep UNPAID: service suspended",
+      "205:20 maintenance upkeep restored",
+      "207:04 maintenance upkeep UNPAID: service suspended",
+      "209:20 maintenance upkeep restored",
+      "211:04 maintenance upkeep UNPAID: service suspended",
+      "213:20 maintenance upkeep restored",
+      "215:04 maintenance upkeep UNPAID: service suspended",
+      "217:20 maintenance upkeep restored",
+      "219:04 maintenance upkeep UNPAID: service suspended",
+      "221:20 maintenance upkeep restored",
+      "223:04 maintenance upkeep UNPAID: service suspended",
+      "225:20 maintenance upkeep restored",
+      "227:04 maintenance upkeep UNPAID: service suspended",
+      "229:20 maintenance upkeep restored",
+      "231:04 maintenance upkeep UNPAID: service suspended",
+      "233:20 maintenance upkeep restored",
+      "235:04 maintenance upkeep UNPAID: service suspended",
+      "237:20 maintenance upkeep restored",
+      "239:04 maintenance upkeep UNPAID: service suspended"
+    ],
+    "kiln_governor_actions": [
+      {
+        "t": 2110,
+        "rule": "build_order",
+        "command": {
+          "do": "construct",
+          "building": "ceramic_kiln",
+          "id": "ceramic_kiln_1",
+          "priority": 27
+        },
+        "reason": "first Kiln (Adapted crew): Ceramic",
+        "ok": true,
+        "result": "site ceramic_kiln_1 placed"
+      },
+      {
+        "t": 3050,
+        "rule": "kiln_fuel",
+        "command": {
+          "do": "set_recipe",
+          "target": "ceramic_kiln_1",
+          "recipe": "ceramic_kiln_biofuel"
+        },
+        "reason": "no Anoxic Organics: biomass fuel",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 4450,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input prepared_silica for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 5810,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input prepared_silica)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6180,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6350,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6720,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11130,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11500,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11830,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 12200,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      }
+    ]
+  },
+  {
+    "label": "build one additional digester at 120:00",
+    "actions": [
+      {
+        "second": 7200,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "diagnosis_digester_1",
+          "priority": 28
+        },
+        "ok": true,
+        "result": "site diagnosis_digester_1 placed"
+      }
+    ],
+    "first_unpaid_second": 8189,
+    "nominal_demand_after_grace": 71.08,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "106:29",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 10,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 132.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 36.0,
+      "blocked_entity_minutes": 1084.3,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 2013.1,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "digester_state_seconds": {
+      "waste_digester_1:no_workforce": 1,
+      "waste_digester_1:running": 10241,
+      "diagnosis_digester_1:no_workforce": 1,
+      "diagnosis_digester_1:running": 2893
+    },
+    "snapshots": [
+      {
+        "second": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 0,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 1,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 5,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 6,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 12,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 8,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 18,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 14,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 25,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 17,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 31,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 22,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 23,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 0.6666666666666666,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 27,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 9,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "no_workforce",
+            "paused": false,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 34,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 36,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "maintenance_weight": 37.5,
+        "demand_per_minute": 0.46875,
+        "enzyme_stock": 6,
+        "organic_waste_stock": 42,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6390,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 44,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 46,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 1,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 55,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 6,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 2,
+        "organic_waste_stock": 61,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 11,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8189,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 67,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 14,
+        "upkeep_unpaid_minutes": 0.02,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 72,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 15,
+        "upkeep_unpaid_minutes": 1.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 78,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 18,
+        "upkeep_unpaid_minutes": 6.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 87,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 20,
+        "upkeep_unpaid_minutes": 11.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 93,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 23,
+        "upkeep_unpaid_minutes": 16.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 100,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 25,
+        "upkeep_unpaid_minutes": 21.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "maintenance_weight": 42.0,
+        "demand_per_minute": 0.525,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 108,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 28,
+        "upkeep_unpaid_minutes": 26.92,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 112,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 32,
+        "upkeep_unpaid_minutes": 30.02,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 116,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 37,
+        "upkeep_unpaid_minutes": 31.15,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 121,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 42,
+        "upkeep_unpaid_minutes": 32.95,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 128,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 47,
+        "upkeep_unpaid_minutes": 34.15,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 134,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 52,
+        "upkeep_unpaid_minutes": 35.95,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      }
+    ],
+    "sites": {
+      "home_4": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_1": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_gleaning_site_1": {
+        "target": "carbonate_gleaning_site",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_washer_1": {
+        "target": "nutrient_washer",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_1": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_collector_1": {
+        "target": "waste_collector",
+        "state": "complete",
+        "missing": {}
+      },
+      "clean_flow_node_1": {
+        "target": "clean_flow_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "silicate_pit_1": {
+        "target": "silicate_pit",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_5": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "mineral_washery_1": {
+        "target": "mineral_washery",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_cutter_1": {
+        "target": "carbonate_cutter",
+        "state": "complete",
+        "missing": {}
+      },
+      "ceramic_kiln_1": {
+        "target": "ceramic_kiln",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_6": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_digester_1": {
+        "target": "waste_digester",
+        "state": "complete",
+        "missing": {}
+      },
+      "fibre_garden_1": {
+        "target": "fibre_garden",
+        "state": "complete",
+        "missing": {}
+      },
+      "retting_pool_1": {
+        "target": "retting_pool",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_1": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_7": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_2": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_2": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_8": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "distribution_node_1": {
+        "target": "distribution_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "detox_clinic_1": {
+        "target": "detox_clinic",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_9": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_kitchen_1": {
+        "target": "nutrient_kitchen",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_grove_1": {
+        "target": "resin_grove",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_curing_1": {
+        "target": "resin_curing",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_2": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "composite_workshop_1": {
+        "target": "composite_workshop",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_10": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "diagnosis_digester_1": {
+        "target": "waste_digester",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_11": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_12": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_13": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "pigment_bed_1": {
+        "target": "pigment_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "artisan_organ_1": {
+        "target": "artisan_organ",
+        "state": "awaiting_materials",
+        "missing": {
+          "fired_ceramic": 2
+        }
+      },
+      "anoxic_pump_1": {
+        "target": "anoxic_pump",
+        "state": "awaiting_materials",
+        "missing": {
+          "fired_ceramic": 2
+        }
+      },
+      "home_14": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_15": {
+        "target": "shelter",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      },
+      "photosynthetic_field_3": {
+        "target": "photosynthetic_field",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      }
+    },
+    "upkeep_events": [
+      "106:30 maintenance upkeep begins",
+      "136:29 maintenance upkeep UNPAID: service suspended",
+      "137:20 maintenance upkeep restored",
+      "139:20 maintenance upkeep UNPAID: service suspended",
+      "141:20 maintenance upkeep restored",
+      "143:20 maintenance upkeep UNPAID: service suspended",
+      "145:20 maintenance upkeep restored",
+      "147:20 maintenance upkeep UNPAID: service suspended",
+      "149:20 maintenance upkeep restored",
+      "151:20 maintenance upkeep UNPAID: service suspended",
+      "153:20 maintenance upkeep restored",
+      "155:20 maintenance upkeep UNPAID: service suspended",
+      "157:20 maintenance upkeep restored",
+      "159:20 maintenance upkeep UNPAID: service suspended",
+      "161:20 maintenance upkeep restored",
+      "163:20 maintenance upkeep UNPAID: service suspended",
+      "165:20 maintenance upkeep restored",
+      "167:20 maintenance upkeep UNPAID: service suspended",
+      "169:20 maintenance upkeep restored",
+      "171:20 maintenance upkeep UNPAID: service suspended",
+      "173:20 maintenance upkeep restored",
+      "175:20 maintenance upkeep UNPAID: service suspended",
+      "177:20 maintenance upkeep restored",
+      "179:20 maintenance upkeep UNPAID: service suspended",
+      "181:20 maintenance upkeep restored",
+      "183:18 maintenance upkeep UNPAID: service suspended",
+      "185:20 maintenance upkeep restored",
+      "187:18 maintenance upkeep UNPAID: service suspended",
+      "189:20 maintenance upkeep restored",
+      "191:15 maintenance upkeep UNPAID: service suspended",
+      "193:20 maintenance upkeep restored",
+      "195:11 maintenance upkeep UNPAID: service suspended",
+      "195:48 maintenance upkeep restored",
+      "199:24 maintenance upkeep UNPAID: service suspended",
+      "199:48 maintenance upkeep restored",
+      "203:16 maintenance upkeep UNPAID: service suspended",
+      "203:48 maintenance upkeep restored",
+      "207:12 maintenance upkeep UNPAID: service suspended",
+      "207:48 maintenance upkeep restored",
+      "211:12 maintenance upkeep UNPAID: service suspended",
+      "211:48 maintenance upkeep restored",
+      "215:12 maintenance upkeep UNPAID: service suspended",
+      "215:48 maintenance upkeep restored",
+      "219:12 maintenance upkeep UNPAID: service suspended",
+      "219:48 maintenance upkeep restored",
+      "223:12 maintenance upkeep UNPAID: service suspended",
+      "223:48 maintenance upkeep restored",
+      "227:12 maintenance upkeep UNPAID: service suspended",
+      "227:48 maintenance upkeep restored",
+      "231:12 maintenance upkeep UNPAID: service suspended",
+      "231:48 maintenance upkeep restored",
+      "235:12 maintenance upkeep UNPAID: service suspended",
+      "235:48 maintenance upkeep restored",
+      "239:12 maintenance upkeep UNPAID: service suspended",
+      "239:48 maintenance upkeep restored"
+    ],
+    "kiln_governor_actions": [
+      {
+        "t": 2110,
+        "rule": "build_order",
+        "command": {
+          "do": "construct",
+          "building": "ceramic_kiln",
+          "id": "ceramic_kiln_1",
+          "priority": 27
+        },
+        "reason": "first Kiln (Adapted crew): Ceramic",
+        "ok": true,
+        "result": "site ceramic_kiln_1 placed"
+      },
+      {
+        "t": 3050,
+        "rule": "kiln_fuel",
+        "command": {
+          "do": "set_recipe",
+          "target": "ceramic_kiln_1",
+          "recipe": "ceramic_kiln_biofuel"
+        },
+        "reason": "no Anoxic Organics: biomass fuel",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 4450,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input prepared_silica for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 5810,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input prepared_silica)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6180,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6350,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6720,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11130,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11500,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11560,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11930,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      }
+    ]
+  },
+  {
+    "label": "build two additional digesters at 120:00",
+    "actions": [
+      {
+        "second": 7200,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "diagnosis_digester_1",
+          "priority": 28
+        },
+        "ok": true,
+        "result": "site diagnosis_digester_1 placed"
+      },
+      {
+        "second": 7200,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "diagnosis_digester_2",
+          "priority": 28
+        },
+        "ok": true,
+        "result": "site diagnosis_digester_2 placed"
+      }
+    ],
+    "first_unpaid_second": 8189,
+    "nominal_demand_after_grace": 70.83,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "106:29",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 10,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 132.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 30.0,
+      "blocked_entity_minutes": 1108.7,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 2023.7,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "digester_state_seconds": {
+      "waste_digester_1:no_workforce": 1,
+      "waste_digester_1:running": 10241,
+      "diagnosis_digester_1:no_workforce": 1,
+      "diagnosis_digester_1:running": 2893,
+      "diagnosis_digester_2:no_workforce": 1,
+      "diagnosis_digester_2:running": 2477
+    },
+    "snapshots": [
+      {
+        "second": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 0,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 1,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 5,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 6,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 12,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 8,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 18,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 14,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 25,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 17,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 31,
+        "ceramic_kilns": [],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 22,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 23,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 0.6666666666666666,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 27,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 9,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "no_workforce",
+            "paused": false,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "enzyme_stock": 1,
+        "organic_waste_stock": 34,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 36,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "maintenance_weight": 37.5,
+        "demand_per_minute": 0.46875,
+        "enzyme_stock": 6,
+        "organic_waste_stock": 42,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "grace",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6390,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 44,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 0,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 46,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 1,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 55,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 6,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 2,
+        "organic_waste_stock": 61,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 11,
+        "upkeep_unpaid_minutes": 0.0,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8189,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 67,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 14,
+        "upkeep_unpaid_minutes": 0.02,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 72,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 15,
+        "upkeep_unpaid_minutes": 1.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 78,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 18,
+        "upkeep_unpaid_minutes": 6.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 87,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 20,
+        "upkeep_unpaid_minutes": 11.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 93,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 23,
+        "upkeep_unpaid_minutes": 16.85,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 100,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 25,
+        "upkeep_unpaid_minutes": 21.53,
+        "state": "unpaid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "maintenance_weight": 42.0,
+        "demand_per_minute": 0.525,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 108,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 2,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "running",
+            "paused": false,
+            "staffing": 1.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 28,
+        "upkeep_unpaid_minutes": 26.92,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "maintenance_weight": 46.0,
+        "demand_per_minute": 0.5750000000000001,
+        "enzyme_stock": 0,
+        "organic_waste_stock": 110,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 32,
+        "upkeep_unpaid_minutes": 30.03,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_2",
+            "commissioned_at": 11923,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "enzyme_stock": 2,
+        "organic_waste_stock": 111,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 37,
+        "upkeep_unpaid_minutes": 30.03,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_2",
+            "commissioned_at": 11923,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "enzyme_stock": 4,
+        "organic_waste_stock": 110,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 43,
+        "upkeep_unpaid_minutes": 30.03,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_2",
+            "commissioned_at": 11923,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "enzyme_stock": 5,
+        "organic_waste_stock": 113,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 49,
+        "upkeep_unpaid_minutes": 30.03,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_2",
+            "commissioned_at": 11923,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "enzyme_stock": 7,
+        "organic_waste_stock": 112,
+        "fired_ceramic_stock": 0,
+        "biomass_stock": 0,
+        "ceramic_kilns": [
+          {
+            "entity": "ceramic_kiln_1",
+            "status": "paused",
+            "paused": true,
+            "staffing": 0.0,
+            "recipe": "ceramic_kiln_biofuel",
+            "inputs": {
+              "prepared_silica": 2,
+              "biomass": 3
+            }
+          }
+        ],
+        "upkeep_paid": 55,
+        "upkeep_unpaid_minutes": 30.03,
+        "state": "paid",
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_1",
+            "commissioned_at": 11507,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          },
+          {
+            "entity": "diagnosis_digester_2",
+            "commissioned_at": 11923,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10,
+            "paused": false,
+            "nominal_enzyme_per_minute": 0.25
+          }
+        ]
+      }
+    ],
+    "sites": {
+      "home_4": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_1": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_gleaning_site_1": {
+        "target": "carbonate_gleaning_site",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_washer_1": {
+        "target": "nutrient_washer",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_1": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_collector_1": {
+        "target": "waste_collector",
+        "state": "complete",
+        "missing": {}
+      },
+      "clean_flow_node_1": {
+        "target": "clean_flow_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "silicate_pit_1": {
+        "target": "silicate_pit",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_5": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "mineral_washery_1": {
+        "target": "mineral_washery",
+        "state": "complete",
+        "missing": {}
+      },
+      "carbonate_cutter_1": {
+        "target": "carbonate_cutter",
+        "state": "complete",
+        "missing": {}
+      },
+      "ceramic_kiln_1": {
+        "target": "ceramic_kiln",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_6": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "waste_digester_1": {
+        "target": "waste_digester",
+        "state": "complete",
+        "missing": {}
+      },
+      "fibre_garden_1": {
+        "target": "fibre_garden",
+        "state": "complete",
+        "missing": {}
+      },
+      "retting_pool_1": {
+        "target": "retting_pool",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_1": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_7": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "photosynthetic_field_2": {
+        "target": "photosynthetic_field",
+        "state": "complete",
+        "missing": {}
+      },
+      "culture_bed_2": {
+        "target": "culture_bed",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_8": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "distribution_node_1": {
+        "target": "distribution_node",
+        "state": "complete",
+        "missing": {}
+      },
+      "detox_clinic_1": {
+        "target": "detox_clinic",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_9": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "nutrient_kitchen_1": {
+        "target": "nutrient_kitchen",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_grove_1": {
+        "target": "resin_grove",
+        "state": "complete",
+        "missing": {}
+      },
+      "resin_curing_1": {
+        "target": "resin_curing",
+        "state": "complete",
+        "missing": {}
+      },
+      "sediment_dredge_2": {
+        "target": "sediment_dredge",
+        "state": "complete",
+        "missing": {}
+      },
+      "composite_workshop_1": {
+        "target": "composite_workshop",
+        "state": "awaiting_materials",
+        "missing": {
+          "fired_ceramic": 2
+        }
+      },
+      "home_10": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "diagnosis_digester_1": {
+        "target": "waste_digester",
+        "state": "complete",
+        "missing": {}
+      },
+      "diagnosis_digester_2": {
+        "target": "waste_digester",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_11": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_12": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_13": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_14": {
+        "target": "shelter",
+        "state": "complete",
+        "missing": {}
+      },
+      "home_15": {
+        "target": "shelter",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      },
+      "photosynthetic_field_3": {
+        "target": "photosynthetic_field",
+        "state": "awaiting_materials",
+        "missing": {
+          "biomass": 1
+        }
+      }
+    },
+    "upkeep_events": [
+      "106:30 maintenance upkeep begins",
+      "136:29 maintenance upkeep UNPAID: service suspended",
+      "137:20 maintenance upkeep restored",
+      "139:20 maintenance upkeep UNPAID: service suspended",
+      "141:20 maintenance upkeep restored",
+      "143:20 maintenance upkeep UNPAID: service suspended",
+      "145:20 maintenance upkeep restored",
+      "147:20 maintenance upkeep UNPAID: service suspended",
+      "149:20 maintenance upkeep restored",
+      "151:20 maintenance upkeep UNPAID: service suspended",
+      "153:20 maintenance upkeep restored",
+      "155:20 maintenance upkeep UNPAID: service suspended",
+      "157:20 maintenance upkeep restored",
+      "159:20 maintenance upkeep UNPAID: service suspended",
+      "161:20 maintenance upkeep restored",
+      "163:20 maintenance upkeep UNPAID: service suspended",
+      "165:20 maintenance upkeep restored",
+      "167:20 maintenance upkeep UNPAID: service suspended",
+      "169:20 maintenance upkeep restored",
+      "171:20 maintenance upkeep UNPAID: service suspended",
+      "173:20 maintenance upkeep restored",
+      "175:20 maintenance upkeep UNPAID: service suspended",
+      "177:20 maintenance upkeep restored",
+      "179:20 maintenance upkeep UNPAID: service suspended",
+      "181:20 maintenance upkeep restored",
+      "183:18 maintenance upkeep UNPAID: service suspended",
+      "185:20 maintenance upkeep restored",
+      "187:18 maintenance upkeep UNPAID: service suspended",
+      "189:20 maintenance upkeep restored",
+      "191:15 maintenance upkeep UNPAID: service suspended",
+      "193:20 maintenance upkeep restored",
+      "195:11 maintenance upkeep UNPAID: service suspended",
+      "195:48 maintenance upkeep restored",
+      "199:23 maintenance upkeep UNPAID: service suspended",
+      "199:48 maintenance upkeep restored"
+    ],
+    "kiln_governor_actions": [
+      {
+        "t": 2110,
+        "rule": "build_order",
+        "command": {
+          "do": "construct",
+          "building": "ceramic_kiln",
+          "id": "ceramic_kiln_1",
+          "priority": 27
+        },
+        "reason": "first Kiln (Adapted crew): Ceramic",
+        "ok": true,
+        "result": "site ceramic_kiln_1 placed"
+      },
+      {
+        "t": 3050,
+        "rule": "kiln_fuel",
+        "command": {
+          "do": "set_recipe",
+          "target": "ceramic_kiln_1",
+          "recipe": "ceramic_kiln_biofuel"
+        },
+        "reason": "no Anoxic Organics: biomass fuel",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 4450,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input prepared_silica for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 5810,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input prepared_silica)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6180,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6350,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 6720,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11130,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11500,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11560,
+        "rule": "idle_crews",
+        "command": {
+          "do": "resume",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "inputs/conditions available again (no_input biomass)",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "t": 11930,
+        "rule": "idle_crews",
+        "command": {
+          "do": "pause",
+          "target": "ceramic_kiln_1"
+        },
+        "reason": "no_input biomass for 60s: release crew",
+        "ok": true,
+        "result": ""
+      }
+    ]
+  }
+]

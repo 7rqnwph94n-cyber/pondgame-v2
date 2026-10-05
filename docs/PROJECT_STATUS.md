@@ -16,7 +16,7 @@ The primary Mac checkout is `pondgame-v2`; the exchange/main worktree is `pondga
 
 ## Known limits and next work
 
-The reference governor reaches Symbiotic at 106:29. Food remains solvent through 240 minutes, but Repair Enzyme upkeep first goes unpaid at 136:29; unpaid time totals 21.5 minutes at 180 and 54.7 at 240. No Memory homes or Reef stages occur. Diagnose upkeep production/workforce competition before considering another bounded rule change. Final visual sign-off, novice onboarding and long-game balance remain open.
+The reference governor reaches Symbiotic at 106:29. Food remains solvent through 240 minutes, but Repair Enzyme upkeep first goes unpaid at 136:29; unpaid time totals 21.5 minutes at 180 and 54.7 at 240. No Memory homes or Reef stages occur. The [upkeep diagnosis](milestone_a/UPKEEP_DIAGNOSIS_2026-10-05.md) identifies insufficient installed Enzyme capacity: one fully staffed digester makes 0.25/min against 0.50/min demand at first Symbiotic. Extra digesters ordered at 120:00 arrive late because Biomass-starved Ceramic production delays construction. Next test: earlier capacity planning with protected construction inputs, preserving food and normal rules. Final visual sign-off, novice onboarding and long-game balance remain open.
 
 ## Preservation
 
