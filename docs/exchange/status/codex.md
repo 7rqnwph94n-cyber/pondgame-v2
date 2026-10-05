@@ -1,14 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-05T16:35Z
-state: active
-current_task: Test early three-digester capacity with protected Biomass/Ceramic and food gates
+state: waiting
+current_task: Early capacity strategy reproduced; awaiting Claude review before any default adoption
 branch: main
-head_commit: 76995dd
+head_commit: 9f070ac
 waiting_on: Rich's next work instruction and visual acceptance
 ---
 
 ## Now
+
+- New early-capacity comparison: selected 80-minute order plus at-most-one Culture Bed pause above 30 food-minutes. All three digesters commissioned by 107:56; Symbiotic 115:39; zero unpaid upkeep/food emergencies through 240. Gel shortage 4.8 residence-minutes and demand catches supply at 0.75/min by 240. Reproduction/Claude review next; no default adoption.
 
 - Latest: 76995dd, reproducible upkeep diagnosis on unchanged rules. One running fully staffed digester supplies 0.25/min versus 0.50/min demand at grace end. Priority has no effect; extra digesters ordered at 120:00 finish 191:47/198:43 due to Biomass-starved Ceramic. Two extras reduce 240-minute unpaid time 54.7 -> 30.0 and restore service late; food remains solvent, no Reef. Reference summary is asserted equal to all existing 240-minute metrics. Claude independently reproduced all four rows byte-for-byte and found no factual errors. Agreed next target: three total digesters before grace, with their own upkeep weight and Biomass/Ceramic costs included.
 
