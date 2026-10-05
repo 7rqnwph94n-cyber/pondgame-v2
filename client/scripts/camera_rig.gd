@@ -49,7 +49,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			zoom_by(pow(1.0 / 0.88, maxf(event.factor, 0.1)))
 
 	elif event is InputEventPanGesture:
-		zoom_by(exp(event.delta.y * 0.035))
+		if event.alt_pressed:
+			_yaw -= (event.delta.x + event.delta.y) * 0.03
+			_apply()
+		elif event.shift_pressed:
+			zoom_by(exp(event.delta.y * 0.035))
+		else:
+			_pan(-event.delta * camera.size * 0.025)
 	elif event is InputEventMagnifyGesture:
 		zoom_by(1.0 / maxf(event.factor, 0.01))
 	elif event is InputEventKey and event.pressed and not event.echo:

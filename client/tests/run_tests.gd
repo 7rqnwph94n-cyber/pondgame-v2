@@ -299,8 +299,9 @@ func test_player_controls() -> void:
 	check(hud._context_commands[1].get("do") == "resume", "paused context offers resume")
 	hud.show_context(Vector2.ZERO, {"kind": "site", "entity": "site"})
 	check(hud._context_commands[1].get("do") == "cancel", "construction context offers cancel")
-	hud.show_context(Vector2.ZERO, {"kind": "residence", "entity": "home", "next_tier": "stable"})
+	hud.show_context(Vector2.ZERO, {"kind": "residence", "entity": "home", "next_tier": "stable", "evolution_workforce_change": {"general": -6, "adapted": 8}})
 	check(hud._context_commands[1].get("do") == "evolve", "home context offers evolution")
+	check(hud._context.get_item_text(1).contains("-6 General"), "context evolution exposes workforce consequence before click")
 	hud.show_context(Vector2.ZERO, {"kind": "carrier", "entity": "carrier_1"})
 	check(hud._context_commands[1].get("ui") == "follow", "carrier context offers camera follow rather than fake orders")
 	hud._context.hide()
@@ -318,8 +319,17 @@ func test_player_controls() -> void:
 	var pan := InputEventPanGesture.new()
 	pan.delta = Vector2(0, -2)
 	var before: float = rig.camera.size
+	var focus_before: Vector3 = rig._focus
 	rig._unhandled_input(pan)
-	check(rig.camera.size < before, "trackpad scroll zooms inward")
+	check(rig._focus != focus_before and rig.camera.size == before, "two-finger trackpad scroll pans the map")
+	pan.shift_pressed = true
+	rig._unhandled_input(pan)
+	check(rig.camera.size < before, "Shift-trackpad scroll zooms inward")
+	pan.shift_pressed = false
+	pan.alt_pressed = true
+	var yaw_before: float = rig._yaw
+	rig._unhandled_input(pan)
+	check(rig._yaw != yaw_before, "Alt-trackpad scroll rotates")
 	var pinch := InputEventMagnifyGesture.new()
 	pinch.factor = 1.5
 	before = rig.camera.size
@@ -338,13 +348,29 @@ func test_player_controls() -> void:
 	carrier.set_meta("phase_offset", 0.0)
 	root.add_child(carrier)
 	main._carrier_views.append(carrier)
+	main._carrier_route.assign([Vector3.ZERO, Vector3(10, 0, 0)])
 	var target: Vector2 = rig.camera.unproject_position(carrier.global_position + Vector3.UP)
 	check(main._pick(target) == "carrier_1", "carrier screen target is clickable at overview zoom")
+	carrier.hide()
+	check(main._pick(target) == "", "hidden carriers cannot take clicks")
+	carrier.show()
+	main._carrier_route.clear()
+	check(main._pick(target) == "", "unconfigured route has no clickable carriers")
 	main._carrier_route.assign([Vector3.ZERO, Vector3(10, 0, 0)])
+	var building = preload("res://scripts/entity_view.gd").new()
+	building.setup("residence", {})
+	building.entity_id = "home_hit"
+	root.add_child(building)
+	await physics_frame
+	check(main._pick(target) == "home_hit", "building hit wins over nearby carrier")
+	building.free()
 	main.view = {"facilities": {}}
 	main.speed_index = 0
 	main._update_carrier_views(1.0)
 	check(main._carrier_phase == 0.0, "pause also freezes carrier route animation")
+	main.speed_index = 6
+	main._update_carrier_views(1.0)
+	check(main._carrier_phase < 0.05, "carrier animation stays readable at 32x")
 	main.free()
 	carrier.queue_free()
 	rig.queue_free()

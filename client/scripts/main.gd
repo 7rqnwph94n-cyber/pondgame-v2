@@ -233,23 +233,23 @@ func _open_context(position: Vector2) -> void:
 
 func _pick(screen_position: Vector2) -> String:
 	var camera: Camera3D = camera_rig.camera
-	# Generous screen-space unit targets keep small carriers selectable at the overview zoom.
+	var from: Vector3 = camera.project_ray_origin(screen_position)
+	var to: Vector3 = from + camera.project_ray_normal(screen_position) * 1000.0
+	var query := PhysicsRayQueryParameters3D.create(from, to)
+	var hit := camera.get_world_3d().direct_space_state.intersect_ray(query)
+	if hit and hit.collider and hit.collider.has_meta("entity_view"):
+		return hit.collider.get_meta("entity_view").entity_id
+	# Building hitboxes take precedence; a visible carrier is the fallback target.
+	if _carrier_route.size() < 2: return ""
 	var nearest := ""
-	var best := 20.0
+	var best := 16.0
 	for carrier in _carrier_views:
-		if camera.is_position_behind(carrier.global_position): continue
+		if not carrier.is_visible_in_tree() or camera.is_position_behind(carrier.global_position): continue
 		var distance := camera.unproject_position(carrier.global_position + Vector3.UP).distance_to(screen_position)
 		if distance < best:
 			best = distance
 			nearest = str(carrier.get_meta("carrier_id"))
-	if nearest != "": return nearest
-	var from: Vector3 = camera.project_ray_origin(screen_position)
-	var to: Vector3 = from + camera.project_ray_normal(screen_position) * 1000.0
-	var query := PhysicsRayQueryParameters3D.create(from, to)
-	var hit := get_world_3d().direct_space_state.intersect_ray(query)
-	if hit and hit.collider and hit.collider.has_meta("entity_view"):
-		return hit.collider.get_meta("entity_view").entity_id
-	return ""
+	return nearest
 
 
 func _select(entity_id: String) -> void:
@@ -654,7 +654,8 @@ func _update_carrier_views(delta: float) -> void:
 			active = true
 			break
 	var speed := 0.055 if active else 0.012
-	_carrier_phase = fmod(_carrier_phase + delta * speed * SPEEDS[speed_index], 1.0)
+	var animation_rate := minf(sqrt(float(SPEEDS[speed_index])), 3.0)
+	_carrier_phase = fmod(_carrier_phase + delta * speed * animation_rate, 1.0)
 	for carrier in _carrier_views:
 		var t: float = fmod(_carrier_phase + float(carrier.get_meta("phase_offset")), 1.0)
 		var scaled := t * (_carrier_route.size() - 1)

@@ -29,9 +29,9 @@ The opening slice is playable; longer-game balance and the Memory Reef remain un
 | Left-click | Select a building, site or home. The inspector says why it is not progressing |
 | Esc | Clear the selection |
 | Right-click | Context menu for a building, construction site or carrier; empty ground opens colony options |
-| Q / E, or Alt + middle-drag | Rotate the camera |
-| Middle-drag, WASD or arrows | Pan |
-| Mouse wheel, trackpad scroll or pinch, + / −, sidebar buttons | Zoom |
+| Q / E, Alt + trackpad scroll, or Alt + middle-drag | Rotate the camera |
+| Two-finger trackpad scroll, middle-drag, WASD or arrows | Pan |
+| Mouse wheel, trackpad pinch, Shift + trackpad scroll, + / −, sidebar buttons | Zoom |
 | Home / reset icon | Restore the opening camera |
 | Left build rail | Choose a category, then single-click a building to queue construction in its district. Hover for purpose, cost and workers |
 | Resource crate icon | View all stocks; hover resource icons for names |
@@ -49,3 +49,5 @@ The inspector explains labour priority, population stalls, evolution workforce c
 The unchanged provisional slice reaches Symbiotic at 106:29 under the reference governor. Extended runs first miss Repair Enzyme upkeep at 136:29, with 21.5 unpaid minutes by 180 and 54.7 by 240; no Reef stages complete. These are reproducible governor results, not guarantees for every player strategy. See `docs/milestone_a/SLICE_EXTENDED_HORIZON_2026-10-05.md`. Final art, novice-player acceptance and longer-game balance remain open.
 
 The top strip uses resource icons and amounts, with names and explanations on hover. The inspector starts with a short status summary; its info button expands the detailed explanation. Carrier animation follows pause/speed, and selected carriers have a ground ring. Carriers remain presentation-only: individual cargo and worker orders are not simulated. Building placement is by district, not a spatial logistics rule.
+
+Buildings take click priority over nearby carriers. Right-click evolution shows its workforce change before you act. Carrier animation is capped at high simulation speeds to keep selection and camera follow readable.

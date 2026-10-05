@@ -2,6 +2,8 @@ extends RefCounted
 ## Small vector UI glyphs, rasterised at runtime so buttons remain crisp.
 static var cache := {}
 const PATHS := {
+ "stock": '<path d="M6 28h14v13H6ZM28 28h14v13H28ZM17 7h14v13H17M6 33h14M28 33h14M17 12h14"/>',
+ "reef": '<path d="M24 41V12M24 31l-12-8V11M12 18l-6-5M24 24l12-9V7M36 12l6-6M24 18l-7-8M24 37l14-7v-9M10 41h28"/>',
  "anoxic_organics": '<circle cx="16" cy="28" r="8"/><circle cx="32" cy="31" r="6"/><circle cx="27" cy="13" r="5"/>',
  "balanced_gel": '<path d="M12 35c-7-10 2-25 13-24 12-1 20 12 12 23-8 8-17 10-25 1Z"/><path d="M17 29c4 4 10 4 15-1"/>',
  "cured_resin": '<path d="m12 13 20-4 9 22-13 10-19-8ZM12 13l16 28M12 13l29 18"/>',

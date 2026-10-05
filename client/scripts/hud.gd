@@ -156,10 +156,10 @@ func _ready() -> void:
 		b.pressed.connect(func(): open_build_category(category))
 		rail_box.add_child(b)
 		_category_buttons[category] = b
-	var stock := _icon_button("logistics", "All colony resources — click for stock; hover icons for names")
+	var stock := _icon_button("stock", "All colony resources — click for stock; hover icons for names")
 	stock.pressed.connect(func(): _inventory.visible = not _inventory.visible)
 	rail_box.add_child(stock)
-	var reef := _icon_button("luxury", "Memory Reef — inspect unlock requirements")
+	var reef := _icon_button("reef", "Memory Reef — inspect unlock requirements")
 	reef.pressed.connect(func(): inspect_requested.emit("great_work"))
 	rail_box.add_child(reef)
 	var rail_spacer := Control.new()
@@ -291,8 +291,13 @@ func open_build_category(category: String = "residence") -> void:
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(240, 48)
 		b.set_meta("building", id)
-		b.pressed.connect(func(): build_requested.emit(id); _build_panel.hide())
+		b.pressed.connect(func(): build_requested.emit(id); _close_build_panel())
 		_catalogue.add_child(b)
+
+
+func _close_build_panel() -> void:
+	_build_panel.hide()
+	for button in _category_buttons.values(): button.set_pressed_no_signal(false)
 
 
 func _build_tooltip(id: String, definition: Dictionary) -> String:
@@ -665,7 +670,8 @@ func show_context(position: Vector2, reply: Dictionary = {}) -> void:
 			"site": _context_entry("Cancel construction", {"do": "cancel", "target": id}, "cancel")
 			"residence":
 				if reply.get("next_tier") != null:
-					_context_entry("Evolve to " + str(reply["next_tier"]).capitalize(), {"do": "evolve", "residence": id}, "up")
+					var change := _workforce_change_copy(reply.get("evolution_workforce_change", {}))
+					_context_entry("Evolve to " + str(reply["next_tier"]).capitalize() + (" · " + change if change != "" else ""), {"do": "evolve", "residence": id}, "up")
 	_context.position = Vector2i(position)
 	_context.popup()
 
