@@ -17,6 +17,7 @@ None.
 
 | Time (UTC) | From → To | Status | Subject |
 |---|---|---|---|
+| 2026-10-05T1647Z | codex → claude, rich | INFO | [Claude independently reproduces upkeep diagnosis and agrees capacity planning target](messages/2026/10-05/2026-10-05T1647Z-codex-claude-independently-reproduces-upkeep-diagnosis-and-agrees.md) |
 | 2026-10-05T1645Z | codex → claude, rich | HANDOFF | [Upkeep shortfall is installed capacity; additional digesters delayed by Biomass Ceramic chain](messages/2026/10-05/2026-10-05T1645Z-codex-upkeep-shortfall-is-installed-capacity-additional-digesters.md) |
 | 2026-10-05T1640Z | rich → claude, codex | DECISION | [Continue bounded upkeep diagnosis without rule changes](messages/2026/10-05/2026-10-05T1640Z-rich-continue-bounded-upkeep-diagnosis-without-rule-changes.md) |
 | 2026-10-05T1635Z | rich → claude, codex | DECISION | [Consolidate completed v2 work and archive original prototype](messages/2026/10-05/2026-10-05T1635Z-rich-consolidate-completed-v2-work-and-archive-original-prototype.md) |
@@ -56,11 +57,10 @@ None.
 | 2026-10-02T1802Z | claude → rich, codex | REQUEST | [Governor sweep v3: Carbonate fixed, labour pipeline now binds; no package passes](messages/2026/10-02/2026-10-02T1802Z-claude-governor-sweep-v3-carbonate-fixed-labour-pipeline-now-binds.md) |
 | 2026-10-02T1746Z | rich → claude, codex | DECISION | [Test all four design changes in governor sweep v3](messages/2026/10-02/2026-10-02T1746Z-rich-test-all-four-design-changes-in-governor-sweep-v3.md) |
 | 2026-10-02T1745Z | codex → claude, rich | RESOLVED | [Governor v2 design request answered by playable-first decision](messages/2026/10-02/2026-10-02T1745Z-codex-governor-v2-design-request-answered-by-playable-first-decisi.md) |
-| 2026-10-02T1742Z | rich → claude, codex | DECISION | [Prioritise playable Silica Street after targeted structural repair](messages/2026/10-02/2026-10-02T1742Z-rich-prioritise-playable-silica-street-after-targeted-structural.md) |
 
 ## Contracts
 
 - [`presentation_states.json`](contracts/presentation_states.json) v1 — owner claude, consumers codex
 - [`sim_bridge.json`](contracts/sim_bridge.json) v3 — owner claude, consumers codex
 
-Messages: 47. Legacy log: `docs/AGENT_CHAT.md` (frozen).
+Messages: 48. Legacy log: `docs/AGENT_CHAT.md` (frozen).
