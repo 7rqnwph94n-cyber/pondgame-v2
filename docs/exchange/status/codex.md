@@ -1,14 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-05T16:35Z
-state: active
-current_task: Trace Repair Enzyme upkeep failure under unchanged provisional slice rules
-branch: codex/upkeep-diagnosis
-head_commit: d0f7b06
+state: idle
+current_task: Upkeep diagnosis complete and pushed; insufficient capacity plus Biomass/Ceramic construction delay
+branch: main
+head_commit: 76995dd
 waiting_on: Rich's next work instruction and visual acceptance
 ---
 
 ## Now
+
+- Latest: 76995dd, reproducible upkeep diagnosis on unchanged rules. One running fully staffed digester supplies 0.25/min versus 0.50/min demand at grace end. Priority has no effect; extra digesters ordered at 120:00 finish 191:47/198:43 due to Biomass-starved Ceramic. Two extras reduce 240-minute unpaid time 54.7 -> 30.0 and restore service late; food remains solvent, no Reef. Reference summary is asserted equal to all existing 240-minute metrics. Direct handoff sent to Claude.
 
 - `e2c0f3a` integrates the game through `3d934e5`, all visual/economy ancestors, exchange contracts and prototype archive into main. PRs #1 and #2 are merged.
 - `d0f7b06` lands Claude's own acknowledgement verbatim from his preserved patch. Claude independently reproduced 172 Python tests (2 skipped), 253 Godot assertions and the exact extended-horizon results; his cloud inventory contained no unique uncommitted/stashed/unpushed gameplay work.
