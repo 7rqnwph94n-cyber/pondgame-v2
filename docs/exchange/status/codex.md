@@ -1,14 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-05T17:14Z
-state: idle
-current_task: Desktop launcher installed and verified; all completed work integrated and pushed
-branch: main
+state: active
+current_task: Rework player controls and icon HUD after Rich click-through
+branch: codex/player-controls
 head_commit: 2986480
 waiting_on: Rich's playable opening review
 ---
 
 ## Now
+
+- Rich rejected the wordy controls/HUD. Editing main.gd, hud.gd and camera_rig.gd: right-click actions, visible left build bar, icon tooltips, trackpad and button zoom, selectable carriers. Simulation and contracts remain unchanged; Claude should avoid these shared client files during this block.
 
 - `2986480`: Play Pondlife.app, custom icon and desktop installer. Installed on Rich’s desktop and launched through native macOS UI; verified rendered basin, live simulation, resource HUD and Space pause. Shell syntax, installer idempotency and diff checks pass. No gameplay or overlay edits. Launcher docs are in client/README.md.
 
