@@ -1,0 +1,22 @@
+{
+  "asset": "plant_ribbon_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      0.8800000000000001,
+      0
+    ]
+  }
+}

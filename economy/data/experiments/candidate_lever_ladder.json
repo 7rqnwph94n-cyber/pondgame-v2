@@ -1,0 +1,112 @@
+{
+ "id": "candidate_lever_ladder",
+ "description": "DIAGNOSTIC ONLY. Starting from candidate_bootstrap_rules_v1, add increasingly generous levers cumulatively to find which constraint category still blocks the Memory Reef. Not a balance proposal.",
+ "plan": "economy/data/plans/verdant_reference_b.json",
+ "base_overlays": [
+  "economy/data/experiments/candidate_bootstrap_rules_v1.json"
+ ],
+ "ladder": [
+  {
+   "name": "L0 candidate rules"
+  },
+  {
+   "name": "L1 +100 Carbonate",
+   "set": {
+    "starting_state.inventory.carbonate": 100
+   }
+  },
+  {
+   "name": "L2 +30 Repair Enzyme",
+   "set": {
+    "starting_state.inventory.repair_enzyme": 30
+   }
+  },
+  {
+   "name": "L3 +40 Growth Nutrient",
+   "set": {
+    "starting_state.inventory.growth_nutrient": 40
+   }
+  },
+  {
+   "name": "L4 +6 full Shelters",
+   "append": {
+    "starting_state.residences": [
+     {
+      "id": "home_x1",
+      "tier": "shelter",
+      "population": 8,
+      "district": "core"
+     },
+     {
+      "id": "home_x2",
+      "tier": "shelter",
+      "population": 8,
+      "district": "core"
+     },
+     {
+      "id": "home_x3",
+      "tier": "shelter",
+      "population": 8,
+      "district": "core"
+     },
+     {
+      "id": "home_x4",
+      "tier": "shelter",
+      "population": 8,
+      "district": "core"
+     },
+     {
+      "id": "home_x5",
+      "tier": "shelter",
+      "population": 8,
+      "district": "core"
+     },
+     {
+      "id": "home_x6",
+      "tier": "shelter",
+      "population": 8,
+      "district": "core"
+     }
+    ]
+   }
+  },
+  {
+   "name": "L5 +40 Silica/Ceramic/Fibre/Resin/Biomass",
+   "set": {
+    "starting_state.inventory.prepared_silica": 40,
+    "starting_state.inventory.fired_ceramic": 40,
+    "starting_state.inventory.woven_fibre": 40,
+    "starting_state.inventory.cured_resin": 40,
+    "starting_state.inventory.biomass": 40
+   }
+  },
+  {
+   "name": "L6 +40 Composite/Ornament/Gel, +60 Staple",
+   "set": {
+    "starting_state.inventory.habitat_composite": 40,
+    "starting_state.inventory.pigment_ornament": 40,
+    "starting_state.inventory.balanced_gel": 40,
+    "starting_state.inventory.staple": 60
+   }
+  },
+  {
+   "name": "L7 research 4x faster",
+   "set": {
+    "morphologies.burrowing_limb.nursery_work": 10.0,
+    "morphologies.filter_crown.nursery_work": 10.0,
+    "morphologies.mineral_jaw.nursery_work": 15.0,
+    "morphologies.detox_sac.nursery_work": 15.0,
+    "morphologies.vascular_carrier.nursery_work": 20.0,
+    "morphologies.memory_ganglion.nursery_work": 25.0
+   }
+  },
+  {
+   "name": "L8 evolution sustain timers halved",
+   "set": {
+    "residences.stable.evolution.sustain_seconds": 45,
+    "residences.symbiotic.evolution.sustain_seconds": 75,
+    "residences.memory.evolution.sustain_seconds": 120
+   }
+  }
+ ]
+}

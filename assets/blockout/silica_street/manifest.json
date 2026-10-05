@@ -1,0 +1,22 @@
+{
+  "generated_by": "tools/generate_blockout_assets.py",
+  "units": "metres",
+  "up_axis": "+Y",
+  "format": "Wavefront OBJ blockout source",
+  "assets": [
+    "payload_raw_silicate_a",
+    "payload_prepared_silica_a",
+    "patch_silicate_a",
+    "unit_general_carrier_a",
+    "store_general_a",
+    "proc_mineral_washery_a",
+    "res_shelter_cluster_a",
+    "service_clean_flow_a",
+    "waste_collector",
+    "farm_photosynthetic_a",
+    "civic_first_nursery_a",
+    "service_maintenance_organ_a",
+    "civic_survey_organ_a",
+    "farm_culture_bed_a"
+  ]
+}

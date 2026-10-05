@@ -1,0 +1,298 @@
+{
+  "id": "reference_governor_v1",
+  "status": "Balance instrument (Rich, 2026-10-02T16:50Z). Not a production bonus and not the intended final player AI.",
+  "description": "Heuristic competent player. Every threshold and the build order are data so the instrument can be reviewed and varied.",
+  "decision_interval_seconds": 10,
+  "max_actions_per_decision": 4,
+  "growth_nutrient_reserve": 0,
+  "pause_at_start": [
+    "survey_1"
+  ],
+  "food": {
+    "target_minutes": 12,
+    "target_minutes_before_lean_season": 20,
+    "forecast_seconds": 300,
+    "crisis_minutes": 5,
+    "recovered_minutes": 10,
+    "site_priority": 12
+  },
+  "idle_crews": {
+    "pause_after_seconds": 60,
+    "never_pause": [
+      "photosynthetic_field",
+      "culture_bed",
+      "nutrient_kitchen"
+    ]
+  },
+  "housing": {
+    "min_free_capacity": 4,
+    "min_food_minutes": 8,
+    "max_residences": 16,
+    "site_priority": 14
+  },
+  "evolution": {
+    "min_occupancy": 0.95,
+    "min_shelters": 2,
+    "min_stable": 1,
+    "max_stable": 5,
+    "max_symbiotic": 3,
+    "max_memory": 1,
+    "adapted_vacancy_trigger": 2,
+    "artisan_vacancy_trigger": 2,
+    "general_surplus_required": 2,
+    "adapted_surplus_required": 2
+  },
+  "morphologies": [
+    {
+      "morphology": "mineral_jaw",
+      "after_built": [
+        "mineral_washery"
+      ],
+      "express_count": 1
+    },
+    {
+      "morphology": "memory_ganglion",
+      "after_built": [
+        "artisan_organ"
+      ],
+      "express_count": 1
+    }
+  ],
+  "build": {
+    "max_open_sites": 2,
+    "max_vacancies_before_new_jobs": 3
+  },
+  "build_order": [
+    {
+      "building": "sediment_dredge",
+      "priority": 20,
+      "why": "Growth Nutrient: migrants, evolution, currency"
+    },
+    {
+      "building": "nutrient_washer",
+      "priority": 21,
+      "why": "Growth Nutrient"
+    },
+    {
+      "building": "photosynthetic_field",
+      "count": 2,
+      "priority": 19,
+      "why": "export field: surplus Biomass pays for Carbonate (Rich 16:50Z export market)"
+    },
+    {
+      "building": "waste_collector",
+      "priority": 22,
+      "why": "Stable gate: Waste"
+    },
+    {
+      "building": "clean_flow_node",
+      "priority": 23,
+      "why": "Stable gate: Clean Flow"
+    },
+    {
+      "building": "silicate_pit",
+      "priority": 24,
+      "why": "start of Silica -> Kiln -> Clinic chain (first Pit needs no Enzyme)",
+      "ignore_labour": true
+    },
+    {
+      "building": "mineral_washery",
+      "priority": 25,
+      "after_built": [
+        "silicate_pit"
+      ],
+      "why": "Prepared Silica",
+      "ignore_labour": true
+    },
+    {
+      "building": "carbonate_cutter",
+      "priority": 26,
+      "after_built": [
+        "mineral_washery"
+      ],
+      "why": "pre-Jaw Carbonate"
+    },
+    {
+      "building": "ceramic_kiln",
+      "priority": 27,
+      "after_built": [
+        "mineral_washery"
+      ],
+      "why": "first Kiln (Adapted crew): Ceramic"
+    },
+    {
+      "building": "waste_digester",
+      "priority": 28,
+      "after_built": [
+        "ceramic_kiln"
+      ],
+      "why": "Repair Enzyme from waste (maintenance, Clinic)"
+    },
+    {
+      "building": "fibre_garden",
+      "priority": 29,
+      "after_built": [
+        "ceramic_kiln"
+      ],
+      "why": "Fibre for Distribution, Curing, Workshop"
+    },
+    {
+      "building": "retting_pool",
+      "priority": 30,
+      "after_built": [
+        "fibre_garden"
+      ],
+      "why": "Woven Fibre"
+    },
+    {
+      "building": "distribution_node",
+      "priority": 31,
+      "after_built": [
+        "retting_pool"
+      ],
+      "why": "Symbiotic gate: Distribution"
+    },
+    {
+      "building": "detox_clinic",
+      "priority": 32,
+      "after_built": [
+        "waste_digester"
+      ],
+      "why": "Symbiotic gate: Health (first Clinic needs no Composite)"
+    },
+    {
+      "building": "nutrient_kitchen",
+      "priority": 33,
+      "after_built": [
+        "detox_clinic"
+      ],
+      "why": "Gel must flow before the first Symbiotic home",
+      "ignore_labour": true
+    },
+    {
+      "building": "resin_grove",
+      "priority": 34,
+      "after_built": [
+        "retting_pool"
+      ],
+      "why": "Resin for Workshop and Organ"
+    },
+    {
+      "building": "resin_curing",
+      "priority": 35,
+      "after_built": [
+        "resin_grove"
+      ],
+      "why": "Cured Resin"
+    },
+    {
+      "building": "sediment_dredge",
+      "count": 2,
+      "priority": 36,
+      "why": "Nutrient demand grows with evolution"
+    },
+    {
+      "building": "composite_workshop",
+      "priority": 37,
+      "after_built": [
+        "resin_curing",
+        "ceramic_kiln"
+      ],
+      "why": "Habitat Composite",
+      "ignore_labour": true
+    },
+    {
+      "building": "pigment_bed",
+      "priority": 38,
+      "after_built": [
+        "composite_workshop"
+      ],
+      "why": "Pigment for Ornaments"
+    },
+    {
+      "building": "artisan_organ",
+      "priority": 39,
+      "after_built": [
+        "pigment_bed"
+      ],
+      "why": "Pigment Ornament",
+      "ignore_labour": true
+    },
+    {
+      "building": "anoxic_pump",
+      "priority": 40,
+      "after_built": [
+        "resin_curing"
+      ],
+      "why": "Kiln fuel without burning Biomass"
+    },
+    {
+      "building": "memory_circle",
+      "priority": 41,
+      "after_built": [
+        "artisan_organ"
+      ],
+      "why": "Memory gate (first Circle: Artisan crew)",
+      "ignore_labour": true
+    },
+    {
+      "building": "ceramic_kiln",
+      "count": 2,
+      "priority": 42,
+      "after_built": [
+        "composite_workshop"
+      ],
+      "why": "Reef Ceramic volume"
+    },
+    {
+      "building": "composite_workshop",
+      "count": 2,
+      "priority": 43,
+      "after_built": [
+        "memory_circle"
+      ],
+      "why": "Reef Composite volume"
+    },
+    {
+      "building": "artisan_organ",
+      "count": 2,
+      "priority": 44,
+      "after_built": [
+        "memory_circle"
+      ],
+      "why": "Reef Ornament volume"
+    },
+    {
+      "building": "pigment_bed",
+      "count": 2,
+      "priority": 45,
+      "after_built": [
+        "memory_circle"
+      ],
+      "why": "Pigment for the second Organ"
+    },
+    {
+      "building": "nutrient_washer",
+      "count": 2,
+      "priority": 46,
+      "after_built": [
+        "memory_circle"
+      ],
+      "why": "Nutrient throughput"
+    }
+  ],
+  "trade": {
+    "interval_seconds": 60,
+    "max_carbonate_per_trade": 6,
+    "sell_food_above_minutes": 12,
+    "staple_reserve_minutes": 8,
+    "staple_reserve_units": 4,
+    "biomass_reserve_units": 3,
+    "growth_nutrient_reserve_units": 6,
+    "silica_reserve_units": 8,
+    "sell_biomass_regardless_of_food": true
+  },
+  "contracts": {
+    "fertile_exchange_keep_nutrient": 2
+  }
+}

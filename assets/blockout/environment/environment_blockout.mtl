@@ -1,0 +1,168 @@
+# Environment blockout materials
+newmtl silt
+Kd 0.47 0.4 0.3
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl sand
+Kd 0.62 0.54 0.39
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl rock
+Kd 0.31 0.38 0.37
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl root
+Kd 0.22 0.18 0.12
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl carbonate
+Kd 0.78 0.72 0.58
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl route_membrane
+Kd 0.12 0.42 0.42
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl flood_silt
+Kd 0.43 0.42 0.31
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl water_dark
+Kd 0.06 0.29 0.33
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl silica_matrix
+Kd 0.49 0.57 0.55
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl silica
+Kd 0.28 0.58 0.6
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl methane
+Kd 0.07 0.16 0.17
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl methane_film
+Kd 0.15 0.27 0.28
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl methane_rim
+Kd 0.37 0.42 0.36
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl sulphur
+Kd 0.57 0.36 0.13
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl sulphur_crust
+Kd 0.69 0.52 0.27
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl sulphur_bed
+Kd 0.43 0.39 0.27
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_green
+Kd 0.31 0.52 0.3
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_olive
+Kd 0.42 0.48 0.25
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_teal
+Kd 0.17 0.43 0.39
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_pale
+Kd 0.48 0.62 0.45
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_methane
+Kd 0.24 0.34 0.43
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_sulphur
+Kd 0.59 0.45 0.2
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl living_silica
+Kd 0.35 0.6 0.56
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl carbonate_shadow
+Kd 0.54 0.54 0.48
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl bower_stem
+Kd 0.17 0.28 0.23
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl bower_canopy
+Kd 0.2 0.41 0.31
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl bower_fan
+Kd 0.43 0.62 0.43
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12
+
+newmtl bower_spore
+Kd 0.72 0.65 0.31
+Ka 0.02 0.02 0.02
+Ks 0.04 0.04 0.04
+Ns 12

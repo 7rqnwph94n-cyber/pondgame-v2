@@ -1,0 +1,32 @@
+{
+  "asset": "silica_cliff_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "SnapLeft": [
+      -5.5,
+      0,
+      0
+    ],
+    "SnapRight": [
+      5.5,
+      0,
+      0
+    ],
+    "ExtractionAnchor": [
+      0,
+      0,
+      -2.5
+    ],
+    "CameraAnchor": [
+      0,
+      3.2,
+      0
+    ]
+  }
+}

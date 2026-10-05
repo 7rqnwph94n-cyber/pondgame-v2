@@ -1,0 +1,39 @@
+# Pondgame v2 client shell (Milestone B)
+
+This is a Godot 4.3 view over the Python simulation. The design is in ADR 0001 (`docs/adr/0001-godot-client-over-python-sim-bridge.md`).
+
+## Run
+
+1. Install [Godot 4.3](https://godotengine.org/download/archive/4.3-stable/) and have Python 3.10 or newer available.
+2. Open `client/project.godot` in Godot and press Play, or from the repository root run `godot --path client`.
+3. The client starts the simulation itself, using `python3 -m economy.bridge`.
+   - If your Python 3.10+ is not `python3`, set `python=` in `client/settings.cfg`, or set the `POND_PYTHON` environment variable.
+   - `settings.cfg` loads the **provisional slice economy** `candidate_playable_slice_v1` (Rich, 2026-10-04): the playable-first package, plus fewer early job slots, plus slow surface-Carbonate renewal capped at 12. It is not a baseline rule. To switch economies, edit the `overlays=` line:
+     - `["economy/data/experiments/candidate_playable_slice_v1.json"]` is the slice default;
+     - `["economy/data/experiments/candidate_playable_v1.json"]` is the earlier package;
+     - `[]` is the plain v0.2 rules.
+   - **Limitation:** the Memory Reef is not reachable within 120 minutes under any of these. The slice ends at the first Stable home and the first Dry season. A first Symbiotic home is possible at about 106 minutes with good play.
+
+## Controls
+
+| Input | Action |
+|---|---|
+| Space | Pause or resume |
+| 1–6 | Speed: 1×, 2×, 4×, 8×, 16×, 32× simulated seconds per second |
+| Left-click | Select a building, site or home. The inspector says why it is not progressing |
+| Esc | Clear the selection |
+| Right-drag | Rotate the camera |
+| Middle-drag, WASD or arrows | Pan |
+| Mouse wheel | Zoom |
+| Build list (double-click) | Place a construction site. Its materials and labour are paid through the normal rules |
+| Inspector buttons | Pause or resume a facility, cancel a site, evolve a home, or begin the Reef |
+| "Why no Memory Reef yet?" | Explains the Reef's unlock blockers |
+| Autoplay | Lets the reference governor play alongside you. It is a balance aid, not game AI |
+
+## Current presentation and limits
+
+The client has authored basin terrain, district placement, a dry river crossing, carrier visuals, distinct starting facilities and resource icons. `presentation/map_layout.json`, `presentation/asset_map.json` and `EntityView` keep these presentation assets replaceable. Geography and carrier movement are visual; the domain still models district-level stores rather than spatial logistics.
+
+The inspector explains labour priority, population stalls, evolution workforce changes and competing input users. Its Inspect buttons open a competitor so the player can choose Pause/Resume; pausing stops its outputs and does not refund held inputs.
+
+The unchanged provisional slice reaches Symbiotic at 106:29 under the reference governor. Extended runs first miss Repair Enzyme upkeep at 136:29, with 21.5 unpaid minutes by 180 and 54.7 by 240; no Reef stages complete. These are reproducible governor results, not guarantees for every player strategy. See `docs/milestone_a/SLICE_EXTENDED_HORIZON_2026-10-05.md`. Final art, novice-player acceptance and longer-game balance remain open.

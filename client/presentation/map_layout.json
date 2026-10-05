@@ -1,0 +1,10 @@
+{
+  "_comment": "Presentation geometry only. Positions and route segments do not control simulation placement, resource access, transport capacity or pathfinding.",
+  "channel": [[-62, -47], [-46, -38], [-36, -19], [-14, -15], [-4, 5], [18, 8], [25, 29], [55, 43]],
+  "crossing": {
+    "west_landing": [-15, 0.5],
+    "east_landing": [-2, -6],
+    "width": 2.8
+  },
+  "carrier_route": [[-24, -8], [-20, -2], [-15, 0.5], [-2, -6], [12, -11], [24, -14], [12, -11], [-2, -6], [-15, 0.5], [-13, 10], [-11, 16], [-13, 10], [-15, 0.5], [-20, -2], [-24, -8]]
+}

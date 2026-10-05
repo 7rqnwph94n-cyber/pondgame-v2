@@ -1,0 +1,201 @@
+{
+ "id": "throughput_sweep_v1",
+ "description": "Bounded throughput sweep requested by Rich (AGENT_CHAT 2026-10-02T15:18Z) on the promoted v0.2 baseline, 120-minute horizon, plan C. Levels are listed least to most generous; ranges are deliberately small.",
+ "plan": "economy/data/plans/verdant_reference_c.json",
+ "base_overlays": [],
+ "criteria": {
+  "require_symbiotic": true,
+  "max_symbiotic_devolutions": 0,
+  "max_devolutions": 0,
+  "max_staple_shortage_minutes": 5,
+  "max_unpaid_minutes": 1,
+  "reef_window_minutes": [
+   100,
+   120
+  ],
+  "note": "(a) reaches Symbiotic with no devolution (so no self-supplied-Gel collapse); (b) food and maintenance solvent: at most 5 residence-minutes of Staple shortage and 1 minute of unpaid upkeep; (c) Memory Reef completed by 120:00 (completion before 100:00 is flagged as earlier than target)."
+ },
+ "parameters": [
+  {
+   "name": "artisan_relief",
+   "levels": [
+    {
+     "label": "off"
+    },
+    {
+     "label": "first_kitchen_workshop_organ_adapted",
+     "set": {
+      "buildings.nutrient_kitchen.first_instance": {
+       "jobs": {
+        "adapted": 4
+       }
+      },
+      "buildings.composite_workshop.first_instance": {
+       "jobs": {
+        "adapted": 5
+       }
+      },
+      "buildings.artisan_organ.first_instance": {
+       "jobs": {
+        "adapted": 4
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "carbonate",
+   "levels": [
+    {
+     "label": "base"
+    },
+    {
+     "label": "trade_0.75",
+     "set": {
+      "trade.partner_sells.carbonate.per_minute": 0.75,
+      "trade.partner_sells.carbonate.max": 45
+     }
+    },
+    {
+     "label": "trade_0.75+cutter_0.65",
+     "set": {
+      "trade.partner_sells.carbonate.per_minute": 0.75,
+      "trade.partner_sells.carbonate.max": 45,
+      "buildings.carbonate_cutter.morphology_modifier.without": 0.65
+     }
+    },
+    {
+     "label": "trade_1.0+cutter_0.65",
+     "set": {
+      "trade.partner_sells.carbonate.per_minute": 1.0,
+      "trade.partner_sells.carbonate.max": 60,
+      "buildings.carbonate_cutter.morphology_modifier.without": 0.65
+     }
+    }
+   ]
+  },
+  {
+   "name": "population",
+   "levels": [
+    {
+     "label": "base"
+    },
+    {
+     "label": "migration_0.75",
+     "set": {
+      "population.migration_per_minute": 0.75
+     }
+    },
+    {
+     "label": "migration_1.0",
+     "set": {
+      "population.migration_per_minute": 1.0
+     }
+    },
+    {
+     "label": "migration_0.75+1_shelter",
+     "set": {
+      "population.migration_per_minute": 0.75
+     },
+     "append": {
+      "starting_state.residences": [
+       {
+        "id": "home_0",
+        "tier": "shelter",
+        "population": 8,
+        "district": "core"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "name": "ganglion_work",
+   "levels": [
+    {
+     "label": "100"
+    },
+    {
+     "label": "75",
+     "set": {
+      "morphologies.memory_ganglion.nursery_work": 75
+     }
+    },
+    {
+     "label": "50",
+     "set": {
+      "morphologies.memory_ganglion.nursery_work": 50
+     }
+    }
+   ]
+  },
+  {
+   "name": "reef_cost",
+   "levels": [
+    {
+     "label": "x1.0"
+    },
+    {
+     "label": "x0.85",
+     "scale": {
+      "great_work.stages.0.cost": 0.85,
+      "great_work.stages.1.cost": 0.85,
+      "great_work.stages.2.cost": 0.85
+     }
+    },
+    {
+     "label": "x0.7",
+     "scale": {
+      "great_work.stages.0.cost": 0.7,
+      "great_work.stages.1.cost": 0.7,
+      "great_work.stages.2.cost": 0.7
+     }
+    }
+   ]
+  }
+ ],
+ "ladders": [
+  {
+   "name": "least generous step of each lever, added in Rich's order",
+   "steps": [
+    {
+     "artisan_relief": "first_kitchen_workshop_organ_adapted"
+    },
+    {
+     "carbonate": "trade_0.75"
+    },
+    {
+     "population": "migration_0.75"
+    },
+    {
+     "ganglion_work": "75"
+    },
+    {
+     "reef_cost": "x0.85"
+    }
+   ]
+  },
+  {
+   "name": "most generous step of each lever, added in Rich's order",
+   "steps": [
+    {
+     "artisan_relief": "first_kitchen_workshop_organ_adapted"
+    },
+    {
+     "carbonate": "trade_1.0+cutter_0.65"
+    },
+    {
+     "population": "migration_0.75+1_shelter"
+    },
+    {
+     "ganglion_work": "50"
+    },
+    {
+     "reef_cost": "x0.7"
+    }
+   ]
+  }
+ ]
+}

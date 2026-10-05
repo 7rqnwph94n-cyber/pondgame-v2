@@ -1,0 +1,129 @@
+{
+  "id": "candidate_playable_slice_v1",
+  "status": "PROVISIONAL SLICE OVERLAY - not a baseline rule. Rich 2026-10-04T1039Z chose '2' (relayed by Codex): use L3 + slow Carbonate renewal provisionally for the playable slice. The Memory Reef is NOT reachable in 120 minutes under this overlay.",
+  "description": "candidate_playable_v1 (finite surface-Carbonate gleaning, Jaw research without Enzyme, first Washery General, Builders 3 WP) + L3 fewer early job slots (workforce_scale_v1: crews of 3-4 lose one slot, outputs unchanged) + C surface Carbonate renewal 0.2/min with reserve_cap 12 (carbonate_workforce_v1). Composed by tests/test_slice_overlay.py so it cannot drift from its sources.",
+  "composed_from": [
+    "economy/data/experiments/candidate_playable_v1.json",
+    "economy/data/experiments/workforce_scale_v1_playable.json#L3_+food_-1",
+    "economy/data/experiments/carbonate_workforce_v1.json#C (+ reserve_cap 12)"
+  ],
+  "patch": {
+    "patches": {
+      "surface_carbonate": {
+        "reserve": 12,
+        "source": "Rich 2026-10-02T17:42Z ('lets get this playable', relayed by Codex) item 1 (finite, earned map resource; least-generous swept reserve); Rich 17:46Z selected the matching option. Renewal 0.2/min and reserve_cap 12 (= the starting crust): Rich 2026-10-04T1039Z '2', provisional slice overlay. The calcifying shallows re-precipitate only the crust gleaning removed; they never exceed their natural standing crust.",
+        "renewal_per_minute": 0.2,
+        "reserve_cap": 12
+      }
+    },
+    "recipes": {
+      "carbonate_gleaning": {
+        "cycle_seconds": 240,
+        "outputs": {
+          "carbonate": 1
+        },
+        "source": "Rich 2026-10-02T17:42Z ('lets get this playable', relayed by Codex) item 1 (slow: least-generous swept rate 0.25/min at full crew); Rich 17:46Z selected the matching option."
+      }
+    },
+    "buildings": {
+      "carbonate_gleaning_site": {
+        "category": "extraction",
+        "cost": {
+          "biomass": 2
+        },
+        "work": 4,
+        "jobs": {
+          "general": 2
+        },
+        "recipes": [
+          "carbonate_gleaning"
+        ],
+        "patch": "surface_carbonate",
+        "maintenance_weight": 0.5,
+        "source": "Rich 2026-10-02T17:42Z ('lets get this playable', relayed by Codex) item 1: General workers glean shallow Carbonate before industrial cutting; costs no Carbonate; Rich 17:46Z selected the matching option."
+      },
+      "mineral_washery": {
+        "first_instance": {
+          "jobs": {
+            "general": 2
+          }
+        },
+        "jobs": {
+          "adapted": 2
+        }
+      },
+      "sediment_dredge": {
+        "jobs": {
+          "general": 2
+        }
+      },
+      "silicate_pit": {
+        "jobs": {
+          "adapted": 3
+        }
+      },
+      "carbonate_cutter": {
+        "jobs": {
+          "adapted": 3
+        }
+      },
+      "retting_pool": {
+        "jobs": {
+          "adapted": 2
+        }
+      },
+      "resin_curing": {
+        "jobs": {
+          "adapted": 2
+        }
+      },
+      "waste_digester": {
+        "jobs": {
+          "adapted": 2
+        }
+      },
+      "ceramic_kiln": {
+        "first_instance": {
+          "jobs": {
+            "adapted": 3
+          }
+        }
+      },
+      "nutrient_washer": {
+        "jobs": {
+          "general": 2
+        }
+      },
+      "photosynthetic_field": {
+        "jobs": {
+          "general": 2
+        }
+      },
+      "culture_bed": {
+        "jobs": {
+          "general": 2
+        }
+      },
+      "fibre_garden": {
+        "jobs": {
+          "general": 2
+        }
+      },
+      "resin_grove": {
+        "jobs": {
+          "general": 2
+        }
+      }
+    },
+    "morphologies": {
+      "mineral_jaw": {
+        "research_cost": {
+          "repair_enzyme": null
+        }
+      }
+    },
+    "construction_rules": {
+      "builder_wp": 3
+    }
+  }
+}

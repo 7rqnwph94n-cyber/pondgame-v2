@@ -1,0 +1,123 @@
+{
+ "id": "workforce_scale_v1_playable",
+ "description": "On the client's provisional playable package (candidate_playable_v1). Rich 2026-10-04T0952Z chose 'fewer early job slots' as the first workforce-scale test (relayed by Codex). Each level removes one job slot from early crews of 3-4 while leaving recipe outputs and cycle times unchanged, so the same work needs fewer people. Levels are cumulative and least intrusive first. Candidate only; nothing is promoted.",
+ "governor": "economy/data/governors/reference_governor_v3.json",
+ "base_overlays": [
+  "economy/data/experiments/candidate_playable_v1.json"
+ ],
+ "criteria": {
+  "require_symbiotic": true,
+  "max_symbiotic_devolutions": 0,
+  "max_devolutions": 0,
+  "max_staple_shortage_minutes": 5,
+  "max_unpaid_minutes": 1,
+  "reef_window_minutes": [
+   100,
+   120
+  ],
+  "note": "Same acceptance criteria as throughput_sweep_v1."
+ },
+ "parameters": [
+  {
+   "name": "early_job_slots",
+   "levels": [
+    {
+     "label": "baseline"
+    },
+    {
+     "label": "L1_extraction_-1",
+     "set": {
+      "buildings.sediment_dredge.jobs": {
+       "general": 2
+      },
+      "buildings.silicate_pit.jobs": {
+       "adapted": 3
+      },
+      "buildings.carbonate_cutter.jobs": {
+       "adapted": 3
+      }
+     }
+    },
+    {
+     "label": "L2_+processing_-1",
+     "set": {
+      "buildings.sediment_dredge.jobs": {
+       "general": 2
+      },
+      "buildings.silicate_pit.jobs": {
+       "adapted": 3
+      },
+      "buildings.carbonate_cutter.jobs": {
+       "adapted": 3
+      },
+      "buildings.mineral_washery.jobs": {
+       "adapted": 2
+      },
+      "buildings.retting_pool.jobs": {
+       "adapted": 2
+      },
+      "buildings.resin_curing.jobs": {
+       "adapted": 2
+      },
+      "buildings.waste_digester.jobs": {
+       "adapted": 2
+      },
+      "buildings.ceramic_kiln.first_instance.jobs": {
+       "adapted": 3
+      },
+      "buildings.mineral_washery.first_instance.jobs": {
+       "general": 2
+      }
+     }
+    },
+    {
+     "label": "L3_+food_-1",
+     "set": {
+      "buildings.sediment_dredge.jobs": {
+       "general": 2
+      },
+      "buildings.silicate_pit.jobs": {
+       "adapted": 3
+      },
+      "buildings.carbonate_cutter.jobs": {
+       "adapted": 3
+      },
+      "buildings.mineral_washery.jobs": {
+       "adapted": 2
+      },
+      "buildings.retting_pool.jobs": {
+       "adapted": 2
+      },
+      "buildings.resin_curing.jobs": {
+       "adapted": 2
+      },
+      "buildings.waste_digester.jobs": {
+       "adapted": 2
+      },
+      "buildings.ceramic_kiln.first_instance.jobs": {
+       "adapted": 3
+      },
+      "buildings.nutrient_washer.jobs": {
+       "general": 2
+      },
+      "buildings.photosynthetic_field.jobs": {
+       "general": 2
+      },
+      "buildings.culture_bed.jobs": {
+       "general": 2
+      },
+      "buildings.fibre_garden.jobs": {
+       "general": 2
+      },
+      "buildings.resin_grove.jobs": {
+       "general": 2
+      },
+      "buildings.mineral_washery.first_instance.jobs": {
+       "general": 2
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

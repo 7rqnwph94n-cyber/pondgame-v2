@@ -1,0 +1,27 @@
+{
+  "asset": "channel_bank_straight_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "SnapNorth": [
+      0,
+      0,
+      -4
+    ],
+    "SnapSouth": [
+      0,
+      0,
+      4
+    ],
+    "FlowAnchor": [
+      0,
+      0.05,
+      0
+    ]
+  }
+}

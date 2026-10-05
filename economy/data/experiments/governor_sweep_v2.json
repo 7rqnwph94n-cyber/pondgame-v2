@@ -1,0 +1,200 @@
+{
+ "id": "governor_sweep_v2",
+ "description": "Second feasibility pass (Rich, 2026-10-02T16:50Z): adaptive reference governor plays every run on the promoted v0.2 baseline with the repeating calendar and early export market. Levels are listed least to most generous.",
+ "governor": "economy/data/governors/reference_governor_v1.json",
+ "base_overlays": [],
+ "criteria": {
+  "require_symbiotic": true,
+  "max_symbiotic_devolutions": 0,
+  "max_devolutions": 0,
+  "max_staple_shortage_minutes": 5,
+  "max_unpaid_minutes": 1,
+  "reef_window_minutes": [
+   100,
+   120
+  ],
+  "note": "Same acceptance criteria as throughput_sweep_v1."
+ },
+ "parameters": [
+  {
+   "name": "builder_wp",
+   "levels": [
+    {
+     "label": "2"
+    },
+    {
+     "label": "3",
+     "set": {
+      "construction_rules.builder_wp": 3
+     }
+    },
+    {
+     "label": "4",
+     "set": {
+      "construction_rules.builder_wp": 4
+     }
+    }
+   ]
+  },
+  {
+   "name": "export_market",
+   "levels": [
+    {
+     "label": "small_0.2/20"
+    },
+    {
+     "label": "modest_0.35/35",
+     "set": {
+      "trade.partner_buys.staple.per_minute": 0.35,
+      "trade.partner_buys.staple.max": 35,
+      "trade.partner_buys.biomass.per_minute": 0.35,
+      "trade.partner_buys.biomass.max": 35
+     }
+    },
+    {
+     "label": "larger_0.5/50",
+     "set": {
+      "trade.partner_buys.staple.per_minute": 0.5,
+      "trade.partner_buys.staple.max": 50,
+      "trade.partner_buys.biomass.per_minute": 0.5,
+      "trade.partner_buys.biomass.max": 50
+     }
+    }
+   ]
+  },
+  {
+   "name": "artisan_relief",
+   "levels": [
+    {
+     "label": "off"
+    },
+    {
+     "label": "first_kitchen_workshop_organ_adapted",
+     "set": {
+      "buildings.nutrient_kitchen.first_instance": {
+       "jobs": {
+        "adapted": 4
+       }
+      },
+      "buildings.composite_workshop.first_instance": {
+       "jobs": {
+        "adapted": 5
+       }
+      },
+      "buildings.artisan_organ.first_instance": {
+       "jobs": {
+        "adapted": 4
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "population",
+   "levels": [
+    {
+     "label": "base"
+    },
+    {
+     "label": "migration_0.75",
+     "set": {
+      "population.migration_per_minute": 0.75
+     }
+    }
+   ]
+  },
+  {
+   "name": "ganglion_work",
+   "levels": [
+    {
+     "label": "100"
+    },
+    {
+     "label": "75",
+     "set": {
+      "morphologies.memory_ganglion.nursery_work": 75
+     }
+    },
+    {
+     "label": "50",
+     "set": {
+      "morphologies.memory_ganglion.nursery_work": 50
+     }
+    }
+   ]
+  },
+  {
+   "name": "reef_cost",
+   "levels": [
+    {
+     "label": "x1.0"
+    },
+    {
+     "label": "x0.85",
+     "scale": {
+      "great_work.stages.0.cost": 0.85,
+      "great_work.stages.1.cost": 0.85,
+      "great_work.stages.2.cost": 0.85
+     }
+    },
+    {
+     "label": "x0.7",
+     "scale": {
+      "great_work.stages.0.cost": 0.7,
+      "great_work.stages.1.cost": 0.7,
+      "great_work.stages.2.cost": 0.7
+     }
+    }
+   ]
+  }
+ ],
+ "ladders": [
+  {
+   "name": "least generous step of each lever, added in order",
+   "steps": [
+    {
+     "builder_wp": "3"
+    },
+    {
+     "export_market": "modest_0.35/35"
+    },
+    {
+     "artisan_relief": "first_kitchen_workshop_organ_adapted"
+    },
+    {
+     "population": "migration_0.75"
+    },
+    {
+     "ganglion_work": "75"
+    },
+    {
+     "reef_cost": "x0.85"
+    }
+   ]
+  },
+  {
+   "name": "most generous step of each lever, added in order",
+   "steps": [
+    {
+     "builder_wp": "4"
+    },
+    {
+     "export_market": "larger_0.5/50"
+    },
+    {
+     "artisan_relief": "first_kitchen_workshop_organ_adapted"
+    },
+    {
+     "population": "migration_0.75"
+    },
+    {
+     "ganglion_work": "50"
+    },
+    {
+     "reef_cost": "x0.7"
+    }
+   ]
+  }
+ ]
+}

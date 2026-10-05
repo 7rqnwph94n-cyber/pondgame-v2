@@ -1,0 +1,32 @@
+{
+  "asset": "civic_first_nursery_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "WorkerAnchor_1": [
+      0,
+      0,
+      -2.9
+    ],
+    "BroodAnchor": [
+      0,
+      0.8,
+      0
+    ],
+    "LabelAnchor": [
+      0,
+      3.2,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      1.5,
+      0
+    ]
+  }
+}

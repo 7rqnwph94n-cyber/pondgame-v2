@@ -1,0 +1,32 @@
+{
+  "asset": "route_flow_junction_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "SnapWest": [
+      -2,
+      0,
+      0
+    ],
+    "SnapEast": [
+      2,
+      0,
+      0
+    ],
+    "SnapNorth": [
+      0,
+      0,
+      2
+    ],
+    "SnapSouth": [
+      0,
+      0,
+      -2
+    ]
+  }
+}

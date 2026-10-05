@@ -1,0 +1,208 @@
+{
+ "id": "governor_sweep_v3",
+ "description": "Third feasibility pass (Rich, 2026-10-02T1746Z): test all four design changes (Carbonate bootstrap, earlier Mineral Jaw, less Adapted demand, longer horizon) plus protected Builder WP, with reference governor v2 on the promoted v0.2 baseline. Other v2 levers stay at their least generous level (small export market, no artisan relief, base migration, base Ganglion work and Reef cost). Levels are listed least to most generous.",
+ "governor": "economy/data/governors/reference_governor_v2.json",
+ "base_overlays": [],
+ "criteria": {
+  "require_symbiotic": true,
+  "max_symbiotic_devolutions": 0,
+  "max_devolutions": 0,
+  "max_staple_shortage_minutes": 5,
+  "max_unpaid_minutes": 1,
+  "reef_window_minutes": [
+   100,
+   120
+  ],
+  "note": "Same acceptance criteria as throughput_sweep_v1."
+ },
+ "parameters": [
+  {
+   "name": "builder_wp",
+   "levels": [
+    {
+     "label": "2"
+    },
+    {
+     "label": "3",
+     "set": {
+      "construction_rules.builder_wp": 3
+     }
+    },
+    {
+     "label": "4",
+     "set": {
+      "construction_rules.builder_wp": 4
+     }
+    }
+   ]
+  },
+  {
+   "name": "carbonate_bootstrap",
+   "levels": [
+    {
+     "label": "off"
+    },
+    {
+     "label": "first_cutter_carbonate_only",
+     "set": {
+      "buildings.carbonate_cutter.first_instance": {
+       "cost": {
+        "carbonate": 3
+       }
+      }
+     }
+    },
+    {
+     "label": "first_cutter+supply_0.8/40",
+     "set": {
+      "buildings.carbonate_cutter.first_instance": {
+       "cost": {
+        "carbonate": 3
+       }
+      },
+      "trade.partner_sells.carbonate.per_minute": 0.8,
+      "trade.partner_sells.carbonate.max": 40
+     }
+    }
+   ]
+  },
+  {
+   "name": "mineral_jaw",
+   "levels": [
+    {
+     "label": "off"
+    },
+    {
+     "label": "no_enzyme",
+     "set": {
+      "morphologies.mineral_jaw.research_cost": {
+       "growth_nutrient": 4,
+       "prepared_silica": 3
+      }
+     }
+    },
+    {
+     "label": "nutrient_only",
+     "set": {
+      "morphologies.mineral_jaw.research_cost": {
+       "growth_nutrient": 4
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "adapted_demand",
+   "levels": [
+    {
+     "label": "off"
+    },
+    {
+     "label": "pit_cutter_3",
+     "set": {
+      "buildings.silicate_pit.jobs": {
+       "adapted": 3
+      },
+      "buildings.carbonate_cutter.jobs": {
+       "adapted": 3
+      }
+     }
+    },
+    {
+     "label": "pit_cutter_3+washery_general",
+     "set": {
+      "buildings.silicate_pit.jobs": {
+       "adapted": 3
+      },
+      "buildings.carbonate_cutter.jobs": {
+       "adapted": 3
+      },
+      "buildings.mineral_washery.jobs": {
+       "general": 3
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "horizon",
+   "levels": [
+    {
+     "label": "120",
+     "criteria": {
+      "reef_window_minutes": [
+       100,
+       120
+      ]
+     }
+    },
+    {
+     "label": "150",
+     "set": {
+      "scenario.duration_seconds": 9000
+     },
+     "criteria": {
+      "reef_window_minutes": [
+       100,
+       150
+      ]
+     }
+    },
+    {
+     "label": "180",
+     "set": {
+      "scenario.duration_seconds": 10800
+     },
+     "criteria": {
+      "reef_window_minutes": [
+       100,
+       180
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "ladders": [
+  {
+   "name": "least generous step of each lever, added in order",
+   "steps": [
+    {
+     "carbonate_bootstrap": "first_cutter_carbonate_only"
+    },
+    {
+     "mineral_jaw": "no_enzyme"
+    },
+    {
+     "adapted_demand": "pit_cutter_3"
+    },
+    {
+     "builder_wp": "3"
+    },
+    {
+     "horizon": "150"
+    }
+   ]
+  },
+  {
+   "name": "most generous step of each lever, added in order",
+   "steps": [
+    {
+     "carbonate_bootstrap": "first_cutter+supply_0.8/40"
+    },
+    {
+     "mineral_jaw": "nutrient_only"
+    },
+    {
+     "adapted_demand": "pit_cutter_3+washery_general"
+    },
+    {
+     "builder_wp": "3"
+    },
+    {
+     "horizon": "180"
+    }
+   ]
+  }
+ ]
+}

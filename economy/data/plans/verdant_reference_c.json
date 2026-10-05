@@ -1,0 +1,1376 @@
+{
+ "id": "verdant_reference_c",
+ "rules": "verdant_v0_2 (bootstrap rules promoted 2026-10-02)",
+ "description": "120-minute competent reference city for the promoted v0.2 baseline and the throughput sweep. It differs from plan B so that lever effects can show: advanced buildings are placed when their inputs flow rather than when a tier is reached; morphologies are expressed on homes that stay Stable; housing, food and trade chains run to the 120-minute horizon; and a second Ornament line and second Symbiotic home are planned. Commands only; all waiting is reported.",
+ "commands": [
+  {
+   "at": 0,
+   "do": "pause",
+   "target": "survey_1",
+   "label": "survey complete; frees one General worker (trade only needs the building)"
+  },
+  {
+   "at": 0,
+   "do": "set_policy",
+   "policy": "growth_nutrient_reserve",
+   "value": 0,
+   "label": "let migrants use the last Nutrient (\u00a79.5 policy)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "sediment_dredge",
+   "id": "dredge_1",
+   "priority": 10
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "dredge_1",
+   "value": 5,
+   "when": {
+    "built": "dredge_1"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "nutrient_washer",
+   "id": "washer_1",
+   "priority": 11
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "washer_1",
+   "value": 5,
+   "when": {
+    "built": "washer_1"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_4",
+   "priority": 9,
+   "label": "housing first: workers are the opening limiter"
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "research",
+   "value": 2,
+   "label": "staff Nursery research as soon as its goods are delivered"
+  },
+  {
+   "at": 240,
+   "do": "trade",
+   "buy": {
+    "carbonate": 2
+   },
+   "label": "first Carbonate purchase",
+   "retry": true
+  },
+  {
+   "at": 600,
+   "do": "trade",
+   "buy": {
+    "carbonate": 3
+   },
+   "label": "rest of the opening stored value",
+   "retry": true
+  },
+  {
+   "at": 240,
+   "do": "construct",
+   "building": "waste_collector",
+   "id": "collector_1",
+   "priority": 20
+  },
+  {
+   "at": 240,
+   "do": "construct",
+   "building": "clean_flow_node",
+   "id": "clean_flow_1",
+   "priority": 21
+  },
+  {
+   "at": 240,
+   "do": "evolve",
+   "residence": "home_1",
+   "when": {
+    "built": [
+     "collector_1",
+     "clean_flow_1"
+    ]
+   },
+   "retry": true
+  },
+  {
+   "at": 240,
+   "do": "evolve",
+   "residence": "home_2",
+   "when": {
+    "tier": [
+     "home_1",
+     "stable"
+    ]
+   },
+   "retry": true
+  },
+  {
+   "at": 480,
+   "do": "construct",
+   "building": "silicate_pit",
+   "id": "pit_1",
+   "priority": 22
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "pit_1",
+   "value": 5,
+   "when": {
+    "built": "pit_1"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 480,
+   "do": "construct",
+   "building": "mineral_washery",
+   "id": "washery_1",
+   "priority": 23
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "washery_1",
+   "value": 5,
+   "when": {
+    "built": "washery_1"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 480,
+   "do": "construct",
+   "building": "carbonate_cutter",
+   "id": "cutter_1",
+   "priority": 24,
+   "when": {
+    "built": "washery_1"
+   },
+   "label": "pre-Mineral-Jaw cutting at 50% (candidate rule 5)"
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "cutter_1",
+   "value": 5,
+   "when": {
+    "built": "cutter_1"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_5",
+   "priority": 25,
+   "when": {
+    "built": "home_4",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_6",
+   "priority": 25,
+   "when": {
+    "built": "home_5",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_7",
+   "priority": 25,
+   "when": {
+    "built": "home_6",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_8",
+   "priority": 25,
+   "when": {
+    "built": "home_7",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_9",
+   "priority": 25,
+   "when": {
+    "built": "home_8",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_10",
+   "priority": 25,
+   "when": {
+    "built": "home_9",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_11",
+   "priority": 25,
+   "when": {
+    "built": "home_10",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_12",
+   "priority": 25,
+   "when": {
+    "built": "home_11",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_13",
+   "priority": 25,
+   "when": {
+    "built": "home_12",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_14",
+   "priority": 25,
+   "when": {
+    "built": "home_13",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 360,
+   "do": "construct",
+   "building": "shelter",
+   "id": "home_15",
+   "priority": 25,
+   "when": {
+    "built": "home_14",
+    "free_housing_below": 3,
+    "food_minutes_above": 10
+   },
+   "label": "add housing only while food is secure"
+  },
+  {
+   "at": 720,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 960,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 1200,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 1440,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 1680,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 1920,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 2160,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 2400,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 2640,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 2880,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 3120,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 3360,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 3600,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 3840,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 4080,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 4320,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 4560,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 4800,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 5040,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 5280,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 5520,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 5760,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 6000,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 6240,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 6480,
+   "do": "trade",
+   "sell": {
+    "growth_nutrient": 1
+   },
+   "buy": {
+    "carbonate": 2
+   },
+   "when": {
+    "stock": {
+     "growth_nutrient": 3
+    }
+   },
+   "label": "surplus Nutrient for Carbonate",
+   "retry": true
+  },
+  {
+   "at": 840,
+   "do": "construct",
+   "building": "sediment_dredge",
+   "id": "dredge_2",
+   "priority": 26
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "dredge_2",
+   "value": 5,
+   "when": {
+    "built": "dredge_2"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 1080,
+   "do": "construct",
+   "building": "ceramic_kiln",
+   "id": "kiln_1",
+   "priority": 30,
+   "when": {
+    "built": "cutter_1"
+   },
+   "label": "first Kiln: Adapted crew (candidate rule 2)"
+  },
+  {
+   "at": 0,
+   "do": "set_recipe",
+   "target": "kiln_1",
+   "recipe": "ceramic_kiln_biofuel",
+   "when": {
+    "built": "kiln_1"
+   },
+   "label": "biomass fuel until Anoxic Organics flow (\u00a77.4)",
+   "retry": true
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_2",
+   "priority": 13,
+   "when": {
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_3",
+   "priority": 13,
+   "when": {
+    "built": "bed_2",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_3",
+   "priority": 14,
+   "when": {
+    "built": "field_3"
+   }
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_4",
+   "priority": 13,
+   "when": {
+    "built": "bed_3",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_4",
+   "priority": 14,
+   "when": {
+    "built": "field_4"
+   }
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_5",
+   "priority": 13,
+   "when": {
+    "built": "bed_4",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_5",
+   "priority": 14,
+   "when": {
+    "built": "field_5"
+   }
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_6",
+   "priority": 13,
+   "when": {
+    "built": "bed_5",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_6",
+   "priority": 14,
+   "when": {
+    "built": "field_6"
+   }
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_7",
+   "priority": 13,
+   "when": {
+    "built": "bed_6",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_7",
+   "priority": 14,
+   "when": {
+    "built": "field_7"
+   }
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_8",
+   "priority": 13,
+   "when": {
+    "built": "bed_7",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_8",
+   "priority": 14,
+   "when": {
+    "built": "field_8"
+   }
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_9",
+   "priority": 13,
+   "when": {
+    "built": "bed_8",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_9",
+   "priority": 14,
+   "when": {
+    "built": "field_9"
+   }
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "photosynthetic_field",
+   "id": "field_10",
+   "priority": 13,
+   "when": {
+    "built": "bed_9",
+    "food_minutes_below": 12
+   },
+   "label": "food keeps pace with population (settlement food minutes)"
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_10",
+   "priority": 14,
+   "when": {
+    "built": "field_10"
+   }
+  },
+  {
+   "at": 1200,
+   "do": "construct",
+   "building": "waste_digester",
+   "id": "digester_1",
+   "priority": 32,
+   "when": {
+    "built": "kiln_1"
+   },
+   "label": "Enzyme from waste"
+  },
+  {
+   "at": 1200,
+   "do": "research",
+   "morphology": "mineral_jaw",
+   "priority": 5,
+   "when": {
+    "tier": [
+     "home_2",
+     "stable"
+    ],
+    "stock": {
+     "growth_nutrient": 4,
+     "prepared_silica": 3,
+     "repair_enzyme": 1
+    }
+   },
+   "retry": true
+  },
+  {
+   "at": 1200,
+   "do": "express",
+   "morphology": "mineral_jaw",
+   "residence": "home_3",
+   "when": {
+    "researched": "mineral_jaw",
+    "tier": [
+     "home_3",
+     "stable"
+    ]
+   },
+   "label": "express on a home that stays Stable",
+   "retry": true
+  },
+  {
+   "at": 1200,
+   "do": "research",
+   "morphology": "burrowing_limb",
+   "priority": 6,
+   "when": {
+    "researched": "mineral_jaw",
+    "stock": {
+     "growth_nutrient": 4,
+     "prepared_silica": 2
+    }
+   },
+   "retry": true
+  },
+  {
+   "at": 1200,
+   "do": "express",
+   "morphology": "burrowing_limb",
+   "residence": "home_4",
+   "when": {
+    "researched": "burrowing_limb",
+    "tier": [
+     "home_4",
+     "stable"
+    ]
+   },
+   "label": "express on a home that stays Stable",
+   "retry": true
+  },
+  {
+   "at": 0,
+   "do": "construct",
+   "building": "culture_bed",
+   "id": "bed_2",
+   "priority": 14,
+   "when": {
+    "built": "field_2"
+   }
+  },
+  {
+   "at": 1800,
+   "do": "construct",
+   "building": "fibre_garden",
+   "id": "fibre_1",
+   "priority": 40,
+   "when": {
+    "built": "kiln_1"
+   }
+  },
+  {
+   "at": 1800,
+   "do": "construct",
+   "building": "retting_pool",
+   "id": "retting_1",
+   "priority": 41,
+   "when": {
+    "built": "kiln_1"
+   }
+  },
+  {
+   "at": 1920,
+   "do": "construct",
+   "building": "resin_grove",
+   "id": "resin_1",
+   "priority": 42,
+   "when": {
+    "built": "retting_1"
+   }
+  },
+  {
+   "at": 1920,
+   "do": "construct",
+   "building": "resin_curing",
+   "id": "curing_1",
+   "priority": 43,
+   "when": {
+    "built": "retting_1"
+   }
+  },
+  {
+   "at": 1920,
+   "do": "construct",
+   "building": "nutrient_washer",
+   "id": "washer_2",
+   "priority": 44,
+   "when": {
+    "built": "dredge_2"
+   }
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "washer_2",
+   "value": 5,
+   "when": {
+    "built": "washer_2"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 2040,
+   "do": "evolve",
+   "residence": "home_3",
+   "when": {
+    "tier": [
+     "home_2",
+     "stable"
+    ]
+   },
+   "retry": true
+  },
+  {
+   "at": 2160,
+   "do": "deliver_contract",
+   "contract": "fertile_exchange",
+   "label": "8 Growth Nutrient for 12 Carbonate",
+   "when": {
+    "stock": {
+     "growth_nutrient": 8
+    }
+   },
+   "retry_until": 3180
+  },
+  {
+   "at": 3180,
+   "do": "decline_contract",
+   "contract": "fertile_exchange",
+   "when": {
+    "contract": [
+     "fertile_exchange",
+     [
+      "open"
+     ]
+    ]
+   },
+   "retry_until": 3300,
+   "label": "decline only if the delivery never left"
+  },
+  {
+   "at": 2160,
+   "do": "construct",
+   "building": "distribution_node",
+   "id": "distribution_1",
+   "priority": 45,
+   "when": {
+    "built": "retting_1"
+   }
+  },
+  {
+   "at": 2160,
+   "do": "construct",
+   "building": "detox_clinic",
+   "id": "clinic_1",
+   "priority": 46,
+   "when": {
+    "built": "digester_1"
+   },
+   "label": "first Clinic: no Composite (candidate rule 2)"
+  },
+  {
+   "at": 2160,
+   "do": "construct",
+   "building": "nutrient_kitchen",
+   "id": "kitchen_1",
+   "priority": 45,
+   "when": {
+    "built": "clinic_1"
+   },
+   "label": "Gel must flow the moment the first Symbiotic home exists"
+  },
+  {
+   "at": 0,
+   "do": "set_labour_priority",
+   "target": "kitchen_1",
+   "value": 4,
+   "when": {
+    "built": "kitchen_1"
+   },
+   "label": "keep this crew staffed (after food)"
+  },
+  {
+   "at": 2280,
+   "do": "evolve",
+   "residence": "home_1",
+   "label": "first Symbiotic",
+   "when": {
+    "built": [
+     "clinic_1",
+     "distribution_1",
+     "kitchen_1"
+    ]
+   },
+   "retry": true
+  },
+  {
+   "at": 2400,
+   "do": "construct",
+   "building": "anoxic_pump",
+   "id": "pump_1",
+   "priority": 47,
+   "when": {
+    "built": "curing_1"
+   }
+  },
+  {
+   "at": 2520,
+   "do": "construct",
+   "building": "composite_workshop",
+   "id": "workshop_1",
+   "priority": 48,
+   "when": {
+    "built": [
+     "curing_1",
+     "kiln_1"
+    ]
+   },
+   "label": "built when its inputs flow, staffed as soon as qualified workers exist"
+  },
+  {
+   "at": 2760,
+   "do": "construct",
+   "building": "pigment_bed",
+   "id": "pigment_1",
+   "priority": 50,
+   "when": {
+    "built": "workshop_1"
+   }
+  },
+  {
+   "at": 2760,
+   "do": "construct",
+   "building": "artisan_organ",
+   "id": "organ_1",
+   "priority": 51,
+   "when": {
+    "built": "workshop_1"
+   }
+  },
+  {
+   "at": 2400,
+   "do": "evolve",
+   "residence": "home_4",
+   "label": "fourth Stable (keeps Adapted crews)",
+   "when": {
+    "tier": [
+     "home_3",
+     "stable"
+    ]
+   },
+   "retry": true
+  },
+  {
+   "at": 2760,
+   "do": "evolve",
+   "residence": "home_2",
+   "label": "second Symbiotic",
+   "when": {
+    "tier": [
+     "home_1",
+     "symbiotic"
+    ]
+   },
+   "retry": true
+  },
+  {
+   "at": 3000,
+   "do": "construct",
+   "building": "pigment_bed",
+   "id": "pigment_2",
+   "priority": 55,
+   "when": {
+    "built": "organ_1"
+   },
+   "label": "Ornament volume for Memory and the Reef"
+  },
+  {
+   "at": 3000,
+   "do": "construct",
+   "building": "artisan_organ",
+   "id": "organ_2",
+   "priority": 56,
+   "when": {
+    "built": "organ_1"
+   }
+  },
+  {
+   "at": 3000,
+   "do": "research",
+   "morphology": "memory_ganglion",
+   "priority": 5,
+   "when": {
+    "stock": {
+     "growth_nutrient": 6,
+     "balanced_gel": 2,
+     "pigment_ornament": 2
+    }
+   },
+   "retry": true
+  },
+  {
+   "at": 3000,
+   "do": "construct",
+   "building": "memory_circle",
+   "id": "memory_circle_1",
+   "priority": 52,
+   "when": {
+    "built": "organ_1"
+   },
+   "label": "first Circle: Artisan crew (candidate rule 3)"
+  },
+  {
+   "at": 3000,
+   "do": "express",
+   "morphology": "memory_ganglion",
+   "residence": "home_1",
+   "when": {
+    "researched": "memory_ganglion"
+   },
+   "retry": true
+  },
+  {
+   "at": 3000,
+   "do": "evolve",
+   "residence": "home_1",
+   "label": "first Memory Enclave",
+   "when": {
+    "researched": "memory_ganglion",
+    "built": "memory_circle_1"
+   },
+   "retry": true
+  },
+  {
+   "at": 3120,
+   "do": "construct",
+   "building": "ceramic_kiln",
+   "id": "kiln_2",
+   "priority": 57,
+   "when": {
+    "built": "workshop_1"
+   }
+  },
+  {
+   "at": 3240,
+   "do": "construct",
+   "building": "composite_workshop",
+   "id": "workshop_2",
+   "priority": 58,
+   "when": {
+    "built": "kiln_2"
+   }
+  },
+  {
+   "at": 3360,
+   "do": "begin_great_work",
+   "priority": 5,
+   "label": "Memory Reef",
+   "retry": true
+  }
+ ]
+}

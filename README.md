@@ -2,7 +2,9 @@
 
 Pondgame v2 is a chemistry-driven alien city builder. The player builds a civilisation whose bodies, farms, industries, settlements and culture emerge from the chemistry of its world.
 
-The project is starting with a headless economic model. No game-client architecture will be chosen until the first 90-minute Verdant Basin economy can be simulated, inspected and balanced.
+The current playable slice uses a Godot client over the Python economy simulation. Run `godot --path client` from this directory with Python 3.10+ available; see [client instructions](client/README.md). The normal launch uses the provisional `candidate_playable_slice_v1` overlay. The v0.2 baseline remains separate.
+
+`main` is the integrated source of truth for the game, documentation and agent exchange. Start new work from current `origin/main`; the milestone and visual branches preserve their development history. Read [the agent exchange](docs/exchange/README.md), [current project state](docs/PROJECT_STATUS.md) and [slice charter](docs/PLAYABLE_SLICE_CHARTER.md) before continuing.
 
 ## Run the economy model
 
@@ -19,7 +21,24 @@ Generate a machine-readable report:
 python3 -m economy.simulate --json reports/reference_run.json
 ```
 
-The source of truth for balance values is `economy/data/verdant_v0_1.json`. The reference plan is intentionally data-driven and represents a competent first-playthrough build, not the only valid strategy.
+The following legacy paper model uses `economy/data/verdant_v0_1.json`; the honest engine uses `economy/data/verdant_v0_2.json` and explicitly selected overlays. The reference plan is intentionally data-driven and represents a competent first-playthrough build, not the only valid strategy.
+
+## Honest economy engine (Milestone A)
+
+`economy/engine/` replaces the reference plan's scripted `set` events with real rules. Buildings are paid for and built, jobs are staffed by workforce class, residences evolve and decline through needs and services, and the plan issues player commands that can fail with reasons.
+
+```bash
+python3 -m economy.run                      # doc-faithful definitions
+python3 -m economy.run --overlay economy/data/experiments/probe_unblock_bootstrap.json
+python3 -m economy.run --bootstrap-only     # static deadlock analysis
+python3 -m economy.sweep economy/data/experiments/candidate_bootstrap_sweep.json   # bounded rule comparison
+```
+
+- Architecture and contracts: `docs/ECONOMY_ENGINE.md`
+- Current balance evidence: `docs/milestone_a/HONEST_ECONOMY_FINDINGS.md`, then `CANDIDATE_RULES_V1_RESULTS.md`, then `THROUGHPUT_SWEEP_V1_RESULTS.md` (all in `docs/milestone_a/`)
+- Definitions: `economy/data/verdant_v0_2.json`; reference plan: `economy/data/plans/verdant_reference_a.json`
+
+The legacy paper model above is kept unchanged as an arithmetic check.
 
 ## Design documents
 

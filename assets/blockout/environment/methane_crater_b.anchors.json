@@ -1,0 +1,22 @@
+{
+  "asset": "methane_crater_b",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "HazardAnchor": [
+      0,
+      0,
+      0
+    ]
+  }
+}

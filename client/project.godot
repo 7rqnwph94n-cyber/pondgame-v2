@@ -1,0 +1,21 @@
+; Engine configuration file.
+; Pondgame v2 client shell (Milestone B, ADR 0001). Godot 4.3.
+
+config_version=5
+
+[application]
+
+config/name="Pondgame v2 — Verdant Basin client shell"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3")
+
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/stretch/aspect="expand"
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+anti_aliasing/quality/msaa_3d=2

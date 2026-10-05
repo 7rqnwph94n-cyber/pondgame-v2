@@ -1,0 +1,26 @@
+{
+  "id": "probe_unblock_bootstrap",
+  "status": "EXPERIMENT - not a balance decision; requires Rich's approval before any value moves into verdant_v0_2.json",
+  "description": "Smallest set of changes found that removes every deadlock reported by economy.engine.bootstrap, chosen to match the timeline in VERDANT_VERTICAL_SLICE_ECONOMY.md §18, so the honest model can expose the bottlenecks behind the deadlocks.",
+  "rationale": {
+    "nutrient_washer.jobs": "Growth Nutrient gates the first Stable, but every producer needs Adapted workers, which only Stables supply. §18.1 expects Dredge + Washer and 4 Nutrient before any Stable, so General staffing matches the doc's timeline.",
+    "clean_flow_node.jobs": "Clean Flow gates the first Stable but needed Adapted workers (same loop).",
+    "waste_collector": "Waste service gates the first Stable but came only from the Waste Digester (Fired Ceramic + Adapted). §13 names a 'Waste Collector/Digester' and §18.2 establishes Waste service at minute 12-25, before ceramics exist. A cheap collector is added; the Digester still provides the service too.",
+    "ceramic_kiln.jobs": "§18.3 runs a Kiln before the first Symbiotic, but Kilns need Artisans, which only Symbiotic homes supply, and Symbiotic needs Health whose clinic costs Ceramic. Adapted staffing follows the doc's timeline.",
+    "detox_clinic.cost": "Health gates Symbiotic, but the clinic cost Habitat Composite, made only by Artisans. Composite removed from the clinic cost.",
+    "memory_circle.jobs": "Memory Enclave evolution needs Memory service; the Memory Circle needed Coordinators; only Memory Enclaves supply Coordinators. Artisans staff the Circle.",
+    "starting_state.inventory.repair_enzyme": "Silicate Pit and Carbonate Cutter cost Repair Enzyme, and every Enzyme route needs Ceramic first, which needs Prepared Silica beyond the starting 2. Two starting Enzyme break the loop."
+  },
+  "patch": {
+    "buildings": {
+      "nutrient_washer": {"jobs": {"general": 3, "adapted": null}},
+      "clean_flow_node": {"jobs": {"general": 1, "adapted": null}},
+      "waste_collector": {"category": "service", "cost": {"carbonate": 2, "biomass": 1}, "work": 10, "jobs": {"general": 2}, "maintenance_weight": 1.0, "source": "provisional: probe_unblock_bootstrap"},
+      "ceramic_kiln": {"jobs": {"adapted": 4, "artisan": null}},
+      "detox_clinic": {"cost": {"habitat_composite": null}},
+      "memory_circle": {"jobs": {"artisan": 3, "coordinator": null}}
+    },
+    "services": {"waste": {"provided_by": ["waste_digester", "waste_collector"]}},
+    "starting_state": {"inventory": {"repair_enzyme": 2}}
+  }
+}

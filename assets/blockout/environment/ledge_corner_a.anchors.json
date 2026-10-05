@@ -1,0 +1,27 @@
+{
+  "asset": "ledge_corner_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "SnapWest": [
+      -4,
+      0,
+      0
+    ],
+    "SnapNorth": [
+      0,
+      0,
+      4
+    ],
+    "TopAnchor": [
+      0,
+      0.9,
+      0
+    ]
+  }
+}

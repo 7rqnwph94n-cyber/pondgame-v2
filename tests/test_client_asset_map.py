@@ -1,0 +1,95 @@
+import json
+import unittest
+from pathlib import Path
+
+
+ROOT=Path(__file__).resolve().parents[1]
+MAP_PATH=ROOT/"client"/"presentation"/"asset_map.json"
+
+
+class ClientAssetMapTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.data=json.loads(MAP_PATH.read_text())
+
+    def test_domain_asset_references_exist(self):
+        asset_dir=(ROOT/"client"/self.data["asset_dir"]).resolve()
+        for section in ("buildings","residence_tiers"):
+            for domain_id,asset in self.data[section].items():
+                with self.subTest(domain_id=domain_id):
+                    self.assertTrue((asset_dir/f"{asset}.obj").is_file())
+
+    def test_every_starting_facility_has_a_distinct_asset(self):
+        from economy.bridge import Session
+
+        initial=Session().view()["facilities"]
+        buildings={facility["building"] for facility in initial.values()}
+        mapped=[self.data["buildings"].get(building) for building in buildings]
+        self.assertNotIn(None,mapped)
+        self.assertEqual(len(mapped),len(set(mapped)))
+
+    def test_environment_references_exist(self):
+        env_dir=(ROOT/"client"/self.data["environment_dir"]).resolve()
+        names=list(self.data["environment"]["terrain_tiles"])
+        names += [item["asset"] for item in self.data["environment"]["routes"]]
+        names += [item["asset"] for item in self.data["environment"]["features"]]
+        names += [item["asset"] for item in self.data["environment"]["empty_features"]]
+        names += [item["asset"] for item in self.data["environment"]["chemical_ecology"]]
+        names += [item["asset"] for item in self.data["environment"]["shore_habitat"]]
+        names += [item["asset"] for item in self.data["environment"]["scenery"]]
+        for name in names:
+            with self.subTest(asset=name):
+                self.assertTrue((env_dir/f"{name}.obj").is_file())
+
+    def test_icon_source_set_is_available(self):
+        icon_dir=(ROOT/"client"/self.data["icon_dir"]).resolve()
+        manifest=json.loads((icon_dir/"manifest.json").read_text())
+        self.assertIn("raw_silicate",manifest["icons"])
+        self.assertIn("carbonate",manifest["icons"])
+        self.assertIn("biomass",manifest["icons"])
+        self.assertIn("output_blocked",manifest["icons"])
+        self.assertIn("food_emergency",manifest["icons"])
+
+    def test_authored_terrain_texture_set_is_available(self):
+        texture_dir=(ROOT/"client"/self.data["terrain_texture_dir"]).resolve()
+        expected={
+            "wet_sediment_v01.png", "fertile_terrace_v01.png",
+            "silica_escarpment_v01.png", "methane_basin_v01.png",
+            "sulphur_crust_v01.png", "carbonate_shelf_v01.png",
+            "carbon_clay_terrace_v01.png",
+        }
+        self.assertEqual({path.name for path in texture_dir.glob("*.png")},expected)
+        self.assertTrue(all((texture_dir/name).stat().st_size>100_000 for name in expected))
+
+    def test_presentation_layout_has_one_river_crossing(self):
+        layout_path=MAP_PATH.parent/self.data["environment"]["map"]["layout_file"]
+        layout=json.loads(layout_path.read_text())
+        self.assertGreaterEqual(len(layout["channel"]),4)
+        route=layout["carrier_route"]
+        crossing=layout["crossing"]
+        west=crossing["west_landing"]
+        east=crossing["east_landing"]
+        self.assertIn(west,route)
+        self.assertIn(east,route)
+        self.assertTrue(any(a==west and b==east or a==east and b==west
+                            for a,b in zip(route,route[1:])))
+
+    def test_scenery_stays_outside_core_settlement_corridor(self):
+        for item in self.data["environment"]["scenery"]:
+            x,_,z=item["position"]
+            self.assertGreaterEqual(max(abs(x),abs(z)),20)
+
+    def test_client_wires_environment_icons_and_carriers(self):
+        main=(ROOT/"client"/"scripts"/"main.gd").read_text()
+        hud=(ROOT/"client"/"scripts"/"hud.gd").read_text()
+        icon_loader=(ROOT/"client"/"scripts"/"icon_loader.gd").read_text()
+        self.assertIn('environment.get("scenery", [])',main)
+        self.assertIn('environment.get("features", [])',main)
+        self.assertIn('unit_general_carrier_a.obj',main)
+        self.assertIn('_update_carrier_views(delta)',main)
+        self.assertIn('IconLoader.load_svg',hud)
+        self.assertIn('load_svg_from_buffer',icon_loader)
+
+
+if __name__=="__main__":
+    unittest.main()

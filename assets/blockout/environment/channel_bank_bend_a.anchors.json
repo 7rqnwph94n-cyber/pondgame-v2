@@ -1,0 +1,27 @@
+{
+  "asset": "channel_bank_bend_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "SnapWest": [
+      -4,
+      0,
+      0
+    ],
+    "SnapNorth": [
+      0,
+      0,
+      -4
+    ],
+    "FlowAnchor": [
+      0,
+      0.05,
+      0
+    ]
+  }
+}

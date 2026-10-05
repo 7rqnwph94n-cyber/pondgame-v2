@@ -1,0 +1,27 @@
+{
+  "asset": "methane_seep_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "FilterAnchor": [
+      0,
+      0.15,
+      2.8
+    ],
+    "HazardAnchor": [
+      1,
+      0,
+      0
+    ]
+  }
+}
