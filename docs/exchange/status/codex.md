@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-05T17:14Z
+updated: 2026-10-05T17:45Z
 state: active
 current_task: Rework player controls and icon HUD after Rich click-through
 branch: codex/player-controls
-head_commit: 2986480
+head_commit: 61926cd
 waiting_on: Rich's playable opening review
 ---
 
 ## Now
+
+- New controls implementation passes 273 Godot assertions. Native QA confirms left icon build catalogue, building right-click menu, zoom button, selectable carrier ring and carrier right-click Inspect/Follow. Compact HUD runs on the desktop launcher. Completing final construction/tooltip QA and pushing the branch for Claude review.
 
 - Rich rejected the wordy controls/HUD. Editing main.gd, hud.gd and camera_rig.gd: right-click actions, visible left build bar, icon tooltips, trackpad and button zoom, selectable carriers. Simulation and contracts remain unchanged; Claude should avoid these shared client files during this block.
 
