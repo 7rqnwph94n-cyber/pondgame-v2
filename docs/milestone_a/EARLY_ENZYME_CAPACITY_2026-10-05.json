@@ -1,0 +1,6305 @@
+[
+  {
+    "label": "reference",
+    "order_at": null,
+    "food_pause_threshold_minutes": null,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "106:29",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 9,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 124.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 54.7,
+      "blocked_entity_minutes": 1137.9,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 1923.0,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 6390,
+    "three_commissioned_at": null,
+    "first_unpaid_second": 8189,
+    "actions": [],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 22.090812720847747,
+        "biomass": 9,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 28.21339563862896,
+        "biomass": 0,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 26.52976190476153,
+        "biomass": 0,
+        "enzyme": 4,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 29.430261969285958,
+        "biomass": 0,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 37.5,
+        "demand_per_minute": 0.46875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          }
+        ]
+      },
+      {
+        "second": 6390,
+        "food_minutes": 31.871996386630098,
+        "biomass": 0,
+        "enzyme": 7,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 32.70803974706368,
+        "biomass": 0,
+        "enzyme": 7,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 35.01680143755567,
+        "biomass": 0,
+        "enzyme": 4,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 37.542666666666165,
+        "biomass": 0,
+        "enzyme": 2,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 36.06115196078379,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 36.84546568627393,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 31.747426470587598,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 27.139583333332638,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 23.021936274509045,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 40.0,
+        "demand_per_minute": 0.5,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 19.557180059523063,
+        "biomass": 2,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 42.0,
+        "demand_per_minute": 0.525,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 16.952710843372767,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 14.126799242423491,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 12.08134469696888,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 11.172253787877901,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 9.126799242423289,
+        "biomass": 0,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 46.5,
+        "demand_per_minute": 0.58125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "106:30 maintenance upkeep begins",
+      "136:29 maintenance upkeep UNPAID: service suspended",
+      "137:20 maintenance upkeep restored",
+      "139:20 maintenance upkeep UNPAID: service suspended",
+      "141:20 maintenance upkeep restored",
+      "143:20 maintenance upkeep UNPAID: service suspended",
+      "145:20 maintenance upkeep restored",
+      "147:20 maintenance upkeep UNPAID: service suspended",
+      "149:20 maintenance upkeep restored",
+      "151:20 maintenance upkeep UNPAID: service suspended",
+      "153:20 maintenance upkeep restored",
+      "155:20 maintenance upkeep UNPAID: service suspended",
+      "157:20 maintenance upkeep restored",
+      "159:20 maintenance upkeep UNPAID: service suspended",
+      "161:20 maintenance upkeep restored",
+      "163:20 maintenance upkeep UNPAID: service suspended",
+      "165:20 maintenance upkeep restored",
+      "167:20 maintenance upkeep UNPAID: service suspended",
+      "169:20 maintenance upkeep restored",
+      "171:20 maintenance upkeep UNPAID: service suspended",
+      "173:20 maintenance upkeep restored",
+      "175:20 maintenance upkeep UNPAID: service suspended",
+      "177:20 maintenance upkeep restored",
+      "179:20 maintenance upkeep UNPAID: service suspended",
+      "181:20 maintenance upkeep restored",
+      "183:18 maintenance upkeep UNPAID: service suspended",
+      "185:20 maintenance upkeep restored",
+      "187:18 maintenance upkeep UNPAID: service suspended",
+      "189:20 maintenance upkeep restored",
+      "191:15 maintenance upkeep UNPAID: service suspended",
+      "193:20 maintenance upkeep restored",
+      "195:10 maintenance upkeep UNPAID: service suspended",
+      "197:20 maintenance upkeep restored",
+      "199:07 maintenance upkeep UNPAID: service suspended",
+      "201:20 maintenance upkeep restored",
+      "203:07 maintenance upkeep UNPAID: service suspended",
+      "205:20 maintenance upkeep restored",
+      "207:04 maintenance upkeep UNPAID: service suspended",
+      "209:20 maintenance upkeep restored",
+      "211:04 maintenance upkeep UNPAID: service suspended",
+      "213:20 maintenance upkeep restored",
+      "215:04 maintenance upkeep UNPAID: service suspended",
+      "217:20 maintenance upkeep restored",
+      "219:04 maintenance upkeep UNPAID: service suspended",
+      "221:20 maintenance upkeep restored",
+      "223:04 maintenance upkeep UNPAID: service suspended",
+      "225:20 maintenance upkeep restored",
+      "227:04 maintenance upkeep UNPAID: service suspended",
+      "229:20 maintenance upkeep restored",
+      "231:04 maintenance upkeep UNPAID: service suspended",
+      "233:20 maintenance upkeep restored",
+      "235:04 maintenance upkeep UNPAID: service suspended",
+      "237:20 maintenance upkeep restored",
+      "239:04 maintenance upkeep UNPAID: service suspended"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "60 min: orders only",
+    "order_at": 3600,
+    "food_pause_threshold_minutes": null,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "193:39",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 10,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 132.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1073.4,
+      "trade_sold": {
+        "biomass": 13,
+        "staple": 8,
+        "growth_nutrient": 2
+      },
+      "trade_bought": {
+        "carbonate": 16
+      },
+      "idle_construction_wp_minutes": 3458.7,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 11620,
+    "three_commissioned_at": 6190,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 3600,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 3600,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 19.263957597172837,
+        "biomass": 8,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 25.098130841121172,
+        "biomass": 0,
+        "enzyme": 2,
+        "ceramic": 0,
+        "maintenance_weight": 33.5,
+        "demand_per_minute": 0.41875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 23.55357142857105,
+        "biomass": 0,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 27.247335140017668,
+        "biomass": 0,
+        "enzyme": 11,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 27.953699284009144,
+        "biomass": 0,
+        "enzyme": 17,
+        "ceramic": 0,
+        "maintenance_weight": 38.5,
+        "demand_per_minute": 0.48125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 26.164036958066387,
+        "biomass": 0,
+        "enzyme": 25,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 25.698941798941338,
+        "biomass": 0,
+        "enzyme": 32,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 27.20687830687778,
+        "biomass": 0,
+        "enzyme": 40,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 28.31798941798882,
+        "biomass": 0,
+        "enzyme": 47,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 25.460846560845887,
+        "biomass": 0,
+        "enzyme": 55,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 22.206878306877567,
+        "biomass": 0,
+        "enzyme": 62,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 19.349735449734638,
+        "biomass": 0,
+        "enzyme": 70,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 17.906127450979575,
+        "biomass": 2,
+        "enzyme": 76,
+        "ceramic": 0,
+        "maintenance_weight": 45.5,
+        "demand_per_minute": 0.56875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          }
+        ]
+      },
+      {
+        "second": 11620,
+        "food_minutes": 17.804806491884282,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 16.2313428120054,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 23
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 13.029544108939271,
+        "biomass": 0,
+        "enzyme": 79,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 11.015199530515439,
+        "biomass": 0,
+        "enzyme": 81,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 8.761678403754805,
+        "biomass": 0,
+        "enzyme": 82,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 6.156044600937835,
+        "biomass": 0,
+        "enzyme": 84,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 41
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 33
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "193:40 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "60 min: protect Biomass above 30 food minutes",
+    "order_at": 3600,
+    "food_pause_threshold_minutes": 30,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "193:39",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 10,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 132.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1073.4,
+      "trade_sold": {
+        "biomass": 13,
+        "staple": 8,
+        "growth_nutrient": 2
+      },
+      "trade_bought": {
+        "carbonate": 16
+      },
+      "idle_construction_wp_minutes": 3458.7,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 11620,
+    "three_commissioned_at": 6190,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 3600,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 3600,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 19.263957597172837,
+        "biomass": 8,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 25.098130841121172,
+        "biomass": 0,
+        "enzyme": 2,
+        "ceramic": 0,
+        "maintenance_weight": 33.5,
+        "demand_per_minute": 0.41875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 23.55357142857105,
+        "biomass": 0,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 27.247335140017668,
+        "biomass": 0,
+        "enzyme": 11,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 27.953699284009144,
+        "biomass": 0,
+        "enzyme": 17,
+        "ceramic": 0,
+        "maintenance_weight": 38.5,
+        "demand_per_minute": 0.48125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 26.164036958066387,
+        "biomass": 0,
+        "enzyme": 25,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 25.698941798941338,
+        "biomass": 0,
+        "enzyme": 32,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 27.20687830687778,
+        "biomass": 0,
+        "enzyme": 40,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 28.31798941798882,
+        "biomass": 0,
+        "enzyme": 47,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 25.460846560845887,
+        "biomass": 0,
+        "enzyme": 55,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 22.206878306877567,
+        "biomass": 0,
+        "enzyme": 62,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 19.349735449734638,
+        "biomass": 0,
+        "enzyme": 70,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 17.906127450979575,
+        "biomass": 2,
+        "enzyme": 76,
+        "ceramic": 0,
+        "maintenance_weight": 45.5,
+        "demand_per_minute": 0.56875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          }
+        ]
+      },
+      {
+        "second": 11620,
+        "food_minutes": 17.804806491884282,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 16.2313428120054,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 23
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 13.029544108939271,
+        "biomass": 0,
+        "enzyme": 79,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 11.015199530515439,
+        "biomass": 0,
+        "enzyme": 81,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 8.761678403754805,
+        "biomass": 0,
+        "enzyme": 82,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 6.156044600937835,
+        "biomass": 0,
+        "enzyme": 84,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 41
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 33
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "193:40 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "80 min: protect Biomass above 30 food minutes",
+    "order_at": 4800,
+    "food_pause_threshold_minutes": 30,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "115:39",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 12,
+        "stable": 2,
+        "symbiotic": 2,
+        "memory": 0
+      },
+      "final_population": 152.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 4.8,
+      "food_emergency_minutes": 4.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1299.7,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 1871.3,
+      "top_bottlenecks": [
+        "goods:biomass",
+        "workforce:artisan",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 6940,
+    "three_commissioned_at": 6470,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      },
+      {
+        "second": 5790,
+        "command": {
+          "do": "pause",
+          "target": "bed_1"
+        },
+        "why": "temporarily reserve Biomass for Ceramic; food buffer sufficient",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 5790,
+        "command": {
+          "do": "set_labour_priority",
+          "target": "ceramic_kiln_1",
+          "value": 3
+        },
+        "why": "staff the construction-material chain first",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 5790,
+        "command": {
+          "do": "pause",
+          "target": "culture_bed_1"
+        },
+        "why": "temporarily reserve Biomass for Ceramic; food buffer sufficient",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 5790,
+        "command": {
+          "do": "pause",
+          "target": "culture_bed_2"
+        },
+        "why": "temporarily reserve Biomass for Ceramic; food buffer sufficient",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 6470,
+        "command": {
+          "do": "set_labour_priority",
+          "target": "ceramic_kiln_1",
+          "value": null
+        },
+        "why": "restore normal kiln priority after capacity construction",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 6470,
+        "command": {
+          "do": "resume",
+          "target": "bed_1"
+        },
+        "why": "restore food production",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 6470,
+        "command": {
+          "do": "resume",
+          "target": "culture_bed_1"
+        },
+        "why": "restore food production",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 6470,
+        "command": {
+          "do": "resume",
+          "target": "culture_bed_2"
+        },
+        "why": "restore food production",
+        "ok": true,
+        "result": ""
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 22.090812720847747,
+        "biomass": 9,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 28.21339563862896,
+        "biomass": 0,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 26.52976190476153,
+        "biomass": 0,
+        "enzyme": 4,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 25.094218608852355,
+        "biomass": 8,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 15.576213206045734,
+        "biomass": 27,
+        "enzyme": 10,
+        "ceramic": 0,
+        "maintenance_weight": 41.5,
+        "demand_per_minute": 0.51875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 6940,
+        "food_minutes": 17.843914081145144,
+        "biomass": 22,
+        "enzyme": 13,
+        "ceramic": 0,
+        "maintenance_weight": 44.0,
+        "demand_per_minute": 0.55,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 3
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 18.761177406522993,
+        "biomass": 18,
+        "enzyme": 15,
+        "ceramic": 0,
+        "maintenance_weight": 44.0,
+        "demand_per_minute": 0.55,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 3
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 20.29795019157035,
+        "biomass": 8,
+        "enzyme": 17,
+        "ceramic": 2,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 19.421872852233136,
+        "biomass": 0,
+        "enzyme": 19,
+        "ceramic": 2,
+        "maintenance_weight": 50.0,
+        "demand_per_minute": 0.625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 8
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 16.653473520248664,
+        "biomass": 0,
+        "enzyme": 19,
+        "ceramic": 6,
+        "maintenance_weight": 52.5,
+        "demand_per_minute": 0.65625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 12.441264880951772,
+        "biomass": 0,
+        "enzyme": 21,
+        "ceramic": 10,
+        "maintenance_weight": 52.5,
+        "demand_per_minute": 0.65625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 13
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 9.108289319248161,
+        "biomass": 0,
+        "enzyme": 21,
+        "ceramic": 14,
+        "maintenance_weight": 52.5,
+        "demand_per_minute": 0.65625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 5.017673482031446,
+        "biomass": 0,
+        "enzyme": 22,
+        "ceramic": 14,
+        "maintenance_weight": 56.0,
+        "demand_per_minute": 0.7000000000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 18
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 12.120523049644616,
+        "biomass": 2,
+        "enzyme": 21,
+        "ceramic": 16,
+        "maintenance_weight": 63.5,
+        "demand_per_minute": 0.7937500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 28.513095238094447,
+        "biomass": 7,
+        "enzyme": 21,
+        "ceramic": 22,
+        "maintenance_weight": 65.5,
+        "demand_per_minute": 0.8187500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 24
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 23
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 43.82047275640941,
+        "biomass": 0,
+        "enzyme": 20,
+        "ceramic": 26,
+        "maintenance_weight": 65.5,
+        "demand_per_minute": 0.8187500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 26
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 58.49995993589651,
+        "biomass": 0,
+        "enzyme": 20,
+        "ceramic": 32,
+        "maintenance_weight": 65.5,
+        "demand_per_minute": 0.8187500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 75.42303685897335,
+        "biomass": 0,
+        "enzyme": 19,
+        "ceramic": 36,
+        "maintenance_weight": 65.5,
+        "demand_per_minute": 0.8187500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 90.10252403846046,
+        "biomass": 0,
+        "enzyme": 19,
+        "ceramic": 42,
+        "maintenance_weight": 65.5,
+        "demand_per_minute": 0.8187500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6165,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6463,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 33
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "115:40 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "60 min: protect Biomass above 45 food minutes",
+    "order_at": 3600,
+    "food_pause_threshold_minutes": 45,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "193:39",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 10,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 132.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1073.4,
+      "trade_sold": {
+        "biomass": 13,
+        "staple": 8,
+        "growth_nutrient": 2
+      },
+      "trade_bought": {
+        "carbonate": 16
+      },
+      "idle_construction_wp_minutes": 3458.7,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 11620,
+    "three_commissioned_at": 6190,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 3600,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 3600,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 19.263957597172837,
+        "biomass": 8,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 25.098130841121172,
+        "biomass": 0,
+        "enzyme": 2,
+        "ceramic": 0,
+        "maintenance_weight": 33.5,
+        "demand_per_minute": 0.41875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 23.55357142857105,
+        "biomass": 0,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 27.247335140017668,
+        "biomass": 0,
+        "enzyme": 11,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 27.953699284009144,
+        "biomass": 0,
+        "enzyme": 17,
+        "ceramic": 0,
+        "maintenance_weight": 38.5,
+        "demand_per_minute": 0.48125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 26.164036958066387,
+        "biomass": 0,
+        "enzyme": 25,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 25.698941798941338,
+        "biomass": 0,
+        "enzyme": 32,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 27.20687830687778,
+        "biomass": 0,
+        "enzyme": 40,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 28.31798941798882,
+        "biomass": 0,
+        "enzyme": 47,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 25.460846560845887,
+        "biomass": 0,
+        "enzyme": 55,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 22.206878306877567,
+        "biomass": 0,
+        "enzyme": 62,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 19.349735449734638,
+        "biomass": 0,
+        "enzyme": 70,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 17.906127450979575,
+        "biomass": 2,
+        "enzyme": 76,
+        "ceramic": 0,
+        "maintenance_weight": 45.5,
+        "demand_per_minute": 0.56875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          }
+        ]
+      },
+      {
+        "second": 11620,
+        "food_minutes": 17.804806491884282,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 16.2313428120054,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 23
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 13.029544108939271,
+        "biomass": 0,
+        "enzyme": 79,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 11.015199530515439,
+        "biomass": 0,
+        "enzyme": 81,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 8.761678403754805,
+        "biomass": 0,
+        "enzyme": 82,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 6.156044600937835,
+        "biomass": 0,
+        "enzyme": 84,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 41
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 33
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "193:40 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "70 min: orders only",
+    "order_at": 4200,
+    "food_pause_threshold_minutes": null,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "193:39",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 10,
+        "stable": 3,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 132.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1032.9,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 3456.6,
+      "top_bottlenecks": [
+        "goods:biomass",
+        "goods:fired_ceramic",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 11620,
+    "three_commissioned_at": 6190,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 4200,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 4200,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 22.090812720847747,
+        "biomass": 9,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 28.21339563862896,
+        "biomass": 0,
+        "enzyme": 2,
+        "ceramic": 0,
+        "maintenance_weight": 33.5,
+        "demand_per_minute": 0.41875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 26.52976190476153,
+        "biomass": 0,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 29.95736224028867,
+        "biomass": 0,
+        "enzyme": 11,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 30.340334128877878,
+        "biomass": 0,
+        "enzyme": 17,
+        "ceramic": 0,
+        "maintenance_weight": 38.5,
+        "demand_per_minute": 0.48125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 28.2962331201133,
+        "biomass": 0,
+        "enzyme": 25,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 27.68306878306832,
+        "biomass": 0,
+        "enzyme": 32,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 29.191005291004764,
+        "biomass": 0,
+        "enzyme": 40,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 30.302116402115804,
+        "biomass": 0,
+        "enzyme": 47,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 27.44497354497287,
+        "biomass": 0,
+        "enzyme": 55,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 24.19100529100455,
+        "biomass": 0,
+        "enzyme": 62,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 21.333862433861622,
+        "biomass": 0,
+        "enzyme": 70,
+        "ceramic": 0,
+        "maintenance_weight": 43.5,
+        "demand_per_minute": 0.5437500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 19.74436274509722,
+        "biomass": 2,
+        "enzyme": 76,
+        "ceramic": 0,
+        "maintenance_weight": 45.5,
+        "demand_per_minute": 0.56875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          }
+        ]
+      },
+      {
+        "second": 11620,
+        "food_minutes": 19.677465667914245,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 18.127077409161796,
+        "biomass": 0,
+        "enzyme": 78,
+        "ceramic": 0,
+        "maintenance_weight": 47.0,
+        "demand_per_minute": 0.5875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 23
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 14.80574304321991,
+        "biomass": 0,
+        "enzyme": 79,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 12.77576291079713,
+        "biomass": 0,
+        "enzyme": 81,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 10.522241784036495,
+        "biomass": 0,
+        "enzyme": 82,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 36
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 7.916607981219525,
+        "biomass": 0,
+        "enzyme": 84,
+        "ceramic": 0,
+        "maintenance_weight": 48.5,
+        "demand_per_minute": 0.6062500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 41
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 4706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 39
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6182,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 33
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "193:40 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "80 min: orders only",
+    "order_at": 4800,
+    "food_pause_threshold_minutes": null,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "193:49",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 8,
+        "stable": 4,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 128.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1012.3,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 2777.5,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 11630,
+    "three_commissioned_at": 6710,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 22.090812720847747,
+        "biomass": 9,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 28.21339563862896,
+        "biomass": 0,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 26.52976190476153,
+        "biomass": 0,
+        "enzyme": 4,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 29.97226738934016,
+        "biomass": 0,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 30.373349244231893,
+        "biomass": 0,
+        "enzyme": 10,
+        "ceramic": 0,
+        "maintenance_weight": 38.5,
+        "demand_per_minute": 0.48125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 29.083908045976585,
+        "biomass": 0,
+        "enzyme": 17,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 31.152873563217895,
+        "biomass": 0,
+        "enzyme": 24,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 33.652873563217824,
+        "biomass": 0,
+        "enzyme": 32,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 35.721839080459134,
+        "biomass": 0,
+        "enzyme": 39,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 33.48045977011424,
+        "biomass": 0,
+        "enzyme": 47,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 30.808045977010725,
+        "biomass": 0,
+        "enzyme": 54,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 28.566666666665828,
+        "biomass": 0,
+        "enzyme": 62,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 27.079894179893344,
+        "biomass": 2,
+        "enzyme": 69,
+        "ceramic": 0,
+        "maintenance_weight": 44.5,
+        "demand_per_minute": 0.55625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          }
+        ]
+      },
+      {
+        "second": 11630,
+        "food_minutes": 27.280904183534883,
+        "biomass": 0,
+        "enzyme": 71,
+        "ceramic": 0,
+        "maintenance_weight": 46.0,
+        "demand_per_minute": 0.5750000000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 26.881491136599678,
+        "biomass": 0,
+        "enzyme": 73,
+        "ceramic": 0,
+        "maintenance_weight": 46.0,
+        "demand_per_minute": 0.5750000000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 24
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 23.735286458332386,
+        "biomass": 0,
+        "enzyme": 74,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 26
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 24
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 21.36206467661595,
+        "biomass": 0,
+        "enzyme": 76,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 19.571019900496488,
+        "biomass": 0,
+        "enzyme": 77,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 17.406840796018816,
+        "biomass": 0,
+        "enzyme": 80,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "193:50 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "80 min: protect Biomass above 45 food minutes",
+    "order_at": 4800,
+    "food_pause_threshold_minutes": 45,
+    "max_paused_culture_beds": null,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "193:49",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 8,
+        "stable": 4,
+        "symbiotic": 1,
+        "memory": 0
+      },
+      "final_population": 128.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 3.0,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1012.3,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 2777.5,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 11630,
+    "three_commissioned_at": 6710,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 22.090812720847747,
+        "biomass": 9,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 28.21339563862896,
+        "biomass": 0,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 26.52976190476153,
+        "biomass": 0,
+        "enzyme": 4,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 29.97226738934016,
+        "biomass": 0,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 30.373349244231893,
+        "biomass": 0,
+        "enzyme": 10,
+        "ceramic": 0,
+        "maintenance_weight": 38.5,
+        "demand_per_minute": 0.48125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 29.083908045976585,
+        "biomass": 0,
+        "enzyme": 17,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 31.152873563217895,
+        "biomass": 0,
+        "enzyme": 24,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 33.652873563217824,
+        "biomass": 0,
+        "enzyme": 32,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 35.721839080459134,
+        "biomass": 0,
+        "enzyme": 39,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 33.48045977011424,
+        "biomass": 0,
+        "enzyme": 47,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 30.808045977010725,
+        "biomass": 0,
+        "enzyme": 54,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 28.566666666665828,
+        "biomass": 0,
+        "enzyme": 62,
+        "ceramic": 0,
+        "maintenance_weight": 42.5,
+        "demand_per_minute": 0.53125,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 27.079894179893344,
+        "biomass": 2,
+        "enzyme": 69,
+        "ceramic": 0,
+        "maintenance_weight": 44.5,
+        "demand_per_minute": 0.55625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          }
+        ]
+      },
+      {
+        "second": 11630,
+        "food_minutes": 27.280904183534883,
+        "biomass": 0,
+        "enzyme": 71,
+        "ceramic": 0,
+        "maintenance_weight": 46.0,
+        "demand_per_minute": 0.5750000000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 26.881491136599678,
+        "biomass": 0,
+        "enzyme": 73,
+        "ceramic": 0,
+        "maintenance_weight": 46.0,
+        "demand_per_minute": 0.5750000000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 24
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 23.735286458332386,
+        "biomass": 0,
+        "enzyme": 74,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 26
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 24
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 21.36206467661595,
+        "biomass": 0,
+        "enzyme": 76,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 19.571019900496488,
+        "biomass": 0,
+        "enzyme": 77,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 17.406840796018816,
+        "biomass": 0,
+        "enzyme": 80,
+        "ceramic": 0,
+        "maintenance_weight": 47.5,
+        "demand_per_minute": 0.59375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6187,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6706,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "193:50 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  },
+  {
+    "label": "80 min: protect above 30 food minutes; pause at most one bed",
+    "order_at": 4800,
+    "food_pause_threshold_minutes": 30,
+    "max_paused_culture_beds": 1,
+    "summary": {
+      "reef_completed_at": null,
+      "reef_minutes": null,
+      "stages": 0,
+      "first_stable": "21:39",
+      "first_symbiotic": "115:39",
+      "first_memory": null,
+      "final_tiers": {
+        "shelter": 12,
+        "stable": 2,
+        "symbiotic": 2,
+        "memory": 0
+      },
+      "final_population": 152.0,
+      "devolutions": 0,
+      "symbiotic_devolutions": 0,
+      "staple_shortage_minutes": 0.0,
+      "gel_shortage_minutes": 4.8,
+      "food_emergency_minutes": 0.0,
+      "upkeep_unpaid_minutes": 0.0,
+      "blocked_entity_minutes": 1010.8,
+      "trade_sold": {
+        "biomass": 12,
+        "staple": 4,
+        "growth_nutrient": 1
+      },
+      "trade_bought": {
+        "carbonate": 12
+      },
+      "idle_construction_wp_minutes": 1907.5,
+      "top_bottlenecks": [
+        "goods:fired_ceramic",
+        "goods:biomass",
+        "environment:dry:farm"
+      ]
+    },
+    "grace_ended_at": 6940,
+    "three_commissioned_at": 6480,
+    "first_unpaid_second": null,
+    "actions": [
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_1",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_1 placed"
+      },
+      {
+        "second": 4800,
+        "command": {
+          "do": "construct",
+          "building": "waste_digester",
+          "id": "early_digester_2",
+          "priority": 10
+        },
+        "why": "order extra paid Enzyme capacity",
+        "ok": true,
+        "result": "site early_digester_2 placed"
+      },
+      {
+        "second": 5790,
+        "command": {
+          "do": "pause",
+          "target": "bed_1"
+        },
+        "why": "temporarily reserve Biomass for Ceramic; food buffer sufficient",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 5790,
+        "command": {
+          "do": "set_labour_priority",
+          "target": "ceramic_kiln_1",
+          "value": 3
+        },
+        "why": "staff the construction-material chain first",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 6480,
+        "command": {
+          "do": "set_labour_priority",
+          "target": "ceramic_kiln_1",
+          "value": null
+        },
+        "why": "restore normal kiln priority after capacity construction",
+        "ok": true,
+        "result": ""
+      },
+      {
+        "second": 6480,
+        "command": {
+          "do": "resume",
+          "target": "bed_1"
+        },
+        "why": "restore food production",
+        "ok": true,
+        "result": ""
+      }
+    ],
+    "snapshots": [
+      {
+        "second": 0,
+        "food_minutes": 13.316666666666665,
+        "biomass": 2,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 9.0,
+        "demand_per_minute": 0.1125,
+        "digesters": []
+      },
+      {
+        "second": 600,
+        "food_minutes": 18.316666666666567,
+        "biomass": 5,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 13.0,
+        "demand_per_minute": 0.1625,
+        "digesters": []
+      },
+      {
+        "second": 1200,
+        "food_minutes": 16.35833333333319,
+        "biomass": 12,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 15.5,
+        "demand_per_minute": 0.19375,
+        "digesters": []
+      },
+      {
+        "second": 1800,
+        "food_minutes": 18.974561403508577,
+        "biomass": 18,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 18.5,
+        "demand_per_minute": 0.23125,
+        "digesters": []
+      },
+      {
+        "second": 2400,
+        "food_minutes": 17.08445692883873,
+        "biomass": 25,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 19.5,
+        "demand_per_minute": 0.24375000000000002,
+        "digesters": []
+      },
+      {
+        "second": 3000,
+        "food_minutes": 14.254460093896471,
+        "biomass": 31,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 22.5,
+        "demand_per_minute": 0.28125,
+        "digesters": []
+      },
+      {
+        "second": 3600,
+        "food_minutes": 13.975268817204027,
+        "biomass": 23,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 26.5,
+        "demand_per_minute": 0.33125000000000004,
+        "digesters": []
+      },
+      {
+        "second": 4200,
+        "food_minutes": 22.090812720847747,
+        "biomass": 9,
+        "enzyme": 0,
+        "ceramic": 0,
+        "maintenance_weight": 31.0,
+        "demand_per_minute": 0.3875,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 4800,
+        "food_minutes": 28.21339563862896,
+        "biomass": 0,
+        "enzyme": 1,
+        "ceramic": 0,
+        "maintenance_weight": 32.5,
+        "demand_per_minute": 0.40625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 2
+          }
+        ]
+      },
+      {
+        "second": 5400,
+        "food_minutes": 26.52976190476153,
+        "biomass": 0,
+        "enzyme": 4,
+        "ceramic": 0,
+        "maintenance_weight": 34.0,
+        "demand_per_minute": 0.42500000000000004,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 6000,
+        "food_minutes": 28.34625112917756,
+        "biomass": 2,
+        "enzyme": 6,
+        "ceramic": 0,
+        "maintenance_weight": 35.0,
+        "demand_per_minute": 0.4375,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 7
+          }
+        ]
+      },
+      {
+        "second": 6600,
+        "food_minutes": 26.07740652346817,
+        "biomass": 5,
+        "enzyme": 10,
+        "ceramic": 0,
+        "maintenance_weight": 40.5,
+        "demand_per_minute": 0.50625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 0
+          }
+        ]
+      },
+      {
+        "second": 6940,
+        "food_minutes": 28.345107398567578,
+        "biomass": 0,
+        "enzyme": 13,
+        "ceramic": 0,
+        "maintenance_weight": 44.0,
+        "demand_per_minute": 0.55,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 3
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 1
+          }
+        ]
+      },
+      {
+        "second": 7200,
+        "food_minutes": 28.78504375497168,
+        "biomass": 0,
+        "enzyme": 15,
+        "ceramic": 0,
+        "maintenance_weight": 44.0,
+        "demand_per_minute": 0.55,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 12
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 4
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 3
+          }
+        ]
+      },
+      {
+        "second": 7800,
+        "food_minutes": 28.57381226053587,
+        "biomass": 0,
+        "enzyme": 17,
+        "ceramic": 0,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 6
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 5
+          }
+        ]
+      },
+      {
+        "second": 8400,
+        "food_minutes": 26.714809027777232,
+        "biomass": 0,
+        "enzyme": 19,
+        "ceramic": 0,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 17
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 9
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 8
+          }
+        ]
+      },
+      {
+        "second": 9000,
+        "food_minutes": 26.146866246497982,
+        "biomass": 0,
+        "enzyme": 20,
+        "ceramic": 0,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 11
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 10
+          }
+        ]
+      },
+      {
+        "second": 9600,
+        "food_minutes": 20.45391051912501,
+        "biomass": 0,
+        "enzyme": 23,
+        "ceramic": 0,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 22
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 14
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 13
+          }
+        ]
+      },
+      {
+        "second": 10200,
+        "food_minutes": 14.14243510928888,
+        "biomass": 0,
+        "enzyme": 24,
+        "ceramic": 0,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 16
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 15
+          }
+        ]
+      },
+      {
+        "second": 10800,
+        "food_minutes": 9.06046789617406,
+        "biomass": 0,
+        "enzyme": 27,
+        "ceramic": 0,
+        "maintenance_weight": 45.0,
+        "demand_per_minute": 0.5625,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 27
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 19
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 18
+          }
+        ]
+      },
+      {
+        "second": 11400,
+        "food_minutes": 12.102604166665863,
+        "biomass": 0,
+        "enzyme": 28,
+        "ceramic": 0,
+        "maintenance_weight": 53.5,
+        "demand_per_minute": 0.6687500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 21
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 20
+          }
+        ]
+      },
+      {
+        "second": 12000,
+        "food_minutes": 25.047880622836573,
+        "biomass": 2,
+        "enzyme": 29,
+        "ceramic": 0,
+        "maintenance_weight": 55.5,
+        "demand_per_minute": 0.6937500000000001,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 32
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 24
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 23
+          }
+        ]
+      },
+      {
+        "second": 12600,
+        "food_minutes": 34.49868630573168,
+        "biomass": 2,
+        "enzyme": 28,
+        "ceramic": 0,
+        "maintenance_weight": 60.0,
+        "demand_per_minute": 0.75,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 35
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 26
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 25
+          }
+        ]
+      },
+      {
+        "second": 13200,
+        "food_minutes": 46.609975961537586,
+        "biomass": 0,
+        "enzyme": 28,
+        "ceramic": 0,
+        "maintenance_weight": 60.0,
+        "demand_per_minute": 0.75,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 37
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 29
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 28
+          }
+        ]
+      },
+      {
+        "second": 13800,
+        "food_minutes": 59.686899038460595,
+        "biomass": 0,
+        "enzyme": 28,
+        "ceramic": 0,
+        "maintenance_weight": 60.0,
+        "demand_per_minute": 0.75,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 40
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 31
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 30
+          }
+        ]
+      },
+      {
+        "second": 14400,
+        "food_minutes": 71.16125801281949,
+        "biomass": 0,
+        "enzyme": 28,
+        "ceramic": 0,
+        "maintenance_weight": 60.0,
+        "demand_per_minute": 0.75,
+        "digesters": [
+          {
+            "entity": "waste_digester_1",
+            "commissioned_at": 4159,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 42
+          },
+          {
+            "entity": "early_digester_1",
+            "commissioned_at": 6179,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 34
+          },
+          {
+            "entity": "early_digester_2",
+            "commissioned_at": 6476,
+            "staffing": 1.0,
+            "status": "running",
+            "cycles": 33
+          }
+        ]
+      }
+    ],
+    "upkeep_events": [
+      "115:40 maintenance upkeep begins"
+    ],
+    "failed_plan_actions": 0
+  }
+]
