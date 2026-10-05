@@ -334,11 +334,48 @@ func show_inspection(reply: Dictionary) -> void:
 		lines.append("\n[b]Why it is not progressing:[/b]")
 		for r in reasons:
 			lines.append("[color=#ffcc80]• %s[/color]" % str(r).replace("_", " "))
+	lines.append_array(_consumer_copy(reply))
 	_inspector_body.text = "\n".join(lines)
 	if _last_inspection.get("entity", "") != entity or _last_inspection.get("kind", "") != kind \
-			or _last_inspection.get("labour_priority_overridden") != reply.get("labour_priority_overridden"):
+			or _last_inspection.get("labour_priority_overridden") != reply.get("labour_priority_overridden") \
+			or _consumer_ids(_last_inspection) != _consumer_ids(reply):
 		_rebuild_actions(kind, entity, reply)
-	_last_inspection = reply
+	_last_inspection = reply.duplicate(true)
+
+
+func _consumer_ids(reply: Dictionary) -> Array:
+	var ids: Array = []
+	for blocker in reply.get("blockers", []):
+		if blocker.get("code") == "waiting_input":
+			for rows in blocker.get("params", {}).get("consumers", {}).values():
+				for row in rows:
+					if not ids.has(row["entity"]):
+						ids.append(row["entity"])
+	ids.sort()
+	return ids
+
+
+func _consumer_copy(reply: Dictionary) -> PackedStringArray:
+	var lines := PackedStringArray()
+	for blocker in reply.get("blockers", []):
+		if blocker.get("code") != "waiting_input":
+			continue
+		var consumers: Dictionary = blocker.get("params", {}).get("consumers", {})
+		for good in consumers:
+			for row in consumers[good]:
+				var outputs := PackedStringArray()
+				for output in row.get("outputs", {}):
+					outputs.append(str(output).replace("_", " "))
+				lines.append("\n[b]%s also uses %s[/b] (%s): %s per cycle → %s." % [
+					str(row["building"]).replace("_", " ").capitalize(), str(good).replace("_", " "),
+					row["entity"], row["per_cycle"], ", ".join(outputs)])
+				if row.get("state") == "waiting_input":
+					lines.append("It is waiting for inputs too; it competes for the next available batch.")
+				if int(row.get("held", 0)) > 0:
+					lines.append("%s already reserved in its current cycle; pausing does not return it." % row["held"])
+	if not lines.is_empty():
+		lines.append("Inspect a competing building to pause it temporarily. Its output will stop too; check food reserves before pausing food production, and resume when construction has its materials.")
+	return lines
 
 
 func _facility_status_copy(reply: Dictionary) -> String:
@@ -381,6 +418,12 @@ func _rebuild_actions(kind: String, entity: String, reply: Dictionary) -> void:
 		"great_work":
 			if not reply.get("begun", false):
 				_action("Begin", {"do": "begin_great_work", "priority": 5})
+
+	for consumer_id in _consumer_ids(reply):
+		var button := Button.new()
+		button.text = "Inspect %s" % consumer_id
+		button.pressed.connect(func(): inspect_requested.emit(str(consumer_id)))
+		_actions.add_child(button)
 
 
 func _action(text: String, cmd: Dictionary, tooltip: String = "") -> void:

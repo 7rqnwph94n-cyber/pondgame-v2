@@ -1,0 +1,9 @@
+# Input competition clarity, 5 October 2026
+
+A blocked construction site, facility or evolution now carries additive `waiting_input.params.consumers` metadata (sim_bridge contract v3 on exchange main). The inspector names competing recipes, their per-cycle requirement and outputs, and any inputs already held in a cycle. A direct Inspect button selects the competitor; the player can use its existing Pause/Resume actions.
+
+The explanation explicitly states the output trade-off, reminds the player to check food reserves, and says that pausing does not refund inputs already reserved. Consumers are limited to the same district store, exclude the inspected facility and paused facilities, and include running recipes or recipes waiting for inputs. The latter are labelled as competitors for the next batch, not as currently consuming. This is a snapshot, not historical attribution or a guarantee that pausing solves every shortage. No simulation rules changed.
+
+Verification: the recorded 12-command manual opening replayed to 45:00 with no Autoplay reproduces the shelter Biomass stall and identifies Culture Bed `bed_1`, which makes Staple. Adapter tests verify recipe amounts and held inputs against simulation state, paused removal, other-store exclusion, self-exclusion and inactive exclusion. Godot assertions exercise consumer navigation, food advice, waiting-state wording and removal of obsolete actions; v2 replies still render without consumer metadata. The complete Python suite passed 172 tests (2 skipped); Godot passed 253 assertions.
+
+`captures/biomass_competitor_2026-10-05.png` is a normal Metal-renderer inspector-only review using the real 45:00 replay reply; no world is rendered in this isolated HUD review. Copy fits the panel, and its Inspect action is visible. The replay remains an automated reproduction of the prior human plan, not a fresh novice playtest.

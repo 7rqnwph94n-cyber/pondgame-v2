@@ -30,7 +30,7 @@ from .engine import Simulation, load_definitions
 from .engine.definitions import read_json
 from .player_view import observe
 
-PROTOCOL = 1          # wire protocol; contract sim_bridge v2 adds fields only
+PROTOCOL = 1          # wire protocol; contract sim_bridge v3 adds fields only
 DEFAULT_PORT = 47615
 MAX_ADVANCE = 600
 ROOT = Path(__file__).resolve().parents[1]
@@ -146,6 +146,26 @@ def labour_rank(sim: Simulation, f) -> int:
     return f.labour_priority if f.labour_priority is not None else (order.index(f.category) if f.category in order else len(order))
 
 
+def input_consumers(sim: Simulation, district: str, goods: dict, exclude: str = "") -> dict:
+    """Same-store recipe competitors; held inputs are reserved, not recoverable by pause."""
+    result = {}
+    for good in sorted(goods):
+        rows = []
+        for fid, f in sorted(sim.facilities.items()):
+            if fid == exclude or f.district != district or f.paused:
+                continue
+            recipe = sim.defs["recipes"].get(f.recipe_id, {})
+            amount = recipe.get("inputs", {}).get(good, 0)
+            if amount and (f.status == "running" or f.status == "no_input"):
+                rows.append({"entity": fid, "building": f.building_id, "recipe": f.recipe_id,
+                             "per_cycle": amount, "held": f.held_inputs.get(good, 0),
+                             "state": "running" if f.status == "running" else "waiting_input",
+                             "outputs": dict(recipe.get("outputs", {}))})
+        if rows:
+            result[good] = rows
+    return result
+
+
 def facility_blockers(sim: Simulation, f) -> list[dict[str, Any]]:
     out = []
     if f.paused:
@@ -163,7 +183,7 @@ def facility_blockers(sim: Simulation, f) -> list[dict[str, Any]]:
     missing = {r: q - store.get(r, 0) for r, q in (recipe or {}).get("inputs", {}).items() if store.get(r, 0) < q}
     if missing and f.cycle_remaining is None:
         out.append(_blocker("waiting_input", "needs inputs " + ", ".join(f"{q} {r}" for r, q in sorted(missing.items())),
-                            goods=missing))
+                            goods=missing, consumers=input_consumers(sim, f.district, missing, f.id)))
     if f.status == "morphology_missing":
         out.append(_blocker("morphology_missing", f"needs morphology {f.status_detail}", morphology=f.status_detail))
     elif f.status == "environment":
@@ -178,7 +198,7 @@ def site_blockers(sim: Simulation, s) -> list[dict[str, Any]]:
     missing = s.missing()
     if missing:
         out.append(_blocker("waiting_input", ", ".join(f"waiting for {q} {r}" for r, q in sorted(missing.items())),
-                            goods=dict(missing)))
+                            goods=dict(missing), consumers=input_consumers(sim, s.district, missing)))
     if s.state == "awaiting_labour":
         if sim.builder_state.get(s.district) == "preempted_food_emergency":
             out.append(_blocker("food_emergency", "Builders are farming: food emergency", reason=sim.food_emergency.reason))
@@ -205,7 +225,7 @@ def residence_blockers(sim: Simulation, r, state: dict[str, Any] | None = None) 
         short = {g: q - store.get(g, 0) for g, q in need.items() if store.get(g, 0) < q}
         if short:
             out.append(_blocker("waiting_input", "to evolve, needs in store: " + ", ".join(f"{q} {g}" for g, q in sorted(short.items())),
-                                goods=short, purpose="evolution"))
+                                goods=short, purpose="evolution", consumers=input_consumers(sim, r.district, short)))
     if state["evolution"]:
         missing = {f"service:{b['params']['service']}" for b in out if b["code"] == "missing_service"}
         for b in state["evolution"]["blockers"]:

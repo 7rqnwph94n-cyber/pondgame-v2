@@ -193,6 +193,27 @@ func test_opening_hud_legibility() -> void:
 	hud.show_inspection(service)
 	check(hud._inspector_body.text.contains("workers assigned"),
 		"idle facility explains that it still occupies workers")
+	var competing := {"ok": true, "kind": "site", "entity": "shelter_new", "builds": "shelter",
+		"state": "awaiting_materials", "reasons": ["waiting for 1 biomass"], "blockers": [
+		{"code": "waiting_input", "params": {"goods": {"biomass": 1}, "consumers": {"biomass": [
+		{"entity": "culture_1", "building": "culture_bed", "state": "waiting_input", "per_cycle": 1,
+		"held": 0, "outputs": {"staple": 2}}]}}}]}
+	hud.show_inspection(competing)
+	await process_frame
+	check(hud._inspector_body.text.to_lower().contains("culture bed also uses biomass"), "stall identifies the competing recipe")
+	check(hud._inspector_body.text.contains("waiting for inputs too"), "waiting competitor is not presented as consuming now")
+	check(hud._inspector_body.text.contains("check food reserves"), "pause advice explains food trade-off")
+	var selected := {"id": ""}
+	hud.inspect_requested.connect(func(id): selected["id"] = id)
+	buttons = _action_buttons(hud)
+	check(buttons.has("Inspect culture_1"), "consumer can be inspected directly")
+	if buttons.has("Inspect culture_1"):
+		buttons["Inspect culture_1"].pressed.emit()
+	check(selected["id"] == "culture_1", "consumer navigation selects its stable id")
+	competing["blockers"][0]["params"]["consumers"] = {}
+	hud.show_inspection(competing)
+	await process_frame
+	check(not _action_buttons(hud).has("Inspect culture_1"), "consumer action disappears after competition ends")
 	hud.queue_free()
 	completed.append("opening_hud")
 
