@@ -11,14 +11,16 @@ Capacity time is when the 10-second plan first observes three commissioned diges
 | Candidate | Three observed | First Symbiotic | Unpaid upkeep min | Food emergency min | Gel shortage residence-min |
 |---|---|---|---:|---:|---:|
 | reference | — | 106:29 | 54.7 | 0.0 | 3.0 |
-| 60 min: orders only | 103:10 | 193:39 | 0.0 | 0.0 | 3.0 |
-| 60 min: protect Biomass above 30 food minutes | 103:10 | 193:39 | 0.0 | 0.0 | 3.0 |
+| 60 min: orders only | 103:10 | 193:39 | 0.0 (late grace) | 0.0 | 3.0 |
+| 60 min: protect Biomass above 30 food minutes | 103:10 | 193:39 | 0.0 (late grace) | 0.0 | 3.0 |
 | 80 min: protect Biomass above 30 food minutes | 107:50 | 115:39 | 0.0 | 4.0 | 4.8 |
-| 60 min: protect Biomass above 45 food minutes | 103:10 | 193:39 | 0.0 | 0.0 | 3.0 |
-| 70 min: orders only | 103:10 | 193:39 | 0.0 | 0.0 | 3.0 |
-| 80 min: orders only | 111:50 | 193:49 | 0.0 | 0.0 | 3.0 |
-| 80 min: protect Biomass above 45 food minutes | 111:50 | 193:49 | 0.0 | 0.0 | 3.0 |
+| 60 min: protect Biomass above 45 food minutes | 103:10 | 193:39 | 0.0 (late grace) | 0.0 | 3.0 |
+| 70 min: orders only | 103:10 | 193:39 | 0.0 (late grace) | 0.0 | 3.0 |
+| 80 min: orders only | 111:50 | 193:49 | 0.0 (late grace) | 0.0 | 3.0 |
+| 80 min: protect Biomass above 45 food minutes | 111:50 | 193:49 | 0.0 (late grace) | 0.0 | 3.0 |
 | 80 min: protect above 30 food minutes; pause at most one bed | 108:00 | 115:39 | 0.0 | 0.0 | 4.8 |
+
+The rows marked **late grace** fail the intended Symbiotic-by-120-minute timing: upkeep only begins around 193:40–193:50, giving about 46 minutes of enforced upkeep before the horizon. Their zeros must not be read as accepted solutions. The selected strategy faces about 124 minutes of enforced upkeep.
 
 All runs have zero Staple shortage and zero devolution. None reaches Memory or a Reef stage. The 60-minute 30/45-buffer and 80-minute 45-buffer candidates never activate protection: they execute only the two construction orders, so their duplicate outcomes are expected and not independent evidence for protection efficacy.
 
@@ -36,8 +38,14 @@ At 240:00 there are two Symbiotic homes, population 152, food buffer 71.2 minute
 
 ## Limits and acceptance
 
-Pausing all Culture Beds at the same 30-minute threshold causes 4.0 minutes of food emergency. Pausing only one preserves food in this trajectory. Ordering extra capacity earlier without protection avoids upkeep but delays Symbiotic to about 194 minutes; no rule change is required to explain these differences.
+Pausing all Culture Beds at the same 30-minute threshold causes 4.0 minutes of food emergency. Pausing only one preserves food in this trajectory. Ordering extra capacity earlier without protection avoids upkeep but delays Symbiotic to about 194 minutes; these timing differences occur under unchanged rules. This comparison does not isolate the cause of the roughly 87-minute evolution delay, so construction-priority/resource competition remains a hypothesis requiring a separate trace.
 
 The selected trajectory improves upkeep and retains Symbiotic within 120 minutes, but cumulative Gel shortage rises from 3.0 to 4.8 residence-minutes, alongside a second Symbiotic home. Residence-minutes add shortage across homes; this is not 4.8 elapsed minutes of colony-wide shortage. No home devolves, but the Gel supply trade-off remains open. This is not a full long-game/ Reef pass.
 
 The plan is a timed simulated strategy alongside the governor, not a new human opening or demonstrated novice onboarding. It has not been wired into Autoplay or the client's launch. Next systems review should check Gel supply and capacity margin beyond four hours before adopting any governor strategy. Baseline rules remain unchanged.
+
+## Independent review
+
+Claude reproduced `--check` successfully from `9f070ac` in a cloud scratch checkout; the evidence JSON remained byte-identical and he confirmed the six accepted actions, commissioning times, staffing, actual upkeep demand and outcome figures. He found no factual discrepancy, but did not endorse default adoption.
+
+This successful point was found by narrowing the failed all-beds variant to a one-bed pause; it is not a validated robust region. A future bounded sensitivity check should compare 75/85-minute orders and 25/35-minute food thresholds, plus explain delayed evolution in the orders-only rows. Biomass and Ceramic stocks are zero both at selected grace end and 240:00, so extra capacity construction remains vulnerable to the same supply chain. A player-facing upkeep forecast would be a separate bridge/UX task; this timed strategy has not demonstrated that an uninformed human can anticipate the need.
