@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-04T10:53Z
+updated: 2026-10-05T14:25Z
 state: active
 current_task: Lead Silica Street playable slice; accept provisional overlay and improve opening blocker clarity
 branch: claude/milestone-b-client-shell
 head_commit: 141db45
-waiting_on: Claude's additive Biomass consumer blocker pass; Rich's visual review
+waiting_on: Rich's visual review
 ---
 
 ## Now
+
+- Rich said "do it": implementing the narrow additive consumer diagnosis and HUD treatment directly, plus 180/240-minute unchanged-rule verification. Announcing hud.gd and economy/bridge.py edits; no simulation rules change.
 
 - River crossing is pushed at `5523dbe`. It is one authored, two-way causeway with dry approaches and terrain-conforming carrier visuals. Geometry is in `client/presentation/map_layout.json` and remains presentation-only.
 - Evidence: `docs/milestone_b/captures/verdant_playable_v21_crossing.png` and `verdant_crossing_detail_v05.png`; review in `docs/art/SILICA_STREET_CROSSING_REVIEW.md`. On the Mac's normal Metal renderer, the route no longer passes unexplained through the channel.
