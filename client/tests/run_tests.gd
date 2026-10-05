@@ -7,7 +7,7 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "bridge"]
 const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
@@ -35,6 +35,7 @@ func _run() -> void:
 	test_crossing_is_the_only_water_route()
 	await test_inspector_staff_first_action()
 	await test_opening_hud_legibility()
+	await test_player_controls()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -127,7 +128,7 @@ func _action_buttons(hud) -> Dictionary:
 	var found := {}
 	for b in hud._actions.get_children():
 		if not b.is_queued_for_deletion():
-			found[b.text] = b
+			found[b.get_meta("action_label", b.text)] = b
 	return found
 
 
@@ -177,7 +178,7 @@ func test_opening_hud_legibility() -> void:
 		"Carbonate stock is visible in the opening strip")
 	check(hud._headline_values.has("biomass") and hud._headline_values["biomass"].text.contains("5"),
 		"Biomass stock is visible in the opening strip")
-	check(hud._colony.text.contains("Pop 24 !") and hud._colony.tooltip_text.contains("no free housing"),
+	check(hud._colony.text.contains("24 !") and hud._colony.tooltip_text.contains("no free housing"),
 		"population chip identifies a growth stall and explains it on hover")
 	var home := {"ok": true, "kind": "residence", "entity": "home_1", "tier": "shelter", "condition": "normal",
 		"population": 8, "capacity": 8, "next_tier": "stable", "services_for_next_tier": {},
@@ -266,3 +267,79 @@ func test_bridge_round_trip() -> void:
 	bridge.stop()
 	world.queue_free()
 	completed.append("bridge")
+
+
+func test_player_controls() -> void:
+	var hud = preload("res://scripts/hud.gd").new()
+	root.add_child(hud)
+	await process_frame
+	hud.configure({"resources": ["biomass", "fired_ceramic"], "buildings": {
+		"culture_bed": {"category": "food", "cost": {"biomass": 2}, "jobs": {"general": 3}},
+		"shelter": {"category": "residence", "cost": {"biomass": 1}}}})
+	check(hud._category_buttons.size() == 8, "eight persistent build categories are available")
+	hud.open_build_category("food")
+	await process_frame
+	var sent: Array = []
+	hud.build_requested.connect(func(id): sent.append(id))
+	var buttons: Array = hud._catalogue.get_children()
+	check(buttons.size() == 1 and buttons[0].get_meta("building") == "culture_bed", "food catalogue excludes homes")
+	check(buttons[0].tooltip_text.contains("2 biomass") and buttons[0].tooltip_text.contains("3 General"), "build tooltip includes cost and workforce")
+	buttons[0].pressed.emit()
+	check(sent == ["culture_bed"] and not hud._build_panel.visible, "single click queues construction and closes catalogue")
+	hud.show_context(Vector2.ZERO, {"kind": "facility", "entity": "bed", "building": "culture_bed", "status": "running", "blockers": []})
+	check(hud._context_commands.size() == 2 and hud._context_commands[1].get("do") == "pause", "running context offers pause without invalid priority override")
+	hud.show_context(Vector2.ZERO, {"kind": "facility", "entity": "bed", "status": "paused"})
+	check(hud._context_commands[1].get("do") == "resume", "paused context offers resume")
+	hud.show_context(Vector2.ZERO, {"kind": "site", "entity": "site"})
+	check(hud._context_commands[1].get("do") == "cancel", "construction context offers cancel")
+	hud.show_context(Vector2.ZERO, {"kind": "residence", "entity": "home", "next_tier": "stable"})
+	check(hud._context_commands[1].get("do") == "evolve", "home context offers evolution")
+	hud.show_context(Vector2.ZERO, {"kind": "carrier", "entity": "carrier_1"})
+	check(hud._context_commands[1].get("ui") == "follow", "carrier context offers camera follow rather than fake orders")
+	hud._context.hide()
+	hud.show_unit_inspection("carrier_1", false)
+	check(hud._summary.text.contains("Paused") and hud._inspector_body.text.contains("not simulated"), "carrier inspection explains paused state and domain limits")
+	check(not hud._inspector_body.visible, "long inspector explanations are collapsed by default")
+	var rig = preload("res://scripts/camera_rig.gd").new()
+	root.add_child(rig)
+	await process_frame
+	var wheel := InputEventMouseButton.new()
+	wheel.button_index = MOUSE_BUTTON_WHEEL_UP
+	wheel.pressed = true
+	rig._unhandled_input(wheel)
+	check(rig.camera.size < 88, "mouse wheel zooms inward")
+	var pan := InputEventPanGesture.new()
+	pan.delta = Vector2(0, -2)
+	var before: float = rig.camera.size
+	rig._unhandled_input(pan)
+	check(rig.camera.size < before, "trackpad scroll zooms inward")
+	var pinch := InputEventMagnifyGesture.new()
+	pinch.factor = 1.5
+	before = rig.camera.size
+	rig._unhandled_input(pinch)
+	check(rig.camera.size < before, "trackpad pinch zooms inward")
+	rig.zoom_by(0.001)
+	check(rig.camera.size == 24, "zoom clamps close range")
+	rig.zoom_by(1000)
+	check(rig.camera.size == 150, "zoom clamps overview range")
+	rig.reset_view()
+	check(rig.camera.size == 88, "camera reset restores opening zoom")
+	var main = preload("res://scripts/main.gd").new()
+	main.camera_rig = rig
+	var carrier := MeshInstance3D.new()
+	carrier.set_meta("carrier_id", "carrier_1")
+	carrier.set_meta("phase_offset", 0.0)
+	root.add_child(carrier)
+	main._carrier_views.append(carrier)
+	var target: Vector2 = rig.camera.unproject_position(carrier.global_position + Vector3.UP)
+	check(main._pick(target) == "carrier_1", "carrier screen target is clickable at overview zoom")
+	main._carrier_route.assign([Vector3.ZERO, Vector3(10, 0, 0)])
+	main.view = {"facilities": {}}
+	main.speed_index = 0
+	main._update_carrier_views(1.0)
+	check(main._carrier_phase == 0.0, "pause also freezes carrier route animation")
+	main.free()
+	carrier.queue_free()
+	rig.queue_free()
+	hud.queue_free()
+	completed.append("player_controls")

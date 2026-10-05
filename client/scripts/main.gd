@@ -35,6 +35,8 @@ var _capture_focus := Vector2.ZERO
 var _capture_zoom := 88.0
 var _capture_view_override := false
 var _carrier_views: Array[MeshInstance3D] = []
+var _follow_carrier := ""
+var _context_serial := 0
 var _carrier_phase := 0.0
 var _carrier_route: Array[Vector3] = []
 var _crossing_view: Node3D
@@ -87,6 +89,9 @@ func _ready() -> void:
 	add_child(hud)
 	_build_carrier_views()
 	hud.speed_selected.connect(_on_speed_selected)
+	hud.zoom_requested.connect(camera_rig.zoom_by)
+	camera_rig.navigation_started.connect(func(): _follow_carrier = "")
+	hud.follow_requested.connect(func(id): _follow_carrier = id)
 	hud.autoplay_toggled.connect(func(on): bridge.request("autoplay", {"enabled": on}, func(_r): pass))
 	hud.build_requested.connect(_on_build_requested)
 	hud.action_requested.connect(_on_action_requested)
@@ -164,9 +169,13 @@ func _process(delta: float) -> void:
 			_capture()
 			return
 	_inspect_timer -= delta
-	if _selected != "" and _inspect_timer <= 0.0:
+	if _selected.begins_with("carrier_"):
+		hud.show_unit_inspection(_selected, speed_index != 0)
+	elif _selected != "" and _inspect_timer <= 0.0:
 		_inspect_timer = INSPECT_INTERVAL
-		bridge.request("inspect", {"target": _selected}, hud.show_inspection)
+		var inspecting := _selected
+		bridge.request("inspect", {"target": inspecting}, func(reply):
+			if _selected == inspecting: hud.show_inspection(reply))
 
 
 func _on_view(reply: Dictionary) -> void:
@@ -176,6 +185,10 @@ func _on_view(reply: Dictionary) -> void:
 		return
 	view = reply["view"]
 	world.sync(view)
+	if world.views.has(_selected):
+		world.views[_selected].set_selected(true)
+	elif _selected != "" and _selected != "great_work" and not _selected.begins_with("carrier_"):
+		_select("")
 	hud.show_view(view)
 	_apply_season(view.get("season", "bloom"))
 
@@ -195,12 +208,41 @@ func _unhandled_input(event: InputEvent) -> void:
 				_on_speed_selected(event.keycode - KEY_0)
 			KEY_ESCAPE:
 				_select("")
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_select(_pick(event.position))
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			_context_serial += 1
+			_select(_pick(event.position))
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			_open_context(event.position)
+
+
+func _open_context(position: Vector2) -> void:
+	var id := _pick(position)
+	_context_serial += 1
+	var serial := _context_serial
+	_select(id)
+	if id == "":
+		hud.show_context(position)
+	elif id.begins_with("carrier_"):
+		hud.show_context(position, {"kind": "carrier", "entity": id})
+	elif bridge.is_ready:
+		bridge.request("inspect", {"target": id}, func(reply):
+			if serial == _context_serial and reply.get("ok", false):
+				hud.show_context(position, reply))
 
 
 func _pick(screen_position: Vector2) -> String:
 	var camera: Camera3D = camera_rig.camera
+	# Generous screen-space unit targets keep small carriers selectable at the overview zoom.
+	var nearest := ""
+	var best := 20.0
+	for carrier in _carrier_views:
+		if camera.is_position_behind(carrier.global_position): continue
+		var distance := camera.unproject_position(carrier.global_position + Vector3.UP).distance_to(screen_position)
+		if distance < best:
+			best = distance
+			nearest = str(carrier.get_meta("carrier_id"))
+	if nearest != "": return nearest
 	var from: Vector3 = camera.project_ray_origin(screen_position)
 	var to: Vector3 = from + camera.project_ray_normal(screen_position) * 1000.0
 	var query := PhysicsRayQueryParameters3D.create(from, to)
@@ -213,7 +255,10 @@ func _pick(screen_position: Vector2) -> String:
 func _select(entity_id: String) -> void:
 	if world.views.has(_selected):
 		world.views[_selected].set_selected(false)
+	_follow_carrier = ""
 	_selected = entity_id
+	for carrier in _carrier_views:
+		carrier.get_node("Selection").visible = str(carrier.get_meta("carrier_id")) == entity_id
 	if world.views.has(_selected):
 		world.views[_selected].set_selected(true)
 	_inspect_timer = 0.0
@@ -224,7 +269,9 @@ func _select(entity_id: String) -> void:
 func _on_build_requested(building: String) -> void:
 	_player_ids += 1
 	var id := "%s_p%d" % [building, _player_ids]
-	bridge.request("command", {"cmd": {"do": "construct", "building": building, "id": id, "priority": 30}}, _on_command_reply)
+	bridge.request("command", {"cmd": {"do": "construct", "building": building, "id": id, "priority": 30}}, func(reply):
+		_on_command_reply(reply)
+		if reply.get("ok", false): _select(id))
 
 
 func _on_action_requested(cmd: Dictionary) -> void:
@@ -582,6 +629,17 @@ func _build_carrier_views() -> void:
 		carrier.mesh = mesh
 		carrier.scale = Vector3.ONE * 0.9
 		carrier.set_meta("asset", "unit_general_carrier_a")
+		carrier.set_meta("carrier_id", "carrier_%d" % (i + 1))
+		var ring := MeshInstance3D.new()
+		ring.name = "Selection"
+		var mesh_ring := TorusMesh.new()
+		mesh_ring.inner_radius = 1.0
+		mesh_ring.outer_radius = 1.22
+		ring.mesh = mesh_ring
+		ring.material_override = _material(Color("#78d6dc"), 0.7, Color("#78d6dc"))
+		ring.position.y = 0.2
+		ring.hide()
+		carrier.add_child(ring)
 		carrier.set_meta("phase_offset", float(i) / 3.0)
 		add_child(carrier)
 		_carrier_views.append(carrier)
@@ -596,7 +654,7 @@ func _update_carrier_views(delta: float) -> void:
 			active = true
 			break
 	var speed := 0.055 if active else 0.012
-	_carrier_phase = fmod(_carrier_phase + delta * speed, 1.0)
+	_carrier_phase = fmod(_carrier_phase + delta * speed * SPEEDS[speed_index], 1.0)
 	for carrier in _carrier_views:
 		var t: float = fmod(_carrier_phase + float(carrier.get_meta("phase_offset")), 1.0)
 		var scaled := t * (_carrier_route.size() - 1)
@@ -605,6 +663,8 @@ func _update_carrier_views(delta: float) -> void:
 		var a: Vector3 = _carrier_route[segment]
 		var b: Vector3 = _carrier_route[segment + 1]
 		carrier.position = a.lerp(b, local_t)
+		if str(carrier.get_meta("carrier_id")) == _follow_carrier:
+			camera_rig.focus_on(carrier.position)
 		var direction := b - a
 		if direction.length_squared() > 0.001:
 			carrier.rotation.y = atan2(direction.x, direction.z)

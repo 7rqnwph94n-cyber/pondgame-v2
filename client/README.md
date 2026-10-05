@@ -28,12 +28,16 @@ The opening slice is playable; longer-game balance and the Memory Reef remain un
 | 1–6 | Speed: 1×, 2×, 4×, 8×, 16×, 32× simulated seconds per second |
 | Left-click | Select a building, site or home. The inspector says why it is not progressing |
 | Esc | Clear the selection |
-| Right-drag | Rotate the camera |
+| Right-click | Context menu for a building, construction site or carrier; empty ground opens colony options |
+| Q / E, or Alt + middle-drag | Rotate the camera |
 | Middle-drag, WASD or arrows | Pan |
-| Mouse wheel | Zoom |
-| Build list (double-click) | Place a construction site. Its materials and labour are paid through the normal rules |
-| Inspector buttons | Pause or resume a facility, cancel a site, evolve a home, or begin the Reef |
-| "Why no Memory Reef yet?" | Explains the Reef's unlock blockers |
+| Mouse wheel, trackpad scroll or pinch, + / −, sidebar buttons | Zoom |
+| Home / reset icon | Restore the opening camera |
+| Left build rail | Choose a category, then single-click a building to queue construction in its district. Hover for purpose, cost and workers |
+| Resource crate icon | View all stocks; hover resource icons for names |
+| Carrier click / right-click | Inspect the visual carrier or follow it with the camera |
+| Inspector action icons | Pause or resume a facility, cancel a site, evolve a home, or begin the Reef |
+| Inspector info icon | Expand full requirements, workforce consequences and input competition |
 | Autoplay | Lets the reference governor play alongside you. It is a balance aid, not game AI |
 
 ## Current presentation and limits
@@ -43,3 +47,5 @@ The client has authored basin terrain, district placement, a dry river crossing,
 The inspector explains labour priority, population stalls, evolution workforce changes and competing input users. Its Inspect buttons open a competitor so the player can choose Pause/Resume; pausing stops its outputs and does not refund held inputs.
 
 The unchanged provisional slice reaches Symbiotic at 106:29 under the reference governor. Extended runs first miss Repair Enzyme upkeep at 136:29, with 21.5 unpaid minutes by 180 and 54.7 by 240; no Reef stages complete. These are reproducible governor results, not guarantees for every player strategy. See `docs/milestone_a/SLICE_EXTENDED_HORIZON_2026-10-05.md`. Final art, novice-player acceptance and longer-game balance remain open.
+
+The top strip uses resource icons and amounts, with names and explanations on hover. The inspector starts with a short status summary; its info button expands the detailed explanation. Carrier animation follows pause/speed, and selected carriers have a ground ring. Carriers remain presentation-only: individual cargo and worker orders are not simulated. Building placement is by district, not a spatial logistics rule.
