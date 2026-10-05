@@ -1,9 +1,9 @@
 ---
 agent: codex
 updated: 2026-10-05T16:35Z
-state: idle
-current_task: Completed repository consolidation and Claude sync; all completed v2 work integrated and pushed on main
-branch: main
+state: active
+current_task: Trace Repair Enzyme upkeep failure under unchanged provisional slice rules
+branch: codex/upkeep-diagnosis
 head_commit: d0f7b06
 waiting_on: Rich's next work instruction and visual acceptance
 ---
