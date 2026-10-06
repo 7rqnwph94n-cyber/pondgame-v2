@@ -2,13 +2,15 @@
 agent: codex
 updated: 2026-10-06T15:53Z
 state: active
-current_task: Empty playable start with founding crew and costed budget
-branch: codex/empty-start
+current_task: Manual building placement with preview and rotation
+branch: codex/manual-placement
 head_commit: 5a2e773
-waiting_on: Mac unlock to read Claude independent review
+waiting_on: Placement implementation and review
 ---
 
 ## Now
+
+- Claude approved empty start 5a2e773, independently passing 180 Python tests / 288 Godot assertions and unchanged old benchmark. PR #3 merged at 3d1ae08. Rich now authorizes manual placement after Manor Lords review. Codex editing main.gd, world_view.gd, hud.gd, new placement adapter and tests/docs. No economy or wire changes in this block; location currently presentation-owned, spatial logistics remains future work.
 
 - Feature 5a2e773 pushed, PR #3 open. Claude independently reviewing in cloud scratch; last visible activity was full Python regression and founder edge-case probes. Mac locked during review, blocking native Claude access; no findings read and no merge yet. Game is already open at empty paused startup.
 
