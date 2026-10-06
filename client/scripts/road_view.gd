@@ -23,6 +23,7 @@ var _marker: MeshInstance3D
 var _anchor_marker: MeshInstance3D
 var _preview_signature := ""
 var current_medium := false
+var straight := false
 var _flow_material: ShaderMaterial
 var _organs: Node3D
 var _intakes: Node3D
@@ -135,17 +136,21 @@ func update_at(camera: Camera3D, screen: Vector2, over_ui: bool) -> void:
 		point = _point([close["point"].x, close["point"].y])
 	_marker.position = point + Vector3.UP * 0.4
 	if has_start:
-		reason = segment_reason(start, point)
+		reason = ""
+		var points := draw_points()
+		for i in range(points.size() - 1):
+			reason = segment_reason(_point(points[i]), _point(points[i+1]))
+			if reason != "": break
 	else:
 		reason = ground_reason(point)
 		if reason == "" and not roads.is_empty() and (close.is_empty() or close["distance"] > snap_radius):
 			reason = "Start on an existing road"
 	var colour := Color(0.3, 1, 0.55, 0.6) if reason == "" else Color(1, 0.2, 0.15, 0.6)
 	_marker.material_override.albedo_color = colour
-	var signature := "%s/%s/%s" % [str(start), str(point), reason]
+	var signature := "%s/%s/%s" % [str(start), str(point) + str(straight), reason]
 	if has_start and signature != _preview_signature:
 		_preview_signature = signature
-		_preview.mesh = _strips_mesh([[start, point]], colour, true)
+		_preview.mesh = _strips_mesh(_draw_strips(), colour, true)
 
 
 func ground_reason(candidate: Vector3) -> String:
@@ -269,10 +274,10 @@ func set_validation(value: String) -> void:
 	reason = value
 	var colour := Color(0.3, 1, 0.55, 0.6) if reason == "" else Color(1, 0.2, 0.15, 0.6)
 	_marker.material_override.albedo_color = colour
-	var signature := "%s/%s/%s" % [str(start), str(point), reason]
+	var signature := "%s/%s/%s" % [str(start), str(point) + str(straight), reason]
 	if has_start and signature != _preview_signature:
 		_preview_signature = signature
-		_preview.mesh = _strips_mesh([[start, point]], colour, true)
+		_preview.mesh = _strips_mesh(_draw_strips(), colour, true)
 
 
 func _current_material() -> ShaderMaterial:
@@ -355,3 +360,28 @@ func _sync_ports(placements: Dictionary) -> void:
 		cup.material_override = _material(Color("#73d6b2") if port["connected"] else Color("#f39863"), false)
 		_intakes.add_child(cup)
 	_ports.mesh = _strips_mesh(strips, Color("#69d9bc"), false)
+
+
+func draw_points() -> Array:
+	var a := Vector2(start.x, start.z)
+	var b := Vector2(point.x, point.z)
+	var length := a.distance_to(b)
+	if straight or not current_medium or length < 8:
+		return [[a.x, a.y], [b.x, b.y]]
+	var normal := Vector2(-(b.y-a.y), b.x-a.x).normalized()
+	var bow := normal * minf(length * 0.06, 2.5)
+	var control_a := a.lerp(b, 1.0/3.0) + bow
+	var control_b := a.lerp(b, 2.0/3.0) + bow
+	var points: Array = []
+	var steps := clampi(floori(length / 3), 3, 30)
+	for i in range(steps + 1):
+		var t := float(i) / steps
+		var sample := a * pow(1-t,3) + control_a * 3 * pow(1-t,2) * t + control_b * 3 * (1-t) * t * t + b * pow(t,3)
+		points.append([sample.x, sample.y])
+	return points
+
+func _draw_strips() -> Array:
+	var points := draw_points()
+	var strips: Array = []
+	for i in range(points.size() - 1): strips.append([_point(points[i]), _point(points[i+1])])
+	return strips

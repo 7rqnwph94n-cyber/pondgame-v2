@@ -390,6 +390,9 @@ func _update_placement() -> void:
 	if _preview_ready and _placement.reason == "":
 		_placement.show_connection(_preview_data, world.terrain)
 	var status: String = _placement.reason
+	if status == "" and _preview_data.get("serves") is Dictionary:
+		var reach: Dictionary = _preview_data["serves"]
+		status = "Click to place · %d homes within %.0f m reach" % [reach.get("homes", []).size(), float(reach.get("range", 0))]
 	if status == "" and _preview_data.get("suitability") is Dictionary:
 		var suitable: Dictionary = _preview_data["suitability"]
 		if suitable.has("light"): status = "Click to place · Light %d%%" % roundi(float(suitable["light"]) * 100)
@@ -1020,19 +1023,20 @@ func _finish_roads() -> void:
 
 func _update_roads() -> void:
 	if _roads == null or not _roads.active: return
+	_roads.straight = Input.is_key_pressed(KEY_SHIFT)
 	_roads.update_at(camera_rig.camera, _placement_screen, get_viewport().gui_get_hovered_control() != null)
 	if _roads.has_ground and _roads.has_start and _roads.reason == "":
-		_roads.set_validation(_validate_preview({"do": "build_road", "points": [[_roads.start.x, _roads.start.z], [_roads.point.x, _roads.point.z]]}))
+		_roads.set_validation(_validate_preview({"do": "build_road", "points": _roads.draw_points()}))
 	var copy: String = _roads.reason
 	if copy == "": copy = "Click end point" if _roads.has_start else "Click current start"
-	hud.show_status("Current lane · %s · Right-click/Esc finish" % copy, _roads.reason != "")
+	hud.show_status("Current lane · %s · Shift straight · Right-click/Esc finish" % copy, _roads.reason != "")
 
 
 func _confirm_road(screen: Vector2) -> void:
 	if _road_pending: return
 	_roads.update_at(camera_rig.camera, screen, false)
 	if _roads.has_ground and _roads.has_start and _roads.reason == "":
-		_roads.set_validation(_validate_preview({"do": "build_road", "points": [[_roads.start.x, _roads.start.z], [_roads.point.x, _roads.point.z]]}))
+		_roads.set_validation(_validate_preview({"do": "build_road", "points": _roads.draw_points()}))
 	if not _roads.has_ground or _roads.reason != "":
 		hud.flash(_roads.reason, true)
 		return
@@ -1042,7 +1046,7 @@ func _confirm_road(screen: Vector2) -> void:
 		return
 	_road_ids += 1
 	var ending: Vector3 = _roads.point
-	var points := [[_roads.start.x, _roads.start.z], [ending.x, ending.z]]
+	var points: Array = _roads.draw_points()
 	_road_pending = true
 	bridge.request("command", {"cmd": {"do": "build_road", "id": "road_p%d" % _road_ids, "points": points}}, func(reply):
 		_road_pending = false

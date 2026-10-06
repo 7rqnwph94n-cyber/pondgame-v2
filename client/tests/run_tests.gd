@@ -518,6 +518,13 @@ func test_current_habitat() -> void:
 	lane.configure(world)
 	lane.current_medium = true
 	lane.sync({"second": 10, "roads": {"r": {"points": [[0,0],[10,0]], "length": 10}}, "placements": {"h": {"kind": "residence", "connected": true, "attach": [5,0], "entrance": [5,-1]}}})
+	lane.start = Vector3.ZERO
+	lane.point = Vector3(30,0,0)
+	var curve: Array = lane.draw_points()
+	check(curve.size() > 2 and curve[0] == [0.0,0.0] and curve[-1] == [30.0,0.0], "current curve keeps exact connected endpoints")
+	check(float(curve[curve.size()/2][1]) > 0, "current planning has a natural bend rather than a ground-road strip")
+	lane.straight = true
+	check(lane.draw_points().size() == 2, "straight modifier preserves explicit player control")
 	check(lane._road_mesh.mesh.surface_get_material(0) is ShaderMaterial, "current lanes use suspended flow shader rather than opaque dirt")
 	check(lane._organs.get_child_count() == 2, "current endpoints grow biological junction organs")
 	check(lane._intakes.get_child_count() == 1 and lane._ports.mesh != null, "connected building has a visible intake and branch")
