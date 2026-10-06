@@ -1,14 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-05T17:45Z
-state: idle
-current_task: Player controls integrated after Claude review; awaiting Rich click-through acceptance
-branch: main
+state: active
+current_task: Empty playable start with founding crew and costed budget
+branch: codex/empty-start
 head_commit: 37adb0e
 waiting_on: Rich's playable opening review
 ---
 
 ## Now
+
+- Rich requires an empty map and reasonable starting budget. Editing the optional founding-party engine path, new empty-start overlay, client startup presentation/settings and regression tests. No baseline/rule-overlay edits. Claude should avoid those shared files while reviewing this block. Founders wait off-map and settle built homes, consume real food and contribute workforce; no prebuilt city or authored bridge/roads/units at start.
 
 - Claude independently passed 273 assertions on the first UI branch and found click-priority and context-evolution warning gaps. These are fixed, with toolbar Space focus, Mac trackpad pan/pinch/Shift-zoom/Alt-rotate, distinct stock/Reef glyphs, category deselection and readable high-speed carriers. Final client suite passes 281 assertions. Integrated to main at 37adb0e. Runtime needs a normal game restart for the latest review corrections; do not reset Rich’s ongoing click-through while he is using it.
 
