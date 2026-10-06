@@ -1,0 +1,12 @@
+{
+  "asset": "node_building_intake_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [0, 0, 0],
+  "anchors": {
+    "BuildingSide": [-0.75, 0.42, 0],
+    "CurrentPort": [1.25, 0.83, 0],
+    "FXAnchor": [0.9, 0.9, 0],
+    "LabelAnchor": [0, 1.42, 0]
+  }
+}
