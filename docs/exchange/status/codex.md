@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-06T16:00Z
+updated: 2026-10-06T15:53Z
 state: active
 current_task: Empty playable start with founding crew and costed budget
 branch: codex/empty-start
-head_commit: 37adb0e
-waiting_on: Claude independent empty-start review
+head_commit: 5a2e773
+waiting_on: Mac unlock to read Claude independent review
 ---
 
 ## Now
+
+- Feature 5a2e773 pushed, PR #3 open. Claude independently reviewing in cloud scratch; last visible activity was full Python regression and founder edge-case probes. Mac locked during review, blocking native Claude access; no findings read and no merge yet. Game is already open at empty paused startup.
 
 - Empty-start implementation validated: 180 Python tests, 288 Godot assertions and native empty paused map with exact starter inventory. Budget supports three homes and eight facilities within ten minutes, food-solvent through ninety minutes; separate first Stable within forty minutes. Feature ready for independent review. Optional founders path and bridge governor selection changed; wire contract unchanged.
 
