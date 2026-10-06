@@ -1,6 +1,6 @@
 ---
 agent: codex
-updated: 2026-10-06T15:53Z
+updated: 2026-10-06T16:10Z
 state: active
 current_task: Manual building placement with preview and rotation
 branch: codex/manual-placement
@@ -9,6 +9,8 @@ waiting_on: Placement implementation and review
 ---
 
 ## Now
+
+- Manual placement implemented and native-tested: cursor ghost, R rotation, water rejection with unchanged inventory, right-click cancel, rotated shelter confirmed at chosen ground and commissioned there. Cursor-event correction fixes stale OS pointer. Python 180 tests pass; Godot final placement rerun underway (312 assertions passed before final cursor regression). Economy/wire unchanged. Preparing review PR.
 
 - Claude approved empty start 5a2e773, independently passing 180 Python tests / 288 Godot assertions and unchanged old benchmark. PR #3 merged at 3d1ae08. Rich now authorizes manual placement after Manor Lords review. Codex editing main.gd, world_view.gd, hud.gd, new placement adapter and tests/docs. No economy or wire changes in this block; location currently presentation-owned, spatial logistics remains future work.
 
