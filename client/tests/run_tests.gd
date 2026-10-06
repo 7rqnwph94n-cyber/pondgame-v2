@@ -7,7 +7,7 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "empty_start_presentation", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "empty_start_presentation", "placement", "bridge"]
 const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
@@ -37,6 +37,7 @@ func _run() -> void:
 	await test_opening_hud_legibility()
 	await test_player_controls()
 	test_empty_start_presentation()
+	await test_manual_placement()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -293,7 +294,7 @@ func test_player_controls() -> void:
 	check(buttons.size() == 1 and buttons[0].get_meta("building") == "culture_bed", "food catalogue excludes homes")
 	check(buttons[0].tooltip_text.contains("2 biomass") and buttons[0].tooltip_text.contains("3 General"), "build tooltip includes cost and workforce")
 	buttons[0].pressed.emit()
-	check(sent == ["culture_bed"] and not hud._build_panel.visible, "single click queues construction and closes catalogue")
+	check(sent == ["culture_bed"] and not hud._build_panel.visible, "single click chooses building and closes catalogue")
 	hud.show_context(Vector2.ZERO, {"kind": "facility", "entity": "bed", "building": "culture_bed", "status": "running", "blockers": []})
 	check(hud._context_commands.size() == 2 and hud._context_commands[1].get("do") == "pause", "running context offers pause without invalid priority override")
 	hud.show_context(Vector2.ZERO, {"kind": "facility", "entity": "bed", "status": "paused"})
@@ -392,3 +393,97 @@ func test_empty_start_presentation() -> void:
 		check(not carrier.visible, "no carrier is visible on the empty starting map")
 	main.free()
 	completed.append("empty_start_presentation")
+
+
+class PlacementMainHarness extends "res://scripts/main.gd":
+	func _ready() -> void: pass
+	func _process(_delta: float) -> void: pass
+
+
+class PlacementBridgeHarness extends Node:
+	var is_ready := true
+	var commands: Array = []
+	var succeed := true
+	func request(method: String, params: Dictionary, callback: Callable = Callable()) -> void:
+		if method == "command":
+			commands.append(params["cmd"])
+			if callback.is_valid(): callback.call({"ok": succeed, "reasons": ["test rejection"] if not succeed else []})
+
+
+func test_manual_placement() -> void:
+	var terrain := BasinTerrain.new()
+	terrain.build()
+	var world := WorldView.new()
+	world.configure(_style(), {"buildings": {"culture_bed": {"category": "food"}}})
+	world.configure_terrain(terrain)
+	root.add_child(world)
+	var point := Vector3(-25, terrain.height_at(-25, -32) + 0.05, -32)
+	check(world.placement_reason(point, 0) == "", "clear dry ground accepts a manual footprint")
+	check(world.placement_reason(Vector3(140, 0, 0), 0) == "Outside the map", "placement rejects outside terrain bounds")
+	check(world.placement_reason(Vector3(-4, 0, 5), 0) == "Too close to water", "placement rejects water and channel margins")
+	check(world.placement_reason(Vector3(18, 0, -30), 0) == "Ground too steep", "placement rejects steep escarpment")
+	world.reserve_placement("paid_home", point, PI / 4)
+	check(world.placement_reason(point + Vector3(5, 0, 0), 0).begins_with("Overlaps"), "rotated footprints block overlapping neighbours")
+	check(world.placement_reason(point + Vector3(0, 0, -12), 0) == "", "separate footprint remains placeable")
+	world.sync({"sites": {"paid_home": {"kind": "building", "target": "shelter"}}})
+	check(world.views["paid_home"].position == point and is_equal_approx(world.views["paid_home"].rotation.y, PI / 4), "site uses player position and rotation")
+	world.sync({"residences": {"paid_home": {"tier": "shelter"}}})
+	check(world.views["paid_home"].position == point and is_equal_approx(world.views["paid_home"].rotation.y, PI / 4), "commissioned home retains placement")
+	world.sync({"residences": {"paid_home": {"tier": "stable"}}})
+	check(world.views["paid_home"].position == point and is_equal_approx(world.views["paid_home"].rotation.y, PI / 4), "evolution retains placement")
+	world.sync({})
+	check(not world._slots.has("paid_home") and world.placement_reason(point, 0) == "", "cancelled or removed site releases footprint")
+	world.obstacles.append(AABB(point - Vector3(1, 0, 1), Vector3(2, 2, 2)))
+	check(world.placement_reason(point, 0).begins_with("Blocked by rocks"), "natural obstacles block construction")
+	world.obstacles.clear()
+	var rig := CameraRig.new()
+	root.add_child(rig)
+	var hud := Hud.new()
+	root.add_child(hud)
+	var bridge := PlacementBridgeHarness.new()
+	var main := PlacementMainHarness.new()
+	root.add_child(main)
+	main.world = world
+	main.camera_rig = rig
+	main.hud = hud
+	main.bridge = bridge
+	main.style = _style()
+	await process_frame
+	var cursor := InputEventMouseMotion.new()
+	cursor.position = rig.camera.unproject_position(point)
+	main._input(cursor)
+	check(main._placement_screen == cursor.position, "placement tracks event coordinates rather than a stale OS cursor")
+	main._on_build_requested("shelter")
+	check(bridge.commands.is_empty() and world.views.is_empty(), "choosing a building creates no site and spends no resources")
+	check(main._placement.get_children().size() == 2, "preview contains only ghost and footprint, without collision bodies")
+	main._placement.rotate_preview()
+	check(is_equal_approx(main._placement.yaw, deg_to_rad(15)), "R rotates preview by fifteen degrees")
+	main._placement.rotate_preview(true)
+	check(is_zero_approx(main._placement.yaw), "Shift-R rotates in reverse")
+	main._cancel_placement()
+	check(main._placement == null and bridge.commands.is_empty(), "cancel discards preview without a construction command")
+	main._on_build_requested("shelter")
+	main._confirm_placement(rig.camera.unproject_position(Vector3(-4, terrain.height_at(-4, 5), 5)))
+	check(bridge.commands.is_empty() and main._placement != null, "invalid water click cannot submit construction")
+	var screen := rig.camera.unproject_position(point)
+	main._placement.update_at(rig.camera, screen, world, false)
+	check(main._placement.has_ground and main._placement.point.distance_to(point) < 0.15, "cursor ray meets actual terrain height")
+	main._placement.update_at(rig.camera, screen, world, true)
+	check(not main._placement.visible, "preview hides over HUD controls")
+	bridge.succeed = false
+	main._confirm_placement(screen)
+	check(bridge.commands.size() == 1 and world._slots.is_empty() and main._placement != null, "economy rejection releases reservation and retains preview")
+	bridge.succeed = true
+	main._confirm_placement(screen)
+	check(bridge.commands.size() == 2 and main._placement == null, "valid confirmation issues exactly one ordinary construct command")
+	var id: String = bridge.commands[-1]["id"]
+	check(world._slots[id].distance_to(point) < 0.15, "confirmed location is reserved before bridge view arrives")
+	world.sync({"sites": {id: {"kind": "building", "target": "shelter"}}})
+	check(world.views[id].position.distance_to(point) < 0.15, "bridge site appears at confirmed cursor location")
+	main.free()
+	bridge.free()
+	hud.free()
+	rig.free()
+	world.free()
+	terrain.free()
+	completed.append("placement")

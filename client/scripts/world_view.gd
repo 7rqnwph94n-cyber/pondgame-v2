@@ -1,7 +1,7 @@
 class_name WorldView
 extends Node3D
 ## Keeps one EntityView per domain entity in step with the bridge's player view.
-## Layout is presentation-only: the Milestone A domain has districts, not coordinates, so each entity gets a
+## Player placements override the fallback layout. Layout is presentation-only: the Milestone A domain has districts, not coordinates, so each entity gets a
 ## deterministic slot in a band for its kind and category. A site keeps its slot when it becomes a facility.
 
 const SPACING := 10.0
@@ -12,6 +12,9 @@ var style: Dictionary = {}
 var building_categories: Dictionary = {}     # building id -> category (from hello)
 var views: Dictionary = {}                   # entity id -> EntityView
 var _slots: Dictionary = {}                  # entity id -> Vector3
+var _footprints: Dictionary = {}
+var obstacles: Array[AABB] = []
+var _rotations: Dictionary = {}             # player placement yaw, retained through commissioning/evolution
 var _band_counts: Dictionary = {}
 var terrain: Node3D
 
@@ -93,6 +96,9 @@ func sync(view: Dictionary) -> void:
 		if not seen.has(id):
 			views[id].queue_free()
 			views.erase(id)
+			_slots.erase(id)
+			_rotations.erase(id)
+			_footprints.erase(id)
 
 
 func _ensure(id: String, kind: String, definition: String, category: String) -> Node3D:
@@ -103,6 +109,66 @@ func _ensure(id: String, kind: String, definition: String, category: String) -> 
 	v.set_category(category)
 	v.set_entity_identity(id, definition)
 	v.position = slot_for(id, "residence" if kind == "residence" else category)
+	v.rotation.y = _rotations.get(id, 0.0)
 	add_child(v)
+	_footprints[id] = mesh_footprint(v._body.mesh)
 	views[id] = v
 	return v
+
+
+func reserve_placement(id: String, point: Vector3, yaw: float, footprint: Vector2 = Vector2(7, 7)) -> void:
+	_footprints[id] = footprint
+	_slots[id] = point
+	_rotations[id] = yaw
+
+
+func release_placement(id: String) -> void:
+	if not views.has(id):
+		_slots.erase(id)
+		_rotations.erase(id)
+		_footprints.erase(id)
+
+
+func placement_reason(point: Vector3, yaw: float, footprint: Vector2 = Vector2(7, 7)) -> String:
+	if terrain == null: return "Terrain unavailable"
+	var low := INF
+	var high := -INF
+	# Sample the entire rotated footprint, including edges and centre.
+	for x in [-footprint.x / 2, 0.0, footprint.x / 2]:
+		for z in [-footprint.y / 2, 0.0, footprint.y / 2]:
+			var sample := point + Vector3(x, 0, z).rotated(Vector3.UP, yaw)
+			if absf(sample.x) > BasinTerrain.SIZE / 2 - 1 or absf(sample.z) > BasinTerrain.SIZE / 2 - 1:
+				return "Outside the map"
+			if terrain.channel_distance_at(Vector2(sample.x, sample.z)) < 7.0:
+				return "Too close to water"
+			var height: float = terrain.height_at(sample.x, sample.z)
+			low = minf(low, height)
+			high = maxf(high, height)
+	if high - low > 1.5: return "Ground too steep"
+	for obstacle in obstacles:
+		var centre := obstacle.get_center()
+		if footprints_overlap(point, yaw, centre, 0, footprint, Vector2(obstacle.size.x, obstacle.size.z)):
+			return "Blocked by rocks or a natural feature"
+	for id in _slots:
+		if footprints_overlap(point, yaw, _slots[id], _rotations.get(id, 0.0), footprint, _footprints.get(id, Vector2(7, 7))):
+			return "Overlaps a building or construction site"
+	return ""
+
+
+static func footprints_overlap(a: Vector3, yaw_a: float, b: Vector3, yaw_b: float, size_a: Vector2 = Vector2(7, 7), size_b: Vector2 = Vector2(7, 7)) -> bool:
+	# Separating-axis test for two rotated rectangular footprints, plus 0.3m clearance.
+	var ax := Vector3.RIGHT.rotated(Vector3.UP, yaw_a)
+	var az := Vector3.BACK.rotated(Vector3.UP, yaw_a)
+	var bx := Vector3.RIGHT.rotated(Vector3.UP, yaw_b)
+	var bz := Vector3.BACK.rotated(Vector3.UP, yaw_b)
+	var difference := Vector3(b.x - a.x, 0, b.z - a.z)
+	for axis in [ax, az, bx, bz]:
+		var extent: float = size_a.x / 2 * absf(axis.dot(ax)) + size_a.y / 2 * absf(axis.dot(az)) + size_b.x / 2 * absf(axis.dot(bx)) + size_b.y / 2 * absf(axis.dot(bz)) + 0.3
+		if absf(difference.dot(axis)) >= extent: return false
+	return true
+
+
+static func mesh_footprint(mesh: Mesh) -> Vector2:
+	var bounds := mesh.get_aabb()
+	return Vector2(maxf(7, 2 * maxf(absf(bounds.position.x), absf(bounds.end.x)) + 0.4),
+		maxf(7, 2 * maxf(absf(bounds.position.z), absf(bounds.end.z)) + 0.4))

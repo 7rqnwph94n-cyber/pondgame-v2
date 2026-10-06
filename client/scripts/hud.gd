@@ -228,10 +228,12 @@ func _ready() -> void:
 	_events.scroll_following = true
 	_event_panel.add_child(_events)
 	_status = Label.new()
-	_status.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	_status.add_theme_font_size_override("font_size", 26)
+	_status.position = Vector2(110, 820)
+	_status.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_status.add_theme_font_size_override("font_size", 18)
 	root.add_child(_status)
 	_flash = Label.new()
+	_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_flash.position = Vector2(110, 860)
 	root.add_child(_flash)
 	_inventory = _panel(root, Vector2(96, 94), Vector2(370, 220))
@@ -307,7 +309,7 @@ func _build_tooltip(id: String, definition: Dictionary) -> String:
 	var jobs := PackedStringArray()
 	for job in definition.get("jobs", {}):
 		jobs.append("%s %s" % [definition["jobs"][job], str(job).capitalize()])
-	return "%s\n%s\nCost: %s\nWorkers: %s\nClick to queue construction in its district." % [str(id).replace("_", " ").capitalize(), BUILD_COPY.get(id, "Colony infrastructure"), ", ".join(parts), ", ".join(jobs)]
+	return "%s\n%s\nCost: %s\nWorkers: %s\nClick to choose a position. R rotates; right-click cancels." % [str(id).replace("_", " ").capitalize(), BUILD_COPY.get(id, "Colony infrastructure"), ", ".join(parts), ", ".join(jobs)]
 
 
 func _unhandled_input(event: InputEvent) -> void:
