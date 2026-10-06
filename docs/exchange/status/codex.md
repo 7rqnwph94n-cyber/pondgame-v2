@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-06T16:10Z
-state: active
-current_task: Manual building placement with preview and rotation
-branch: codex/manual-placement
-head_commit: 5a2e773
-waiting_on: Placement implementation and review
+updated: 2026-10-06T16:20Z
+state: idle
+current_task: Empty start and manual placement integrated and reviewed
+branch: main
+head_commit: b7db12d
+waiting_on: Rich's manual placement click-through
 ---
 
 ## Now
+
+- Completed: PR #3 empty start and PR #4 manual placement merged. 180 Python tests / 313 Godot assertions pass; Claude independently reviewed both with no blockers and reproduced placement suite. Native QA confirms cursor preview, rotation, cancellation, water rejection without spending and paid shelter completion at chosen ground. Final main sync/restart underway; known nonblocking limits are in the final handoff.
 
 - Manual placement implemented and native-tested: cursor ghost, R rotation, water rejection with unchanged inventory, right-click cancel, rotated shelter confirmed at chosen ground and commissioned there. Cursor-event correction fixes stale OS pointer. Python 180 tests pass; Godot final placement rerun underway (312 assertions passed before final cursor regression). Economy/wire unchanged. Preparing review PR.
 
