@@ -8,6 +8,7 @@ const SPEEDS := [0, 1, 2, 4, 8, 16, 32]           # simulated seconds per real s
 const INSPECT_INTERVAL := 0.5
 const SimBridgeScript = preload("res://scripts/sim_bridge.gd")
 const WorldViewScript = preload("res://scripts/world_view.gd")
+const PlacementScript = preload("res://scripts/build_placement.gd")
 const HudScript = preload("res://scripts/hud.gd")
 const CameraRigScript = preload("res://scripts/camera_rig.gd")
 const ObjLoaderScript = preload("res://scripts/obj_loader.gd")
@@ -26,6 +27,9 @@ var _advance_in_flight := false
 var _selected := ""
 var _inspect_timer := 0.0
 var _player_ids := 0
+var _placement: Node3D
+var _placement_pending := false
+var _placement_screen := Vector2.ZERO
 var style: Dictionary = {}
 # Capture mode (Codex import review, CI): --capture=<png> [--capture-seconds=N] [--capture-speed=S] [--autoplay]
 var _capture_path := ""
@@ -89,6 +93,9 @@ func _ready() -> void:
 		return
 	world = WorldViewScript.new()
 	world.configure_terrain(_basin_terrain)
+	for child in get_children():
+		if child is MeshInstance3D and child.has_meta("placement_obstacle"):
+			world.obstacles.append(child.transform * child.mesh.get_aabb())
 	add_child(world)
 	hud = HudScript.new()
 	hud.configure_style(style)
@@ -161,6 +168,7 @@ func _process(delta: float) -> void:
 		return
 	if not bridge or not bridge.is_ready:
 		return
+	_update_placement()
 	_update_carrier_views(delta)
 	_accumulated += delta * SPEEDS[speed_index]
 	if not _advance_in_flight and (_accumulated >= 1.0 or SPEEDS[speed_index] == 0):
@@ -206,7 +214,32 @@ func _on_speed_selected(index: int) -> void:
 	hud.show_speed(speed_index, SPEEDS[speed_index])
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouse:
+		_placement_screen = event.position
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if _placement != null:
+		if event is InputEventKey and event.pressed and not event.echo:
+			if event.keycode == KEY_ESCAPE:
+				_cancel_placement()
+				get_viewport().set_input_as_handled()
+				return
+			if event.keycode == KEY_R:
+				_placement.rotate_preview(event.shift_pressed)
+				_update_placement()
+				get_viewport().set_input_as_handled()
+				return
+		if event is InputEventMouseButton and event.pressed:
+			if event.button_index == MOUSE_BUTTON_RIGHT:
+				_cancel_placement()
+				get_viewport().set_input_as_handled()
+				return
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				_confirm_placement(event.position)
+				get_viewport().set_input_as_handled()
+				return
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
 			KEY_SPACE:
@@ -274,11 +307,54 @@ func _select(entity_id: String) -> void:
 
 
 func _on_build_requested(building: String) -> void:
+	if _placement_pending or not bridge.is_ready: return
+	_cancel_placement()
+	_follow_carrier = ""
+	_context_serial += 1
+	hud._context.hide()
+	_placement = PlacementScript.new()
+	_placement.configure(building, style)
+	add_child(_placement)
+	_update_placement()
+
+
+func _update_placement() -> void:
+	if _placement == null: return
+	_placement.update_at(camera_rig.camera, _placement_screen, world,
+		get_viewport().gui_get_hovered_control() != null)
+	var status: String = _placement.reason
+	hud.show_status("%s · %s · R rotate · Right-click/Esc cancel" % [
+		str(_placement.building).replace("_", " ").capitalize(),
+		"Click to place" if status == "" else status], status != "")
+
+
+func _cancel_placement() -> void:
+	if _placement_pending: return
+	if _placement != null:
+		_placement.queue_free()
+		_placement = null
+	if hud != null: hud.show_status("", false)
+
+
+func _confirm_placement(screen: Vector2) -> void:
+	if _placement == null or _placement_pending: return
+	_placement.update_at(camera_rig.camera, screen, world, false)
+	if not _placement.has_ground or _placement.reason != "":
+		hud.flash(_placement.reason, true)
+		return
 	_player_ids += 1
+	var building: String = _placement.building
 	var id := "%s_p%d" % [building, _player_ids]
+	world.reserve_placement(id, _placement.point, _placement.yaw, _placement.footprint)
+	_placement_pending = true
 	bridge.request("command", {"cmd": {"do": "construct", "building": building, "id": id, "priority": 30}}, func(reply):
-		_on_command_reply(reply)
-		if reply.get("ok", false): _select(id))
+		_placement_pending = false
+		if reply.get("ok", false):
+			_cancel_placement()
+			_select(id)
+		else:
+			world.release_placement(id)
+		_on_command_reply(reply))
 
 
 func _on_action_requested(cmd: Dictionary) -> void:
@@ -618,6 +694,7 @@ func _build_ecological_scatter() -> void:
 			continue
 		var rock_instance := MeshInstance3D.new()
 		rock_instance.mesh = rock_mesh
+		if rock_asset != "detail_pebbles_a": rock_instance.set_meta("placement_obstacle", true)
 		var rock_x := 18.0 + float((i * 17) % 65)
 		var rock_z := -42.0 + float((i * 29) % 72)
 		rock_instance.position = Vector3(rock_x, _basin_terrain.height_at(rock_x, rock_z) + 0.06, rock_z)
@@ -703,6 +780,8 @@ func _add_environment_mesh(asset: String, position: Vector3, rotation_y: float, 
 	instance.rotation_degrees.y = rotation_y
 	instance.scale = Vector3.ONE * uniform_scale
 	instance.set_meta("asset", asset)
+	if asset.begins_with("boulder") or asset.begins_with("silica_cliff") or asset.begins_with("silica_outcrop") or asset.begins_with("methane_") or asset.begins_with("sulphur_vent"):
+		instance.set_meta("placement_obstacle", true)
 	_texture_environment_surfaces(instance)
 	add_child(instance)
 

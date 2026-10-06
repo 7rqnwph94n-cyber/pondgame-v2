@@ -37,3 +37,9 @@ Final controls regression suite: 281 Godot assertions pass on the Mac.
 Rich requested an empty map and a reasonable starting budget. The default now starts paused with no homes, facilities, sites, roads, bridge or carriers. Twenty-four founders wait off-map, provide 18 General workforce and consume actual Staple provisions until housed. Starter supplies and 50 trade credit support paid construction; no buildings are granted. The original populated overlay and v0.2 baseline remain separate. See [budget and opening evidence](milestone_a/EMPTY_START_2026-10-06.md).
 
 The tested opening builds three homes and eight basic facilities within ten minutes, stays food-solvent through ninety minutes, and a separate opening reaches a Stable home within forty minutes. These are bounded opening checks, not long-game balance acceptance. All 180 Python tests and 288 Godot assertions pass. Native Mac launch confirms the empty paused basin and exact starting inventory.
+
+## Manual placement, 2026-10-06
+
+Rich rejected automatic slots after comparing with Manor Lords. Build icons now activate a translucent cursor preview, green/red footprint and short rejection reason. R / Shift-R rotates in 15-degree increments; left-click confirms paid construction; right-click / Escape cancels the preview without cost. Water, map bounds, steep terrain, rocks, buildings and sites block placement. Chosen positions and orientations remain through construction and evolution. Autoplay retains fallback slots; manual locations are presentation-owned for the running session, with no save/load or spatial resource/service/transport rules yet. Road drawing and flexible plots are subsequent work.
+
+Validation: 180 Python tests and 313 Godot assertions pass. Native Mac QA verified green cursor preview, rotation, red water rejection without resource spending, right-click cancellation and paid shelter commissioning at the selected location.
