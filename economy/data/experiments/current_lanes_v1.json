@@ -1,0 +1,47 @@
+{
+  "id": "current_lanes_v1",
+  "description": "Rich 2026-10-06 'go' to the submerged correction (Codex 1924Z). Applied after spatial_roads_v1: transport lanes are controlled currents in a liquid world, so there is no water/bank exclusion. Habitat legality uses substrate slope and the shared natural obstacles; services reach homes only by lane distance; Photosynthetic Fields depend on sampled light and Silicate Pits on a published extraction zone. Provisional numbers, not balanced.",
+  "patch": {
+    "spatial": {
+      "mode": "current",
+      "habitat": "economy/data/maps/verdant_habitat_v1.json",
+      "road_water_margin": 0,
+      "building_water_margin": 0,
+      "road_max_grade": 0.7,
+      "service_ranges": {
+        "clean_flow": 40,
+        "waste": 40,
+        "maintenance": 50,
+        "default": 45
+      },
+      "geography": {
+        "light": {
+          "model": "height",
+          "dark_height": -1.0,
+          "full_height": 1.2,
+          "buildings": [
+            "photosynthetic_field"
+          ],
+          "min_to_place": 0.35,
+          "text": "Light falls with depth: full where the substrate is at height 1.2 or above, none at -1.0 or below (the deep depressions). A Photosynthetic Field needs light 0.35 to be placed and its rate is multiplied by its light."
+        },
+        "extraction_zones": [
+          {
+            "id": "silica_exposure",
+            "buildings": [
+              "silicate_pit"
+            ],
+            "shape": "circle",
+            "centre": [
+              40,
+              -54
+            ],
+            "radius": 12,
+            "text": "Exposed silica on the escarpment top. Reached by a lane climbing the escarpment's southern slope."
+          }
+        ]
+      },
+      "source": "Provisional (Claude, 2026-10-06): lane grade 0.7 lets currents follow the submerged depression banks; service reach by lane distance clean flow 40 m, waste 40 m, maintenance 50 m, other 45 m."
+    }
+  }
+}

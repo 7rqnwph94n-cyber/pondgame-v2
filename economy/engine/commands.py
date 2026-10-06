@@ -27,6 +27,7 @@ class CommandResult:
     ok: bool
     reasons: list[str] = field(default_factory=list)
     info: str = ""
+    data: dict[str, Any] | None = None    # v5: structured dry-run preview
 
 
 @dataclass
@@ -134,12 +135,13 @@ def cmd_construct(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
             footprint = sim.spatial.footprint_for(building_id, cmd.get("footprint"))
         except (TypeError, ValueError, IndexError, KeyError):
             return fail("spatial:malformed_position")
-        entrance, reasons = sim.spatial.validate_building(position, yaw, footprint)
-        if entrance is None:
+        checked, reasons = sim.spatial.validate_building(position, yaw, footprint, building_id)
+        if checked is None:
             return fail(*reasons)
-        placement = (position, yaw, footprint, entrance)
-        if cmd.get("dry_run"):   # v4: authoritative preview, nothing is created or paid
-            return CommandResult(True, info=f"valid {building_id} placement")
+        placement = (position, yaw, footprint, checked["entrance"], building_id, checked["suitability"])
+        if cmd.get("dry_run"):   # v4: authoritative preview, nothing is created or paid; v5 adds `preview`
+            return CommandResult(True, info=f"valid {building_id} placement",
+                                 data=sim.spatial.preview(building_id, checked, position, yaw, footprint))
     # First-instance terms apply once per settlement; a cancelled first site releases them.
     first = "first_instance" in definition and building_id not in sim.first_instance_used
     terms = first_instance_terms(definition) if first else definition

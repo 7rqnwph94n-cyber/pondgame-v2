@@ -262,7 +262,20 @@ class Simulation:
         return self.spatial is None or self.spatial.connected(entity_id)
 
     def services_for(self, residence: Residence) -> set[str]:
-        return self.services.get(residence.district, set()) if self.is_connected(residence.id) else set()
+        if not self.is_connected(residence.id):
+            return set()
+        available = self.services.get(residence.district, set())
+        if self.spatial is not None and self.spatial.mode == "current":
+            # Local reach by lane distance; no district-wide fallback (unpaid upkeep still suspends maintenance).
+            return {s for s in available if self.spatial.covered(residence.id, s)}
+        return available
+
+    def site_factor(self, entity_id: str) -> float:
+        """Current mode: production multiplier from published habitat geography (e.g. light)."""
+        if self.spatial is None or entity_id not in self.spatial.placements:
+            return 1.0
+        suitability = self.spatial.placements[entity_id].suitability or {}
+        return float(suitability.get("factor", 1.0))
 
     def _load_starting_state(self) -> None:
         start = self.defs["starting_state"]
@@ -506,6 +519,13 @@ class Simulation:
             }
             if self.upkeep.state == UNPAID:
                 self.services[district].discard(self.upkeep.service)
+            if self.spatial is not None and self.spatial.mode == "current" and district == self.districts[0]:
+                self.spatial.update_services({
+                    service_id: sorted(f.id for f in self.facilities.values()
+                                       if f.district == district and f.building_id in service["provided_by"] and not f.paused
+                                       and f.staffing >= min_staff and self.is_connected(f.id)
+                                       and not (service_id == self.upkeep.service and self.upkeep.state == UNPAID))
+                    for service_id, service in sorted(self.defs["services"].items())})
 
     def _great_work_coordinator_demand(self, district: str) -> float:
         """While a stage is ready for Coordinator work, every Coordinator is claimed for it (top priority)."""

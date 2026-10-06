@@ -73,6 +73,10 @@ class Facility:
             without = modifier.get("without_by_season", {}).get(season["id"], modifier["without"])
             factor *= float(without)
             detail = (detail + "; " if detail else "") + f"without {modifier['morphology']}"
+        site = ctx.site_factor(self.id) if hasattr(ctx, "site_factor") else 1.0
+        if site < 1.0 - EPS:
+            factor *= site
+            detail = (detail + "; " if detail else "") + f"habitat {site:.2f}"
         return factor, detail
 
     def step(self, recipes: dict[str, Any], season: dict[str, Any], env, ctx: ProductionContext, min_staffing: float, dt: float) -> None:

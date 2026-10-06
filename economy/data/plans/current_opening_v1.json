@@ -1,0 +1,184 @@
+{
+ "id": "current_opening_v1",
+ "description": "Legal, budgeted current-habitat opening (Codex 1924Z acceptance). Every command is an ordinary player command through the bridge: two free lanes, eleven paid buildings, then one evolution at 10:00. No autoplay, no granted goods.",
+ "overlays": [
+  "economy/data/experiments/candidate_playable_slice_v1.json",
+  "economy/data/experiments/empty_settlement_start_v1.json",
+  "economy/data/experiments/spatial_roads_v1.json",
+  "economy/data/experiments/current_lanes_v1.json"
+ ],
+ "commands": [
+  {
+   "at": 0,
+   "cmd": {
+    "do": "build_road",
+    "id": "lane_main",
+    "points": [
+     [
+      -64,
+      -2
+     ],
+     [
+      -20,
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "build_road",
+    "id": "lane_south",
+    "points": [
+     [
+      -56,
+      -2
+     ],
+     [
+      -56,
+      -26
+     ]
+    ]
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "shelter",
+    "id": "home_1",
+    "position": [
+     -50,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "shelter",
+    "id": "home_2",
+    "position": [
+     -42,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "shelter",
+    "id": "home_3",
+    "position": [
+     -34,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "photosynthetic_field",
+    "id": "field_1",
+    "position": [
+     -25,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "culture_bed",
+    "id": "bed_1",
+    "position": [
+     -61,
+     -10
+    ],
+    "yaw": 1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "clean_flow_node",
+    "id": "flow_1",
+    "position": [
+     -61,
+     -18
+    ],
+    "yaw": 1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "waste_collector",
+    "id": "waste_1",
+    "position": [
+     -51,
+     -17
+    ],
+    "yaw": -1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "maintenance_organ",
+    "id": "maint_1",
+    "position": [
+     -51,
+     -25
+    ],
+    "yaw": -1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "first_nursery",
+    "id": "nursery_1",
+    "position": [
+     -61,
+     -26
+    ],
+    "yaw": 1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "general_store",
+    "id": "store_1",
+    "position": [
+     -42,
+     3.5
+    ],
+    "yaw": 3.141593
+   }
+  },
+  {
+   "at": 600,
+   "cmd": {
+    "do": "evolve",
+    "residence": "home_1"
+   }
+  }
+ ],
+ "duration_seconds": 5400
+}
