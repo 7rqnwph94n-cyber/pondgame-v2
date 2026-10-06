@@ -7,7 +7,7 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "empty_start_presentation", "bridge"]
 const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
@@ -36,6 +36,7 @@ func _run() -> void:
 	await test_inspector_staff_first_action()
 	await test_opening_hud_legibility()
 	await test_player_controls()
+	test_empty_start_presentation()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -376,3 +377,18 @@ func test_player_controls() -> void:
 	rig.queue_free()
 	hud.queue_free()
 	completed.append("player_controls")
+
+
+func test_empty_start_presentation() -> void:
+	var main = preload("res://scripts/main.gd").new()
+	main._parse_capture_args()
+	check(main._empty_settlement_start and main.speed_index == 0, "playable default starts empty and paused")
+	main.style = _style()
+	main._build_environment()
+	check(main._crossing_view == null and main._carrier_route.is_empty(), "empty opening contains no prebuilt crossing or authored carrier route")
+	main._build_carrier_views()
+	check(main._carrier_views.size() == 3, "carrier visuals remain available for a later player settlement")
+	for carrier in main._carrier_views:
+		check(not carrier.visible, "no carrier is visible on the empty starting map")
+	main.free()
+	completed.append("empty_start_presentation")

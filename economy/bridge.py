@@ -112,7 +112,8 @@ class Session:
     def autoplay(self, enabled: bool) -> dict[str, Any]:
         from .governor import Governor, load_governor_config
         if enabled and self.governor is None:
-            path = self.governor_path or str(ROOT / "economy" / "data" / "governors" / "reference_governor_v3.json")
+            default = "empty_start_governor_v1.json" if self.defs["starting_state"].get("founding_party") else "reference_governor_v3.json"
+            path = self.governor_path or str(ROOT / "economy" / "data" / "governors" / default)
             self.governor = Governor(load_governor_config(path))
             self.sim.controllers.append(self.governor)
         elif not enabled and self.governor is not None:

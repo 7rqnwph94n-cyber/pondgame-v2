@@ -135,7 +135,7 @@ func _ready() -> void:
 	var resources := HBoxContainer.new()
 	resources.add_theme_constant_override("separation", 18)
 	top_stack.add_child(resources)
-	for entry in [["raw_silicate", "Raw Silicate"], ["prepared_silica", "Prepared Silica"], ["staple", "Staple food"], ["carbonate", "Carbonate"], ["biomass", "Biomass"], ["repair_enzyme", "Repair Enzyme"], ["builder", "Builders"]]:
+	for entry in [["raw_silicate", "Raw Silicate"], ["prepared_silica", "Prepared Silica"], ["staple", "Staple food"], ["carbonate", "Carbonate"], ["biomass", "Biomass"], ["repair_enzyme", "Repair Enzyme"], ["stored_value", "Trade credit"], ["builder", "Builders"]]:
 		_resource_chip(resources, entry[0], entry[1])
 	show_speed(1, 1)
 
@@ -342,7 +342,8 @@ func _resource_chip(parent: Container, icon: String, label_text: String) -> void
 	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	var icon_name := icon if icon != "staple" else "staple_food"
-	image.texture = IconLoader.load_svg(str(_style.get("icon_root", "")).path_join(icon_name + ".svg"), 0.6)
+	var path := str(_style.get("icon_root", "")).path_join(icon_name + ".svg")
+	image.texture = IconLoader.load_svg(path, 0.6) if FileAccess.file_exists(path) else Glyph.texture(icon_name)
 	chip.add_child(image)
 	var value := Label.new()
 	value.text = "–"
@@ -425,6 +426,8 @@ func show_view(view: Dictionary) -> void:
 	var growth_blockers: Array = view.get("colony_blockers", [])
 	_colony.text = "%s%s" % [str(view.get("population", 0)), " !" if not growth_blockers.is_empty() else ""]
 	_colony.tooltip_text = "Population: %s\n%s" % [view.get("population", 0), str(growth_blockers[0].get("text", "stalled")) if not growth_blockers.is_empty() else "Population growth is not blocked"]
+	if view.get("residences", {}).is_empty() and view.get("facilities", {}).is_empty():
+		_colony.tooltip_text += "\nYour founding crew waits off-map. Build shelters to settle them; Space starts time."
 	_food.text = "%s min%s" % ["–" if food == null else "%.1f" % food, " !" if view.get("food_emergency", false) else ""]
 	_food.modulate = Color("#ff8a70") if view.get("food_emergency", false) else Color.WHITE
 	_food.tooltip_text = "Food reserve at current consumption.\nUpkeep: %s" % view.get("maintenance_upkeep", "")
@@ -435,6 +438,7 @@ func show_view(view: Dictionary) -> void:
 	_set_headline("carbonate", int(store.get("carbonate", 0)))
 	_set_headline("biomass", int(store.get("biomass", 0)))
 	_set_headline("repair_enzyme", int(store.get("repair_enzyme", 0)))
+	_set_headline("stored_value", int(store.get("stored_value", 0)))
 	if _headline_values.has("builder"):
 		_headline_values["builder"].text = "%s" % str(view.get("builders", "idle")).replace("_", " ")
 	for resource in _inventory_values:
