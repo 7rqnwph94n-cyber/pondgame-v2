@@ -1,14 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-06T16:20Z
-state: idle
-current_task: Empty start and manual placement integrated and reviewed
-branch: main
+state: active
+current_task: Strict road connections and spatial transport client
+branch: codex/roads-spatial
 head_commit: b7db12d
-waiting_on: Rich's manual placement click-through
+waiting_on: Claude spatial contract and domain implementation
 ---
 
 ## Now
+
+- Rich authorized roads/spatial transport and requires every building connected. Codex owns road drawing/snapping/placement and carrier UI; dispatching Claude (domain/contract owner) for optional spatial model, real cargo movement and additive bridge contract. Client/files shared ownership announced in request; old nonspatial baseline preserved.
 
 - Completed: PR #3 empty start and PR #4 manual placement merged. 180 Python tests / 313 Godot assertions pass; Claude independently reviewed both with no blockers and reproduced placement suite. Native QA confirms cursor preview, rotation, cancellation, water rejection without spending and paid shelter completion at chosen ground. Final main sync/restart underway; known nonblocking limits are in the final handoff.
 

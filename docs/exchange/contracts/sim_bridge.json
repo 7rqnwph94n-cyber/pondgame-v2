@@ -1,13 +1,13 @@
 {
  "id": "sim_bridge",
- "version": 3,
+ "version": 4,
  "protocol": 1,
  "owner": "claude",
  "consumers": [
   "codex"
  ],
- "description": "Local simulation bridge between the Godot 4.3 client and the Python domain (ADR 0001; Rich 2026-10-02T18:11Z). Version 2 (2026-10-04, Codex 0907Z request) is additive: structured blockers, labour priority and colony growth blockers; every v1 field is unchanged. Newline-delimited JSON over TCP on 127.0.0.1 (default port 47615). Every request has an integer `id` and an `op`; every reply echoes `id` and `op` and has `ok` (false replies carry `reasons`). The Python domain is the only rules authority: the client renders the `view` and sends player commands. Presentation reads entity state through presentation_states.json values; anything not listed here is unstable. Version 3 adds optional waiting_input.params.consumers; existing fields and protocol unchanged.",
- "source": "economy/bridge.py on claude/milestone-b-client-shell; verified by tests/test_bridge.py",
+ "description": "Local simulation bridge between the Godot 4.3 client and the Python domain (ADR 0001; Rich 2026-10-02T18:11Z). Version 2 (2026-10-04, Codex 0907Z request) is additive: structured blockers, labour priority and colony growth blockers; every v1 field is unchanged. Newline-delimited JSON over TCP on 127.0.0.1 (default port 47615). Every request has an integer `id` and an `op`; every reply echoes `id` and `op` and has `ok` (false replies carry `reasons`). The Python domain is the only rules authority: the client renders the `view` and sends player commands. Presentation reads entity state through presentation_states.json values; anything not listed here is unstable. Version 3 adds optional waiting_input.params.consumers; existing fields and protocol unchanged. Version 4 (2026-10-06, Codex 1637Z request, Rich: 'no, all buildings must connect') adds the optional spatial transport mode: hello.spatial, view.spatial, construct position/yaw/footprint, build_road/remove_road commands and the road_disconnected/awaiting_transport blockers. All v4 additions are present only when hello.spatial exists (overlay spatial_roads_v1); protocol and every v3 field are unchanged.",
+ "source": "economy/bridge.py and economy/engine/spatial.py; verified by tests/test_bridge.py and tests/test_spatial.py",
  "transport": {
   "encoding": "utf-8",
   "framing": "one JSON object per line",
@@ -26,8 +26,39 @@
     "residence_tiers",
     "resources",
     "seasons",
-    "calendar_cycle_seconds"
-   ]
+    "calendar_cycle_seconds",
+    "autoplay_available"
+   ],
+   "optional_fields": {
+    "spatial": {
+     "when": "spatial mode only",
+     "fields": [
+      "enabled",
+      "version",
+      "rules",
+      "footprints"
+     ],
+     "rules": [
+      "carriers",
+      "carrier_capacity",
+      "carrier_speed_mps",
+      "snap_distance",
+      "attach_distance",
+      "entrance_offset",
+      "min_segment_m",
+      "max_road_points",
+      "road_water_margin",
+      "road_max_grade",
+      "building_water_margin",
+      "building_max_rise",
+      "default_footprint",
+      "input_cycles_stocked",
+      "residence_stock_minutes",
+      "map_half_extent"
+     ],
+     "note": "footprints = {building: [width, depth]} minimums; default_footprint otherwise. autoplay_available is false in spatial mode."
+    }
+   }
   },
   "advance": {
    "example": {
@@ -56,6 +87,9 @@
     "autoplay",
     "events",
     "colony_blockers"
+   ],
+   "optional_reply_fields": [
+    "spatial"
    ]
   },
   "view": {
@@ -76,11 +110,51 @@
      "target": "survey_1"
     }
    },
-   "note": "Player command with the same legality checks as plans (construct, cancel, demolish, evolve, research, express, set_recipe, pause, resume, set_labour_priority, trade, deliver_contract, decline_contract, begin_great_work, set_policy).",
+   "note": "Player command with the same legality checks as plans (construct, cancel, demolish, evolve, research, express, set_recipe, pause, resume, set_labour_priority, trade, deliver_contract, decline_contract, begin_great_work, set_policy). v4 spatial mode: construct requires position [x, z] (metres) and accepts yaw (radians) and footprint [width, depth] (never below the domain minimum); build_road {id?, points: [[x, z], ...]} and remove_road {target} are added. Spatial rejection reasons start with 'spatial:' (outside_map, water, too_steep, overlaps_building:<id>, overlaps_road, no_road_network, not_connected, road_not_joined, segment_too_short, road_points_2_to_<n>, malformed_points, malformed_position, position_required, unknown_road:<id>, not_enabled). Spatial construct and build_road accept dry_run: true for an authoritative preview: same checks and reasons, nothing created or paid; a valid road preview's info is 'valid road ' + JSON of the snapped points.",
    "reply_fields": [
     "ok",
     "info",
     "reasons"
+   ],
+   "spatial_examples": [
+    {
+     "cmd": {
+      "do": "build_road",
+      "id": "road_1",
+      "points": [
+       [
+        -45,
+        0
+       ],
+       [
+        -25,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "cmd": {
+      "do": "construct",
+      "building": "shelter",
+      "id": "home_1",
+      "position": [
+       -40,
+       -5
+      ],
+      "yaw": 0.0,
+      "footprint": [
+       7,
+       7
+      ]
+     }
+    },
+    {
+     "cmd": {
+      "do": "remove_road",
+      "target": "road_1"
+     }
+    }
    ]
   },
   "inspect": {
@@ -100,7 +174,7 @@
    "example": {
     "enabled": false
    },
-   "note": "Reference governor acts alongside the player; a demonstration/balance aid, not game AI.",
+   "note": "Reference governor acts alongside the player; a demonstration/balance aid, not game AI. v4: in spatial mode the reply is ok:false with reasons ['spatial:autoplay_unavailable']; no infrastructure is granted.",
    "reply_fields": [
     "autoplay"
    ]
@@ -157,6 +231,15 @@
    "text": "English tooltip; never parse it"
   },
   "codes": {
+   "road_disconnected": {
+    "params": [],
+    "on": [
+     "facility",
+     "site",
+     "residence"
+    ],
+    "note": "v4 spatial: the entrance does not reach the anchor's road network; nothing operates or is delivered. Listed first."
+   },
    "paused": {
     "params": [],
     "on": [
@@ -282,8 +365,75 @@
      "colony"
     ],
     "note": "reason in no_free_capacity | basic_needs_unsupplied | growth_nutrient_unavailable"
+   },
+   "awaiting_transport": {
+    "params": [
+     "needs",
+     "inbound"
+    ],
+    "on": [
+     "facility",
+     "site"
+    ],
+    "note": "v4 spatial: needs = {resource: quantity} missing locally that carriers are bringing or that wait at the anchor; inbound = goods currently on the way. Goods listed here are not repeated in waiting_input."
    }
   },
   "icon_binding": "Presentation binds icons to codes (Codex icons: waiting_input, unstaffed, output_blocked, dormant, food_emergency, strained). Unknown codes must fall back to a generic attention icon."
+ },
+ "view_spatial": {
+  "when": "view.spatial exists only in spatial mode",
+  "coordinates": "metres on the client x/z plane (basin_terrain.gd). yaw is radians about +Y as Godot rotates: local (lx, lz) -> (lx*cos+lz*sin, -lx*sin+lz*cos). A building's entrance is on its local +Z face at centre + rotate(0, depth/2 + entrance_offset).",
+  "fields": {
+   "enabled": "true",
+   "anchor": "null until the first road; then {position: [x, z]} = first point of the first road, the founding supply store (view.store)",
+   "roads.<id>": [
+    "points",
+    "length"
+   ],
+   "placements.<entity_id>": [
+    "kind",
+    "position",
+    "yaw",
+    "footprint",
+    "entrance",
+    "attach",
+    "connected",
+    "route_length",
+    "local",
+    "inbound"
+   ],
+   "carriers.<id>": [
+    "state",
+    "job",
+    "source",
+    "target",
+    "cargo",
+    "path",
+    "length",
+    "distance",
+    "progress",
+    "position"
+   ]
+  },
+  "enums": {
+   "placements.kind": [
+    "site",
+    "facility",
+    "residence",
+    "pile"
+   ],
+   "carriers.state": [
+    "idle",
+    "to_target",
+    "to_anchor"
+   ],
+   "carriers.job": [
+    null,
+    "deliver",
+    "collect",
+    "return"
+   ]
+  },
+  "notes": "A placement keeps its id from site to facility/home. A 'pile' is salvage left by a cancelled site or demolished building; carriers collect it and it disappears when empty. local = goods in that building's depot; inbound = goods carriers are delivering to it. Carrier path is the polyline being travelled (anchor->target or back); position is the current point; progress = distance/length. Idle carriers stand at the anchor. A carrier finishes its current leg on the path it started even if a road is removed."
  }
 }

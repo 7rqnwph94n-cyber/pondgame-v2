@@ -91,6 +91,21 @@ def validate_definitions(defs: dict[str, Any]) -> list[str]:
             errors.append("founding_party: unknown residence tier")
         if not isinstance(party.get("population"), int) or party["population"] <= 0:
             errors.append("founding_party: population must be a positive integer")
+    spatial = defs.get("spatial", {})
+    if spatial.get("enabled"):
+        required = ("carriers", "carrier_capacity", "carrier_speed_mps", "snap_distance", "attach_distance",
+                    "entrance_offset", "min_segment_m", "max_road_points", "road_water_margin", "road_max_grade",
+                    "building_water_margin", "building_max_rise", "default_footprint", "footprints",
+                    "input_cycles_stocked", "residence_stock_minutes")
+        errors += [f"spatial: missing {key}" for key in required if key not in spatial]
+        if "channel" not in spatial and "channel_source" not in spatial:
+            errors.append("spatial: needs channel or channel_source")
+        start = defs.get("starting_state", {})
+        if start.get("buildings") or start.get("residences"):
+            errors.append("spatial: starting buildings/residences need positions; use an empty start")
+        for key in ("carriers", "carrier_capacity"):
+            if not isinstance(spatial.get(key), int) or spatial.get(key, 0) <= 0:
+                errors.append(f"spatial: {key} must be a positive integer")
     services = defs.get("services", {})
     buildings = defs.get("buildings", {})
     for building_id, building in buildings.items():

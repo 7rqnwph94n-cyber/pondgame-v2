@@ -1,0 +1,27 @@
+{
+  "id": "spatial_roads_v1",
+  "description": "Rich 2026-10-06: 'no, all buildings must connect'. Strict road-connected spatial transport: first player road sets the founding-supply anchor, every building joins the anchor's road network, finite carriers move all construction, recipe and household goods between local depots and the anchor. Apply after candidate_playable_slice_v1 and empty_settlement_start_v1. Provisional numbers, not balanced.",
+  "patch": {
+    "spatial": {
+      "enabled": true,
+      "channel_source": "client/presentation/map_layout.json",
+      "carriers": 6,
+      "carrier_capacity": 4,
+      "carrier_speed_mps": 2.0,
+      "snap_distance": 2.0,
+      "attach_distance": 3.0,
+      "entrance_offset": 1.0,
+      "min_segment_m": 1.0,
+      "max_road_points": 32,
+      "road_water_margin": 6.5,
+      "road_max_grade": 0.35,
+      "building_water_margin": 7.0,
+      "building_max_rise": 1.5,
+      "default_footprint": [7, 7],
+      "footprints": {},
+      "input_cycles_stocked": 2,
+      "residence_stock_minutes": 20,
+      "source": "Provisional lean values (Claude, 2026-10-06): 6 carriers of 4 units at 2 m/s; a 40 m route is a 40 s round trip. Water/slope margins match the client's placement rules. Not tuned."
+    }
+  }
+}
