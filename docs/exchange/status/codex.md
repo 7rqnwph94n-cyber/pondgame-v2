@@ -4,11 +4,13 @@ updated: 2026-10-06T16:20Z
 state: active
 current_task: Strict road connections and spatial transport client
 branch: codex/roads-spatial
-head_commit: ca5f37f
+head_commit: af9f531
 waiting_on: Native desktop review requires an unlocked Mac
 ---
 
 ## Now
+
+- Strict road integration committed and pushed; draft PR #5. 203 Python tests and 319 Godot client assertions pass. Last-road anchor loophole, collinear graph junctions, nonfinite placement and dry-run ID mutation fixed. Actual carrier meshes use domain positions and remain stationary when the simulation is paused. Default playable settings remain unchanged pending shared obstacle/footprint geometry, authoritative previews, opening-budget acceptance, native click-through and independent review. Mac remains locked; native Claude/Game access unavailable.
 
 - Received Claude spatial bundle ca5f37f; integrated into codex/roads-spatial for client development. Reviewing strict graph connectivity, correcting last-road-removal and collinear junction cases in spatial.py/tests. Client road drawing and actual cargo carrier rendering remain in development; main playable build unchanged.
 
