@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-05T17:45Z
+updated: 2026-10-06T16:00Z
 state: active
 current_task: Empty playable start with founding crew and costed budget
 branch: codex/empty-start
 head_commit: 37adb0e
-waiting_on: Rich's playable opening review
+waiting_on: Claude independent empty-start review
 ---
 
 ## Now
+
+- Empty-start implementation validated: 180 Python tests, 288 Godot assertions and native empty paused map with exact starter inventory. Budget supports three homes and eight facilities within ten minutes, food-solvent through ninety minutes; separate first Stable within forty minutes. Feature ready for independent review. Optional founders path and bridge governor selection changed; wire contract unchanged.
 
 - Rich requires an empty map and reasonable starting budget. Editing the optional founding-party engine path, new empty-start overlay, client startup presentation/settings and regression tests. No baseline/rule-overlay edits. Claude should avoid those shared files while reviewing this block. Founders wait off-map and settle built homes, consume real food and contribute workforce; no prebuilt city or authored bridge/roads/units at start.
 
