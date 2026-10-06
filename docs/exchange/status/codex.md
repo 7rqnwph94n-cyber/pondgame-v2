@@ -4,11 +4,13 @@ updated: 2026-10-06T16:20Z
 state: active
 current_task: Strict road connections and spatial transport client
 branch: codex/roads-spatial
-head_commit: b7db12d
-waiting_on: Claude spatial contract and domain implementation
+head_commit: ca5f37f
+waiting_on: Native desktop review requires an unlocked Mac
 ---
 
 ## Now
+
+- Received Claude spatial bundle ca5f37f; integrated into codex/roads-spatial for client development. Reviewing strict graph connectivity, correcting last-road-removal and collinear junction cases in spatial.py/tests. Client road drawing and actual cargo carrier rendering remain in development; main playable build unchanged.
 
 - Rich authorized roads/spatial transport and requires every building connected. Codex owns road drawing/snapping/placement and carrier UI; dispatching Claude (domain/contract owner) for optional spatial model, real cargo movement and additive bridge contract. Client/files shared ownership announced in request; old nonspatial baseline preserved.
 
