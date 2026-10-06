@@ -5,10 +5,12 @@ state: active
 current_task: Restore underwater city-building brief; controlled-current transport design
 branch: codex/roads-spatial
 head_commit: 78cee7a
-waiting_on: Native desktop review requires an unlocked Mac
+waiting_on: Claude current habitat/local service contract; Mac unlocked
 ---
 
 ## Now
+
+- Rich authorizes implementation. Editing client current ribbons, biological nodes/ports, removing surface river, authoritative previews and cargo/readability; Claude dispatched cloud-only for current-mode habitat/local services/suitability/bridge v5. Shared geometry committed to feature. Native desktop available again.
 
 - Rich rejects terrestrial roads and redundant river; brief/reference audit committed 78cee7a. Original Chemical Civilisation GDD already specifies controlled currents. Draft PR #5 must not release dirt roads/water exclusion unchanged. Recommendation: connected biological current lanes and visible intake ports; river becomes an inspectable submerged resource/hazard flow or is removed. Audit compares Pharaoh/Manor Lords with playable main and draft, identifies geography/services/storage/animation gaps, and defines a human-tested submerged neighbourhood acceptance gate. No design recommendation is claimed implemented.
 
