@@ -76,6 +76,36 @@ class RoadAndPlacementTests(unittest.TestCase):
         self.assertEqual(r.reasons, ["spatial:no_road_network"])
         self.assertFalse(sim.sites)
 
+    def test_removing_last_road_disconnects_buildings_even_at_anchor(self):
+        sim = make_sim()
+        self.assertTrue(issue(sim, {"do": "build_road", "id": "r", "points": MAIN_ROAD}).ok)
+        self.assertTrue(issue(sim, {"do": "construct", "id": "h", "building": "shelter", "position": [-45, -5]}).ok)
+        self.assertTrue(sim.spatial.connected("h"))
+        self.assertTrue(issue(sim, {"do": "remove_road", "target": "r"}).ok)
+        self.assertFalse(sim.spatial.connected("h"))
+        self.assertIsNone(sim.spatial._route_to((-45, -0.5)))
+        result = issue(sim, {"do": "construct", "id": "other", "building": "shelter", "position": [-45, 5], "yaw": math.pi})
+        self.assertEqual(result.reasons, ["spatial:not_connected"])
+
+    def test_collinear_road_extension_has_a_shared_junction(self):
+        sim = make_sim()
+        self.assertTrue(issue(sim, {"do": "build_road", "points": MAIN_ROAD}).ok)
+        self.assertTrue(issue(sim, {"do": "build_road", "points": [[-35, 0], [-15, 0]]}).ok)
+        self.assertIn((-15.0, 0.0), sim.spatial.dist)
+        route = sim.spatial._route_to((-16, -1))
+        self.assertIsNotNone(route)
+        self.assertAlmostEqual(route[1], 29.0)
+
+    def test_nonfinite_building_coordinates_reject_without_creation(self):
+        for field, value in (("position", [math.nan, -5]), ("position", [math.inf, -5]), ("yaw", math.inf)):
+            with self.subTest(field=field, value=value):
+                sim = make_sim()
+                issue(sim, {"do": "build_road", "points": MAIN_ROAD})
+                cmd = {"do": "construct", "id": "h", "building": "shelter", "position": [-40, -5]}
+                cmd[field] = value
+                self.assertEqual(issue(sim, cmd).reasons, ["spatial:malformed_position"])
+                self.assertFalse(sim.sites)
+
     def test_first_road_sets_the_anchor_and_later_roads_must_join(self):
         sim = make_sim()
         self.assertTrue(issue(sim, {"do": "build_road", "id": "r1", "points": MAIN_ROAD}).ok)
@@ -119,11 +149,14 @@ class RoadAndPlacementTests(unittest.TestCase):
         self.assertTrue(r.ok)
         self.assertEqual(r.info, "valid road [[-45.0,0.0],[-25.0,0.0]]")
         self.assertIsNone(sim.spatial.anchor)
+        self.assertEqual(sim.spatial._road_counter, 0)
         issue(sim, {"do": "build_road", "points": MAIN_ROAD})
         r = issue(sim, {"do": "build_road", "points": [[-35, 1.5], [-35, 15]], "dry_run": True})
         self.assertEqual(r.info, "valid road [[-35.0,0.0],[-35.0,15.0]]")       # snapped endpoint
         self.assertTrue(issue(sim, {"do": "construct", "building": "shelter", "position": [-40, -5], "dry_run": True}).ok)
         self.assertFalse(sim.sites)
+        self.assertEqual(sim._id_counters, {})
+        self.assertEqual(sim.spatial._road_counter, 1)
         self.assertEqual(len(sim.spatial.roads), 1)
 
     def test_building_rejections(self):

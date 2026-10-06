@@ -8,6 +8,7 @@ const SPEEDS := [0, 1, 2, 4, 8, 16, 32]           # simulated seconds per real s
 const INSPECT_INTERVAL := 0.5
 const SimBridgeScript = preload("res://scripts/sim_bridge.gd")
 const WorldViewScript = preload("res://scripts/world_view.gd")
+const RoadViewScript = preload("res://scripts/road_view.gd")
 const PlacementScript = preload("res://scripts/build_placement.gd")
 const HudScript = preload("res://scripts/hud.gd")
 const CameraRigScript = preload("res://scripts/camera_rig.gd")
@@ -30,6 +31,10 @@ var _player_ids := 0
 var _placement: Node3D
 var _placement_pending := false
 var _placement_screen := Vector2.ZERO
+var _roads: Node3D
+var _road_pending := false
+var _road_ids := 0
+var _spatial_enabled := false
 var style: Dictionary = {}
 # Capture mode (Codex import review, CI): --capture=<png> [--capture-seconds=N] [--capture-speed=S] [--autoplay]
 var _capture_path := ""
@@ -97,6 +102,10 @@ func _ready() -> void:
 		if child is MeshInstance3D and child.has_meta("placement_obstacle"):
 			world.obstacles.append(child.transform * child.mesh.get_aabb())
 	add_child(world)
+	_roads = RoadViewScript.new()
+	_roads.configure(world)
+	world.road_network = _roads
+	add_child(_roads)
 	hud = HudScript.new()
 	hud.configure_style(style)
 	add_child(hud)
@@ -107,6 +116,7 @@ func _ready() -> void:
 	hud.follow_requested.connect(func(id): _follow_carrier = id)
 	hud.autoplay_toggled.connect(func(on): bridge.request("autoplay", {"enabled": on}, func(_r): pass))
 	hud.build_requested.connect(_on_build_requested)
+	hud.road_requested.connect(_begin_roads)
 	hud.action_requested.connect(_on_action_requested)
 	hud.inspect_requested.connect(_select)
 	bridge = SimBridgeScript.new()
@@ -148,6 +158,8 @@ func _load_style() -> Dictionary:
 
 func _on_connected(reply: Dictionary) -> void:
 	hello = reply
+	_spatial_enabled = hello.get("spatial", {}).get("enabled", false)
+	_roads.configure_rules(hello.get("spatial", {}).get("rules", {}))
 	world.configure(style, hello)
 	hud.configure(hello)
 	hud.show_status("", false)
@@ -169,6 +181,7 @@ func _process(delta: float) -> void:
 	if not bridge or not bridge.is_ready:
 		return
 	_update_placement()
+	_update_roads()
 	_update_carrier_views(delta)
 	_accumulated += delta * SPEEDS[speed_index]
 	if not _advance_in_flight and (_accumulated >= 1.0 or SPEEDS[speed_index] == 0):
@@ -184,7 +197,9 @@ func _process(delta: float) -> void:
 			return
 	_inspect_timer -= delta
 	if _selected.begins_with("carrier_"):
-		hud.show_unit_inspection(_selected, speed_index != 0)
+		hud.show_unit_inspection(_selected, speed_index != 0, view.get("spatial", {}).get("carriers", {}).get(_selected, {}))
+	elif _roads != null and _roads.roads.has(_selected):
+		hud.show_road_inspection(_selected, _roads.roads[_selected])
 	elif _selected != "" and _inspect_timer <= 0.0:
 		_inspect_timer = INSPECT_INTERVAL
 		var inspecting := _selected
@@ -198,11 +213,13 @@ func _on_view(reply: Dictionary) -> void:
 		hud.show_status("Simulation error: " + str(reply.get("reasons", [])), true)
 		return
 	view = reply["view"]
+	_spatial_enabled = view.get("spatial", {}).get("enabled", false)
 	world.sync(view)
-	if _empty_settlement_start: _refresh_settlement_route()
+	if _roads != null: _roads.sync(view.get("spatial", {}))
+	if _empty_settlement_start and not _spatial_enabled: _refresh_settlement_route()
 	if world.views.has(_selected):
 		world.views[_selected].set_selected(true)
-	elif _selected != "" and _selected != "great_work" and not _selected.begins_with("carrier_"):
+	elif _selected != "" and _selected != "great_work" and not _selected.begins_with("carrier_") and (_roads == null or not _roads.roads.has(_selected)):
 		_select("")
 	hud.show_view(view)
 	_apply_season(view.get("season", "bloom"))
@@ -220,6 +237,24 @@ func _input(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_T:
+		_begin_roads()
+		get_viewport().set_input_as_handled()
+		return
+	if _roads != null and _roads.active:
+		if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+			_finish_roads()
+			get_viewport().set_input_as_handled()
+			return
+		if event is InputEventMouseButton and event.pressed:
+			if event.button_index == MOUSE_BUTTON_RIGHT:
+				_finish_roads()
+				get_viewport().set_input_as_handled()
+				return
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				_confirm_road(event.position)
+				get_viewport().set_input_as_handled()
+				return
 	if _placement != null:
 		if event is InputEventKey and event.pressed and not event.echo:
 			if event.keycode == KEY_ESCAPE:
@@ -263,6 +298,8 @@ func _open_context(position: Vector2) -> void:
 	_select(id)
 	if id == "":
 		hud.show_context(position)
+	elif _roads != null and _roads.roads.has(id):
+		hud.show_context(position, {"kind": "road", "entity": id})
 	elif id.begins_with("carrier_"):
 		hud.show_context(position, {"kind": "carrier", "entity": id})
 	elif bridge.is_ready:
@@ -280,7 +317,8 @@ func _pick(screen_position: Vector2) -> String:
 	if hit and hit.collider and hit.collider.has_meta("entity_view"):
 		return hit.collider.get_meta("entity_view").entity_id
 	# Building hitboxes take precedence; a visible carrier is the fallback target.
-	if _carrier_route.size() < 2: return ""
+	if not _spatial_enabled and _carrier_route.size() < 2:
+		return _roads.pick(camera, screen_position) if _roads != null else ""
 	var nearest := ""
 	var best := 16.0
 	for carrier in _carrier_views:
@@ -289,6 +327,7 @@ func _pick(screen_position: Vector2) -> String:
 		if distance < best:
 			best = distance
 			nearest = str(carrier.get_meta("carrier_id"))
+	if nearest == "" and _roads != null: return _roads.pick(camera, screen_position)
 	return nearest
 
 
@@ -307,8 +346,9 @@ func _select(entity_id: String) -> void:
 
 
 func _on_build_requested(building: String) -> void:
-	if _placement_pending or not bridge.is_ready: return
+	if _placement_pending or _road_pending or not bridge.is_ready: return
 	_cancel_placement()
+	_finish_roads()
 	_follow_carrier = ""
 	_context_serial += 1
 	hud._context.hide()
@@ -347,7 +387,7 @@ func _confirm_placement(screen: Vector2) -> void:
 	var id := "%s_p%d" % [building, _player_ids]
 	world.reserve_placement(id, _placement.point, _placement.yaw, _placement.footprint)
 	_placement_pending = true
-	bridge.request("command", {"cmd": {"do": "construct", "building": building, "id": id, "priority": 30}}, func(reply):
+	bridge.request("command", {"cmd": {"do": "construct", "building": building, "id": id, "priority": 30, "position": [_placement.point.x, _placement.point.z], "yaw": _placement.yaw, "footprint": [_placement.footprint.x, _placement.footprint.y]}}, func(reply):
 		_placement_pending = false
 		if reply.get("ok", false):
 			_cancel_placement()
@@ -708,7 +748,7 @@ func _build_carrier_views() -> void:
 	var mesh: ArrayMesh = ObjLoaderScript.load_mesh(str(style.get("asset_root", "")).path_join("unit_general_carrier_a.obj"))
 	if mesh == null:
 		return
-	for i in range(3):
+	for i in range(6):
 		var carrier := MeshInstance3D.new()
 		carrier.mesh = mesh
 		carrier.hide()
@@ -732,6 +772,9 @@ func _build_carrier_views() -> void:
 
 func _update_carrier_views(delta: float) -> void:
 	if _carrier_views.is_empty(): return
+	if _spatial_enabled:
+		_update_spatial_carriers()
+		return
 	var visible_route := not view.is_empty() and _carrier_route.size() >= 2
 	for carrier in _carrier_views: carrier.visible = visible_route
 	if not visible_route: return
@@ -756,6 +799,30 @@ func _update_carrier_views(delta: float) -> void:
 		var direction := b - a
 		if direction.length_squared() > 0.001:
 			carrier.rotation.y = atan2(direction.x, direction.z)
+func _update_spatial_carriers() -> void:
+	var states: Dictionary = view.get("spatial", {}).get("carriers", {})
+	for carrier in _carrier_views:
+		var state: Dictionary = states.get(str(carrier.get_meta("carrier_id")), {})
+		var pair = state.get("position")
+		carrier.visible = pair is Array and pair.size() >= 2
+		if not carrier.visible: continue
+		var flat := Vector2(float(pair[0]), float(pair[1]))
+		carrier.position = Vector3(flat.x, _basin_terrain.height_at(flat.x, flat.y) + 0.32, flat.y)
+		var path: Array = state.get("path", [])
+		var remaining := float(state.get("distance", 0))
+		for i in range(path.size() - 1):
+			var a := Vector2(float(path[i][0]), float(path[i][1]))
+			var b := Vector2(float(path[i + 1][0]), float(path[i + 1][1]))
+			var length := a.distance_to(b)
+			if remaining <= length:
+				var heading := b - a
+				if heading.length_squared() > 0.001: carrier.rotation.y = atan2(heading.x, heading.y)
+				break
+			remaining -= length
+		if str(carrier.get_meta("carrier_id")) == _follow_carrier:
+			camera_rig.focus_on(carrier.position)
+
+
 func _add_environment_item(item: Dictionary) -> void:
 	var p: Array = item.get("position", [0, 0, 0])
 	var terrain_y: float = _basin_terrain.height_at(float(p[0]), float(p[2])) if _basin_terrain else 0.0
@@ -871,3 +938,51 @@ func _refresh_settlement_route() -> void:
 				samples.reverse()
 				_carrier_route.append_array(samples.slice(1))
 				return
+
+
+func _begin_roads() -> void:
+	if _roads == null or _placement_pending or _road_pending or not bridge.is_ready: return
+	if not _spatial_enabled:
+		hud.flash("Roads require the spatial scenario", true)
+		return
+	_cancel_placement()
+	if _roads.active: _finish_roads(); return
+	_follow_carrier = ""
+	_context_serial += 1
+	hud._context.hide()
+	_roads.begin()
+	_update_roads()
+
+
+func _finish_roads() -> void:
+	if _road_pending: return
+	if _roads != null: _roads.finish()
+	if hud != null: hud.show_status("", false)
+
+
+func _update_roads() -> void:
+	if _roads == null or not _roads.active: return
+	_roads.update_at(camera_rig.camera, _placement_screen, get_viewport().gui_get_hovered_control() != null)
+	var copy: String = _roads.reason
+	if copy == "": copy = "Click end point" if _roads.has_start else "Click road start"
+	hud.show_status("Road · %s · Right-click/Esc finish" % copy, _roads.reason != "")
+
+
+func _confirm_road(screen: Vector2) -> void:
+	if _road_pending: return
+	_roads.update_at(camera_rig.camera, screen, false)
+	if not _roads.has_ground or _roads.reason != "":
+		hud.flash(_roads.reason, true)
+		return
+	if not _roads.has_start:
+		_roads.start = _roads.point
+		_roads.has_start = true
+		return
+	_road_ids += 1
+	var ending: Vector3 = _roads.point
+	var points := [[_roads.start.x, _roads.start.z], [ending.x, ending.z]]
+	_road_pending = true
+	bridge.request("command", {"cmd": {"do": "build_road", "id": "road_p%d" % _road_ids, "points": points}}, func(reply):
+		_road_pending = false
+		if reply.get("ok", false): _roads.start = ending
+		_on_command_reply(reply))

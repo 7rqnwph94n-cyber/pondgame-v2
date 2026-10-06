@@ -388,9 +388,17 @@ func test_empty_start_presentation() -> void:
 	main._build_environment()
 	check(main._crossing_view == null and main._carrier_route.is_empty(), "empty opening contains no prebuilt crossing or authored carrier route")
 	main._build_carrier_views()
-	check(main._carrier_views.size() == 3, "carrier visuals remain available for a later player settlement")
+	check(main._carrier_views.size() == 6, "carrier visuals remain available for a later player settlement")
 	for carrier in main._carrier_views:
 		check(not carrier.visible, "no carrier is visible on the empty starting map")
+	main._spatial_enabled = true
+	main.view = {"spatial": {"carriers": {"carrier_1": {"position": [-40, 0], "state": "to_target", "distance": 5, "path": [[-45, 0], [-25, 0]], "cargo": {"carbonate": 4}}}}}
+	main._update_carrier_views(1)
+	check(main._carrier_views[0].visible and is_equal_approx(main._carrier_views[0].position.x, -40), "spatial carrier uses authoritative cargo position without an authored route")
+	var stationary: Vector3 = main._carrier_views[0].position
+	main._update_carrier_views(30)
+	check(main._carrier_views[0].position == stationary, "spatial carrier cannot animate ahead of paused domain state")
+	check(not main._carrier_views[1].visible, "carrier without a domain position stays off map")
 	main.free()
 	completed.append("empty_start_presentation")
 
@@ -455,7 +463,7 @@ func test_manual_placement() -> void:
 	check(main._placement_screen == cursor.position, "placement tracks event coordinates rather than a stale OS cursor")
 	main._on_build_requested("shelter")
 	check(bridge.commands.is_empty() and world.views.is_empty(), "choosing a building creates no site and spends no resources")
-	check(main._placement.get_children().size() == 2, "preview contains only ghost and footprint, without collision bodies")
+	check(main._placement.get_children().size() == 3, "preview contains only ghost, footprint and entrance marker, without collision bodies")
 	main._placement.rotate_preview()
 	check(is_equal_approx(main._placement.yaw, deg_to_rad(15)), "R rotates preview by fifteen degrees")
 	main._placement.rotate_preview(true)

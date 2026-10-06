@@ -118,8 +118,10 @@ def cmd_construct(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
     district = _district(sim, cmd)
     if district is None:
         return fail(f"unknown_district:{cmd.get('district')}")
-    site_id = cmd.get("id") or sim.next_id(building_id)
-    if sim.id_in_use(site_id):
+    site_id = cmd.get("id")
+    if not site_id and not (sim.spatial is not None and cmd.get("dry_run")):
+        site_id = sim.next_id(building_id)
+    if site_id and sim.id_in_use(site_id):
         return fail(f"duplicate_id:{site_id}")
     placement = None
     if sim.spatial is not None:

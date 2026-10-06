@@ -259,6 +259,17 @@ class SpatialState:
                 if hit:
                     cuts[i].add(hit[0])
                     cuts[j].add(hit[1])
+                # Parallel overlaps also share junctions at every segment endpoint.
+                # Without these cuts a road starting midway along a straight road
+                # has a separate graph node despite touching it on the ground.
+                for endpoint in segments[j]:
+                    q, t = project(*segments[i], endpoint)
+                    if math.dist(q, endpoint) < JOIN_TOL:
+                        cuts[i].add(t)
+                for endpoint in segments[i]:
+                    q, t = project(*segments[j], endpoint)
+                    if math.dist(q, endpoint) < JOIN_TOL:
+                        cuts[j].add(t)
             if self.anchor is not None:
                 q, t = project(*segments[i], self.anchor)
                 if math.dist(q, self.anchor) < JOIN_TOL:
@@ -334,8 +345,6 @@ class SpatialState:
                 total = self.dist[_key(end)] + math.dist(end, q)
                 if best is None or (gap, total) < (best[0], best[1]):
                     best = (gap, total, q, end)
-        if self.anchor is not None and math.dist(point, self.anchor) <= limit + EPS and not candidates:
-            return [self.anchor], 0.0, self.anchor
         if best is None:
             return None
         gap, total, q, end = best
@@ -419,6 +428,8 @@ class SpatialState:
         return (w, d)
 
     def validate_building(self, position: Point, yaw: float, footprint: Point) -> tuple[Point | None, list[str]]:
+        if not all(math.isfinite(v) for v in (*position, yaw, *footprint)):
+            return None, ["spatial:malformed_position"]
         w, d = footprint
         samples = [(position[0], position[1])]
         local = [(x * w / 2, z * d / 2) for x in (-1.0, -0.5, 0.0, 0.5, 1.0) for z in (-1.0, -0.5, 0.0, 0.5, 1.0)]
@@ -445,14 +456,8 @@ class SpatialState:
 
     # ------------------------------------------------------------ commands
     def build_road(self, cmd: dict[str, Any]) -> tuple[bool, str, list[str]]:
-        road_id = cmd.get("id")
-        if road_id is None:
-            while True:
-                self._road_counter += 1
-                road_id = f"road_{self._road_counter}"
-                if road_id not in self.roads:
-                    break
-        road_id = str(road_id)
+        raw_id = cmd.get("id")
+        road_id = str(raw_id) if raw_id is not None else None
         if road_id in self.roads:
             return False, "", [f"duplicate_id:{road_id}"]
         points, reasons = self.validate_road(cmd.get("points"))
@@ -460,6 +465,12 @@ class SpatialState:
             return False, "", reasons
         if cmd.get("dry_run"):   # v4: authoritative preview; info carries the snapped points
             return True, "valid road " + json.dumps([_r(p) for p in points], separators=(",", ":")), []
+        if road_id is None:
+            while True:
+                self._road_counter += 1
+                road_id = f"road_{self._road_counter}"
+                if road_id not in self.roads:
+                    break
         if self.anchor is None:
             self.anchor = points[0]
         self.roads[road_id] = points

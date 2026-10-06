@@ -14,6 +14,9 @@ var views: Dictionary = {}                   # entity id -> EntityView
 var _slots: Dictionary = {}                  # entity id -> Vector3
 var _footprints: Dictionary = {}
 var obstacles: Array[AABB] = []
+var spatial_enabled := false
+var road_network: Node3D
+var spatial_placements: Dictionary = {}
 var _rotations: Dictionary = {}             # player placement yaw, retained through commissioning/evolution
 var _band_counts: Dictionary = {}
 var terrain: Node3D
@@ -64,7 +67,25 @@ func slot_for(entity_id: String, band: String) -> Vector3:
 
 
 func sync(view: Dictionary) -> void:
+	spatial_enabled = view.get("spatial", {}).get("enabled", false)
+	spatial_placements = view.get("spatial", {}).get("placements", {})
+	for id in spatial_placements:
+		var placement: Dictionary = spatial_placements[id]
+		var pair: Array = placement.get("position", [])
+		if pair.size() < 2: continue
+		var point := Vector3(float(pair[0]), 0, float(pair[1]))
+		if terrain != null: point.y = terrain.height_at(point.x, point.z) + 0.05
+		var footprint: Array = placement.get("footprint", [7, 7])
+		reserve_placement(id, point, float(placement.get("yaw", 0)), Vector2(float(footprint[0]), float(footprint[1])))
+		if views.has(id):
+			views[id].position = point
+			views[id].rotation.y = float(placement.get("yaw", 0))
 	var seen := {}
+	for id in spatial_placements:
+		if spatial_placements[id].get("kind") == "pile":
+			var pile := _ensure(id, "pile", "salvage", "logistics")
+			pile.set_condition_state("awaiting_transport")
+			seen[id] = true
 	for id in view.get("residences", {}):
 		var r: Dictionary = view["residences"][id]
 		var v := _ensure(id, "residence", r.get("tier", "shelter"), "residence")
@@ -111,7 +132,7 @@ func _ensure(id: String, kind: String, definition: String, category: String) -> 
 	v.position = slot_for(id, "residence" if kind == "residence" else category)
 	v.rotation.y = _rotations.get(id, 0.0)
 	add_child(v)
-	_footprints[id] = mesh_footprint(v._body.mesh)
+	if not _footprints.has(id): _footprints[id] = mesh_footprint(v._body.mesh)
 	views[id] = v
 	return v
 
@@ -145,6 +166,10 @@ func placement_reason(point: Vector3, yaw: float, footprint: Vector2 = Vector2(7
 			low = minf(low, height)
 			high = maxf(high, height)
 	if high - low > 1.5: return "Ground too steep"
+	if spatial_enabled and road_network != null:
+		if road_network.footprint_overlaps_road(point, yaw, footprint): return "Footprint overlaps road"
+		var connection: String = road_network.connection_reason(point, yaw, footprint)
+		if connection != "": return connection
 	for obstacle in obstacles:
 		var centre := obstacle.get_center()
 		if footprints_overlap(point, yaw, centre, 0, footprint, Vector2(obstacle.size.x, obstacle.size.z)):
