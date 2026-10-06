@@ -18,6 +18,14 @@ scenario is untouched. The model, in metres on the client's x/z plane:
   started, so cargo is never lost.
 
 Provisional, documented numbers live in ``economy/data/experiments/spatial_roads_v1.json``.
+
+Current mode (overlay ``current_lanes_v1``, sim_bridge v5; Rich "go" to the submerged correction): the same
+graph and custody, re-read for a liquid world. Lanes are controlled currents, so there is no water or bank
+exclusion; legality is substrate slope plus the shared natural obstacles and footprints in
+``economy/data/maps/verdant_habitat_v1.json``, and a building's intake spur may not cross rock or another
+building. Services reach homes only within a lane distance (provider spur + lanes + home spur), with no
+district-wide fallback. Published geography sets light (sampled at a field's position, scaling its rate) and
+extraction zones (where pits may be placed).
 """
 from __future__ import annotations
 
@@ -212,6 +220,9 @@ class Placement:
     attach: Point | None = None
     path: list[Point] = field(default_factory=list)     # anchor -> entrance along roads
     route_length: float | None = None
+    building: str = ""
+    piece: tuple[Point, Point] | None = None             # network piece the intake attaches to
+    suitability: dict[str, Any] | None = None             # current mode: sampled light or extraction zone
 
     @property
     def connected(self) -> bool:
@@ -234,10 +245,25 @@ class SpatialState:
     def __init__(self, sim: Any):
         self.sim = sim
         self.rules: dict[str, Any] = dict(sim.defs["spatial"])
-        channel = self.rules.get("channel")
+        # "roads" (v4) or "current" (v5, current_lanes_v1): submerged habitat, local services, suitability.
+        self.mode: str = self.rules.get("mode", "roads")
+        habitat: dict[str, Any] = {}
+        if self.rules.get("habitat"):
+            habitat = json.loads((ROOT / self.rules["habitat"]).read_text(encoding="utf-8"))
+        self.habitat_source = self.rules.get("habitat")
+        channel = self.rules.get("channel") or habitat.get("channel")
         if channel is None:   # one source of truth with the client's visible basin
             channel = json.loads((ROOT / self.rules["channel_source"]).read_text(encoding="utf-8"))["channel"]
         self.terrain = Terrain(channel)
+        # Natural obstacles are authoritative only in current mode (axis-aligned bounds from shared geometry).
+        self.obstacles: list[tuple[Point, Point]] = [
+            ((float(o["position"][0]), float(o["position"][1])), (float(o["size"][0]), float(o["size"][1])))
+            for o in habitat.get("obstacles", [])] if self.mode == "current" else []
+        self.footprint_minimums: dict[str, Any] = {**habitat.get("footprints", {}), **self.rules.get("footprints", {})}
+        self._distance_cache: dict[str, dict[str, Any]] = {}
+        self.coverage: dict[str, dict[str, dict[str, Any]]] = {}     # home -> service -> nearest provider
+        self.reach: dict[str, dict[str, Any]] = {}                   # provider -> service, range, homes
+        self.active_providers: dict[str, list[str]] = {}
         self.anchor: Point | None = None
         self.roads: dict[str, list[Point]] = {}
         self.placements: dict[str, Placement] = {}
@@ -306,6 +332,7 @@ class SpatialState:
                     if nd + EPS < self.dist.get(nk, math.inf):
                         self.dist[nk], self.prev[nk] = nd, k
                         heapq.heappush(heap, (nd, nk))
+        self._distance_cache = {}
         for placement in self.placements.values():
             self._attach(placement)
 
@@ -331,7 +358,17 @@ class SpatialState:
             best = (self.anchor, math.dist(p, self.anchor))
         return best
 
-    def _route_to(self, point: Point) -> tuple[list[Point], float, Point] | None:
+    def _spur_blocked(self, entrance: Point, attach: Point, extra: list[tuple[Point, float, Point]] = ()) -> bool:
+        """Current mode: the intake spur (entrance -> attach point) may not pass through rock or a building."""
+        if self.mode != "current" or math.dist(entrance, attach) <= EPS:
+            return False
+        if any(segment_hits_rect(entrance, attach, centre, 0.0, size) for centre, size in self.obstacles):
+            return True
+        rects = [(p.position, p.yaw, p.footprint) for p in self._blocking_rects()] + list(extra)
+        return any(segment_hits_rect(entrance, attach, c, yaw, size) for c, yaw, size in rects)
+
+    def _route_to(self, point: Point, extra: list[tuple[Point, float, Point]] = (),
+                  check_spur: bool = True) -> tuple[list[Point], float, Point, tuple[Point, Point]] | None:
         """Shortest road route from the anchor to the nearest attachable network point."""
         limit = float(self.rules["attach_distance"])
         best = None
@@ -341,27 +378,30 @@ class SpatialState:
             gap = math.dist(q, point)
             if gap > limit + EPS:
                 continue
+            if check_spur and self._spur_blocked(point, q, extra):
+                continue
             for end in (a, b):
                 total = self.dist[_key(end)] + math.dist(end, q)
                 if best is None or (gap, total) < (best[0], best[1]):
-                    best = (gap, total, q, end)
+                    best = (gap, total, q, end, (a, b))
         if best is None:
             return None
-        gap, total, q, end = best
+        gap, total, q, end, piece = best
         path = self._node_path(_key(end))
         if math.dist(path[-1], q) > EPS:
             path.append(q)
-        return path, total, q
+        return path, total, q, piece
 
-    def _attach(self, placement: Placement) -> None:
-        route = self._route_to(placement.entrance)
+    def _attach(self, placement: Placement, extra: list[tuple[Point, float, Point]] = ()) -> None:
+        route = self._route_to(placement.entrance, extra)
         if route is None:
-            placement.attach, placement.path, placement.route_length = None, [], None
+            placement.attach, placement.path, placement.route_length, placement.piece = None, [], None, None
             return
-        path, length, q = route
+        path, length, q, piece = route
         if math.dist(path[-1], placement.entrance) > EPS:
             path = path + [placement.entrance]
         placement.attach = q
+        placement.piece = piece
         placement.path = path
         placement.route_length = polyline_length(path)
 
@@ -369,13 +409,126 @@ class SpatialState:
         placement = self.placements.get(entity_id)
         return placement is not None and placement.connected
 
+    # ------------------------------------------------------------ local services (current mode)
+    def service_range(self, service: str) -> float:
+        ranges = self.rules.get("service_ranges", {})
+        return float(ranges.get(service, ranges.get("default", 45.0)))
+
+    def _distances_from(self, placement: Placement) -> dict[str, Any] | None:
+        """Network distance from a placement's entrance to every junction it can reach."""
+        if not placement.connected or placement.piece is None:
+            return None
+        cached = self._distance_cache.get(placement.id) if placement.id in self.placements else None
+        if cached is not None and cached["attach"] == placement.attach:
+            return cached
+        spur = math.dist(placement.entrance, placement.attach)
+        dist: dict[tuple[float, float], float] = {}
+        heap = []
+        for end in placement.piece:
+            k, d = _key(end), spur + math.dist(placement.attach, end)
+            if d < dist.get(k, math.inf):
+                dist[k] = d
+                heapq.heappush(heap, (d, k))
+        while heap:
+            d, k = heapq.heappop(heap)
+            if d > dist[k] + EPS:
+                continue
+            for nk, length in sorted(self.edges.get(k, [])):
+                if d + length + EPS < dist.get(nk, math.inf):
+                    dist[nk] = d + length
+                    heapq.heappush(heap, (d + length, nk))
+        result = {"attach": placement.attach, "piece": placement.piece, "spur": spur, "nodes": dist}
+        if placement.id in self.placements:
+            self._distance_cache[placement.id] = result
+        return result
+
+    def network_distance(self, source: Placement, target: Placement) -> float | None:
+        """Lane distance between two connected placements: source spur + lanes + target spur."""
+        origin = self._distances_from(source)
+        if origin is None or not target.connected or target.piece is None:
+            return None
+        spur = math.dist(target.entrance, target.attach)
+        best = math.inf
+        if {_key(p) for p in origin["piece"]} == {_key(p) for p in target.piece}:
+            best = origin["spur"] + math.dist(origin["attach"], target.attach) + spur
+        for end in target.piece:
+            d = origin["nodes"].get(_key(end))
+            if d is not None:
+                best = min(best, d + math.dist(end, target.attach) + spur)
+        return None if best == math.inf else best
+
+    def _nearest_providers(self, home: Placement, providers: dict[str, list[str]]) -> dict[str, dict[str, Any]]:
+        out = {}
+        for service in sorted(self.sim.defs["services"]):
+            reach = self.service_range(service)
+            best = None
+            for fid in providers.get(service, []):
+                d = self.network_distance(self.placements[fid], home)
+                if d is not None and (best is None or d < best[1] - EPS):
+                    best = (fid, d)
+            out[service] = {"covered": best is not None and best[1] <= reach + EPS,
+                            "provider": best[0] if best else None,
+                            "distance": round(best[1], 2) if best else None, "range": reach}
+        return out
+
+    def update_services(self, providers: dict[str, list[str]]) -> None:
+        """Recompute local coverage from the providers active this step (connected, staffed, unpaused)."""
+        self.active_providers = providers
+        self.coverage, self.reach = {}, {}
+        homes = [p for pid, p in sorted(self.placements.items()) if self.kind(pid) == "residence"]
+        for home in homes:
+            self.coverage[home.id] = self._nearest_providers(home, providers)
+        services = self.sim.defs["services"]
+        for pid, p in sorted(self.placements.items()):
+            if self.kind(pid) != "facility":
+                continue
+            building = self.sim.facilities[pid].building_id
+            for service, spec in sorted(services.items()):
+                if building in spec["provided_by"]:
+                    reach = self.service_range(service)
+                    in_range = [h.id for h in homes if (d := self.network_distance(p, h)) is not None and d <= reach + EPS]
+                    self.reach[pid] = {"service": service, "range": reach, "active": pid in providers.get(service, []),
+                                       "homes": in_range}
+
+    def _with_needs(self, home_id: str | None, coverage: dict[str, dict[str, Any]], tier: str | None = None) -> dict[str, dict[str, Any]]:
+        """Mark the services the home's next tier requires (planning view, even before anyone lives there)."""
+        residences = self.sim.defs["residences"]
+        tier = tier or self.sim.residences[home_id].tier
+        next_tier = residences[tier].get("next")
+        needed = set(residences[next_tier]["evolution"].get("services", [])) if next_tier else set()
+        return {s: {**row, "needed_for_next_tier": s in needed} for s, row in coverage.items()}
+
+    def covered(self, home_id: str, service: str) -> bool:
+        return bool(self.coverage.get(home_id, {}).get(service, {}).get("covered"))
+
+    def preview(self, building_id: str, info: dict[str, Any], position: Point, yaw: float, footprint: Point) -> dict[str, Any]:
+        """What a placement would connect to and reach (dry-run construct, current and roads modes)."""
+        temp = Placement("__preview__", position, yaw, footprint, info["entrance"], order=0,
+                         attach=info["attach"], piece=info["piece"], route_length=info["route_length"])
+        definition = self.sim.defs["buildings"].get(building_id, {})
+        out: dict[str, Any] = {"entrance": _r(info["entrance"]), "attach": _r(info["attach"]),
+                               "spur": [_r(info["entrance"]), _r(info["attach"])],
+                               "route_length": round(info["route_length"], 2), "suitability": info["suitability"]}
+        if self.mode != "current":
+            return out
+        providers = self.active_providers
+        if definition.get("residence_tier"):
+            out["coverage"] = self._with_needs(None, self._nearest_providers(temp, providers), definition["residence_tier"])
+        for service, spec in sorted(self.sim.defs["services"].items()):
+            if building_id in spec["provided_by"]:
+                reach = self.service_range(service)
+                homes = [pid for pid, p in sorted(self.placements.items()) if self.kind(pid) == "residence"
+                         and (d := self.network_distance(temp, p)) is not None and d <= reach + EPS]
+                out["serves"] = {"service": service, "range": reach, "active": False, "homes": homes}
+        return out
+
     # ------------------------------------------------------------ validation
     def _ground_ok(self, points: list[Point], water_margin: float) -> str | None:
         half = Terrain.SIZE / 2 - 1
         for x, z in points:
             if abs(x) > half or abs(z) > half:
                 return "spatial:outside_map"
-            if self.terrain.channel_distance(x, z) < water_margin:
+            if water_margin > 0 and self.terrain.channel_distance(x, z) < water_margin:
                 return "spatial:water"
         return None
 
@@ -414,20 +567,38 @@ class SpatialState:
             spacing = length / steps
             if any(abs(h1 - h0) / spacing > float(rules["road_max_grade"]) + EPS for h0, h1 in zip(heights, heights[1:])):
                 return None, ["spatial:too_steep"]
+            if any(segment_hits_rect(a, b, centre, 0.0, size) for centre, size in self.obstacles):
+                return None, ["spatial:obstacle"]
             for p in self._blocking_rects():
                 if segment_hits_rect(a, b, p.position, p.yaw, p.footprint):
                     return None, [f"spatial:overlaps_building:{p.id}"]
         return points, []
 
     def footprint_for(self, building_id: str, raw: Any) -> Point:
-        default = self.rules["footprints"].get(building_id, self.rules["default_footprint"])
+        default = self.footprint_minimums.get(building_id, self.rules["default_footprint"])
         w, d = float(default[0]), float(default[1])
         if raw is not None:
             rw, rd = _pt(raw)
             w, d = max(w, min(rw, 40.0)), max(d, min(rd, 40.0))
         return (w, d)
 
-    def validate_building(self, position: Point, yaw: float, footprint: Point) -> tuple[Point | None, list[str]]:
+    def suitability(self, building_id: str, position: Point) -> dict[str, Any] | None:
+        """Published habitat geography (current mode): sampled light, or a required extraction zone."""
+        geography = self.rules.get("geography", {}) if self.mode == "current" else {}
+        light = geography.get("light")
+        if light and building_id in light["buildings"]:
+            h = self.terrain.height(*position)
+            value = min(1.0, max(0.0, (h - light["dark_height"]) / (light["full_height"] - light["dark_height"])))
+            return {"light": round(value, 3), "factor": round(value, 3)}
+        zones = [z for z in geography.get("extraction_zones", []) if building_id in z["buildings"]]
+        if zones:
+            inside = [z["id"] for z in zones if math.dist(position, tuple(z["centre"])) <= float(z["radius"]) + EPS]
+            return {"zone": inside[0] if inside else None}
+        return None
+
+    def validate_building(self, position: Point, yaw: float, footprint: Point,
+                          building_id: str = "") -> tuple[dict[str, Any] | None, list[str]]:
+        """Authoritative placement check. On success returns the entrance, route and habitat suitability."""
         if not all(math.isfinite(v) for v in (*position, yaw, *footprint)):
             return None, ["spatial:malformed_position"]
         w, d = footprint
@@ -440,19 +611,31 @@ class SpatialState:
         heights = [self.terrain.height(x, z) for x, z in samples]
         if max(heights) - min(heights) > float(self.rules["building_max_rise"]) + EPS:
             return None, ["spatial:too_steep"]
+        if any(rects_overlap(position, yaw, footprint, centre, 0.0, size) for centre, size in self.obstacles):
+            return None, ["spatial:obstacle"]
         for p in self._blocking_rects():
             if rects_overlap(position, yaw, footprint, p.position, p.yaw, p.footprint):
                 return None, [f"spatial:overlaps_building:{p.id}"]
         for a, b in self.pieces:
             if segment_hits_rect(a, b, position, yaw, footprint):
                 return None, ["spatial:overlaps_road"]
+        suitability = self.suitability(building_id, position)
+        if suitability and "light" in suitability and suitability["light"] < float(self.rules["geography"]["light"]["min_to_place"]) - EPS:
+            return None, [f"spatial:too_dark:{suitability['light']:.2f}"]
+        if suitability and "zone" in suitability and suitability["zone"] is None:
+            return None, [f"spatial:outside_extraction_zone:{building_id}"]
         offset = rotate(0.0, d / 2 + float(self.rules["entrance_offset"]), yaw)
         entrance = (position[0] + offset[0], position[1] + offset[1])
         if self.anchor is None:
             return None, ["spatial:no_road_network"]
-        if self._route_to(entrance) is None:
-            return None, ["spatial:not_connected"]
-        return entrance, []
+        own = [(position, yaw, footprint)]
+        route = self._route_to(entrance, own)
+        if route is None:
+            blocked = self._route_to(entrance, own, check_spur=False) is not None
+            return None, ["spatial:spur_blocked" if blocked else "spatial:not_connected"]
+        path, total, q, piece = route
+        return {"entrance": entrance, "attach": q, "piece": piece, "suitability": suitability,
+                "route_length": polyline_length(path + [entrance])}, []
 
     # ------------------------------------------------------------ commands
     def build_road(self, cmd: dict[str, Any]) -> tuple[bool, str, list[str]]:
@@ -484,8 +667,10 @@ class SpatialState:
         self._rebuild()
         return True, f"{road_id} removed", []
 
-    def place(self, entity_id: str, position: Point, yaw: float, footprint: Point, entrance: Point) -> None:
-        placement = Placement(entity_id, position, yaw, footprint, entrance, order=self.sim.next_order())
+    def place(self, entity_id: str, position: Point, yaw: float, footprint: Point, entrance: Point,
+              building: str = "", suitability: dict[str, Any] | None = None) -> None:
+        placement = Placement(entity_id, position, yaw, footprint, entrance, order=self.sim.next_order(),
+                              building=building, suitability=suitability)
         self._attach(placement)
         self.placements[entity_id] = placement
         self.depots[entity_id] = Inventory(self.sim.defs["resources"])
@@ -525,8 +710,15 @@ class SpatialState:
                     want[good] = want.get(good, 0) + int(q)
             return want
         site = sim.sites.get(entity_id)
-        if site is not None and site.active and site.materials_complete_at is None:
-            return site.missing()
+        if site is not None and site.active:
+            want = site.missing() if site.materials_complete_at is None else {}
+            tier = (site.terms or sim.defs["buildings"].get(site.target, {})).get("residence_tier")
+            if tier:
+                # A home is provisioned while it grows, so the people who move in on completion can eat.
+                minutes = float(self.rules["residence_stock_minutes"])
+                for good, rate in sim.defs["residences"][tier]["per_minute"].items():
+                    want[good] = want.get(good, 0) + max(1, math.ceil(rate * minutes - EPS))
+            return want
         return {}
 
     def collectable(self, entity_id: str) -> dict[str, int]:
@@ -672,7 +864,19 @@ class SpatialState:
                 "residence_stock_minutes")
         rules = {k: self.rules[k] for k in keys}
         rules["map_half_extent"] = Terrain.SIZE / 2 - 1
-        return {"enabled": True, "version": 1, "rules": rules, "footprints": dict(self.rules["footprints"])}
+        out = {"enabled": True, "version": 1, "mode": self.mode, "rules": rules,
+               "footprints": dict(self.footprint_minimums)}
+        if self.mode == "current":
+            geography = self.rules.get("geography", {})
+            ranges = dict(self.rules.get("service_ranges", {}))
+            out["service_ranges"] = ranges
+            out["geography"] = {
+                "source": self.habitat_source,
+                "obstacles": [{"position": _r(c), "size": [round(sz[0], 3), round(sz[1], 3)]} for c, sz in self.obstacles],
+                "light": geography.get("light"),
+                "extraction_zones": geography.get("extraction_zones", []),
+            }
+        return out
 
     def view(self) -> dict[str, Any]:
         placements = {}
@@ -684,6 +888,13 @@ class SpatialState:
                 "route_length": None if p.route_length is None else round(p.route_length, 2),
                 "local": self.depots[pid].nonzero(), "inbound": self.inbound(pid),
             }
+            if self.mode == "current":
+                placements[pid]["spur"] = [_r(p.entrance), _r(p.attach)] if p.attach else None
+                placements[pid]["suitability"] = p.suitability
+                if pid in self.coverage:
+                    placements[pid]["coverage"] = self._with_needs(pid, self.coverage[pid])
+                if pid in self.reach:
+                    placements[pid]["serves"] = self.reach[pid]
         carriers = {}
         for c in self.carriers:
             moving = c.state != "idle"
@@ -698,6 +909,7 @@ class SpatialState:
             }
         return {
             "enabled": True,
+            "mode": self.mode,
             "anchor": {"position": _r(self.anchor)} if self.anchor else None,
             "roads": {rid: {"points": [_r(p) for p in pts], "length": round(polyline_length(pts), 2)}
                       for rid, pts in sorted(self.roads.items())},

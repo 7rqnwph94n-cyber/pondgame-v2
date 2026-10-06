@@ -170,7 +170,7 @@ class Diagnostics:
             "custody": {k: v for k, v in sorted(sim.custody().items()) if v},
             "workforce": workforce,
             "population": round(sum(r.population for r in sim.residences.values()), 2),
-            "residences": {r.id: r.presentation_state(sim.defs, sim.services.get(r.district, set()))
+            "residences": {r.id: r.presentation_state(sim.defs, sim.services_for(r))
                            for r in sim.residences.values()},
             "maintenance_upkeep": sim.upkeep.state,
             "builders_wp": {d: round(v, 2) for d, v in sim.builder_wp.items()},

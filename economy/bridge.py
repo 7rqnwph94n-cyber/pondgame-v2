@@ -94,6 +94,9 @@ class Session:
             facility["blockers"] = facility_blockers(self.sim, built)
             facility["labour_priority"] = labour_rank(self.sim, built)
             facility["labour_priority_overridden"] = built.labour_priority is not None
+            recipe = self.sim.defs["recipes"].get(built.recipe_id) if built.recipe_id else None
+            facility["cycle_progress"] = (None if built.cycle_remaining is None or not recipe else
+                                          round(1 - built.cycle_remaining / recipe["cycle_seconds"], 3))
         for rid, residence in view["residences"].items():
             residence["blockers"] = residence_blockers(self.sim, self.sim.residences[rid])
         if self.sim.spatial is not None:
@@ -110,7 +113,10 @@ class Session:
             result = self.sim.issue(cmd, source="player")
         except (KeyError, TypeError, ValueError) as error:
             return {"ok": False, "reasons": [f"invalid_command:{error}"]}
-        return {"ok": result.ok, "info": result.info if result.ok else "", "reasons": [] if result.ok else result.reasons}
+        reply = {"ok": result.ok, "info": result.info if result.ok else "", "reasons": [] if result.ok else result.reasons}
+        if result.ok and result.data is not None:
+            reply["preview"] = result.data   # v5: dry-run construct preview
+        return reply
 
     def autoplay(self, enabled: bool) -> dict[str, Any]:
         from .governor import Governor, load_governor_config
@@ -255,9 +261,17 @@ def residence_blockers(sim: Simulation, r, state: dict[str, Any] | None = None) 
     for good, minutes in sorted(state["need_buffer_minutes"].items()):
         if minutes < 3:
             out.append(_blocker("low_need", f"low {good}: {minutes:.1f} min", good=good, minutes=minutes))
+    local = sim.spatial is not None and sim.spatial.mode == "current"
     for service, ok in state["services_for_next_tier"].items():
         if not ok:
-            out.append(_blocker("missing_service", f"next tier needs service: {service}", service=service))
+            if local:   # v5: local reach by lane distance
+                row = sim.spatial.coverage.get(r.id, {}).get(service, {})
+                provider, distance, reach = row.get("provider"), row.get("distance"), row.get("range")
+                text = (f"next tier needs service: {service} (nearest {provider} is {distance:.0f} m by lane; reach {reach:.0f} m)"
+                        if provider else f"next tier needs service: {service} (no active provider connected)")
+                out.append(_blocker("missing_service", text, service=service, provider=provider, distance=distance, range=reach))
+            else:
+                out.append(_blocker("missing_service", f"next tier needs service: {service}", service=service))
     next_tier = sim.defs["residences"][r.tier].get("next")
     if next_tier and not state["evolution"] and all(state["services_for_next_tier"].values()):
         need = sim.defs["residences"][next_tier]["evolution"].get("goods", {})
