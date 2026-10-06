@@ -89,7 +89,8 @@ class ClientLaunchTests(unittest.TestCase):
         cfg = configparser.ConfigParser()
         cfg.read(ROOT / "client" / "settings.cfg", encoding="utf-8")
         overlays = _json.loads(cfg["bridge"]["overlays"])
-        self.assertEqual(["economy/data/experiments/candidate_playable_slice_v1.json"], overlays)
+        self.assertEqual(["economy/data/experiments/candidate_playable_slice_v1.json",
+                          "economy/data/experiments/empty_settlement_start_v1.json"], overlays)
         from economy.bridge import Session, handle
         hello = handle(Session([str(ROOT / o) for o in overlays]), {"id": 1, "op": "hello"})
-        self.assertEqual(["candidate_playable_slice_v1"], hello["overlays"])
+        self.assertEqual(["candidate_playable_slice_v1", "empty_settlement_start_v1"], hello["overlays"])

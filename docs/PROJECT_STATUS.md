@@ -1,4 +1,4 @@
-# Pondgame v2 status — 5 October 2026
+# Pondgame v2 status — 6 October 2026
 
 ## Shared source of truth
 
@@ -9,14 +9,14 @@ The primary Mac checkout is `pondgame-v2`; the exchange/main worktree is `pondga
 ## Current playable state
 
 - Python simulation with paid construction, workforce allocation, seasonal food, residence evolution, production and reference-governor diagnostics.
-- Godot client with authored Verdant basin, dry crossing, carrier presentation, distinct starting facilities, resource HUD, Staff first / Normal priority and evolution/growth explanations.
+- Godot client with an empty Verdant basin at launch, player-built facilities and subsequent carrier presentation, resource HUD, Staff first / Normal priority and evolution/growth explanations.
 - Additive sim_bridge contract v3 (protocol 1): input competitors identify same-store recipes and allow direct inspection; waiting recipes are labelled as competing for the next batch, and pausing does not refund reserved inputs.
-- Default economy: provisional `candidate_playable_slice_v1`, fewer early job slots plus Carbonate renewal 0.2/min capped at 12. Baseline v0.2 remains unchanged.
-- Recorded manual-opening replay: first Stable home 25:55 and food-solvent through the first Dry season. This is prior human-play evidence and scripted reproduction, not fresh novice acceptance.
+- Default economy: provisional `candidate_playable_slice_v1` followed by `empty_settlement_start_v1`, fewer early job slots plus Carbonate renewal 0.2/min capped at 12. Baseline v0.2 remains unchanged.
+- Earlier populated-slice manual-opening replay: first Stable home 25:55 and food-solvent through the first Dry season. This is prior human-play evidence and scripted reproduction, not fresh novice acceptance.
 
 ## Known limits and next work
 
-The reference governor reaches Symbiotic at 106:29. Food remains solvent through 240 minutes, but Repair Enzyme upkeep first goes unpaid at 136:29; unpaid time totals 21.5 minutes at 180 and 54.7 at 240. No Memory homes or Reef stages occur. The [upkeep diagnosis](milestone_a/UPKEEP_DIAGNOSIS_2026-10-05.md) identifies insufficient installed Enzyme capacity: one fully staffed digester makes 0.25/min against 0.50/min demand at first Symbiotic. Extra digesters ordered at 120:00 arrive late because Biomass-starved Ceramic production delays construction. The [early capacity comparison](milestone_a/EARLY_ENZYME_CAPACITY_2026-10-05.md) found a legal 80-minute construction/one-Culture-Bed-pause strategy with Symbiotic at 115:39 and zero unpaid upkeep or food emergencies through 240 minutes. Gel shortage rises to 4.8 residence-minutes, and by 240 production merely matches upkeep demand. The strategy is research only; Autoplay/default rules are unchanged. Final visual sign-off, novice onboarding and long-game balance remain open.
+In the earlier populated slice, the reference governor reaches Symbiotic at 106:29. Food remains solvent through 240 minutes, but Repair Enzyme upkeep first goes unpaid at 136:29; unpaid time totals 21.5 minutes at 180 and 54.7 at 240. No Memory homes or Reef stages occur. The [upkeep diagnosis](milestone_a/UPKEEP_DIAGNOSIS_2026-10-05.md) identifies insufficient installed Enzyme capacity: one fully staffed digester makes 0.25/min against 0.50/min demand at first Symbiotic. Extra digesters ordered at 120:00 arrive late because Biomass-starved Ceramic production delays construction. The [early capacity comparison](milestone_a/EARLY_ENZYME_CAPACITY_2026-10-05.md) found a legal 80-minute construction/one-Culture-Bed-pause strategy with Symbiotic at 115:39 and zero unpaid upkeep or food emergencies through 240 minutes. Gel shortage rises to 4.8 residence-minutes, and by 240 production merely matches upkeep demand. The strategy is research only; Autoplay/default rules are unchanged. Final visual sign-off, novice onboarding and long-game balance remain open.
 
 ## Preservation
 
@@ -31,3 +31,9 @@ Native Mac QA verified the build rail, resource strip, hover help, zoom button, 
 Claude independently reproduced the first controls branch’s 273 assertions and reviewed selection/action paths. His review identified toolbar focus consuming Space (fixed), carrier click priority and missing workforce warning on context evolution. All are corrected, with regression coverage. His trackpad and high-speed animation observations are also incorporated.
 
 Final controls regression suite: 281 Godot assertions pass on the Mac.
+
+## Empty founding start, 2026-10-06
+
+Rich requested an empty map and a reasonable starting budget. The default now starts paused with no homes, facilities, sites, roads, bridge or carriers. Twenty-four founders wait off-map, provide 18 General workforce and consume actual Staple provisions until housed. Starter supplies and 50 trade credit support paid construction; no buildings are granted. The original populated overlay and v0.2 baseline remain separate. See [budget and opening evidence](milestone_a/EMPTY_START_2026-10-06.md).
+
+The tested opening builds three homes and eight basic facilities within ten minutes, stays food-solvent through ninety minutes, and a separate opening reaches a Stable home within forty minutes. These are bounded opening checks, not long-game balance acceptance. All 180 Python tests and 288 Godot assertions pass. Native Mac launch confirms the empty paused basin and exact starting inventory.

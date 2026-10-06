@@ -129,11 +129,13 @@ class FoodEmergency:
         good = (self.rules or {}).get("good", "staple")
         held = sum(store.get(good) for store in sim.stores.values())
         held += sum(r.buffers.get(good, 0.0) for r in sim.residences.values())
+        held += sim.founder_food_buffer if good == "staple" else 0.0
         demand = 0.0
         for residence in sim.residences.values():
             definition = residence.definition(sim.defs)
             rate = definition["per_minute"].get(good, 0.0)
             demand += rate * min(1.0, residence.population / definition["capacity"])
+        demand += sim.founding_food_demand() if good == "staple" else 0.0
         return held / demand if demand > EPS else None
 
     def update(self, sim: "Simulation") -> None:
@@ -220,6 +222,10 @@ class Simulation:
         self._queued = sorted(enumerate(self.plan.get("commands", [])), key=lambda item: (item[1]["at"], item[0]))
         self.controllers: list[Any] = []   # e.g. economy.governor.Governor; act only through issue()
         self.diag = Diagnostics(self)
+        self.founding_rules = defs["starting_state"].get("founding_party", {})
+        self.founders_remaining = int(self.founding_rules.get("population", 0))
+        self.founder_food_buffer = 0.0
+        self.founder_food_shortage = False
         self._load_starting_state()
 
     # ------------------------------------------------------------------ setup
@@ -284,7 +290,43 @@ class Simulation:
             if residence.district == district:
                 job_class, wp = residence.workforce(self.defs, self.second)
                 supply[job_class] += wp
+        if district == self.districts[0] and self.founders_remaining and not self.founder_food_shortage:
+            definition = self.defs["residences"][self.founding_rules["tier"]]
+            supply[definition["class"]] += self.founders_remaining * definition["workforce"] / definition["capacity"]
         return supply
+
+    def founding_food_demand(self) -> float:
+        if not self.founders_remaining:
+            return 0.0
+        definition = self.defs["residences"][self.founding_rules["tier"]]
+        return self.founders_remaining * definition["per_minute"].get("staple", 0.0) / definition["capacity"]
+
+    def _founding_party_step(self) -> None:
+        if self.second == 0:
+            return  # tick zero initializes the view; provisions begin when play advances
+        needed = self.founding_food_demand() * self.dt / 60.0
+        if needed <= EPS:
+            return
+        if self.founder_food_buffer + EPS < needed:
+            self.founder_food_buffer += self.store(self.districts[0]).take_up_to("staple", 1)
+        self.founder_food_shortage = self.founder_food_buffer + EPS < needed
+        self.founder_food_buffer = max(0.0, self.founder_food_buffer - needed)
+
+    def _settle_founders(self) -> None:
+        for residence in sorted(self.residences.values(), key=lambda r: r.order):
+            if not self.founders_remaining:
+                break
+            if residence.tier != self.founding_rules["tier"] or residence.state != NORMAL:
+                continue
+            arrived = min(self.founders_remaining, int(residence.capacity(self.defs) - residence.population))
+            if arrived <= 0:
+                continue
+            residence.population += arrived
+            self.founders_remaining -= arrived
+            self.events.append(f"{stamp(self.second)} {arrived} founders settled in {residence.id}")
+            if not self.founders_remaining:
+                residence.buffers["staple"] = residence.buffers.get("staple", 0.0) + self.founder_food_buffer
+                self.founder_food_buffer = 0.0
 
     def active_research(self) -> ResearchProject | None:
         candidates = [p for p in self.research if p.active]
@@ -512,6 +554,8 @@ class Simulation:
                 self.diag.record_site_complete(site)
                 if site.kind == "building":
                     self._commission_facility(site.id, site.target, site.district, site.terms)
+                    if self.founders_remaining:
+                        self._settle_founders()
                     self.events.append(f"{stamp(self.second)} commissioned {site.id} ({site.target})")
                 else:
                     self._complete_great_work_stage(site)
@@ -552,6 +596,11 @@ class Simulation:
             facility.step(recipes, self.season, self.env, self, min_staff, self.dt)
 
     def _population_step(self) -> None:
+        if self.founders_remaining:
+            self._settle_founders()
+            if self.founders_remaining:
+                self.diag.record_growth_block("no_free_capacity")
+            return
         rules = self.defs["population"]
         free = [r for r in sorted(self.residences.values(), key=lambda r: r.order)
                 if r.population + 1.0 <= r.capacity(self.defs) + EPS and r.emigration_rate == 0.0]
@@ -597,6 +646,7 @@ class Simulation:
         self._process_commands()
         for controller in self.controllers:
             controller.act(self)
+        self._founding_party_step()
         self.upkeep.step(self)
         self.food_emergency.update(self)
         self._allocate_workforce()

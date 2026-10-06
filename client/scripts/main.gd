@@ -35,6 +35,8 @@ var _capture_focus := Vector2.ZERO
 var _capture_zoom := 88.0
 var _capture_view_override := false
 var _carrier_views: Array[MeshInstance3D] = []
+var _empty_settlement_start := false
+var _settlement_route_ids := ""
 var _follow_carrier := ""
 var _context_serial := 0
 var _carrier_phase := 0.0
@@ -44,6 +46,10 @@ var _environment_materials: Dictionary = {}
 
 
 func _parse_capture_args() -> void:
+	var startup := ConfigFile.new()
+	if startup.load("res://settings.cfg") == OK:
+		_empty_settlement_start = startup.get_value("presentation", "empty_settlement_start", false)
+		if _empty_settlement_start: speed_index = 0
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--capture="):
 			_capture_path = arg.get_slice("=", 1)
@@ -185,6 +191,7 @@ func _on_view(reply: Dictionary) -> void:
 		return
 	view = reply["view"]
 	world.sync(view)
+	if _empty_settlement_start: _refresh_settlement_route()
 	if world.views.has(_selected):
 		world.views[_selected].set_selected(true)
 	elif _selected != "" and _selected != "great_work" and not _selected.begins_with("carrier_"):
@@ -339,7 +346,7 @@ func _build_environment() -> void:
 	add_child(_basin_terrain)
 	_build_environment_assets()
 	_build_ecological_scatter()
-	if not has_meta("empty_map"):
+	if not has_meta("empty_map") and not _empty_settlement_start:
 		_build_presentation_routes(map)
 		_load_carrier_route(map)
 
@@ -627,6 +634,7 @@ func _build_carrier_views() -> void:
 	for i in range(3):
 		var carrier := MeshInstance3D.new()
 		carrier.mesh = mesh
+		carrier.hide()
 		carrier.scale = Vector3.ONE * 0.9
 		carrier.set_meta("asset", "unit_general_carrier_a")
 		carrier.set_meta("carrier_id", "carrier_%d" % (i + 1))
@@ -646,8 +654,10 @@ func _build_carrier_views() -> void:
 
 
 func _update_carrier_views(delta: float) -> void:
-	if _carrier_views.is_empty() or view.is_empty() or _carrier_route.size() < 2:
-		return
+	if _carrier_views.is_empty(): return
+	var visible_route := not view.is_empty() and _carrier_route.size() >= 2
+	for carrier in _carrier_views: carrier.visible = visible_route
+	if not visible_route: return
 	var active := false
 	for facility in view.get("facilities", {}).values():
 		if facility.get("building", "") in ["silicate_pit", "mineral_washery"] and facility.get("status", "") == "running":
@@ -750,3 +760,35 @@ void fragment() {
 func _apply_season(season: String) -> void:
 	if _ground_mat:
 		_ground_mat.albedo_color = _ground_mat.albedo_color.lerp(SEASON_TINTS.get(season, SEASON_TINTS["bloom"]), 0.2)
+
+
+func _refresh_settlement_route() -> void:
+	# No prefabricated roads or crossing. Walkers appear only between player-built entities
+	# with an entirely dry connecting segment; these are visual walks, not simulated cargo.
+	var ids: Array = []
+	for id in world.views:
+		if world.views[id].kind != "site": ids.append(id)
+	ids.sort()
+	var signature := ",".join(PackedStringArray(ids))
+	if signature == _settlement_route_ids: return
+	_settlement_route_ids = signature
+	_carrier_route.clear()
+	for i in ids.size():
+		for j in range(i + 1, ids.size()):
+			var a: Vector3 = world.views[ids[i]].position
+			var b: Vector3 = world.views[ids[j]].position
+			var samples: Array[Vector3] = []
+			var dry := true
+			var steps := maxi(2, ceili(a.distance_to(b) / 1.0))
+			for step in range(steps + 1):
+				var point := a.lerp(b, float(step) / steps)
+				if not _basin_terrain.has_dry_footprint_at(point.x, point.z):
+					dry = false
+					break
+				point.y = _basin_terrain.height_at(point.x, point.z) + 0.32
+				samples.append(point)
+			if dry:
+				_carrier_route.assign(samples)
+				samples.reverse()
+				_carrier_route.append_array(samples.slice(1))
+				return

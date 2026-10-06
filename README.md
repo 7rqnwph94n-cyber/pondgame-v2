@@ -2,7 +2,7 @@
 
 Pondgame v2 is a chemistry-driven alien city builder. The player builds a civilisation whose bodies, farms, industries, settlements and culture emerge from the chemistry of its world.
 
-The current playable slice uses a Godot client over the Python economy simulation. Run `godot --path client` from this directory with Python 3.10+ available; see [client instructions](client/README.md). The normal launch uses the provisional `candidate_playable_slice_v1` overlay. The v0.2 baseline remains separate.
+The current playable slice uses a Godot client over the Python economy simulation. Run `godot --path client` from this directory with Python 3.10+ available; see [client instructions](client/README.md). The normal launch starts paused on an empty basin, with a founding crew and starter supplies, using `candidate_playable_slice_v1` followed by `empty_settlement_start_v1`. The v0.2 baseline remains separate.
 
 `main` is the integrated source of truth for the game, documentation and agent exchange. Start new work from current `origin/main`; the milestone and visual branches preserve their development history. Read [the agent exchange](docs/exchange/README.md), [current project state](docs/PROJECT_STATUS.md) and [slice charter](docs/PLAYABLE_SLICE_CHARTER.md) before continuing.
 

@@ -85,6 +85,12 @@ def validate_definitions(defs: dict[str, Any]) -> list[str]:
             if int(good) != good:
                 errors.append(f"recipe {recipe_id}: inputs must be whole cargo units")
 
+    party = defs.get("starting_state", {}).get("founding_party", {})
+    if party:
+        if party.get("tier") not in defs.get("residences", {}):
+            errors.append("founding_party: unknown residence tier")
+        if not isinstance(party.get("population"), int) or party["population"] <= 0:
+            errors.append("founding_party: population must be a positive integer")
     services = defs.get("services", {})
     buildings = defs.get("buildings", {})
     for building_id, building in buildings.items():
