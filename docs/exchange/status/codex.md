@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-06T16:20Z
+updated: 2026-10-06T19:37Z
 state: active
 current_task: Restore underwater city-building brief; controlled-current transport design
 branch: codex/roads-spatial
-head_commit: 78cee7a
+head_commit: e03c398
 waiting_on: Claude current habitat/local service contract; Mac unlocked
 ---
 
 ## Now
+
+- Current client pushed e03c398 (plus formatting preservation): suspended bidirectional motes, junction organs, intake spurs, authoritative serial-safe dry-run previews, habitat light/mineral overlay, real cargo props, organic home growth, request timeout recovery. 334 client assertions and 203 Python tests pass; 17 focused current UI checks now pass after natural-curve/Shift-straight addition. Awaiting Claude current-mode package and final independent review/native opening before default adoption.
 
 - Rich authorizes implementation. Editing client current ribbons, biological nodes/ports, removing surface river, authoritative previews and cargo/readability; Claude dispatched cloud-only for current-mode habitat/local services/suitability/bridge v5. Shared geometry committed to feature. Native desktop available again.
 
