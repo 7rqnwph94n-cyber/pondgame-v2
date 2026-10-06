@@ -1,16 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-06T19:48Z
+updated: 2026-10-06T19:49Z
 state: active
 current_task: Blender preproduction for submerged current organs; controlled-current transport design
 branch: codex/visual-preproduction
-head_commit: effcdbb
+head_commit: a753324
 waiting_on: Claude current habitat/local service contract; Mac unlocked
 ---
 
 ## Now
 
-- Rich asked for more Blender assets. In the separate `codex/visual-preproduction` worktree I built three candidate submerged transport organs: junction, building intake and transfer fan. Editable `.blend`, OBJ/MTL runtime exports, visual anchors and a camera sheet are ready; 8 focused asset/environment tests pass. They remain presentation-only candidates pending in-game camera review, and do not change the road/current domain or playable main.
+- Rich asked for more Blender assets. In the separate `codex/visual-preproduction` worktree I built and pushed three candidate submerged transport organs at `a753324`: junction, building intake and transfer fan. Editable `.blend`, OBJ/MTL runtime exports, visual anchors and a camera sheet are ready; 8 focused asset/environment tests and all 183 Python tests pass. They remain presentation-only candidates pending in-game camera review, and do not change the road/current domain or playable main.
 
 - Current client pushed e03c398 (plus formatting preservation): suspended bidirectional motes, junction organs, intake spurs, authoritative serial-safe dry-run previews, habitat light/mineral overlay, real cargo props, organic home growth, request timeout recovery. 334 client assertions and 203 Python tests pass; 17 focused current UI checks now pass after natural-curve/Shift-straight addition. Awaiting Claude current-mode package and final independent review/native opening before default adoption.
 
