@@ -26,6 +26,7 @@ from .inventory import Inventory, add_goods
 from .morphology import ResearchProject, capability
 from .production import Facility
 from .residences import NORMAL, Residence
+from .spatial import SpatialState
 from .trade import TradeState
 from .workforce import Job, allocate
 
@@ -130,6 +131,8 @@ class FoodEmergency:
         held = sum(store.get(good) for store in sim.stores.values())
         held += sum(r.buffers.get(good, 0.0) for r in sim.residences.values())
         held += sim.founder_food_buffer if good == "staple" else 0.0
+        if sim.spatial is not None:
+            held += sim.spatial.held(good)
         demand = 0.0
         for residence in sim.residences.values():
             definition = residence.definition(sim.defs)
@@ -226,6 +229,7 @@ class Simulation:
         self.founders_remaining = int(self.founding_rules.get("population", 0))
         self.founder_food_buffer = 0.0
         self.founder_food_shortage = False
+        self.spatial: SpatialState | None = SpatialState(self) if defs.get("spatial", {}).get("enabled") else None
         self._load_starting_state()
 
     # ------------------------------------------------------------------ setup
@@ -241,10 +245,24 @@ class Simulation:
                 return candidate
 
     def id_in_use(self, entity_id: str) -> bool:
-        return entity_id in self.facilities or entity_id in self.residences or entity_id in self.sites
+        return (entity_id in self.facilities or entity_id in self.residences or entity_id in self.sites
+                or (self.spatial is not None and entity_id in self.spatial.placements))
 
     def store(self, district: str) -> Inventory:
         return self.stores[district]
+
+    def local_store(self, entity_id: str, district: str) -> Inventory:
+        """Where an entity's goods are: its own depot in spatial mode, else the district store."""
+        if self.spatial is not None and entity_id in self.spatial.depots:
+            return self.spatial.depots[entity_id]
+        return self.stores[district]
+
+    def is_connected(self, entity_id: str) -> bool:
+        """Non-spatial scenarios have no roads, so everything is connected."""
+        return self.spatial is None or self.spatial.connected(entity_id)
+
+    def services_for(self, residence: Residence) -> set[str]:
+        return self.services.get(residence.district, set()) if self.is_connected(residence.id) else set()
 
     def _load_starting_state(self) -> None:
         start = self.defs["starting_state"]
@@ -287,7 +305,7 @@ class Simulation:
     def workforce_supply(self, district: str) -> dict[str, float]:
         supply = {c: 0.0 for c in self.defs["workforce"]["classes"]}
         for residence in self.residences.values():
-            if residence.district == district:
+            if residence.district == district and self.is_connected(residence.id):
                 job_class, wp = residence.workforce(self.defs, self.second)
                 supply[job_class] += wp
         if district == self.districts[0] and self.founders_remaining and not self.founder_food_shortage:
@@ -316,7 +334,7 @@ class Simulation:
         for residence in sorted(self.residences.values(), key=lambda r: r.order):
             if not self.founders_remaining:
                 break
-            if residence.tier != self.founding_rules["tier"] or residence.state != NORMAL:
+            if residence.tier != self.founding_rules["tier"] or residence.state != NORMAL or not self.is_connected(residence.id):
                 continue
             arrived = min(self.founders_remaining, int(residence.capacity(self.defs) - residence.population))
             if arrived <= 0:
@@ -439,7 +457,7 @@ class Simulation:
         for district in self.districts:
             jobs: list[Job] = []
             for facility in self.facilities.values():
-                if facility.district != district or facility.paused:
+                if facility.district != district or facility.paused or not self.is_connected(facility.id):
                     continue
                 rank = priorities.get(facility.category, len(priorities)) if facility.labour_priority is None else facility.labour_priority
                 for job_class, required in facility.definition.get("jobs", {}).items():
@@ -484,7 +502,7 @@ class Simulation:
             self.services[district] = {
                 service_id for service_id, service in self.defs["services"].items()
                 if any(f.district == district and f.building_id in service["provided_by"] and not f.paused and f.staffing >= min_staff
-                       for f in self.facilities.values())
+                       and self.is_connected(f.id) for f in self.facilities.values())
             }
             if self.upkeep.state == UNPAID:
                 self.services[district].discard(self.upkeep.service)
@@ -503,14 +521,15 @@ class Simulation:
         if wanted <= EPS:
             return 0.0
         ready = any(s.active and s.district == district and s.materials_complete_at is not None and s.physical_remaining() > EPS
+                    and (s.kind != "building" or self.is_connected(s.id))
                     and not (s.kind == "great_work_stage" and self.great_work.paused) for s in self.sites.values())
         return wanted if ready else 0.0
 
     def _residences_step(self) -> None:
         for residence in self.residences.values():
-            residence.refill(self.defs, self.store(residence.district))
+            residence.refill(self.defs, self.local_store(residence.id, residence.district))
         for residence in self.residences.values():
-            store = self.store(residence.district)
+            store = self.local_store(residence.id, residence.district)
             residence.consume(self.defs, store, self.dt)
             if residence.short_this_step:
                 self.diag.record_shortage(residence)
@@ -518,7 +537,7 @@ class Simulation:
             if residence.evolution_target:
                 morph = self.defs["residences"][residence.evolution_target]["evolution"].get("requires_morphology")
                 has_morph = morph is None or (morph in residence.expressed.values() and self.second >= residence.conversion_until)
-                blockers = residence.step_evolution(self.defs, store, self.services[residence.district], has_morph,
+                blockers = residence.step_evolution(self.defs, store, self.services_for(residence), has_morph,
                                                     self.dt, self.events, stamp(self.second))
                 self.diag.record_evolution_wait(residence.id, blockers)
 
@@ -528,12 +547,15 @@ class Simulation:
         claims += [(p.priority, p.order, p) for p in self.research if p.active]
         for _, _, claimant in sorted(claims, key=lambda c: (c[0], c[1])):
             district = getattr(claimant, "district", self.districts[0])
-            claimant.deliver_from(self.store(district), self.second)
+            claimant.deliver_from(self.local_store(claimant.id, district), self.second)
         physical = dict(self.construction_pool)
         coordinator = dict(self.coordinator_pool)
         for site in active_sites:
             if site.kind == "great_work_stage" and self.great_work.paused:
                 self.diag.record_site_wait(site, ["paused"])
+                continue
+            if site.kind == "building" and not self.is_connected(site.id):
+                self.diag.record_site_wait(site, ["road_disconnected"])
                 continue
             used_p, used_c = site.apply_labour(physical[site.district], coordinator[site.district], self.dt)
             physical[site.district] -= used_p
@@ -603,7 +625,8 @@ class Simulation:
             return
         rules = self.defs["population"]
         free = [r for r in sorted(self.residences.values(), key=lambda r: r.order)
-                if r.population + 1.0 <= r.capacity(self.defs) + EPS and r.emigration_rate == 0.0]
+                if r.population + 1.0 <= r.capacity(self.defs) + EPS and r.emigration_rate == 0.0
+                and self.is_connected(r.id)]
         if not free:
             self.diag.record_growth_block("no_free_capacity")
             return
@@ -650,6 +673,8 @@ class Simulation:
         self.upkeep.step(self)
         self.food_emergency.update(self)
         self._allocate_workforce()
+        if self.spatial is not None:
+            self.spatial.step(self.dt)
         self._residences_step()
         self._construction_step()
         self._research_step()
@@ -691,6 +716,8 @@ class Simulation:
         for residence in self.residences.values():
             add_goods(totals, residence.evolution_reserved)
         add_goods(totals, self.trade.in_transit())
+        if self.spatial is not None:
+            add_goods(totals, self.spatial.custody())
         return totals
 
 

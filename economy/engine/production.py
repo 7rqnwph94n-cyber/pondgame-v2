@@ -79,7 +79,8 @@ class Facility:
         if not self.recipe_id:
             return
         recipe = recipes[self.recipe_id]
-        store = ctx.store(self.district)
+        # Spatial mode: the facility's own depot; otherwise the district store.
+        store = ctx.local_store(self.id, self.district) if hasattr(ctx, "local_store") else ctx.store(self.district)
 
         def stall(cause: str, detail: str = "") -> None:
             self.status, self.status_detail = cause, detail

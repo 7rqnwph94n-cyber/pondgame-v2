@@ -47,7 +47,7 @@ def observe(sim) -> dict[str, Any]:
         },
         "sites": {s.id: {"target": s.target, "kind": s.kind, "state": s.state, "missing": s.missing()}
                   for s in sim.sites.values() if s.active},
-        "residences": {r.id: {**r.presentation_state(defs, sim.services.get(r.district, set())), "order": r.order}
+        "residences": {r.id: {**r.presentation_state(defs, sim.services_for(r)), "order": r.order}
                        for r in sim.residences.values()},
         "services": sorted(sim.services.get(district, set())),
         "researched": sorted(sim.researched),
