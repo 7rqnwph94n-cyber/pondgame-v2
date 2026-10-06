@@ -112,7 +112,11 @@ func sync(view: Dictionary) -> void:
 		if v.kind == "site":         # commissioned: same id, same slot
 			v.complete_as("facility")
 		v.set_condition_state("paused" if f.get("paused", false) else f.get("status", "idle"))
+		if f.get("cycle_progress") != null: v.set_recipe_state("", float(f["cycle_progress"]), "")
 		seen[id] = true
+	for id in spatial_placements:
+		if views.has(id) and not spatial_placements[id].get("connected", false):
+			views[id].set_condition_state("road_disconnected")
 	for id in views.keys():
 		if not seen.has(id):
 			views[id].queue_free()
@@ -160,14 +164,14 @@ func placement_reason(point: Vector3, yaw: float, footprint: Vector2 = Vector2(7
 			var sample := point + Vector3(x, 0, z).rotated(Vector3.UP, yaw)
 			if absf(sample.x) > BasinTerrain.SIZE / 2 - 1 or absf(sample.z) > BasinTerrain.SIZE / 2 - 1:
 				return "Outside the map"
-			if terrain.channel_distance_at(Vector2(sample.x, sample.z)) < 7.0:
+			if not terrain.submerged and terrain.channel_distance_at(Vector2(sample.x, sample.z)) < 7.0:
 				return "Too close to water"
 			var height: float = terrain.height_at(sample.x, sample.z)
 			low = minf(low, height)
 			high = maxf(high, height)
 	if high - low > 1.5: return "Ground too steep"
 	if spatial_enabled and road_network != null:
-		if road_network.footprint_overlaps_road(point, yaw, footprint): return "Footprint overlaps road"
+		if road_network.footprint_overlaps_road(point, yaw, footprint): return "Footprint overlaps current lane"
 		var connection: String = road_network.connection_reason(point, yaw, footprint)
 		if connection != "": return connection
 	for obstacle in obstacles:

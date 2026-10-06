@@ -10,6 +10,8 @@ var has_ground := false
 var _ghost: MeshInstance3D
 var _footprint: MeshInstance3D
 var _entrance_marker: MeshInstance3D
+var _branch: MeshInstance3D
+var _branch_signature := ""
 var _material: StandardMaterial3D
 
 
@@ -55,6 +57,7 @@ func configure(definition: String, style: Dictionary) -> void:
 
 func update_at(camera: Camera3D, screen: Vector2, world: Node3D, over_ui: bool) -> void:
 	has_ground = false
+	if _branch: _branch.hide()
 	visible = not over_ui
 	if over_ui: return
 	var ground := ground_at(camera, screen, world.terrain)
@@ -90,3 +93,31 @@ static func ground_at(camera: Camera3D, screen: Vector2, terrain: Node3D) -> Dic
 			return {"hit": true, "point": point}
 		last_distance = float(distance)
 	return {"hit": false}
+
+
+func set_validation(value: String) -> void:
+	reason = value
+	_material.albedo_color = Color(0.3, 1.0, 0.55, 0.45) if reason == "" else Color(1.0, 0.22, 0.18, 0.45)
+
+
+func show_connection(data: Dictionary, terrain: Node3D) -> void:
+	var spur = data.get("spur")
+	if not spur is Array or spur.size() != 2: return
+	if _branch == null:
+		_branch = MeshInstance3D.new()
+		_branch.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(_branch)
+	_branch.show()
+	var signature := str(spur) + str(point) + str(yaw)
+	if signature == _branch_signature: return
+	_branch_signature = signature
+	var a := Vector3(float(spur[0][0]), terrain.height_at(float(spur[0][0]), float(spur[0][1])) + 0.85, float(spur[0][1]))
+	var b := Vector3(float(spur[1][0]), terrain.height_at(float(spur[1][0]), float(spur[1][1])) + 0.85, float(spur[1][1]))
+	var side := Vector3(-(b.z - a.z), 0, b.x - a.x).normalized() * 0.18
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for vertex in [a + side, b - side, b + side, a + side, a - side, b - side]:
+		st.add_vertex((vertex - point).rotated(Vector3.UP, -yaw))
+	st.generate_normals()
+	st.set_material(_material)
+	_branch.mesh = st.commit()

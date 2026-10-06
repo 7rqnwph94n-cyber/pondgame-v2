@@ -84,9 +84,10 @@ func set_recipe_state(_input_state: String, progress: float, _output_state: Stri
 func set_construction_progress(progress: float) -> void:
 	if _scaffold == null:
 		_scaffold = MeshInstance3D.new()
-		var box := BoxMesh.new()
-		box.size = Vector3(6, 1, 6)
-		_scaffold.mesh = box
+		var bud := SphereMesh.new()
+		bud.radius = 2.8
+		bud.height = 1.8
+		_scaffold.mesh = bud
 		var mat := StandardMaterial3D.new()
 		mat.albedo_color = Color(0.6, 0.65, 0.68, 0.45)
 		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
@@ -98,7 +99,8 @@ func set_construction_progress(progress: float) -> void:
 	var done := progress >= 0.999
 	_scaffold.visible = not done
 	if _body:
-		_body.visible = done
+		_body.visible = true
+		_body.scale = Vector3.ONE * lerpf(0.12, 1.0, clampf(progress, 0, 1))
 
 
 func set_condition_state(value: String) -> void:
@@ -163,8 +165,8 @@ func _rebuild_body() -> void:
 		_body.queue_free()
 	var mesh: ArrayMesh = null
 	var asset := ""
-	if kind == "residence":
-		asset = _style.get("residence_tiers", {}).get(definition_id, "")
+	if kind == "residence" or definition_id == "shelter":
+		asset = _style.get("residence_tiers", {}).get(definition_id, _style.get("residence_tiers", {}).get("shelter", ""))
 	else:
 		asset = _style.get("buildings", {}).get(definition_id, "")
 	if asset != "":
@@ -182,6 +184,20 @@ func _rebuild_body() -> void:
 	instance.set_meta("asset", asset if mesh else "placeholder")
 	_body = instance
 	add_child(_body)
+	if kind == "residence" and definition_id != "shelter":
+		var count := 3 if definition_id == "stable" else 5
+		for i in range(count):
+			var chamber := MeshInstance3D.new()
+			var bud := SphereMesh.new()
+			bud.radius = 0.72
+			bud.height = 1.9
+			chamber.mesh = bud
+			chamber.position = Vector3(cos(i * TAU / count) * 2.0, 1.4, sin(i * TAU / count) * 2.0)
+			var material := StandardMaterial3D.new()
+			material.albedo_color = Color("#8bbea2") if definition_id == "stable" else Color("#d7bc91")
+			material.roughness = 0.35
+			chamber.material_override = material
+			_body.add_child(chamber)
 
 
 func _placeholder_mesh() -> Mesh:

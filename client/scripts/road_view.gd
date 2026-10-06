@@ -22,10 +22,22 @@ var _preview: MeshInstance3D
 var _marker: MeshInstance3D
 var _anchor_marker: MeshInstance3D
 var _preview_signature := ""
+var current_medium := false
+var _flow_material: ShaderMaterial
+var _organs: Node3D
+var _intakes: Node3D
+var _ports: MeshInstance3D
+var _port_signature := ""
 
 
 func configure(view_world: Node3D) -> void:
 	world = view_world
+	_organs = Node3D.new()
+	add_child(_organs)
+	_intakes = Node3D.new()
+	add_child(_intakes)
+	_ports = MeshInstance3D.new()
+	add_child(_ports)
 	terrain = world.terrain
 	_road_mesh = MeshInstance3D.new()
 	add_child(_road_mesh)
@@ -60,7 +72,10 @@ func sync(spatial: Dictionary) -> void:
 		for road in roads.values():
 			var points: Array = road.get("points", []) if road is Dictionary else road
 			for i in range(points.size() - 1): strips.append([_point(points[i]), _point(points[i + 1])])
-		_road_mesh.mesh = _strips_mesh(strips, Color("#586751"), false)
+		_road_mesh.mesh = _strips_mesh(strips, Color("#69d9bc") if current_medium else Color("#586751"), false)
+		_rebuild_organs()
+	_sync_ports(spatial.get("placements", {}))
+	if _flow_material: _flow_material.set_shader_parameter("clock", float(spatial.get("second", 0)))
 	var anchor_data = spatial.get("anchor")
 	var anchor = anchor_data.get("position") if anchor_data is Dictionary else anchor_data
 	_anchor_marker.visible = anchor is Array and anchor.size() >= 2
@@ -83,7 +98,7 @@ func finish() -> void:
 func _point(pair: Array) -> Vector3:
 	var x := float(pair[0])
 	var z := float(pair[1])
-	return Vector3(x, terrain.height_at(x, z) + 0.08, z)
+	return Vector3(x, terrain.height_at(x, z) + (0.85 if current_medium else 0.08), z)
 
 
 func nearest(flat: Vector2) -> Dictionary:
@@ -136,7 +151,7 @@ func update_at(camera: Camera3D, screen: Vector2, over_ui: bool) -> void:
 func ground_reason(candidate: Vector3) -> String:
 	if absf(candidate.x) > BasinTerrain.SIZE / 2 - width or absf(candidate.z) > BasinTerrain.SIZE / 2 - width:
 		return "Outside the map"
-	if terrain.channel_distance_at(Vector2(candidate.x, candidate.z)) < water_margin:
+	if not current_medium and terrain.channel_distance_at(Vector2(candidate.x, candidate.z)) < water_margin:
 		return "Road cannot cross water"
 	for obstacle in world.obstacles:
 		var flat := Vector3(candidate.x, obstacle.get_center().y, candidate.z)
@@ -179,10 +194,14 @@ func _strips_mesh(strips: Array, colour: Color, overlay: bool) -> ArrayMesh:
 		for i in range(steps):
 			var p := Vector2(a.x, a.z).lerp(Vector2(b.x, b.z), float(i) / steps)
 			var q := Vector2(a.x, a.z).lerp(Vector2(b.x, b.z), float(i + 1) / steps)
-			for vertex in [p + side, q - side, q + side, p + side, p - side, q - side]:
-				st.add_vertex(Vector3(vertex.x, terrain.height_at(vertex.x, vertex.y) + 0.1, vertex.y))
+			var vertices := [p + side, q - side, q + side, p + side, p - side, q - side]
+			var uvs := [Vector2(float(i), 1), Vector2(float(i+1), 0), Vector2(float(i+1), 1), Vector2(float(i), 1), Vector2(float(i), 0), Vector2(float(i+1), 0)]
+			for n in vertices.size():
+				var vertex: Vector2 = vertices[n]
+				st.set_uv(uvs[n])
+				st.add_vertex(Vector3(vertex.x, terrain.height_at(vertex.x, vertex.y) + (0.85 if current_medium and not overlay else 0.15), vertex.y))
 	st.generate_normals()
-	st.set_material(_material(colour, overlay))
+	st.set_material(_current_material() if current_medium and not overlay else _material(colour, overlay))
 	return st.commit()
 
 
@@ -206,12 +225,12 @@ func configure_rules(rules: Dictionary) -> void:
 
 
 func connection_reason(centre: Vector3, yaw: float, footprint: Vector2) -> String:
-	if roads.is_empty(): return "Draw a road first (T)"
+	if roads.is_empty(): return "Grow a current lane first (T)"
 	# Entrance lies on the local +Z face, one metre outside the footprint.
 	var entrance := centre + Vector3(0, 0, footprint.y / 2 + 1).rotated(Vector3.UP, yaw)
 	var close := nearest(Vector2(entrance.x, entrance.z))
 	if close.is_empty() or close["distance"] > attach_distance:
-		return "Entrance must meet a road · R rotate"
+		return "Intake must meet a current lane · R rotate"
 	return ""
 
 
@@ -244,3 +263,95 @@ func pick(camera: Camera3D, screen: Vector2) -> String:
 				best = distance
 				result = id
 	return result
+
+
+func set_validation(value: String) -> void:
+	reason = value
+	var colour := Color(0.3, 1, 0.55, 0.6) if reason == "" else Color(1, 0.2, 0.15, 0.6)
+	_marker.material_override.albedo_color = colour
+	var signature := "%s/%s/%s" % [str(start), str(point), reason]
+	if has_start and signature != _preview_signature:
+		_preview_signature = signature
+		_preview.mesh = _strips_mesh([[start, point]], colour, true)
+
+
+func _current_material() -> ShaderMaterial:
+	if _flow_material != null: return _flow_material
+	var shader := Shader.new()
+	shader.code = """
+shader_type spatial;
+render_mode unshaded, cull_disabled, depth_draw_never;
+uniform float clock = 0.0;
+void fragment() {
+	float edge = pow(max(0.0, 1.0 - abs(UV.y * 2.0 - 1.0)), 2.0);
+	float side = UV.y < 0.5 ? 1.0 : -1.0;
+	float bead = pow(max(0.0, sin(UV.x * 3.0 - clock * side * 1.7)), 18.0);
+	float strands = pow(max(0.0, cos((UV.y - 0.5) * 19.0)), 8.0);
+	ALBEDO = mix(vec3(0.12, 0.49, 0.42), vec3(0.58, 0.94, 0.78), bead);
+	EMISSION = ALBEDO * bead * 0.55;
+	ALPHA = edge * (0.055 + strands * 0.12 + bead * 0.55);
+}
+"""
+	_flow_material = ShaderMaterial.new()
+	_flow_material.shader = shader
+	return _flow_material
+
+
+func _rebuild_organs() -> void:
+	for child in _organs.get_children(): child.queue_free()
+	if not current_medium: return
+	var seen := {}
+	for road in roads.values():
+		var points: Array = road.get("points", [])
+		for pair in points:
+			var key := str(pair)
+			if seen.has(key): continue
+			seen[key] = true
+			_add_organ(_point(pair), 0.6)
+
+
+func _add_organ(point_at: Vector3, radius: float) -> void:
+	var organ := Node3D.new()
+	organ.position = point_at
+	_organs.add_child(organ)
+	for i in range(5):
+		var lobe := MeshInstance3D.new()
+		var sphere := SphereMesh.new()
+		sphere.radius = radius * 0.42
+		sphere.height = radius * 1.6
+		lobe.mesh = sphere
+		lobe.position = Vector3(cos(i * TAU / 5) * radius, -0.32, sin(i * TAU / 5) * radius)
+		lobe.rotation.z = 0.25
+		var material := _material(Color("#3c967e"), false)
+		material.roughness = 0.32
+		material.emission_enabled = true
+		material.emission = Color("#356c59")
+		material.emission_energy_multiplier = 0.25
+		lobe.material_override = material
+		organ.add_child(lobe)
+
+
+func _sync_ports(placements: Dictionary) -> void:
+	var strips: Array = []
+	var ports: Array = []
+	for placement in placements.values():
+		if placement.get("kind") != "pile" and placement.get("entrance") is Array:
+			ports.append({"point": _point(placement["entrance"]), "connected": placement.get("connected", false)})
+		if placement.get("kind") == "pile" or not placement.get("connected", false): continue
+		var attach = placement.get("attach")
+		var entrance = placement.get("entrance")
+		if attach is Array and entrance is Array: strips.append([_point(attach), _point(entrance)])
+	var signature := str(strips) + str(ports)
+	if signature == _port_signature: return
+	_port_signature = signature
+	for child in _intakes.get_children(): child.queue_free()
+	for port in ports:
+		var cup := MeshInstance3D.new()
+		var ring := TorusMesh.new()
+		ring.inner_radius = 0.3
+		ring.outer_radius = 0.65
+		cup.mesh = ring
+		cup.position = port["point"]
+		cup.material_override = _material(Color("#73d6b2") if port["connected"] else Color("#f39863"), false)
+		_intakes.add_child(cup)
+	_ports.mesh = _strips_mesh(strips, Color("#69d9bc"), false)

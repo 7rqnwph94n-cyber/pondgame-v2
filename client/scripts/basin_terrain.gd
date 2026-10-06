@@ -11,9 +11,11 @@ const CHANNEL := [
 var _smooth_channel: Array[Vector2] = []
 var _channel_points: Array[Vector2] = []
 var _textures: Dictionary = {}
+var submerged := false
 
 
 func configure_layout(map: Dictionary) -> void:
+	submerged = map.get("submerged", false)
 	_channel_points.clear()
 	for pair in map.get("channel", []):
 		if pair is Array and pair.size() >= 2:
@@ -24,8 +26,9 @@ func build(texture_root: String = "") -> void:
 	_smooth_channel = _sample_channel()
 	_textures = _load_terrain_textures(texture_root)
 	add_child(_terrain_mesh())
-	add_child(_deposition_marks())
-	add_child(_water_mesh())
+	if not submerged:
+		add_child(_deposition_marks())
+		add_child(_water_mesh())
 
 
 func height_at(x: float, z: float) -> float:

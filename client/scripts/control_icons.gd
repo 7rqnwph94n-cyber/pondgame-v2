@@ -2,6 +2,7 @@ extends RefCounted
 ## Small vector UI glyphs, rasterised at runtime so buttons remain crisp.
 static var cache := {}
 const PATHS := {
+ "habitat": '<path d="M10 38C9 13 32 8 46 8C46 29 35 43 18 38M13 43L38 17M24 32L22 22M30 25L40 26"/>',
  "road": '<path d="M8 40V28c0-10 32-8 32-19M17 41V29c0-4 32-7 32-20M12 37v-4M20 24l5-2M34 19l5-3"/>',
  "stock": '<path d="M6 28h14v13H6ZM28 28h14v13H28ZM17 7h14v13H17M6 33h14M28 33h14M17 12h14"/>',
  "reef": '<path d="M24 41V12M24 31l-12-8V11M12 18l-6-5M24 24l12-9V7M36 12l6-6M24 18l-7-8M24 37l14-7v-9M10 41h28"/>',

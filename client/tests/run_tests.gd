@@ -7,7 +7,7 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "empty_start_presentation", "placement", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "empty_start_presentation", "placement", "current_habitat", "bridge"]
 const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
@@ -38,6 +38,7 @@ func _run() -> void:
 	await test_player_controls()
 	test_empty_start_presentation()
 	await test_manual_placement()
+	test_current_habitat()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -495,3 +496,65 @@ func test_manual_placement() -> void:
 	world.free()
 	terrain.free()
 	completed.append("placement")
+
+
+class CurrentTerrainHarness extends Node3D:
+	var submerged := true
+	func height_at(_x: float, _z: float) -> float: return 0.0
+	func channel_distance_at(_point: Vector2) -> float: return 0.0
+
+class PreviewBridgeHarness extends Node:
+	var callbacks: Array[Callable] = []
+	var commands: Array = []
+	func request(_method: String, payload: Dictionary, callback: Callable) -> void:
+		commands.append(payload["cmd"])
+		callbacks.append(callback)
+
+func test_current_habitat() -> void:
+	var terrain := CurrentTerrainHarness.new()
+	var world := WorldView.new()
+	world.configure_terrain(terrain)
+	var lane = preload("res://scripts/road_view.gd").new()
+	lane.configure(world)
+	lane.current_medium = true
+	lane.sync({"second": 10, "roads": {"r": {"points": [[0,0],[10,0]], "length": 10}}, "placements": {"h": {"kind": "residence", "connected": true, "attach": [5,0], "entrance": [5,-1]}}})
+	check(lane._road_mesh.mesh.surface_get_material(0) is ShaderMaterial, "current lanes use suspended flow shader rather than opaque dirt")
+	check(lane._organs.get_child_count() == 2, "current endpoints grow biological junction organs")
+	check(lane._intakes.get_child_count() == 1 and lane._ports.mesh != null, "connected building has a visible intake and branch")
+	check(lane.ground_reason(Vector3(20,0,20)) == "", "current lane permits ordinary liquid habitat without blanket channel exclusion")
+	check(lane.connection_reason(Vector3(5,0,-5), 0, Vector2(7,7)) == "", "building intake can meet current lane")
+	var phase = lane._flow_material.get_shader_parameter("clock")
+	lane.sync({"second": 10, "roads": lane.roads, "placements": {}})
+	check(lane._flow_material.get_shader_parameter("clock") == phase, "current motion uses simulation time and remains still on pause")
+	var habitat = preload("res://scripts/habitat_view.gd").new()
+	habitat.configure(terrain, {"light": {"dark_height": -2.5,"full_height":1}, "extraction_zones":[{"center":[20,0],"radius":8}]})
+	check(not habitat.overlay.visible and habitat.deposits.get_child_count() == 7, "published mineral exposure is visible while suitability overlay stays optional")
+	habitat.toggle()
+	check(habitat.overlay.visible, "habitat view exposes published suitability")
+	check(habitat.in_zone(Vector2(20,0), {"center":[20,0],"radius":8}) and not habitat.in_zone(Vector2(30,0), {"center":[20,0],"radius":8}), "exposure overlay obeys published bounds")
+	var main := PlacementMainHarness.new()
+	var bridge := PreviewBridgeHarness.new()
+	main.bridge = bridge
+	main._preview_last_sent = -1000
+	var a := {"do":"construct","building":"shelter","position":[0,0]}
+	check(main._validate_preview(a) != "", "unverified preview cannot appear valid")
+	check(bridge.commands[0].get("dry_run", false), "preview validates without placing or spending")
+	main._preview_last_sent = -1000
+	var b := {"do":"construct","building":"shelter","position":[10,0]}
+	main._validate_preview(b)
+	bridge.callbacks[0].call({"ok":true})
+	check(not main._preview_ready, "late reply for old cursor location cannot approve a new placement")
+	bridge.callbacks[1].call({"ok":false,"reasons":["spatial:not_connected"]})
+	check(main._validate_preview(b).contains("connected current network"), "authoritative disconnection remains blocked in preview")
+	var home := EntityView.new()
+	home.setup("residence", _style())
+	home.set_entity_identity("grown", "stable")
+	check(home.uses_asset() == "res_shelter_cluster_a" and home._body.get_child_count() == 3, "evolved home retains organic shelter and adds visible living chambers")
+	home.free()
+	main.free()
+	bridge.free()
+	habitat.free()
+	lane.free()
+	world.free()
+	terrain.free()
+	completed.append("current_habitat")
