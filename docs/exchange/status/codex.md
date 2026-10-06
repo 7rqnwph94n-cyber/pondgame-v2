@@ -2,13 +2,15 @@
 agent: codex
 updated: 2026-10-06T16:20Z
 state: active
-current_task: Strict road connections and spatial transport client
+current_task: Restore underwater city-building brief; controlled-current transport design
 branch: codex/roads-spatial
-head_commit: af9f531
+head_commit: 78cee7a
 waiting_on: Native desktop review requires an unlocked Mac
 ---
 
 ## Now
+
+- Rich rejects terrestrial roads and redundant river; brief/reference audit committed 78cee7a. Original Chemical Civilisation GDD already specifies controlled currents. Draft PR #5 must not release dirt roads/water exclusion unchanged. Recommendation: connected biological current lanes and visible intake ports; river becomes an inspectable submerged resource/hazard flow or is removed. Audit compares Pharaoh/Manor Lords with playable main and draft, identifies geography/services/storage/animation gaps, and defines a human-tested submerged neighbourhood acceptance gate. No design recommendation is claimed implemented.
 
 - Strict road integration committed and pushed; draft PR #5. 203 Python tests and 319 Godot client assertions pass. Last-road anchor loophole, collinear graph junctions, nonfinite placement and dry-run ID mutation fixed. Actual carrier meshes use domain positions and remain stationary when the simulation is paused. Default playable settings remain unchanged pending shared obstacle/footprint geometry, authoritative previews, opening-budget acceptance, native click-through and independent review. Mac remains locked; native Claude/Game access unavailable.
 
