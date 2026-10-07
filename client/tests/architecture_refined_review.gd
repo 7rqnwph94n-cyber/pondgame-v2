@@ -8,6 +8,7 @@ var manifest: Dictionary
 var world: Node3D
 var camera: Camera3D
 var models: Array[Node3D] = []
+var labels: Array[Label3D] = []
 var failures: Array[String] = []
 var checks := 0
 
@@ -69,6 +70,10 @@ func run() -> void:
 		visual.set_construction_progress(1)
 		check(visual.running,"commissioned architecture can operate")
 		check(visual.set_low_detail(true),"distance mesh loads")
+		visit(visual.asset)
+		var distant_box := Loader.bounds(visual.asset)
+		for axis in range(3):
+			check(absf(distant_box.size[axis]-box.size[axis]) <= box.size[axis]*.05,"distance silhouette bounds "+record["id"])
 		check(visual.running,"LOD preserves condition")
 		visual.set_recipe_state("present",.25,"present")
 		check(visual.set_low_detail(false),"recipe-progress near mesh restores")
@@ -167,9 +172,16 @@ func run() -> void:
 		if mode == "construction": label.text = ["0%","25% frame","50% shell","75% soft tissue","100% complete"][j]
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		label.position = visual.position+Vector3(0,.1,2.55);world.add_child(label)
+		labels.append(label)
 	if mode == "pitch":
 		camera.size = 29
 		for pitch in [20,38,65]:
+			# At low pitch the tall foreground manor obscured the seed shelter.
+			# Spread the two rows for review; never mistake that occlusion for
+			# an asset mismatch or hide it by selecting a flattering yaw.
+			for j in range(models.size()):
+				models[j].position.z = (floori(float(j)/columns)-.5)*(20 if pitch==20 else 12)
+				labels[j].position = models[j].position+Vector3(0,.1,2.55)
 			camera.position = Vector3(0,sin(deg_to_rad(pitch))*40,cos(deg_to_rad(pitch))*40)
 			camera.look_at(Vector3(0,1,0));await capture("pitch_%d"%pitch)
 	elif mode == "zoom":

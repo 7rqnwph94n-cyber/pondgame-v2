@@ -120,9 +120,10 @@ def tube(col,name,points,radius,mat="chalk",state="Structure",sides=6):
         u=previous_u-tangent*previous_u.dot(tangent) if previous_u is not None else tangent.cross(axis)
         if u.length_squared<.00001:u=tangent.cross(axis)
         u.normalize();v=tangent.cross(u).normalized();previous_u=u
-        taper=1-.12*i/max(1,len(points)-1)
+        taper=1 if closed else 1-.12*i/max(1,len(points)-1)
+        section_radius=radius[i] if isinstance(radius,(list,tuple)) else radius
         for j in range(sides):
-            a=j*math.tau/sides;vertices.append(Vector(p)+radius*taper*(math.cos(a)*u+math.sin(a)*v))
+            a=j*math.tau/sides;vertices.append(Vector(p)+section_radius*taper*(math.cos(a)*u+math.sin(a)*v))
     for i in range(len(points)-1):
         for j in range(sides):faces.append((i*sides+j,i*sides+(j+1)%sides,(i+1)*sides+(j+1)%sides,(i+1)*sides+j))
     faces += [tuple(reversed(range(sides))),tuple((len(points)-1)*sides+j for j in range(sides))]
@@ -142,7 +143,7 @@ def organ(col,p,size,seed=0,kind="home"):
         s=math.sin(t);w=1
         return (p[0]+rx*s*math.cos(a)*scale*w,p[1]+ry*s*math.sin(a)*scale,p[2]+h*math.cos(t)*scale)
     verts=[];faces=[];n=48;rings=32
-    holes=[(-math.pi/2-.65,1.55,.29,.43),(-math.pi/2+.35,1.64,.35,.47),(math.pi/2,1.65,.27,.35)]
+    holes=[(-math.pi/2-.57,1.65,.36,.48),(-math.pi/2+.52,1.37,.20,.31),(math.pi/2+.17,1.65,.27,.35)]
     if kind=="kiln":holes=[(-math.pi/2,1.85,.40,.48)]
     if kind=="store":holes=[]
     for k in range(rings+1):
@@ -178,7 +179,12 @@ def organ(col,p,size,seed=0,kind="home"):
             cc=sum((rel[i]/radii[i])**2 for i in range(3))-1
             distance=(-bb+math.sqrt(max(0,bb*bb-4*aa*cc)))/(2*aa)
             pts.append(q+normal*(distance+.015))
-        tube(col,"continuous grown aperture rim",pts,.042,"resin",sides=8)
+        tube(col,"continuous grown aperture rim",pts,.040,"resin",sides=8)
+        # Protective mineral brow grows around the principal aperture, not two
+        # identical eye-like discs attached to every chamber.
+        if ha==holes[0][0]:
+            brow=[Vector(pts[j])+normal*.025+Vector((0,0,.035)) for j in range(2,19)]
+            tube(col,"grown protective aperture brow",brow,[.04+.06*math.sin(math.pi*i/16) for i in range(17)],"chalk",sides=8)
         # A closed dormant pore has a real silhouette/state change, not an icon.
         shutter_verts=[surface]+[Vector(q)-normal*.01 for q in pts[:-1]]
         shutter_faces=[(0,j+1,(j+1)%40+1) for j in range(40)]
@@ -188,10 +194,17 @@ def organ(col,p,size,seed=0,kind="home"):
         window.rotation_euler=normal.to_track_quat("Z","Y").to_euler()
     for a in (-2.9,-1.76,-.60,.55,1.5):
         tube(col,"asymmetric carapace seam",[point(a+.07*math.sin(t*3),t,1.018) for t in [.12+i*2.8/24 for i in range(25)]],.022,"resin")
+    for a in (-2.80,-.30):
+        tube(col,"protective carbonate shoulder",[point(a+.12*math.sin(t*2),t,1.025) for t in [.28+i*1.75/20 for i in range(21)]],
+             [.04+.035*math.sin(math.pi*i/20) for i in range(21)],"chalk",sides=10)
     # Low organic buttresses, not a shared foundation ring.
-    for j in range(5):
-        a=j*math.tau/5+.27
-        tube(col,"load-bearing root",[point(a,1.65),(p[0]+rx*math.cos(a)*1.1,p[1]+ry*math.sin(a)*1.1,p[2]-h*.45),(p[0]+rx*math.cos(a)*1.24,p[1]+ry*math.sin(a)*1.2,max(.03,p[2]-h*.93))],.06,"chalk")
+    for a in (-3.0,-.25,.85,1.85,2.55):
+        points=[point(a,1.55),point(a,1.9,1.07),
+                (p[0]+rx*math.cos(a)*1.16,p[1]+ry*math.sin(a)*1.16,p[2]-h*.62),
+                (p[0]+rx*math.cos(a)*1.30,p[1]+ry*math.sin(a)*1.27,max(.04,p[2]-h*.93))]
+        tube(col,"grown flared load-bearing root",points,[.075,.09,.115,.15],"chalk",sides=10)
+        end=Vector(points[-1]);tip=end+Vector((.18*math.cos(a+.7),.18*math.sin(a+.7),-.015))
+        tube(col,"forked substrate root",[points[-2],end,tip],[.085,.09,.025],"chalk",sides=8)
     # A coherent grown mantle, not perfect spheres plus ornaments. Warp shell,
     # carved openings, rims and enclosed organs together so they remain fitted.
     bpy.context.view_layer.update()
@@ -199,10 +212,13 @@ def organ(col,p,size,seed=0,kind="home"):
         world=obj.matrix_world.copy();inverse=world.inverted()
         for vertex in obj.data.vertices:
             q=world@vertex.co;rel=q-Vector(p);z=max(-1,min(1,rel.z/h))
-            taper=1.035-.105*z
-            x=rel.x*taper+.075*rx*z*z*math.sin(seed*.75)
-            y=rel.y*taper+.08*ry*z+.035*ry*z*z
-            vertex.co=inverse@Vector((p[0]+x,p[1]+y,q.z))
+            a=math.atan2(rel.y/ry,rel.x/rx)
+            mantle=1+.055*math.sin(a*3+seed*.61)*(1-z*z)
+            taper=1.035-.17*z
+            x=rel.x*taper*mantle+.13*rx*(z+1)*.5*math.sin(seed*.75)
+            y=rel.y*taper*mantle+.14*ry*z+.065*ry*z*z
+            crown=q.z+.07*h*math.sin(a*2+seed*.4)*(1-z*z)
+            vertex.co=inverse@Vector((p[0]+x,p[1]+y,crown))
         obj.data.update()
 
 
@@ -224,16 +240,17 @@ def lattice(col,p,rx,ry,height,levels=2,seed=0):
             inner=[]
             for u,v in outer:
                 a=math.atan2(v-.5,u-.5)
-                inner.append((.5+.31*math.cos(a),.5+.34*math.sin(a)))
+                width=.25+.04*rng.random();depth=.27+.045*rng.random()
+                inner.append((.5+width*math.cos(a),.5+depth*math.sin(a)))
             vertices=[bilinear(u,v) for u,v in outer+inner]
             faces=[(i,(i+1)%8,(i+1)%8+8,i+8) for i in range(8)]
             o=mesh(col,"perforated carbonate support tissue",vertices,faces,"chalk")
-            mod=o.modifiers.new("porous load-bearing thickness","SOLIDIFY");mod.thickness=.09
+            mod=o.modifiers.new("porous load-bearing thickness","SOLIDIFY");mod.thickness=.13
             bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
             bevel=o.modifiers.new("rounded living pore edges","BEVEL");bevel.width=.025;bevel.segments=2
             bpy.ops.object.modifier_apply(modifier=bevel.name)
     for k in range(levels+1):
-        tube(col,"structural web chord",nodes[k]+[nodes[k][0]],.055,sides=8)
+        tube(col,"structural web chord",nodes[k]+[nodes[k][0]],.075,sides=8)
 
 
 def cup(col,p,rx,ry,height,mat="chalk",state="Structure"):
@@ -285,22 +302,37 @@ def leaf(col,p,height,width,angle,mat="growth",seed=0):
 
 def garden(col,p,rx=.5,ry=.5,count=7,seed=0):
     rng=random.Random(seed)
-    cup(col,p,rx,ry,.16)
-    ball(col,"cultivated bed tissue",(p[0],p[1],p[2]+.10),(rx*.76,ry*.75,.06),"growth")
+    # A low branching culture mat grows directly into the host structure. No
+    # pottery-like standalone bowl or perfect circular rim around every bed.
+    for j in range(5):
+        a=j*math.tau/5+.3;r=.3+.12*rng.random()
+        q=(p[0]+rx*r*math.cos(a),p[1]+ry*r*math.sin(a),p[2]+.035)
+        ball(col,"intergrown cultivation cushion",q,(rx*.55,ry*.54,.085),"growth",segments=12)
+        tube(col,"cultivation nutrient root",[q,(p[0]+rx*.8*math.cos(a),p[1]+ry*.8*math.sin(a),p[2]+.03),
+             (p[0]+rx*1.10*math.cos(a),p[1]+ry*1.10*math.sin(a),p[2]-.015)],[.035,.025,.012],"fibre")
     for j in range(count):
         a=rng.random()*math.tau;r=.65*math.sqrt(rng.random())
-        q=(p[0]+rx*r*math.cos(a),p[1]+ry*r*math.sin(a),p[2]+.15)
-        leaf(col,q,.40+rng.random()*.45,.09,a,seed=seed)
+        q=(p[0]+rx*r*math.cos(a),p[1]+ry*r*math.sin(a),p[2]+.08)
+        leaf(col,q,.24+rng.random()*.46,.10+rng.random()*.04,a,seed=seed)
+        if j%2==0:
+            leaf(col,q,.16+rng.random()*.16,.13,a+1.8,"membrane" if j%4==0 else "growth",seed)
+        if j%3==0:
+            ball(col,"retained cultivation bud",(q[0],q[1],q[2]+.08),(.065,.08,.09),"memory" if seed>=8 else "growth",segments=12)
 
 
-def canopy(col,points):
+def canopy(col,points,support_floor=.12):
     # Curved tension membrane, corners physically connected to living supports.
     a,b,c=map(Vector,points);n=10;verts=[];faces=[]
+    centre=(a+b+c)/3
+    def surface(u,v):
+        w=1-u-v;p=a*w+b*u+c*v
+        edge=math.sin(math.pi*u)*math.sin(math.pi*v)+math.sin(math.pi*v)*math.sin(math.pi*w)+math.sin(math.pi*w)*math.sin(math.pi*u)
+        p+=(centre-p)*(.30*edge)
+        p.z-=.38*math.sin(math.pi*u)*math.sin(math.pi*v)*math.sin(math.pi*w)
+        return p
     for i in range(n+1):
         for j in range(n+1-i):
-            u=i/n;v=j/n;p=a*(1-u-v)+b*u+c*v
-            p.z-=.7*math.sin(math.pi*u)*math.sin(math.pi*v)*math.sin(math.pi*(1-u-v))
-            verts.append(p)
+            u=i/n;v=j/n;verts.append(surface(u,v))
     row=[];offset=0
     for i in range(n+1):row.append(offset);offset+=n+1-i
     for i in range(n):
@@ -308,11 +340,12 @@ def canopy(col,points):
             faces.append((row[i]+j,row[i+1]+j,row[i]+j+1))
             if j<n-i-1:faces.append((row[i]+j+1,row[i+1]+j,row[i+1]+j+1))
     mesh(col,"tensioned symbiotic membrane",verts,faces,"membrane")
-    for p,q in ((a,b),(b,c),(c,a)):
-        tube(col,"membrane tensile edge",[p,q],.035,"resin")
+    for edge in ([(i/n,0) for i in range(n+1)],[(1-i/n,i/n) for i in range(n+1)],[(0,1-i/n) for i in range(n+1)]):
+        tube(col,"curved membrane tensile edge",[surface(u,v) for u,v in edge],.040,"resin")
     for p in (a,b,c):
-        tube(col,"grown canopy support",[(p.x,p.y,max(.08,p.z-1.2)),(p.x+.08,p.y,p.z-.5),p],.055,"chalk")
-        for t in (.25,.5,.75):tube(col,"membrane tension vein",[a*(1-t)+b*t,c],.012,"resin")
+        tube(col,"grown branching canopy support",[(p.x,p.y,support_floor),(p.x+.12,p.y+.05,p.z-.5),p],[.16,.10,.045],"chalk",sides=10)
+    for t in (.25,.5,.75):
+        tube(col,"curved membrane tension vein",[surface(t*(1-k/n),k/n) for k in range(n+1)],.012,"resin")
 
 
 def terrace(col,p,rx,ry):
@@ -372,15 +405,15 @@ for tier,name in enumerate(NAMES[:6],1):
         organ(col,(-1.0,1.0,.88),(.83,.88,.87),7)
         terrace(col,(0,.6,1.5),2.2,1.85)
         organ(col,(-.1,.7,2.15),(.85,.92,.7),8)
-        for p in ((-1.45,.25,1.55),(1.35,.8,1.55),(.5,-.65,1.55)):garden(col,p,.36,.4,6,8)
-        canopy(col,[(-1.2,1.5,3.45),(1.2,1.25,3.35),(.9,-.55,3.05)])
+        for j,p in enumerate(((-1.45,.25,1.55),(1.35,.8,1.55),(.5,-.65,1.55))):garden(col,p,.65,.23,9,8+j)
+        canopy(col,[(-1.2,1.5,3.45),(1.2,1.25,3.35),(.9,-.55,3.05)],1.55)
     if tier==6:
         terrace(col,(-.2,.9,2.92),1.36,1.35)
         organ(col,(-.45,1.05,3.42),(.66,.6,.6),9)
         # Encoded curved silica archive leaves instead of an arbitrary crystal crown.
         for j in range(5):
             leaf(col,(-.95+j*.25,1.35,3.1),1.50+.15*math.sin(j),.25,(j-2)*.28,"silica" if j%2==0 else "memory",j)
-        for p in ((-.9,.25,2.97),(.75,.7,2.97)):garden(col,p,.23,.3,4,15)
+        for j,p in enumerate(((-.9,.25,2.97),(.75,.7,2.97))):garden(col,p,.40,.20,6,15+j)
         organ(col,(1.70,.8,1.0),(.45,.8,.92),11)
     # All-tier biological receiving mouth stays unobscured by later upper growth.
     cup(col,(-.65,-1.22,.06),.27,.3,.16,"shell")
@@ -418,7 +451,10 @@ for i in range(3):
     if i==1:
         for k in range(5):
             tube(col,"porous screening gill",[(x-.35+k*.15,-.35,z+.28),(x-.35+k*.15,.1,z+.60),(x-.35+k*.15,.50,z+.28)],.032,"resin")
-organ(col,(-1.45,.85,1.0),(.6,.55,.95),30)
+organ(col,(-1.45,.85,1.0),(.6,.55,.95),30,"store")
+for j in range(2):
+    tube(col,"washery carbonate process backbone",[(-1.75+j*.40,.95,.12),(-1.3+j*.35,1.02,1.8),
+         (-.20+j*.35,.95,1.22),(1.15+j*.30,.78,.30)],[.14,.13,.10,.075],"chalk",sides=10)
 for j in range(5):leaf(col,(-1.9+j*.18,.85,1.9),.8+.2*math.sin(j),.10,j*.4,"membrane",j)
 cup(col,(-1.1,-1.0,.08),.48,.40,.26);goods(col,(-1.1,-1,.19),"raw",8,"Residue",(.3,.25),41)
 utility(col,-1.9,1.25)
@@ -447,15 +483,23 @@ anchor(col,"CleanFlowIn",(-1.76,1.5,.24));anchor(col,"WasteReturnOut",(-1.24,1.5
 # Digester: no household apertures. Sealed asymmetrical muscular fermentation sacs.
 col=group(NAMES[9])
 for j,(p,size) in enumerate((((-.6,.5,1.2),(.95,1.1,1.2)),((.85,.85,.8),(.70,.75,.85)))):
-    ball(col,"sealed fermentation mantle",p,size,"dark")
+    mantle=ball(col,"sealed fermentation mantle",p,size,"dark",segments=32)
+    for vertex in mantle.data.vertices:
+        q=vertex.co;z=q.z/size[2];a=math.atan2(q.y/size[1],q.x/size[0])
+        wave=1+.045*math.cos(a*6+.2*j)*(1-z*z)
+        q.x*=wave*(1-.08*z);q.y*=wave;q.x+=.08*size[0]*z*z
+    mantle.data.update()
     rx,ry,h=size
     for k in range(6):
         a=k*math.tau/6+.17*j
-        tube(col,"pressurised lobe seam",[(p[0]+rx*math.sin(t)*math.cos(a),p[1]+ry*math.sin(t)*math.sin(a),p[2]+h*math.cos(t)) for t in [.13+i*2.84/24 for i in range(25)]],.035,"shell")
+        tube(col,"pressurised lobe seam",[(p[0]+rx*math.sin(t)*math.cos(a)*(1-.08*math.cos(t))+.08*rx*math.cos(t)**2,p[1]+ry*math.sin(t)*math.sin(a),p[2]+h*math.cos(t)) for t in [.13+i*2.84/24 for i in range(25)]],.045,"shell")
 ball(col,"buried containment tissue",(0,.35,.12),(1.6,1.2,.3),"silt")
 lattice(col,(0,.55,.1),1.35,1.18,.7,2,70)
 tube(col,"sealed digestion transfer neck",[(-.2,.5,.85),(.3,.75,.65),(.7,.8,.55)],.21,"membrane","Flow")
 cup(col,(-.7,-.9,.06),.55,.5,.32,"dark");goods(col,(-.7,-.9,.15),"waste",13,"CargoInput",(.35,.28),70)
+tube(col,"contained waste receiving throat",[(-.7,-.62,.19),(-.75,-.40,.22),(-.60,-.18,.37)],
+     [.22,.20,.16],"dark",sides=12)
+tube(col,"enzyme separation tissue",[(.7,.50,.40),(1.25,.16,.28),(1.35,-.2,.24)],.10,"membrane","Flow")
 cup(col,(1.35,-.2,.09),.24,.35,.40,"shell")
 ball(col,"retained enzyme output",(1.35,-.2,.29),(.16,.22,.15),"amber","CargoOutput__repair_enzyme")
 cup(col,(.4,-1.0,.05),.55,.40,.25,"shell");goods(col,(.4,-1,.16),"fertiliser",24,"CargoOutput",(.4,.26),71)

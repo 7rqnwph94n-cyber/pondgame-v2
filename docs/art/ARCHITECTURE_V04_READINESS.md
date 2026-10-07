@@ -20,6 +20,12 @@ This package replaces the v03 roof-only massing candidates for further review. I
 | Rich's six tiers were only names | Six authored visual stages with retained ancestor; tier 3/5 explicitly unbound pending domain design |
 | Close-up detail risked settlement cost | Separate distance meshes at approximately 42% of near geometry, cached runtime scenes and zoom hysteresis |
 | Idle/paused/blocked presentation could invent production | Work deformation changes only on explicit recipe progress; no whole-building pulse or wall-clock production animation |
+| Large lobes and identical paired apertures still read like assembled toys | Stronger coherent carapace warp, unequal main/secondary apertures, protective carbonate brows and shoulder tissue |
+| Stronger roots obscured habitation openings in the first follow-up camera pass | Main load-bearing roots move to side/rear sectors; receiving mouth and inhabited front remain clear |
+| Repeated cultivation bowls read like pot plants | Intergrown culture cushions, nutrient roots, mixed laminae/buds and elongated terrace beds replace bowls |
+| Thin canopy poles sometimes stopped above their supporting surface | Tapered supports reach the specific ground/terrace floor; curved membrane perimeter and matching veins replace straight triangle edges |
+| Processor parts appeared as separate props | Washery carbonate backbone links its process chambers; Digester gains contained receiving throat, shaped pressure mantle and separate enzyme transfer tissue |
+| Closed rim sweep had mismatched start/end radii | Closed tubes now retain one section radius around the seam; taper remains for open roots/veins |
 
 ## Package and reproduction
 
@@ -48,7 +54,7 @@ Passing import tests or a density fixture is not a visual quality judgement. The
 Before normal adoption:
 
 1. Rich's visual review against the approved residence/Store/Washery concepts.
-2. More sculpted carapace/terrace asymmetry and fewer generic perfect lobes if the present silhouettes are still judged too toy-like. Flora should integrate into structure, not merely resemble pot plants.
+2. Judge the stronger carapace asymmetry, unequal apertures and intergrown cultivation in this follow-up. Repeated chamber/court arrangements and clean cream terraces still need comparison with the richer concepts; no amount of extra small props waives that silhouette gate.
 3. A mixed, populated, authoritative settlement review with selected/blocked/dormant neighbours and carriers docking to actual domain-approved ports.
 4. Building-local typed inventory and recipe-progress bindings, with no duplicate/global-stock display.
 5. Claude's six-tier progression and utility dependency proposal, accepted and tested separately from art.
@@ -59,7 +65,8 @@ Refinement remains restricted to these ten assets. Other families remain on hold
 ## Verification evidence, 7 October 2026
 
 - Python regression: 188 tests pass, including self-contained GLB/texture/normal/UV/near-distance manifest validation.
-- Existing default-client regression: 316 assertions pass. Review-only architecture checks: 564 pass, zero errors, including explicit recipe-phase preservation across distance-mesh swaps.
+- Existing default-client regression: 316 assertions pass. Follow-up architecture checks: 1,050 pass, zero errors, including near/distance embedded material/UV/normal validation, silhouette bounds within 5%, and explicit recipe-phase preservation across distance-mesh swaps.
 - Native Godot 4.7.1 Metal Forward+ on this Mac: eight yaw captures, pitches 20/38/65 degrees, three zooms, greyscale, close-up, construction and explicit-stock/state fixtures. Current native captures are `docs/art/renders/architecture_v04/godot_*.png`; Blender detail renders are earlier iteration evidence, not final camera acceptance.
-- Final density fixture after Blender/Python work completed: 100 instances, 8.646ms median / 16.596ms p95, 598 draw calls, 4,868,384 rendered primitives. This is a timed art fixture, not whole-game frame-rate certification; see `density_report.json`. Repeat on the final authoritative settlement before setting a release budget.
-- Close-up assessment: the tier ladder and industrial functions are clearer, but repeated round apertures, thin supports, geometric canopy triangles and discrete planter-like beds remain below the sculpted, integrated concept standard. No concept-parity claim or Rich approval is recorded.
+- Follow-up density fixture after Blender/Python work completed: 100 instances, 8.384ms median / 18.504ms p95, 634 draw calls, 5,399,492 rendered primitives. Geometry rises approximately 11% and draws 6% versus the preceding milestone; median timing improved slightly but p95 worsened, so no overall performance improvement is claimed. This is a timed art fixture, not whole-game frame-rate certification; see `density_report.json`. Repeat on the final authoritative settlement before setting a release budget.
+- Rich's response to the preceding milestone was "this is good. make it all better." This approves continued refinement, not normal-game adoption or the six-tier domain proposal. The follow-up specifically addresses aperture regularity, disconnected/thin supports, geometric canopy boundaries and isolated planter-like beds. Concept-parity and final acceptance remain separate gates.
+- Low-pitch review rows are spread farther apart: previously the foreground Manor obscured the rear Seed Shelter. This corrects a diagnostic layout flaw; it does not certify actual settlement occlusion. The authoritative mixed-settlement gate remains open.
