@@ -90,7 +90,23 @@ Before normal adoption:
 
 Refinement remains restricted to these ten assets. Other families remain on hold.
 
-## Latest texture verification, 7 October 2026
+## Continued surface refinement, 7 October 2026
+
+Rich: "better. continue refinement". Forms remain frozen. This follow-up uses the material-only refresh rather than rebuilding geometry.
+
+- Shell warp is calmer: less restless zigzagging, retaining gentle accretion and broad teal variation.
+- Carbonate gains quiet layered mineral grain with softer, less heavily pitted relief. It remains chalky and matte rather than looking battered.
+- Ceramic uses a warmer fired-mineral palette, subdued firing clouds and finer sintered grain. It is visibly different from the cream carbonate supports under unchanged diagnostic lighting.
+- Membrane filaments, fibrous bundles and branching cultivation grain are now three different surface treatments, not the same texture with different colours.
+- Silica has restrained directional strata; violet memory mineral has interrupted encoded lamellae rather than literal writing or emission. Resin/amber remain quieter focal surfaces.
+
+Verification: 189 Python tests, 316 original-client assertions and 2,826 architecture checks pass. Final native family sheets, close-ups, eight yaws, pitch/zoom, greyscale, state and construction fixtures repeated. SHA-256 comparisons of each primitive's accessor payloads against `f254cc6` confirm all twenty GLBs retain identical indices, positions, normals, UVs and vertex tints. Manifest/anchors remain unchanged. Only surface imagery/materials change.
+
+Final 100-instance fixture: 8.666ms median / 17.395ms p95, 642 draws, 5,430,372 primitives. Previous surface pass was 9.341ms/16.744ms: median lower, tail higher, so no overall performance gain is claimed. Fixture is not whole-game certification. Current `godot_*.png` captures show this pass; earlier milestone images are recoverable in Git.
+
+Review-only status is unchanged. Shared surfaces remain procedural rather than bespoke per-building painting; mixed authoritative settlement, local inventory/progress binding and Rich's final surface acceptance are still open.
+
+## First texture-pass verification, 7 October 2026 (f254cc6)
 
 - 189 Python tests pass. Embedded GLBs have albedo/normal/metallic-roughness textures, UVs and vertex colours; all 36 source maps are 512×512.
 - 316 default-client assertions and 2,826 architecture checks pass, zero errors. Added native checks for roughness presence, green-channel use, spatial variation, map resolution and nonmetallic blue channel on near and distance materials.

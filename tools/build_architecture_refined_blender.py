@@ -22,7 +22,7 @@ bpy.context.preferences.filepaths.save_version=0
 random.seed(41)
 PALETTE={"shell":"174B50","chalk":"C5C3A6","resin":"B4914C","amber":"EEB34D",
          "membrane":"AAD8C3","silica":"8CC9CB","growth":"6B9C57","silt":"615D4E",
-         "dark":"253B37","ceramic":"B7AE91","memory":"77729C","fibre":"859367"}
+         "dark":"253B37","ceramic":"AD987A","memory":"77729C","fibre":"93916C"}
 MATS={};COLS={};ROOTS={};RECORDS=[];STATE={};PHASES={}
 
 
@@ -50,7 +50,7 @@ def surface_maps(key,hexcol):
         return (a*(1-f[None,:])+b*f[None,:])*(1-f[:,None])+(c*(1-f[None,:])+d*f[None,:])*f[:,None]
     broad=noise(4);medium=noise(16);fine=noise(64)
     # Warped, differently spaced accretion lines, not a regular checkerboard.
-    phase=yy*18+1.6*noise(4)+.28*noise(16)
+    phase=yy*18+.55*noise(4)+.10*noise(16)
     bands=(.5+.5*np.cos(math.tau*phase))**10
     pores=np.zeros((n,n))
     for _ in range(135):
@@ -71,30 +71,58 @@ def surface_maps(key,hexcol):
         height=.035*bands+.018*medium
         rough=.59+.09*broad+.08*bands;relief=.025
     elif key=="chalk":
-        variation=.075*broad+.025*fine-.23*pores
-        colour+=medium[:,:,None]*np.array([.022,.013,-.013])
-        height=.06*medium+.015*fine-.20*pores
-        rough=.87+.025*medium+.07*pores;relief=.035
+        lamina=(.5+.5*np.cos(math.tau*(yy*7+.12*broad)))**3
+        variation=.09*broad+.022*fine-.17*pores-.025*lamina
+        colour+=medium[:,:,None]*np.array([.025,.010,-.025])
+        height=.035*medium+.009*fine-.11*pores+.014*lamina
+        rough=.86+.025*medium+.07*pores;relief=.024
     elif key=="ceramic":
         # Fired mineral skin: sintered grains and quiet firing clouds, not metal.
-        variation=.13*broad+.045*medium-.10*pores
-        colour+=broad[:,:,None]*np.array([.025,.004,-.026])
-        height=.035*medium+.022*fine-.06*pores
-        rough=.76+.06*broad+.025*fine;relief=.04
-    elif key in ("membrane","fibre","growth"):
-        veins=(.5+.5*np.cos(math.tau*(xx*24+.60*noise(4))))**14
-        variation=.10*broad+.035*medium-.08*veins
-        height=.045*veins+.012*medium
-        rough={"membrane":.53,"fibre":.78,"growth":.58}[key]+.07*broad+.05*veins
-        relief=.025
+        firing=np.clip(.5+.8*broad+.25*medium,0,1)
+        variation=.10*broad+.032*medium-.08*pores
+        colour-=firing[:,:,None]*np.array([.020,.035,.045])
+        height=.025*medium+.013*fine-.04*pores
+        rough=.73+.08*broad+.025*fine;relief=.028
+    elif key=="membrane":
+        veins=(.5+.5*np.cos(math.tau*(xx*24+.25*noise(4))))**14
+        variation=.065*broad+.020*medium-.035*veins
+        height=.022*veins+.008*medium
+        rough=.51+.06*broad+.035*veins;relief=.018
+    elif key=="fibre":
+        strands=(.5+.5*np.cos(math.tau*(xx*30+.22*noise(4))))**6
+        binding=(.5+.5*np.cos(math.tau*(yy*11+.15*medium)))**8
+        variation=.08*broad-.09*strands-.035*binding
+        height=.030*strands+.012*binding+.005*medium
+        rough=.79+.045*broad+.045*strands;relief=.020
+    elif key=="growth":
+        # Fine branching vascular grain, not the membrane's parallel filaments.
+        left=(.5+.5*np.cos(math.tau*(xx*11+yy*6+.15*broad)))**12
+        right=(.5+.5*np.cos(math.tau*(xx*11-yy*6+.15*broad)))**12
+        veins=np.maximum(left,right)*(.5+.5*(medium+1)*.5)
+        variation=.13*broad+.03*medium-.06*veins
+        colour+=broad[:,:,None]*np.array([.005,.025,-.009])
+        height=.024*veins+.009*medium
+        rough=.55+.07*broad+.025*veins;relief=.020
     elif key=="dark":
         variation=.14*broad+.045*medium
         height=.035*medium+.014*fine
         rough=.62+.10*broad+.035*fine;relief=.035
-    elif key in ("resin","amber","silica","memory"):
+    elif key=="silica":
+        strata=(.5+.5*np.cos(math.tau*(xx*13+yy*9+.12*broad)))**12
+        variation=.065*broad+.018*medium-.025*strata
+        height=.010*medium+.014*strata
+        rough=.36+.06*broad+.045*strata;relief=.012
+    elif key=="memory":
+        # Quiet encoded lamellae in pigment-bearing mineral; no literal script.
+        marks=(.5+.5*np.cos(math.tau*(xx*16+.18*broad)))**16
+        marks*=np.clip(.4+.8*medium,0,1)
+        variation=.08*broad+.02*medium-.065*marks
+        height=.012*medium+.018*marks
+        rough=.48+.06*broad+.04*marks;relief=.015
+    elif key in ("resin","amber"):
         variation=.09*broad+.022*medium
         height=.018*medium+.008*fine
-        rough={"resin":.44,"amber":.48,"silica":.36,"memory":.47}[key]+.065*broad
+        rough={"resin":.44,"amber":.48}[key]+.065*broad
         relief=.016
     else:
         variation=.16*broad+.06*medium+.025*fine
