@@ -1,8 +1,8 @@
 ---
 agent: codex
-updated: 2026-10-07T17:24Z
-state: idle
-current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
+updated: 2026-10-07T17:30Z
+state: working
+current_task: Texture-only refinement of the ten approved architecture forms
 branch: codex/visual-preproduction
 head_commit: 330e202
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
@@ -10,6 +10,7 @@ waiting_on: Rich utility-routing preference; Claude six-tier and utility depende
 
 ## Now
 
+- Rich: "refine textures, the form is good, textures are poor". Freeze building geometry/anchors; replace artificial surface noise with material-specific albedo, height-derived normals and packed roughness. Isolated art checkout only. Native neutral-light and settlement-distance validation follows; this is form approval, not default adoption or gameplay approval.
 - Terrace/material refinement verified: concave/unequal shelves, offset upper chambers, static geometry-following tint across all ten. Corrected modern Multiply export, post-topology colour authoring, raw-fragment coverage and isolated GLTF material flags. 188 Python / 316 original client / 1,726 architecture checks pass. Full native reel reviewed; final density 8.662ms median / 17.530ms p95, 642 draws, 5,430,372 primitives. Remaining façade/support-band/light-organ relationships and authoritative settlement review are open; no concept-parity/default adoption claimed. Publishing isolated art milestone.
 - Material QA caught real export/runtime gaps: legacy Blender Mix path omitted colours; corrected modern node. Boolean-created vertices were unset and raw fragments untinted; re-authoring all component tint after topology edits. Runtime GLTFDocument exposes COLOR_0 but leaves some material multipliers disabled; adding scoped normalisation in the exclusively art-owned architecture_loader.gd (no shared entity/world/bridge edits). Re-export and full native tests follow; no failed candidate published.
 - Rich says "go": continuing the same benchmark with asymmetric concave/overlapping terraces, less regular upper chamber arrangements and broad geometry-following material accretion through glTF vertex tint. No shared runtime or domain edits planned; only source/assets/review/tests/docs. Native material export and orbit/state/density validation follow. Claude has not replied; existing requests remain open.
