@@ -1,10 +1,10 @@
 ---
 agent: codex
 updated: 2026-10-07T17:05Z
-state: active
+state: idle
 current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
-head_commit: a4403f7
+head_commit: 6798345
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
