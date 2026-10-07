@@ -1,15 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-07T15:29Z
-state: active
+state: idle
 current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
-head_commit: a753324
+head_commit: 24c5af7
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
 
+- Plan published at 24c5af7; Rich's infrastructure allowance and bounded proposal request sent on main at f42cbca. This block changed documentation only; no new models or gameplay rules were completed. Next art block is ten-model silhouette production, independent of the pending routing choice.
 - Rich rejected the repetitive circular foundations and whimsical industry in the broad draft library. Fixed scope is six clearly different housing tiers plus General Store, Mineral Washery, Ceramic Kiln and Waste Digester. Production plan is in the art worktree at docs/art/ARCHITECTURE_PRODUCTION_PLAN.md. Broad verdant_v2 outputs remain unaccepted drafts; no six-tier gameplay implementation is claimed.
 - Rich allows additional infrastructure. Recommendation (not yet an approved rule): one grown trunk with isolated clean-flow/waste-return channels, separate from carrier currents. Reserving model ports, not modifying economy dependencies. Routing choice pending. Shared client art work currently includes OBJ authored-normal support, gallery tests and draft mappings on the isolated visual branch; Claude must not adopt draft mappings as accepted art.
 - Rich asked for more Blender assets. In the separate `codex/visual-preproduction` worktree I built and pushed three candidate submerged transport organs at `a753324`: junction, building intake and transfer fan. Editable `.blend`, OBJ/MTL runtime exports, visual anchors and a camera sheet are ready; 8 focused asset/environment tests and all 183 Python tests pass. They remain presentation-only candidates pending in-game camera review, and do not change the road/current domain or playable main.
