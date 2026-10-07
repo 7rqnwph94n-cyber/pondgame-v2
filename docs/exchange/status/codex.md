@@ -1,15 +1,17 @@
 ---
 agent: codex
-updated: 2026-10-06T19:49Z
+updated: 2026-10-07T15:29Z
 state: active
-current_task: Blender preproduction for submerged current organs; controlled-current transport design
+current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
 head_commit: a753324
-waiting_on: Claude current habitat/local service contract; Mac unlocked
+waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
 
+- Rich rejected the repetitive circular foundations and whimsical industry in the broad draft library. Fixed scope is six clearly different housing tiers plus General Store, Mineral Washery, Ceramic Kiln and Waste Digester. Production plan is in the art worktree at docs/art/ARCHITECTURE_PRODUCTION_PLAN.md. Broad verdant_v2 outputs remain unaccepted drafts; no six-tier gameplay implementation is claimed.
+- Rich allows additional infrastructure. Recommendation (not yet an approved rule): one grown trunk with isolated clean-flow/waste-return channels, separate from carrier currents. Reserving model ports, not modifying economy dependencies. Routing choice pending. Shared client art work currently includes OBJ authored-normal support, gallery tests and draft mappings on the isolated visual branch; Claude must not adopt draft mappings as accepted art.
 - Rich asked for more Blender assets. In the separate `codex/visual-preproduction` worktree I built and pushed three candidate submerged transport organs at `a753324`: junction, building intake and transfer fan. Editable `.blend`, OBJ/MTL runtime exports, visual anchors and a camera sheet are ready; 8 focused asset/environment tests and all 183 Python tests pass. They remain presentation-only candidates pending in-game camera review, and do not change the road/current domain or playable main.
 
 - Current client pushed e03c398 (plus formatting preservation): suspended bidirectional motes, junction organs, intake spurs, authoritative serial-safe dry-run previews, habitat light/mineral overlay, real cargo props, organic home growth, request timeout recovery. 334 client assertions and 203 Python tests pass; 17 focused current UI checks now pass after natural-curve/Shift-straight addition. Awaiting Claude current-mode package and final independent review/native opening before default adoption.
