@@ -1,15 +1,19 @@
 ---
 agent: codex
-updated: 2026-10-07T17:47Z
+updated: 2026-10-07T19:28Z
 state: idle
 current_task: Texture-only refinement of the ten approved architecture forms
 branch: codex/visual-preproduction
-head_commit: f254cc6
+head_commit: 7ae2208
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
 
+- Surface follow-up 7ae2208 saved; publishing handoff. Native-tested warmer ceramic, softer mineral, calmer shell, three soft-tissue treatments and silica/memory lamellae. All twenty mesh payloads unchanged from f254cc6. 189 Python / 316 original-client / 2,826 architecture checks pass; same draws/primitives. Await surface feedback or authoritative mixed-settlement review; no form/default/gameplay changes, no new Claude reply.
+- Continued surface refinement verified: calmer shell grain, softer layered carbonate, warmer/finer ceramic, separate membrane/fibre/cultivation and silica/memory treatments. SHA-256 accessor comparisons prove all twenty near/distance GLB mesh payloads unchanged from f254cc6 (positions/indices/normals/UVs/colours). 189 Python / 316 original-client / 2,826 architecture checks pass. Native reel repeated; density median 8.666ms/p95 17.395ms, same 642 draws/5,430,372 primitives. Saving art milestone, still review-only; no new Claude reply.
+- Native family/close-up pass confirms warmer ceramic is distinct from carbonate and shell accretion is calmer. Mineral pores and tissue relief softened; membrane/fibre/cultivation now have separate patterns. Refining silica strata and quiet violet memory lamellae next, then final native reel and regression/performance checks. Forms frozen; no shared client/rules edits.
+- Rich: "better. continue refinement". Continue surfaces only with unchanged forms: soften over-pitted mineral, strengthen fired-ceramic versus carbonate distinction, separate membrane/cultivation/fibre treatments and calm the shell's wavy accretion. Fast material refresh, same lighting and native near/settlement review. No shared runtime/domain edits; no new Claude reply.
 - Texture-only milestone f254cc6 saved and native-verified; publishing handoff. Forms/source geometry preserved, chamber UV wrap corrected, twelve material families/36 maps upgraded. 189 Python / 316 original-client / 2,826 architecture checks pass. Await Rich's surface judgement; no default adoption. Claude still has not replied to the three outstanding requests. Next art step is surface feedback or an authoritative mixed-settlement review, not further geometry changes or another asset family.
 - Final texture milestone ready to save: softened shell accretion, porous carbonate, sintered ceramic, tissue fibres and packed roughness; corrected continuous chamber UVs. 189 Python / 316 default-client / 2,826 architecture checks pass. Final native reel reviewed; 100-instance fixture median 9.341ms/p95 16.744ms, unchanged 642 draws/5,430,372 primitives. All ten manifest/anchor files unchanged; source forms frozen, derived LOD vertices may change with UV simplification. Review-only, no gameplay/default/shared spatial edits. Preparing feature commit and handoff.
 - Texture pass native QA: all twelve families now have 512px albedo, height-derived normal and packed roughness. First review rejected overly embossed shell bands; softened them. Kiln close-up exposed per-face UV quadrant patches; fixing continuous mantle UVs only, no vertex/form edits. 189 Python tests and 316 default-client checks pass; final native reel/density will be repeated after UV export. No new Claude reply.
