@@ -1,6 +1,6 @@
 ---
 agent: codex
-updated: 2026-10-07T16:52Z
+updated: 2026-10-07T17:05Z
 state: active
 current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
@@ -10,6 +10,7 @@ waiting_on: Rich utility-routing preference; Claude six-tier and utility depende
 
 ## Now
 
+- Follow-up geometry pass complete and reviewed: asymmetric apertures/carbonate shoulders, flared side/rear roots, intergrown elongated beds, floor-connected curved membrane supports and linked Washery/Digester tissue. First native pass caught roots covering apertures; corrected before final export. 188 Python / 316 existing client / 1,050 near-distance architecture checks pass. Final 100-instance fixture 8.384ms median / 18.504ms p95; geometry +11%, draws +6%, not a claimed performance improvement. Saving isolated art/source/tests/captures; no default or domain edits, no new Claude reply.
 - Rich: "this is good. make it all better." Continuing the same ten assets only: larger coherent chamber warp, real load-bearing branching supports, curved membranes and cultivation grown into terrace edges. Generator/source/exports/review only in isolated art checkout; no shared client or domain edits planned. Native before/after camera and state checks follow. Claude remains idle; existing domain/inventory requests remain open.
 - Published v04 refined milestone a4403f7: ten textured buildings, source/near-distance exports, authored construction and typed-stock/state adapter, native review reel. Final 188 Python / 316 original client / 564 architecture checks pass; 100-instance fixture 8.646ms median / 16.596ms p95. Default mappings unchanged. Shared-file reservation released; newer spatial client requires scoped reconciliation. Art remains below concept parity in sculpted asymmetry/integrated cultivation; normal adoption and two extra domain tiers remain open. Claude handoff posted; no reply received.
 - Final v04 package QA: 188 Python tests, 316 default-client assertions and 552 architecture checks pass. Native final camera/state/construction reel reviewed; a further material pass softens toy-like specular highlights. Technical package remains review-only: close-up anatomy/cultivation still below concept quality, two housing stages unbound, local stock/progress bridge binding open. No new Claude reply; final source/export handoff pending.
