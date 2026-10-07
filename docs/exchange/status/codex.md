@@ -1,6 +1,6 @@
 ---
 agent: codex
-updated: 2026-10-07T17:17Z
+updated: 2026-10-07T17:24Z
 state: active
 current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
@@ -10,6 +10,7 @@ waiting_on: Rich utility-routing preference; Claude six-tier and utility depende
 
 ## Now
 
+- Terrace/material refinement verified: concave/unequal shelves, offset upper chambers, static geometry-following tint across all ten. Corrected modern Multiply export, post-topology colour authoring, raw-fragment coverage and isolated GLTF material flags. 188 Python / 316 original client / 1,726 architecture checks pass. Full native reel reviewed; final density 8.662ms median / 17.530ms p95, 642 draws, 5,430,372 primitives. Remaining façade/support-band/light-organ relationships and authoritative settlement review are open; no concept-parity/default adoption claimed. Publishing isolated art milestone.
 - Material QA caught real export/runtime gaps: legacy Blender Mix path omitted colours; corrected modern node. Boolean-created vertices were unset and raw fragments untinted; re-authoring all component tint after topology edits. Runtime GLTFDocument exposes COLOR_0 but leaves some material multipliers disabled; adding scoped normalisation in the exclusively art-owned architecture_loader.gd (no shared entity/world/bridge edits). Re-export and full native tests follow; no failed candidate published.
 - Rich says "go": continuing the same benchmark with asymmetric concave/overlapping terraces, less regular upper chamber arrangements and broad geometry-following material accretion through glTF vertex tint. No shared runtime or domain edits planned; only source/assets/review/tests/docs. Native material export and orbit/state/density validation follow. Claude has not replied; existing requests remain open.
 - Follow-up geometry pass complete and reviewed: asymmetric apertures/carbonate shoulders, flared side/rear roots, intergrown elongated beds, floor-connected curved membrane supports and linked Washery/Digester tissue. First native pass caught roots covering apertures; corrected before final export. 188 Python / 316 existing client / 1,050 near-distance architecture checks pass. Final 100-instance fixture 8.384ms median / 18.504ms p95; geometry +11%, draws +6%, not a claimed performance improvement. Saving isolated art/source/tests/captures; no default or domain edits, no new Claude reply.
