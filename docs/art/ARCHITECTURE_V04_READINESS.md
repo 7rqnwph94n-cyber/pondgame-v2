@@ -26,6 +26,11 @@ This package replaces the v03 roof-only massing candidates for further review. I
 | Thin canopy poles sometimes stopped above their supporting surface | Tapered supports reach the specific ground/terrace floor; curved membrane perimeter and matching veins replace straight triangle edges |
 | Processor parts appeared as separate props | Washery carbonate backbone links its process chambers; Digester gains contained receiving throat, shaped pressure mantle and separate enzyme transfer tissue |
 | Closed rim sweep had mismatched start/end radii | Closed tubes now retain one section radius around the seam; taper remains for open roots/veins |
+| Terraces still resembled stacked round trays | Unequal lobed/concave shelf boundaries, partial accreted seams and offset/unequal upper inhabited chambers |
+| Materials looked like uniformly coloured parts | Geometry-following vertex accretion tint multiplies the shared embedded albedo: darker shell bases, warm mineral support and a restrained fired-ceramic transition |
+| Blender preview did not prove that accretion survived export | Corrected the modern colour Multiply node path and added native/GLB checks for exported colours and their material use |
+| Cuts created unset tint and raw fragments bypassed initial tint authoring | All component colours are re-authored after topology edits, before near/distance consolidation/export |
+| Runtime import left the material colour multiplier disabled | Isolated architecture loader normalises imported coloured surfaces before caching; original OBJ/default materials are untouched |
 
 ## Package and reproduction
 
@@ -39,7 +44,7 @@ This package replaces the v03 roof-only massing candidates for further review. I
 
 ## Actual runtime behavior
 
-`architecture_loader.gd` loads self-contained glTF files and caches scenes. `architecture_visual.gd` owns construction-layer visibility, dormant pore closures, explicitly supplied stock groups and local soft transfer deformation. Textures/materials are not modified globally when instances change state.
+`architecture_loader.gd` loads self-contained glTF files and caches scenes. `architecture_visual.gd` owns construction-layer visibility, dormant pore closures, explicitly supplied stock groups and local soft transfer deformation. Textures/materials are not modified globally when instances change state. The static accretion tint follows each organ's geometry through glTF `COLOR_0`; it is authored surface character, not invented weather, age, maintenance damage or recipe state.
 
 The opt-in plugs into EntityView and matching placement ghosts. Hierarchical bounds retain the established minimum seven-metre visual footprint. The default OBJ mapping is unchanged, and unrelated building families continue to use their existing assets. Typed cargo groups use actual resource IDs; `set_chamber_stocks` accepts known building-local counts and displays presence only (not exact visual unit counts). A silica-filled gallery does not imply that food or carbonate are present. Unknown stocks remain hidden through LOD/state changes.
 
@@ -65,8 +70,9 @@ Refinement remains restricted to these ten assets. Other families remain on hold
 ## Verification evidence, 7 October 2026
 
 - Python regression: 188 tests pass, including self-contained GLB/texture/normal/UV/near-distance manifest validation.
-- Existing default-client regression: 316 assertions pass. Follow-up architecture checks: 1,050 pass, zero errors, including near/distance embedded material/UV/normal validation, silhouette bounds within 5%, and explicit recipe-phase preservation across distance-mesh swaps.
+- Existing default-client regression: 316 assertions pass. Latest architecture checks: 1,726 pass, zero errors, including near/distance embedded material/UV/normal/colour validation, nonzero/valid tint, native material multiplier use, silhouette bounds within 5%, and explicit recipe-phase preservation across distance-mesh swaps.
 - Native Godot 4.7.1 Metal Forward+ on this Mac: eight yaw captures, pitches 20/38/65 degrees, three zooms, greyscale, close-up, construction and explicit-stock/state fixtures. Current native captures are `docs/art/renders/architecture_v04/godot_*.png`; Blender detail renders are earlier iteration evidence, not final camera acceptance.
-- Follow-up density fixture after Blender/Python work completed: 100 instances, 8.384ms median / 18.504ms p95, 634 draw calls, 5,399,492 rendered primitives. Geometry rises approximately 11% and draws 6% versus the preceding milestone; median timing improved slightly but p95 worsened, so no overall performance improvement is claimed. This is a timed art fixture, not whole-game frame-rate certification; see `density_report.json`. Repeat on the final authoritative settlement before setting a release budget.
+- Latest density fixture after Blender/Python work completed: 100 instances, 8.662ms median / 17.530ms p95, 642 draw calls, 5,430,372 rendered primitives. Versus the preceding grown-anatomy pass, geometry +0.6% and draws +1.3%; median slightly worsened while p95 improved, so no overall performance improvement is claimed. This is a timed art fixture, not whole-game frame-rate certification; see `density_report.json`. Repeat on the final authoritative settlement before setting a release budget.
 - Rich's response to the preceding milestone was "this is good. make it all better." This approves continued refinement, not normal-game adoption or the six-tier domain proposal. The follow-up specifically addresses aperture regularity, disconnected/thin supports, geometric canopy boundaries and isolated planter-like beds. Concept-parity and final acceptance remain separate gates.
 - Low-pitch review rows are spread farther apart: previously the foreground Manor obscured the rear Seed Shelter. This corrects a diagnostic layout flaw; it does not certify actual settlement occlusion. The authoritative mixed-settlement gate remains open.
+- Final close-up after the terrace/material pass: unequal/offset shelf outlines are clearer, with restrained geometry-following surface transitions. Horizontal support bands still repeat and cross some light organs; cultivation and the mineral façade remain simpler than the paintings. Resolve façade/opening relationships and mixed-settlement sightlines before any production-quality claim. Greyscale review now includes vertex tint instead of discarding it.

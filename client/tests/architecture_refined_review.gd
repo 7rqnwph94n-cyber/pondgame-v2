@@ -25,7 +25,15 @@ func visit(node: Node) -> void:
 			var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
 			var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
 			var uvs: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV]
+			var colours = arrays[Mesh.ARRAY_COLOR]
 			check(vertices.size()==normals.size() and vertices.size()==uvs.size(),"textured geometry "+str(node.name))
+			check(colours != null and colours.size()==vertices.size(),"geometry-following accretion tint "+str(node.name))
+			var tint_valid := colours != null
+			if colours != null:
+				for colour in colours:
+					if not (colour.r>=.55 and colour.r<=1.01 and colour.g>=.55 and colour.g<=1.01 and colour.b>=.55 and colour.b<=1.01):
+						tint_valid = false;break
+			check(tint_valid,"no unset or invalid accretion tint "+str(node.name))
 			var valid := true
 			for n in normals:
 				if not n.is_finite() or n.length_squared()<.8: valid = false;break
@@ -33,6 +41,7 @@ func visit(node: Node) -> void:
 			var material: StandardMaterial3D = node.mesh.surface_get_material(s)
 			check(material != null and material.albedo_texture != null,"embedded albedo "+str(node.name))
 			check(material != null and material.normal_enabled and material.normal_texture != null,"embedded normals "+str(node.name))
+			check(material != null and material.vertex_color_use_as_albedo,"native accretion material "+str(node.name))
 	for child in node.get_children(): visit(child)
 
 func run() -> void:
@@ -225,7 +234,7 @@ func greyscale(node: Node) -> void:
 			var original: StandardMaterial3D = node.mesh.surface_get_material(surface)
 			var material := ShaderMaterial.new()
 			var shader := Shader.new()
-			shader.code = "shader_type spatial; uniform sampler2D base_texture: source_color; void fragment(){vec3 c=texture(base_texture,UV).rgb;ALBEDO=vec3(dot(c,vec3(.2126,.7152,.0722)));ROUGHNESS=.6;}"
+			shader.code = "shader_type spatial; uniform sampler2D base_texture: source_color; void fragment(){vec3 c=texture(base_texture,UV).rgb*COLOR.rgb;ALBEDO=vec3(dot(c,vec3(.2126,.7152,.0722)));ROUGHNESS=.6;}"
 			material.shader = shader
 			material.set_shader_parameter("base_texture",original.albedo_texture)
 			node.set_surface_override_material(surface,material)

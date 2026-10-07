@@ -26,12 +26,27 @@ static func instantiate(path: String) -> Node3D:
 			return null
 		var scene := document.generate_scene(state)
 		if scene == null: return null
+		_enable_vertex_tint(scene)
 		var packed := PackedScene.new()
 		error = packed.pack(scene)
 		scene.free()
 		if error != OK: return null
 		_cache[path] = packed
 	return _cache[path].instantiate() as Node3D
+
+static func _enable_vertex_tint(node: Node) -> void:
+	# Runtime GLTFDocument imports expose COLOR_0 but do not consistently enable
+	# its StandardMaterial multiplier. Normalise only these isolated glTF scenes.
+	if node is MeshInstance3D:
+		for surface in range(node.mesh.get_surface_count()):
+			var arrays: Array = node.mesh.surface_get_arrays(surface)
+			var colours = arrays[Mesh.ARRAY_COLOR]
+			var original = node.mesh.surface_get_material(surface)
+			if colours != null and colours.size()>0 and original is StandardMaterial3D:
+				var material: StandardMaterial3D = original.duplicate()
+				material.vertex_color_use_as_albedo = true
+				node.mesh.surface_set_material(surface,material)
+	for child in node.get_children(): _enable_vertex_tint(child)
 
 static func bounds(node: Node3D) -> AABB:
 	var points: Array[Vector3] = []

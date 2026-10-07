@@ -144,17 +144,17 @@
       "id": "05_terraced_habitat",
       "path": "assets/architecture_v04/05_terraced_habitat.glb",
       "lod_path": "assets/architecture_v04/05_terraced_habitat_lod.glb",
-      "triangles": 78780,
-      "lod_triangles": 33083,
-      "surfaces": 12,
+      "triangles": 79662,
+      "lod_triangles": 33451,
+      "surfaces": 13,
       "bounds_y_up": {
         "min": [
           -2.451066732406616,
           -0.04487838223576546,
-          -2.3926048278808594
+          -2.355759382247925
         ],
         "max": [
-          2.4091694355010986,
+          2.670255184173584,
           3.4845948219299316,
           1.5449999570846558
         ]
@@ -175,17 +175,17 @@
       "id": "06_memory_manor",
       "path": "assets/architecture_v04/06_memory_manor.glb",
       "lod_path": "assets/architecture_v04/06_memory_manor_lod.glb",
-      "triangles": 122208,
-      "lod_triangles": 51324,
-      "surfaces": 12,
+      "triangles": 123976,
+      "lod_triangles": 52068,
+      "surfaces": 13,
       "bounds_y_up": {
         "min": [
           -2.451066732406616,
           -0.04487838223576546,
-          -2.3926048278808594
+          -2.355759382247925
         ],
         "max": [
-          2.5841574668884277,
+          2.670255184173584,
           4.74068546295166,
           1.5449999570846558
         ]
@@ -270,8 +270,8 @@
       "id": "09_ceramic_kiln",
       "path": "assets/architecture_v04/09_ceramic_kiln.glb",
       "lod_path": "assets/architecture_v04/09_ceramic_kiln_lod.glb",
-      "triangles": 66560,
-      "lod_triangles": 27947,
+      "triangles": 67584,
+      "lod_triangles": 28379,
       "surfaces": 13,
       "bounds_y_up": {
         "min": [
@@ -280,7 +280,7 @@
           -2.053522825241089
         ],
         "max": [
-          1.5109803676605225,
+          1.5574625730514526,
           2.895890712738037,
           1.4249999523162842
         ]

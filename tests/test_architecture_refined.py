@@ -37,7 +37,7 @@ class RefinedArchitectureTests(unittest.TestCase):
                     for mesh in data["meshes"]:
                         for primitive in mesh["primitives"]:
                             self.assertEqual(primitive.get("mode",4),4)
-                            for attr in ("POSITION","NORMAL","TEXCOORD_0"):
+                            for attr in ("POSITION","NORMAL","TEXCOORD_0","COLOR_0"):
                                 self.assertIn(attr,primitive["attributes"])
                             triangles+=data["accessors"][primitive["indices"]]["count"]//3
                     self.assertEqual(triangles,record["lod_triangles" if key=="lod_path" else "triangles"])

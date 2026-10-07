@@ -54,7 +54,11 @@ def material(key,hexcol):
     shader.inputs["Metallic"].default_value=0
     shader.inputs["Coat Weight"].default_value=.06 if key=="shell" else 0
     texture=m.node_tree.nodes.new("ShaderNodeTexImage");texture.image=image
-    m.node_tree.links.new(texture.outputs["Color"],shader.inputs["Base Color"])
+    tint=m.node_tree.nodes.new("ShaderNodeVertexColor");tint.layer_name="GrowthTint"
+    mix=m.node_tree.nodes.new("ShaderNodeMix");mix.data_type="RGBA";mix.blend_type="MULTIPLY";mix.inputs[0].default_value=1
+    m.node_tree.links.new(texture.outputs["Color"],mix.inputs[6])
+    m.node_tree.links.new(tint.outputs["Color"],mix.inputs[7])
+    m.node_tree.links.new(mix.outputs[2],shader.inputs["Base Color"])
     texture=m.node_tree.nodes.new("ShaderNodeTexImage");texture.image=normal
     nm=m.node_tree.nodes.new("ShaderNodeNormalMap")
     m.node_tree.links.new(texture.outputs["Color"],nm.inputs["Color"])
@@ -97,7 +101,31 @@ def mesh(col,name,vertices,faces,mat,state="Structure",smooth=True):
             p=data.vertices[data.loops[li].vertex_index].co
             uv.data[li].uv=(p[dims[0]]*.65,p[dims[1]]*.65)
     obj=bpy.data.objects.new(name,data);col.objects.link(obj);parent(col,obj,state)
+    surface_tint(obj,mat)
     return obj
+
+
+def surface_tint(obj,mat):
+    """Broad structural accretion, not random noise or invented gameplay damage.
+
+    glTF COLOR_0 multiplies the embedded shared albedo. Gradients follow each
+    organ's own geometry; they are not screen-space grime or a state indicator.
+    """
+    data=obj.data
+    layer=data.color_attributes.get("GrowthTint") or data.color_attributes.new(name="GrowthTint",type="FLOAT_COLOR",domain="POINT")
+    lo=min(v.co.z for v in data.vertices);hi=max(v.co.z for v in data.vertices)
+    span=max(.01,hi-lo)
+    for vertex in data.vertices:
+        q=vertex.co;z=(q.z-lo)/span
+        patch=.035*math.sin(q.x*2.3+q.y*1.9)*math.sin(q.y*2.0-q.z*1.7)
+        if mat=="shell":rgb=(.78+.22*z+patch,.85+.15*z+patch,.90+.10*z+patch)
+        elif mat=="chalk":rgb=(.86+.14*z+patch,.86+.14*z+patch,.76+.24*z+patch)
+        elif mat=="ceramic":rgb=(.85+.15*z,.79+.21*z,.69+.31*z)
+        elif mat=="growth":rgb=(.88+.12*z+patch,.86+.14*z+patch,.78+.22*z+patch)
+        elif mat=="dark":rgb=(.85+.15*z,.89+.11*z,.87+.13*z)
+        else:rgb=(1+patch,1+patch,1+patch)
+        layer.data[vertex.index].color=(*[max(0,min(1,v)) for v in rgb],1)
+    data.color_attributes.active_color=layer
 
 
 def ball(col,name,p,size,mat,state="Structure",segments=20):
@@ -107,6 +135,7 @@ def ball(col,name,p,size,mat,state="Structure",segments=20):
     for c in list(o.users_collection):c.objects.unlink(o)
     col.objects.link(o);o.data.materials.append(MATS[mat]);parent(col,o,state)
     for face in o.data.polygons:face.use_smooth=True
+    surface_tint(o,mat)
     return o
 
 
@@ -351,15 +380,28 @@ def canopy(col,points,support_floor=.12):
 def terrace(col,p,rx,ry):
     # A living, genuinely perforated support frame beneath a continuous terrace.
     lattice(col,(p[0],p[1],p[2]-.55),rx*.92,ry*.9,.53,2,int(p[2]*10))
-    n=48;verts=[(p[0],p[1],p[2])];faces=[]
+    n=64;verts=[(p[0],p[1],p[2])];faces=[]
+    def edge(a):
+        # Unequal overlapping shell lobes and a concave access inlet. The large
+        # inhabited terraces no longer read as two stacked round serving trays.
+        notch=math.exp(-((math.atan2(math.sin(a+1.08),math.cos(a+1.08)))/.38)**2)
+        r=1+.12*math.sin(a*2+.55)+.07*math.cos(a*3-.25)-(.20*notch if rx>1 else .04*notch)
+        return Vector((p[0]+rx*r*math.cos(a),p[1]+ry*r*math.sin(a),p[2]+.025*math.sin(a*3)))
     for j in range(n):
-        a=j*math.tau/n;r=1+.08*math.sin(a*3+.3)+.025*math.sin(a*5)
-        verts.append((p[0]+rx*r*math.cos(a),p[1]+ry*r*math.sin(a),p[2]+.04*math.sin(a*4)))
+        verts.append(edge(j*math.tau/n))
     for j in range(n):faces.append((0,j+1,(j+1)%n+1))
     o=mesh(col,"inhabited shell terrace",verts,faces,"chalk")
     mod=o.modifiers.new("terrace depth","SOLIDIFY");mod.thickness=.1
     bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
     tube(col,"grown terrace retaining edge",[(v[0],v[1],v[2]+.10) for v in verts[1:]+[verts[1]]],.035,"resin")
+    if rx>1:
+        for start,end,r in ((.1,2.8,.74),(2.9,4.4,.84)):
+            points=[]
+            for j in range(25):
+                a=start+(end-start)*j/24;q=edge(a)
+                q.x=p[0]+(q.x-p[0])*r;q.y=p[1]+(q.y-p[1])*r;q.z=p[2]+.025
+                points.append(q)
+            tube(col,"accreted overlapping terrace seam",points,.018,"ceramic")
 
 
 def utility(col,x,y,z=.24,waste_in=False):
@@ -401,15 +443,15 @@ for tier,name in enumerate(NAMES[:6],1):
         canopy(col,[(-1.15,1.8,2.30),(1.55,1.45,2.5),(.7,-.45,2.05)])
         garden(col,(-1.3,-.9,.12),.32,.45,5,12)
     if tier>=5:
-        organ(col,(1.0,.2,.82),(.8,1.0,.8),6)
+        organ(col,(1.08,.12,.75),(.92,.78,.72),6)
         organ(col,(-1.0,1.0,.88),(.83,.88,.87),7)
         terrace(col,(0,.6,1.5),2.2,1.85)
-        organ(col,(-.1,.7,2.15),(.85,.92,.7),8)
+        organ(col,(-.40,.90,2.15),(.94,.79,.7),8)
         for j,p in enumerate(((-1.45,.25,1.55),(1.35,.8,1.55),(.5,-.65,1.55))):garden(col,p,.65,.23,9,8+j)
         canopy(col,[(-1.2,1.5,3.45),(1.2,1.25,3.35),(.9,-.55,3.05)],1.55)
     if tier==6:
-        terrace(col,(-.2,.9,2.92),1.36,1.35)
-        organ(col,(-.45,1.05,3.42),(.66,.6,.6),9)
+        terrace(col,(-.38,1.03,2.92),1.58,1.16)
+        organ(col,(-.65,1.25,3.42),(.76,.54,.6),9)
         # Encoded curved silica archive leaves instead of an arbitrary crystal crown.
         for j in range(5):
             leaf(col,(-.95+j*.25,1.35,3.1),1.50+.15*math.sin(j),.25,(j-2)*.28,"silica" if j%2==0 else "memory",j)
@@ -522,6 +564,11 @@ def consolidate(col):
 
 for name,col in COLS.items():
     bpy.context.view_layer.update()
+    # Boolean cuts can create untinted vertices; raw fragments bypass mesh().
+    # Re-author every component after all topology edits, before consolidation.
+    for obj in col.objects:
+        if obj.type=="MESH" and obj.data.materials:
+            surface_tint(obj,obj.data.materials[0].name.removeprefix("verdant_"))
     pts=[o.matrix_world@v.co for o in col.objects if o.type=="MESH" for v in o.data.vertices]
     hi=[max(p[i] for p in pts) for i in range(3)];lo=[min(p[i] for p in pts) for i in range(3)]
     anchor(col,"LabelAnchor",(0,0,hi[2]+.3));anchor(col,"CameraAnchor",(0,0,hi[2]*.5))
