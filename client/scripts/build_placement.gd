@@ -1,13 +1,15 @@
 extends Node3D
 ## Cursor preview only: no collision body and no economy command until confirmation.
 const ObjLoaderScript = preload("res://scripts/obj_loader.gd")
+const ArchitectureLoader = preload("res://scripts/architecture_loader.gd")
+const ArchitectureVisual = preload("res://scripts/architecture_visual.gd")
 var footprint := Vector2(7, 7)
 var building := ""
 var yaw := 0.0
 var reason := "Choose ground"
 var point := Vector3.ZERO
 var has_ground := false
-var _ghost: MeshInstance3D
+var _ghost: Node3D
 var _footprint: MeshInstance3D
 var _material: StandardMaterial3D
 
@@ -18,17 +20,19 @@ func configure(definition: String, style: Dictionary) -> void:
 	_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	_material.no_depth_test = true
-	_ghost = MeshInstance3D.new()
-	var asset: String = style.get("residence_tiers", {}).get("shelter", "") if definition == "shelter" else style.get("buildings", {}).get(definition, "")
-	if asset != "": _ghost.mesh = ObjLoaderScript.load_mesh(style.get("asset_root", "").path_join(asset + ".obj"))
-	if _ghost.mesh == null:
-		var box := BoxMesh.new()
-		box.size = Vector3(5, 3, 5)
-		_ghost.mesh = box
-		_ghost.position.y = 1.5
-	footprint = WorldView.mesh_footprint(_ghost.mesh)
-	_ghost.material_override = _material
-	_ghost.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var candidate_path := ArchitectureLoader.path_for(style,"residence" if definition=="shelter" else "facility",definition)
+	if not candidate_path.is_empty():
+		var candidate := ArchitectureVisual.new()
+		if candidate.load_asset(candidate_path):
+			_ghost = candidate
+			candidate.set_process(false)
+		else: candidate.free()
+	if _ghost == null:
+		var instance := MeshInstance3D.new()
+		_ghost = instance
+		_load_legacy_ghost(instance,definition,style)
+	footprint = WorldView.visual_footprint(_ghost)
+	_apply_ghost_material(_ghost)
 	add_child(_ghost)
 	_footprint = MeshInstance3D.new()
 	var pad := BoxMesh.new()
@@ -39,6 +43,23 @@ func configure(definition: String, style: Dictionary) -> void:
 	_footprint.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(_footprint)
 	visible = false
+
+
+func _load_legacy_ghost(instance: MeshInstance3D,definition: String,style: Dictionary) -> void:
+	var asset: String = style.get("residence_tiers", {}).get("shelter", "") if definition == "shelter" else style.get("buildings", {}).get(definition, "")
+	if asset != "": instance.mesh = ObjLoaderScript.load_mesh(style.get("asset_root", "").path_join(asset + ".obj"))
+	if instance.mesh == null:
+		var box := BoxMesh.new()
+		box.size = Vector3(5, 3, 5)
+		instance.mesh = box
+		instance.position.y = 1.5
+
+
+func _apply_ghost_material(node: Node) -> void:
+	if node is MeshInstance3D:
+		node.material_override = _material
+		node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	for child in node.get_children(): _apply_ghost_material(child)
 
 
 func update_at(camera: Camera3D, screen: Vector2, world: Node3D, over_ui: bool) -> void:

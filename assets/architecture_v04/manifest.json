@@ -1,0 +1,337 @@
+{
+  "version": 4,
+  "gameplay_bound": false,
+  "materials": [
+    "shell",
+    "chalk",
+    "resin",
+    "amber",
+    "membrane",
+    "silica",
+    "growth",
+    "silt",
+    "dark",
+    "ceramic",
+    "memory",
+    "fibre"
+  ],
+  "assets": [
+    {
+      "id": "01_seed_shelter",
+      "path": "assets/architecture_v04/01_seed_shelter.glb",
+      "lod_path": "assets/architecture_v04/01_seed_shelter_lod.glb",
+      "triangles": 14204,
+      "lod_triangles": 5962,
+      "surfaces": 9,
+      "bounds_y_up": {
+        "min": [
+          -1.6592673063278198,
+          -0.04487838223576546,
+          -1.402459979057312
+        ],
+        "max": [
+          0.4500950276851654,
+          1.2648783922195435,
+          1.5427500009536743
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "02_rooted_dwelling",
+      "path": "assets/architecture_v04/02_rooted_dwelling.glb",
+      "lod_path": "assets/architecture_v04/02_rooted_dwelling_lod.glb",
+      "triangles": 32432,
+      "lod_triangles": 13617,
+      "surfaces": 9,
+      "bounds_y_up": {
+        "min": [
+          -1.6592673063278198,
+          -0.0648542270064354,
+          -2.25246000289917
+        ],
+        "max": [
+          1.6933883428573608,
+          1.7048542499542236,
+          1.5427500009536743
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "03_mature_habitat",
+      "path": "assets/architecture_v04/03_mature_habitat.glb",
+      "lod_path": "assets/architecture_v04/03_mature_habitat_lod.glb",
+      "triangles": 48566,
+      "lod_triangles": 20393,
+      "surfaces": 10,
+      "bounds_y_up": {
+        "min": [
+          -1.6592673063278198,
+          -0.06476616859436035,
+          -2.25246000289917
+        ],
+        "max": [
+          1.946639060974121,
+          2.680253505706787,
+          1.5427500009536743
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "04_symbiotic_court",
+      "path": "assets/architecture_v04/04_symbiotic_court.glb",
+      "lod_path": "assets/architecture_v04/04_symbiotic_court_lod.glb",
+      "triangles": 63172,
+      "lod_triangles": 26526,
+      "surfaces": 10,
+      "bounds_y_up": {
+        "min": [
+          -2.1020991802215576,
+          -0.04487838223576546,
+          -2.6885311603546143
+        ],
+        "max": [
+          2.230172634124756,
+          2.5296263694763184,
+          1.5427500009536743
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "05_terraced_habitat",
+      "path": "assets/architecture_v04/05_terraced_habitat.glb",
+      "lod_path": "assets/architecture_v04/05_terraced_habitat_lod.glb",
+      "triangles": 65166,
+      "lod_triangles": 27364,
+      "surfaces": 10,
+      "bounds_y_up": {
+        "min": [
+          -2.288701057434082,
+          -0.04487838223576546,
+          -2.3914685249328613
+        ],
+        "max": [
+          2.361091136932373,
+          3.4802849292755127,
+          1.5427500009536743
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "06_memory_manor",
+      "path": "assets/architecture_v04/06_memory_manor.glb",
+      "lod_path": "assets/architecture_v04/06_memory_manor_lod.glb",
+      "triangles": 102070,
+      "lod_triangles": 42865,
+      "surfaces": 11,
+      "bounds_y_up": {
+        "min": [
+          -2.288701057434082,
+          -0.04487838223576546,
+          -2.3914685249328613
+        ],
+        "max": [
+          2.3943638801574707,
+          4.74068546295166,
+          1.5427500009536743
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "07_general_store",
+      "path": "assets/architecture_v04/07_general_store.glb",
+      "lod_path": "assets/architecture_v04/07_general_store_lod.glb",
+      "triangles": 69400,
+      "lod_triangles": 29139,
+      "surfaces": 7,
+      "bounds_y_up": {
+        "min": [
+          -2.4161970615386963,
+          -0.02487594448029995,
+          -2.098658323287964
+        ],
+        "max": [
+          2.4744129180908203,
+          1.8648759126663208,
+          1.4709498882293701
+        ]
+      },
+      "states": [
+        "Structure",
+        "CargoOutput__prepared_silica",
+        "CargoOutput__staple",
+        "CargoOutput__carbonate"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "08_mineral_washery",
+      "path": "assets/architecture_v04/08_mineral_washery.glb",
+      "lod_path": "assets/architecture_v04/08_mineral_washery_lod.glb",
+      "triangles": 63976,
+      "lod_triangles": 26863,
+      "surfaces": 13,
+      "bounds_y_up": {
+        "min": [
+          -2.315938711166382,
+          -0.04840511083602905,
+          -1.6236073970794678
+        ],
+        "max": [
+          2.0450000762939453,
+          2.8882334232330322,
+          1.4227499961853027
+        ]
+      },
+      "states": [
+        "Structure",
+        "CargoInput__raw_silicate",
+        "Flow",
+        "CargoOutput__prepared_silica",
+        "Dormancy",
+        "Activity",
+        "Residue"
+      ],
+      "construction_phases": [
+        "GrowthFrame",
+        "GrowthShell",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "09_ceramic_kiln",
+      "path": "assets/architecture_v04/09_ceramic_kiln.glb",
+      "lod_path": "assets/architecture_v04/09_ceramic_kiln_lod.glb",
+      "triangles": 65516,
+      "lod_triangles": 27509,
+      "surfaces": 13,
+      "bounds_y_up": {
+        "min": [
+          -2.142130136489868,
+          -0.2495260238647461,
+          -1.8955724239349365
+        ],
+        "max": [
+          1.5108994245529175,
+          2.895890712738037,
+          1.4227499961853027
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity",
+        "CargoOutput__fired_ceramic",
+        "CargoInput__prepared_silica",
+        "CargoInput__anoxic_organics"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "10_waste_digester",
+      "path": "assets/architecture_v04/10_waste_digester.glb",
+      "lod_path": "assets/architecture_v04/10_waste_digester_lod.glb",
+      "triangles": 25948,
+      "lod_triangles": 10891,
+      "surfaces": 10,
+      "bounds_y_up": {
+        "min": [
+          -1.7619199752807617,
+          -0.18000000715255737,
+          -1.7707715034484863
+        ],
+        "max": [
+          1.6150000095367432,
+          2.4195029735565186,
+          1.4227499961853027
+        ]
+      },
+      "states": [
+        "Structure",
+        "Flow",
+        "CargoInput__organic_waste",
+        "CargoOutput__repair_enzyme",
+        "CargoOutput__recovered_fertiliser"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame"
+      ],
+      "status": "refined_candidate"
+    }
+  ]
+}

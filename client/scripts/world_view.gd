@@ -111,7 +111,7 @@ func _ensure(id: String, kind: String, definition: String, category: String) -> 
 	v.position = slot_for(id, "residence" if kind == "residence" else category)
 	v.rotation.y = _rotations.get(id, 0.0)
 	add_child(v)
-	_footprints[id] = mesh_footprint(v._body.mesh)
+	_footprints[id] = visual_footprint(v._body)
 	views[id] = v
 	return v
 
@@ -172,3 +172,11 @@ static func mesh_footprint(mesh: Mesh) -> Vector2:
 	var bounds := mesh.get_aabb()
 	return Vector2(maxf(7, 2 * maxf(absf(bounds.position.x), absf(bounds.end.x)) + 0.4),
 		maxf(7, 2 * maxf(absf(bounds.position.z), absf(bounds.end.z)) + 0.4))
+
+
+static func visual_footprint(body: Node3D) -> Vector2:
+	if body is MeshInstance3D: return mesh_footprint(body.mesh)
+	var loader = preload("res://scripts/architecture_loader.gd")
+	var bounds: AABB = loader.bounds(body)
+	return Vector2(maxf(7,2*maxf(absf(bounds.position.x),absf(bounds.end.x))+.4),
+		maxf(7,2*maxf(absf(bounds.position.z),absf(bounds.end.z))+.4))

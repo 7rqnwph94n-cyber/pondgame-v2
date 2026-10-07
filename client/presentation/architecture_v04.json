@@ -1,0 +1,18 @@
+{
+  "status": "review_only_not_visually_approved",
+  "asset_dir": "assets/architecture_v04",
+  "residence_tiers": {
+    "shelter": "01_seed_shelter",
+    "stable": "02_rooted_dwelling",
+    "symbiotic": "04_symbiotic_court",
+    "memory": "06_memory_manor"
+  },
+  "buildings": {
+    "shelter": "01_seed_shelter",
+    "general_store": "07_general_store",
+    "mineral_washery": "08_mineral_washery",
+    "ceramic_kiln": "09_ceramic_kiln",
+    "waste_digester": "10_waste_digester"
+  },
+  "unbound_art_stages": ["03_mature_habitat", "05_terraced_habitat"]
+}

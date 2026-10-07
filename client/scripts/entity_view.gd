@@ -8,6 +8,8 @@ extends Node3D
 signal picked(entity_id: String)
 
 const ObjLoaderScript = preload("res://scripts/obj_loader.gd")
+const ArchitectureLoader = preload("res://scripts/architecture_loader.gd")
+const ArchitectureVisual = preload("res://scripts/architecture_visual.gd")
 
 var entity_id := ""
 var definition_id := ""
@@ -22,6 +24,7 @@ var _label: Label3D
 var _style: Dictionary = {}
 var _pulse := 0.0
 var _selected := false
+var _known_local_stocks: Dictionary = {}
 
 
 func setup(entity_kind: String, style: Dictionary) -> void:
@@ -73,15 +76,22 @@ func set_action(action_id: String) -> void:
 
 
 func set_payload(_resource_id: String, _amount: int, _capacity: int) -> void:
-	pass   # payload props arrive with logistics (later milestone)
+	if _body and _body.has_method("set_chamber_stocks"):
+		_known_local_stocks[_resource_id] = max(0,_amount)
+		_body.set_chamber_stocks(_known_local_stocks)
 
 
 func set_recipe_state(_input_state: String, progress: float, _output_state: String) -> void:
-	if _body:
-		_body.scale = Vector3.ONE * (1.0 + 0.03 * sin(progress * TAU))
+	if _body and _body.has_method("set_recipe_state"):
+		_body.set_recipe_state(_input_state,progress,_output_state)
 
 
 func set_construction_progress(progress: float) -> void:
+	if _body and _body.has_method("set_construction_progress"):
+		_body.set_construction_progress(progress)
+		_body.visible = true
+		if _scaffold: _scaffold.visible = false
+		return
 	if _scaffold == null:
 		_scaffold = MeshInstance3D.new()
 		var box := BoxMesh.new()
@@ -103,6 +113,7 @@ func set_construction_progress(progress: float) -> void:
 
 func set_condition_state(value: String) -> void:
 	state_id = value
+	if _body and _body.has_method("set_condition_state"): _body.set_condition_state(value)
 	var colours: Dictionary = _style.get("status_colours", {})
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = Color(colours.get(value, "#9e9e9e"))
@@ -161,6 +172,17 @@ func _refresh_label() -> void:
 func _rebuild_body() -> void:
 	if _body:
 		_body.queue_free()
+	var architecture_path := ArchitectureLoader.path_for(_style,kind,definition_id)
+	if not architecture_path.is_empty():
+		var visual := ArchitectureVisual.new()
+		if visual.load_asset(architecture_path):
+			visual.set_meta("asset",architecture_path.get_file().get_basename())
+			_body = visual
+			add_child(_body)
+			visual.set_condition_state(state_id if not state_id.is_empty() else "idle")
+			visual.set_chamber_stocks(_known_local_stocks)
+			return
+		visual.free()
 	var mesh: ArrayMesh = null
 	var asset := ""
 	if kind == "residence":
