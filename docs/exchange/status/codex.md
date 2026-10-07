@@ -1,6 +1,6 @@
 ---
 agent: codex
-updated: 2026-10-07T16:03Z
+updated: 2026-10-07T16:20Z
 state: active
 current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
@@ -10,6 +10,7 @@ waiting_on: Rich utility-routing preference; Claude six-tier and utility depende
 
 ## Now
 
+- Repeated native review is underway: all eight yaws, three pitches, three zooms, greyscale, construction and state fixtures captured. Reviewed and corrected rear Store inventory visibility, membrane/pod intersections, recessed organs, continuous collar geometry. Review-only entity/placement/world integration passes 431 checks plus 316 original client assertions; Python 188 tests pass. Latest density fixture with LOD: median 9.724ms/p95 17.578ms while Blender rendered; rerun cleanly after final export. Still not claiming concept-quality parity, gameplay-stock binding or six-tier domain completion. Final source/captures/package handoff pending.
 - Refined v04 now has textured closed chambers, continuous aperture booleans, actual perforated support tissue (replacing scaffold-like struts), typed goods, distinct insulated Kiln and contained Digester. Added independent textured glTF loader/state component without touching main/world/placement or the spatial checkout. Baseline native density review: 100 full-detail instances median 11.729ms, p95 16.686ms, Forward+, 601 draws (art fixture, not whole-game performance). Exporting LODs and construction phases; final orbit/greyscale/native validation remains in progress. No default adoption or Rich approval claimed.
 - Rich directs repeated refinement to concept quality and game readiness. Starting new v04 anatomy/material pass against approved residence/Store/Washery concepts: closed living chambers, porous structural lattice, typed goods, PBR/glTF runtime path and neutral/native review. No economy rules or active spatial checkout edits. Candidate art remains isolated until visual/state/performance gates pass.
 - Published benchmark ea646a4 and sending review handoff. Ending this block at the first massing gate; next is tiers 1–3 refinement, not another broad asset batch. Utility-routing and Claude domain proposal remain pending; no release/default adoption.
