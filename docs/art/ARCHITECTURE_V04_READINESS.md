@@ -1,6 +1,29 @@
 # Verdant architecture v04 — refinement and readiness
 
-This package replaces the v03 roof-only massing candidates for further review. It is **review-only**: technically integrated in the isolated art branch, not Rich-approved production art and not a six-tier economy implementation.
+This package replaces the v03 roof-only massing candidates for further review. It is **review-only**: technically integrated in the isolated art branch and not a six-tier economy implementation. Rich has accepted the current form direction, but rejected its textures; neither surface acceptance nor normal-game adoption is implied.
+
+## Texture-only refinement, 7 October
+
+Rich's exact direction: "refine textures, the form is good, textures are poor".
+
+Building forms, source topology, anchors and construction/state hierarchy are frozen for this block. The chamber UV wrap is corrected without moving source vertices. Distance meshes are regenerated from that source: triangle counts and bounds are unchanged, but their individual simplification vertices are not claimed byte-identical after the UV changes. No rule, bridge, placement, default mapping or active spatial-checkout file is edited.
+
+The twelve shared surfaces now use 512×512 albedo, tangent normal and packed ORM maps. ORM red stays white (no fake baked occlusion), green carries spatial roughness, blue stays black (nonmetallic). Normal relief is derived from the same surface height used to place growth ridges, pores and grains; it is no longer an unrelated sinusoidal checker. Maps are deterministic and tileable. No dirt/damage texture implies an authoritative maintenance or production state.
+
+| Surface | Material treatment |
+|---|---|
+| Living shell | Irregular accretion bands, broader teal variation, softened relief and broken semi-matte highlights |
+| Carbonate | Sparse irregular pores, warm mineral inclusions, matte roughness and granular relief |
+| Fired ceramic | Sintered grain and firing clouds; continuous chamber UVs remove quadrant patches |
+| Membrane / fibre / cultivation | Directional fine tissue fibres with different roughness; opaque fallback retained |
+| Digester tissue | Dark mottled skin, shallow relief and softer damp highlights rather than polished plastic |
+| Resin / amber / silica / memory | Restrained clouding and gentler, distinct highlights; no generic metallic shine |
+
+The first native pass made the shell ridges too strongly embossed. A second pass reduced the relief and colour contrast before acceptance checks. Close-up kiln review then exposed per-face box-UV discontinuities, corrected with a continuous wrap before solidification and aperture cutting. Other forms remain unchanged.
+
+For fast subsequent **material-only** iterations, run `Blender -b -t 4 --python-exit-code 1 --python tools/refine_architecture_surfaces_blender.py`. It loads the existing approved source, reuses the exact material functions from the full generator, remaps materials and re-exports near/distance assets. It does not author geometry or change metadata; it asserts the distance triangle counts. Geometry/UV source changes require the full generator instead.
+
+Current native close-ups: `godot_detail.png`, `godot_kiln_detail.png`, `godot_digester_detail.png`. Historical Blender sheets/details are pre-texture-pass evidence, not current surface approval.
 
 ## Concept-led refinement log
 
@@ -39,7 +62,7 @@ This package replaces the v03 roof-only massing candidates for further review. I
 - `manifest.json`: paths, geometry/surface counts, Y-up bounds, state groups and construction phases.
 - Per-model `.anchors.json`: cargo, utilities, work, camera and label attachments. Anchors are visual and **not authoritative docking contracts**.
 - Generator: `tools/build_architecture_refined_blender.py`. Blender command: `Blender -b -t 4 --python-exit-code 1 --python tools/build_architecture_refined_blender.py`. `-- --export-only` regenerates source/runtime data without renders; `-- --quick-review` produces faster family sheets.
-- Native review: `Godot --path client -s res://tests/architecture_refined_review.gd -- housing` (also `industry`, `orbit`, `pitch`, `zoom`, `greyscale`, `states`, `construction`, `density`; headless `verify`).
+- Native review: `Godot --path client -s res://tests/architecture_refined_review.gd -- housing` (also `industry`, `detail`, `kiln_detail`, `digester_detail`, `orbit`, `pitch`, `zoom`, `greyscale`, `states`, `construction`, `density`; headless `verify`).
 - Review-only game opt-in: launch **this art checkout** with `POND_ARCHITECTURE_V04=1 Godot --path client`. This does not edit saved settings. Do not set this on the normal desktop launcher yet.
 
 ## Actual runtime behavior
@@ -59,7 +82,7 @@ Passing import tests or a density fixture is not a visual quality judgement. The
 Before normal adoption:
 
 1. Rich's visual review against the approved residence/Store/Washery concepts.
-2. Judge the stronger carapace asymmetry, unequal apertures and intergrown cultivation in this follow-up. Repeated chamber/court arrangements and clean cream terraces still need comparison with the richer concepts; no amount of extra small props waives that silhouette gate.
+2. Rich has accepted the current forms. Obtain surface approval of this texture-only pass; concept-parity and authoritative mixed-settlement readability remain separate gates. Do not reopen geometry changes in this block.
 3. A mixed, populated, authoritative settlement review with selected/blocked/dormant neighbours and carriers docking to actual domain-approved ports.
 4. Building-local typed inventory and recipe-progress bindings, with no duplicate/global-stock display.
 5. Claude's six-tier progression and utility dependency proposal, accepted and tested separately from art.
@@ -67,7 +90,16 @@ Before normal adoption:
 
 Refinement remains restricted to these ten assets. Other families remain on hold.
 
-## Verification evidence, 7 October 2026
+## Latest texture verification, 7 October 2026
+
+- 189 Python tests pass. Embedded GLBs have albedo/normal/metallic-roughness textures, UVs and vertex colours; all 36 source maps are 512×512.
+- 316 default-client assertions and 2,826 architecture checks pass, zero errors. Added native checks for roughness presence, green-channel use, spatial variation, map resolution and nonmetallic blue channel on near and distance materials.
+- Final native captures repeated after continuous UV export: housing/industry, Manor/Kiln/Digester close-ups, eight yaws, three pitches, three zooms, greyscale and construction/state fixtures. Same diagnostic lighting, no flattering post-process replacement.
+- Compared with form-approved `330e202`: all ten manifest entries and anchor files are unchanged, including near/distance triangle counts, surfaces, bounds, states and construction groups. Full-detail source geometry was not edited; only textures, material nodes and mantle UVs changed.
+- Final isolated 100-instance fixture: 9.341ms median / 16.744ms p95, 642 draws and 5,430,372 primitives, Metal Forward+. Previous median was 8.662ms and p95 17.530ms; this is not a claimed performance improvement. Draw/primitive counts are unchanged. The higher-resolution surfaces add texture memory and package size; verify the authoritative settlement before normal adoption.
+- Remaining surface limitations: shared procedural tiles are not bespoke per-building painting; small support pieces still use box projection. Surface acceptance remains Rich's judgement, not something passing tests settles.
+
+## Earlier geometry verification evidence, 7 October 2026
 
 - Python regression: 188 tests pass, including self-contained GLB/texture/normal/UV/near-distance manifest validation.
 - Existing default-client regression: 316 assertions pass. Latest architecture checks: 1,726 pass, zero errors, including near/distance embedded material/UV/normal/colour validation, nonzero/valid tint, native material multiplier use, silhouette bounds within 5%, and explicit recipe-phase preservation across distance-mesh swaps.

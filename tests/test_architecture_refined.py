@@ -32,6 +32,7 @@ class RefinedArchitectureTests(unittest.TestCase):
                     self.assertTrue(all("uri" not in buffer for buffer in data["buffers"]))
                     for mat in data["materials"]:
                         self.assertIn("baseColorTexture",mat["pbrMetallicRoughness"])
+                        self.assertIn("metallicRoughnessTexture",mat["pbrMetallicRoughness"])
                         self.assertIn("normalTexture",mat)
                     triangles=0
                     for mesh in data["meshes"]:
@@ -41,6 +42,15 @@ class RefinedArchitectureTests(unittest.TestCase):
                                 self.assertIn(attr,primitive["attributes"])
                             triangles+=data["accessors"][primitive["indices"]]["count"]//3
                     self.assertEqual(triangles,record["lod_triangles" if key=="lod_path" else "triangles"])
+
+    def test_shared_surface_maps_have_production_resolution(self):
+        manifest=json.loads((OUT/"manifest.json").read_text())
+        for material in manifest["materials"]:
+            for suffix in ("surface","normal","orm"):
+                with self.subTest(material=material,map=suffix):
+                    raw=(OUT/"textures"/(material+"_"+suffix+".png")).read_bytes()
+                    self.assertEqual(raw[:8],b"\x89PNG\r\n\x1a\n")
+                    self.assertEqual(struct.unpack_from(">II",raw,16),(512,512))
 
     def test_lod_and_binding_metadata(self):
         manifest=json.loads((OUT/"manifest.json").read_text())

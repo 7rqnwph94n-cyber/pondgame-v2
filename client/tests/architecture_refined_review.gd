@@ -41,6 +41,21 @@ func visit(node: Node) -> void:
 			var material: StandardMaterial3D = node.mesh.surface_get_material(s)
 			check(material != null and material.albedo_texture != null,"embedded albedo "+str(node.name))
 			check(material != null and material.normal_enabled and material.normal_texture != null,"embedded normals "+str(node.name))
+			check(material != null and material.roughness_texture != null,"embedded surface roughness "+str(node.name))
+			check(material != null and material.roughness_texture_channel == BaseMaterial3D.TEXTURE_CHANNEL_GREEN,"glTF roughness green channel "+str(node.name))
+			if material != null and material.roughness_texture != null:
+				var rough_image := material.roughness_texture.get_image()
+				check(rough_image.get_width()==512 and rough_image.get_height()==512,"full-resolution surface map "+str(node.name))
+				var low := 1.0
+				var high := 0.0
+				var metal_free := true
+				for y in range(0,512,64):
+					for x in range(0,512,64):
+						var sample := rough_image.get_pixel(x,y)
+						low = minf(low,sample.g);high = maxf(high,sample.g)
+						metal_free = metal_free and sample.b<.01
+				check(high-low>.01,"spatially varying roughness "+str(node.name))
+				check(metal_free,"living/mineral surfaces are not metallic "+str(node.name))
 			check(material != null and material.vertex_color_use_as_albedo,"native accretion material "+str(node.name))
 	for child in node.get_children(): visit(child)
 
@@ -159,6 +174,8 @@ func run() -> void:
 	if mode == "states": columns = 4;indices = range(4)
 	if mode == "construction": columns = 5;indices = range(5)
 	if mode == "detail": columns = 1;indices = range(5,6)
+	if mode == "kiln_detail": columns = 1;indices = range(8,9)
+	if mode == "digester_detail": columns = 1;indices = range(9,10)
 	for j in range(indices.size()):
 		var index: int = indices[j]%10
 		if mode == "states": index = 7
@@ -167,7 +184,7 @@ func run() -> void:
 		var visual := Visual.new();visual.load_asset(base.path_join(record["path"]))
 		world.add_child(visual);models.append(visual)
 		visual.position = Vector3((j%columns-(columns-1)/2.0)*6.5,0,(floori(float(j)/columns)-.5)*12)
-		if mode == "detail": visual.position = Vector3.ZERO
+		if mode in ["detail","kiln_detail","digester_detail"]: visual.position = Vector3.ZERO
 		visual.set_condition_state("normal" if index<6 else "active")
 		visual.set_stock_state(true,true)
 		if mode == "states":
@@ -214,7 +231,7 @@ func run() -> void:
 		var f := FileAccess.open(base.path_join("docs/art/renders/architecture_v04/density_report.json"),FileAccess.WRITE);f.store_string(JSON.stringify(report,"\t"));f.close()
 		print("Density report: ",report);await capture("density")
 	else:
-		if mode == "detail":
+		if mode in ["detail","kiln_detail","digester_detail"]:
 			camera.size = 6.5;camera.position = Vector3(7,8,11);camera.look_at(Vector3(0,2,0))
 		if mode=="states": camera.size = 17
 		if mode in ["greyscale","construction"]: camera.size = 27

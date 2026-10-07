@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 import bpy
+import numpy as np
 from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,29 +26,99 @@ PALETTE={"shell":"174B50","chalk":"C5C3A6","resin":"B4914C","amber":"EEB34D",
 MATS={};COLS={};ROOTS={};RECORDS=[];STATE={};PHASES={}
 
 
+TEXTURE_SIZE=512
+
+
+def surface_maps(key,hexcol):
+    """Tileable biological surfaces; relief, colour and roughness agree.
+
+    No painted shadow, damage/state indicator or geometry change. Periodic
+    value noise avoids the former screen-door sinusoidal micro-normal pattern.
+    The small shared library is deterministic across full and distance exports.
+    """
+    n=TEXTURE_SIZE
+    rng=np.random.default_rng(4100+list(PALETTE).index(key))
+    yy,xx=np.mgrid[:n,:n]/n
+    def noise(cells):
+        grid=rng.uniform(-1,1,(cells,cells))
+        pos=np.arange(n)*cells/n;index=pos.astype(int);f=pos-index
+        f=f*f*f*(f*(f*6-15)+10)
+        a=grid[index[:,None]%cells,index[None,:]%cells]
+        b=grid[index[:,None]%cells,(index[None,:]+1)%cells]
+        c=grid[(index[:,None]+1)%cells,index[None,:]%cells]
+        d=grid[(index[:,None]+1)%cells,(index[None,:]+1)%cells]
+        return (a*(1-f[None,:])+b*f[None,:])*(1-f[:,None])+(c*(1-f[None,:])+d*f[None,:])*f[:,None]
+    broad=noise(4);medium=noise(16);fine=noise(64)
+    # Warped, differently spaced accretion lines, not a regular checkerboard.
+    phase=yy*18+1.6*noise(4)+.28*noise(16)
+    bands=(.5+.5*np.cos(math.tau*phase))**10
+    pores=np.zeros((n,n))
+    for _ in range(135):
+        cx,cy=rng.random(2);rx=rng.uniform(.003,.013);ry=rx*rng.uniform(.6,1.6)
+        dx=np.minimum(abs(xx-cx),1-abs(xx-cx))/rx
+        dy=np.minimum(abs(yy-cy),1-abs(yy-cy))/ry
+        pores=np.maximum(pores,np.exp(-2*(dx*dx+dy*dy)))
+    rgb=np.array([int(hexcol[i:i+2],16)/255 for i in (0,2,4)])
+    colour=np.ones((n,n,3))*rgb
+    height=.035*medium+.012*fine
+    variation=.06*broad+.025*medium
+    rough=np.full((n,n),.65)+.04*medium
+    relief=.03
+    if key=="shell":
+        bands*=.65+.35*(medium+1)*.5
+        variation=.18*broad+.055*medium-.075*bands
+        colour+=broad[:,:,None]*np.array([.005,.027,.017])
+        height=.035*bands+.018*medium
+        rough=.59+.09*broad+.08*bands;relief=.025
+    elif key=="chalk":
+        variation=.075*broad+.025*fine-.23*pores
+        colour+=medium[:,:,None]*np.array([.022,.013,-.013])
+        height=.06*medium+.015*fine-.20*pores
+        rough=.87+.025*medium+.07*pores;relief=.035
+    elif key=="ceramic":
+        # Fired mineral skin: sintered grains and quiet firing clouds, not metal.
+        variation=.13*broad+.045*medium-.10*pores
+        colour+=broad[:,:,None]*np.array([.025,.004,-.026])
+        height=.035*medium+.022*fine-.06*pores
+        rough=.76+.06*broad+.025*fine;relief=.04
+    elif key in ("membrane","fibre","growth"):
+        veins=(.5+.5*np.cos(math.tau*(xx*24+.60*noise(4))))**14
+        variation=.10*broad+.035*medium-.08*veins
+        height=.045*veins+.012*medium
+        rough={"membrane":.53,"fibre":.78,"growth":.58}[key]+.07*broad+.05*veins
+        relief=.025
+    elif key=="dark":
+        variation=.14*broad+.045*medium
+        height=.035*medium+.014*fine
+        rough=.62+.10*broad+.035*fine;relief=.035
+    elif key in ("resin","amber","silica","memory"):
+        variation=.09*broad+.022*medium
+        height=.018*medium+.008*fine
+        rough={"resin":.44,"amber":.48,"silica":.36,"memory":.47}[key]+.065*broad
+        relief=.016
+    else:
+        variation=.16*broad+.06*medium+.025*fine
+        height=.06*medium+.025*fine
+        rough=.89+.035*medium;relief=.04
+    colour=np.clip(colour*(1+variation[:,:,None]),0,1)
+    gx=(np.roll(height,-1,axis=1)-np.roll(height,1,axis=1))*n*.5*relief
+    gy=(np.roll(height,-1,axis=0)-np.roll(height,1,axis=0))*n*.5*relief
+    normals=np.stack((-gx,-gy,np.ones_like(gx)),axis=2)
+    normals/=np.linalg.norm(normals,axis=2,keepdims=True)
+    orm=np.stack((np.ones_like(rough),np.clip(rough,.25,.98),np.zeros_like(rough)),axis=2)
+    def save(suffix,values,noncolour=False):
+        result=bpy.data.images.new(key+"_"+suffix,width=n,height=n,alpha=True)
+        if noncolour:result.colorspace_settings.name="Non-Color"
+        rgba=np.concatenate((values,np.ones((n,n,1))),axis=2).astype(np.float32)
+        result.pixels.foreach_set(rgba.ravel())
+        result.filepath_raw=str(OUT/"textures"/(key+"_"+suffix+".png"))
+        result.file_format="PNG";result.save()
+        return result
+    return save("surface",colour),save("normal",normals*.5+.5,True),save("orm",orm,True)
+
+
 def material(key,hexcol):
-    rgb=[int(hexcol[i:i+2],16)/255 for i in (0,2,4)]
-    image=bpy.data.images.new(key+"_surface",width=256,height=256,alpha=True)
-    pixels=[]
-    for y in range(256):
-        for x in range(256):
-            grain=math.sin(x*1.71+y*2.13)*math.sin(x*.37-y*.81)
-            growth=math.sin(y*.11+2*math.sin(x*.021))
-            fine=math.sin(x*.071+y*.12)*math.sin(x*.14-y*.03)
-            variation=1+.014*grain+.025*fine+.022*growth
-            if key=="chalk":variation-=.13*max(0,grain-.5)
-            pixels.extend([max(0,min(1,c*variation)) for c in rgb]+[1])
-    image.pixels.foreach_set(pixels)
-    image.filepath_raw=str(OUT/"textures"/(key+"_surface.png"));image.file_format="PNG";image.save()
-    normal=bpy.data.images.new(key+"_micro_normal",width=256,height=256,alpha=True)
-    normal.colorspace_settings.name="Non-Color"
-    pixels=[]
-    strength=.009 if key=="shell" else .025 if key in ("chalk","ceramic") else .008
-    for y in range(256):
-        for x in range(256):
-            pixels.extend([.5+strength*math.sin(x*.22+y*.31),.5+strength*math.cos(x*.27-y*.19),1,1])
-    normal.pixels.foreach_set(pixels)
-    normal.filepath_raw=str(OUT/"textures"/(key+"_normal.png"));normal.file_format="PNG";normal.save()
+    image,normal,orm=surface_maps(key,hexcol)
     m=bpy.data.materials.new("verdant_"+key);m.use_nodes=True
     shader=m.node_tree.nodes["Principled BSDF"]
     shader.inputs["Roughness"].default_value={"shell":.46,"resin":.4,"silica":.28,"amber":.45,"chalk":.82}.get(key,.6)
@@ -63,6 +134,11 @@ def material(key,hexcol):
     nm=m.node_tree.nodes.new("ShaderNodeNormalMap")
     m.node_tree.links.new(texture.outputs["Color"],nm.inputs["Color"])
     m.node_tree.links.new(nm.outputs["Normal"],shader.inputs["Normal"])
+    texture=m.node_tree.nodes.new("ShaderNodeTexImage");texture.image=orm
+    channels=m.node_tree.nodes.new("ShaderNodeSeparateColor");channels.mode="RGB"
+    m.node_tree.links.new(texture.outputs["Color"],channels.inputs["Color"])
+    m.node_tree.links.new(channels.outputs["Green"],shader.inputs["Roughness"])
+    m.node_tree.links.new(channels.outputs["Blue"],shader.inputs["Metallic"])
     if key=="amber":
         shader.inputs["Emission Color"].default_value=(.42,.16,.025,1)
         shader.inputs["Emission Strength"].default_value=.15
@@ -184,6 +260,16 @@ def organ(col,p,size,seed=0,kind="home"):
             a=(j+.5)*math.tau/n
             faces.append((k*n+j,k*n+(j+1)%n,(k+1)*n+(j+1)%n,(k+1)*n+j))
     o=mesh(col,"closed protective carapace",verts,faces,"ceramic" if kind=="kiln" else "shell")
+    # Continuous mantle wrap replaces per-face box projection. Only UVs change:
+    # stable growth direction, no quadrant patches on the fired ceramic body.
+    uv=o.data.uv_layers.active
+    for face in o.data.polygons:
+        circumferences=[(o.data.loops[li].vertex_index%n)/n for li in face.loop_indices]
+        seam=max(circumferences)-min(circumferences)>.5
+        for li,u in zip(face.loop_indices,circumferences):
+            index=o.data.loops[li].vertex_index
+            if seam and u<.5:u+=1
+            uv.data[li].uv=(u*math.tau*(rx+ry)*.5*.65,(1-(index//n)/rings)*2*h*.65)
     mod=o.modifiers.new("shell thickness","SOLIDIFY");mod.thickness=.045
     bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
     ball(col,"inner enclosed habitation",p,(rx*.84,ry*.84,h*.86),"dark")
