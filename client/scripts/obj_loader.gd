@@ -1,8 +1,8 @@
 class_name ObjLoader
 extends RefCounted
-## Minimal runtime Wavefront OBJ/MTL reader for Codex's blockout kit (positions, polygons, usemtl, Kd).
+## Runtime Wavefront OBJ/MTL reader (positions, authored normals, polygons, usemtl, Kd).
 ## Reading at runtime keeps the presentation assets outside the Godot project untouched (no .import files)
-## and lets Codex replace an asset file without any engine step. Normals are generated flat per face.
+## Authored Blender normals preserve rounded living shells. Legacy files without normals stay flat.
 
 static var _cache: Dictionary = {}
 static var stats: Dictionary = {}     # path -> {vertices, triangles, materials}; testable without a renderer
@@ -17,7 +17,8 @@ static func load_mesh(path: String) -> ArrayMesh:
 		return null
 	var materials := {}
 	var positions: Array[Vector3] = []
-	var faces_by_material := {}   # material name -> Array of PackedInt32Array (0-based indices)
+	var normals: Array[Vector3] = []
+	var faces_by_material := {}
 	var current := "_default"
 	while not file.eof_reached():
 		var line := file.get_line().strip_edges()
@@ -29,16 +30,22 @@ static func load_mesh(path: String) -> ArrayMesh:
 				materials.merge(_load_mtl(path.get_base_dir().path_join(parts[1])))
 			"v":
 				positions.append(Vector3(parts[1].to_float(), parts[2].to_float(), parts[3].to_float()))
+			"vn":
+				normals.append(Vector3(parts[1].to_float(), parts[2].to_float(), parts[3].to_float()).normalized())
 			"usemtl":
 				current = parts[1]
 			"f":
 				var face := PackedInt32Array()
+				var face_normals := PackedInt32Array()
 				for i in range(1, parts.size()):
-					var index := parts[i].split("/")[0].to_int()
+					var fields := parts[i].split("/", true)
+					var index := fields[0].to_int()
 					face.append(index - 1 if index > 0 else positions.size() + index)
+					var normal_index := fields[2].to_int() if fields.size() > 2 else 0
+					face_normals.append(normal_index - 1 if normal_index > 0 else normals.size() + normal_index if normal_index < 0 else -1)
 				if not faces_by_material.has(current):
 					faces_by_material[current] = []
-				faces_by_material[current].append(face)
+				faces_by_material[current].append({"vertices": face, "normals": face_normals})
 	if positions.is_empty() or faces_by_material.is_empty():
 		return null
 	var mesh := ArrayMesh.new()
@@ -46,12 +53,16 @@ static func load_mesh(path: String) -> ArrayMesh:
 	for name in faces_by_material:
 		var st := SurfaceTool.new()
 		st.begin(Mesh.PRIMITIVE_TRIANGLES)
-		for face in faces_by_material[name]:
+		for record in faces_by_material[name]:
+			var face: PackedInt32Array = record["vertices"]
+			var normal_indices: PackedInt32Array = record["normals"]
 			for k in range(1, face.size() - 1):   # triangle fan; OBJ winding is counter-clockwise
 				triangles += 1
-				for idx in [face[0], face[k + 1], face[k]]:
-					st.add_vertex(positions[idx])
-		st.generate_normals()
+				var fallback := (positions[face[k]] - positions[face[0]]).cross(positions[face[k + 1]] - positions[face[0]]).normalized()
+				for corner in [0, k + 1, k]:
+					var ni: int = normal_indices[corner]
+					st.set_normal(normals[ni] if ni >= 0 and ni < normals.size() else fallback)
+					st.add_vertex(positions[face[corner]])
 		var material := StandardMaterial3D.new()
 		material.resource_name = str(name)
 		material.albedo_color = materials.get(name, Color(0.6, 0.65, 0.65))

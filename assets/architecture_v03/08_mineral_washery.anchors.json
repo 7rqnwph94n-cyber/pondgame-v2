@@ -1,0 +1,33 @@
+{
+  "asset": "08_mineral_washery",
+  "up_axis": "+Y",
+  "units": "metres",
+  "status": "visual_candidate",
+  "anchors": {
+    "CarrierInput": [
+      -1.7,
+      0.25,
+      1.3
+    ],
+    "CarrierOutput": [
+      1.25,
+      0.5,
+      0.65
+    ],
+    "CleanFlowIn": [
+      -1.6,
+      0.28,
+      -1.5
+    ],
+    "WasteReturnOut": [
+      1.6,
+      0.28,
+      -1.5
+    ],
+    "LabelAnchor": [
+      0,
+      3.1200001716613768,
+      0
+    ]
+  }
+}

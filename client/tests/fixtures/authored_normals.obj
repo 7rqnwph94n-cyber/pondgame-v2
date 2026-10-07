@@ -1,0 +1,8 @@
+# Smooth corner normals and negative OBJ indices must survive import.
+v 0 0 0
+v 1 0 0
+v 0 1 0
+vn 0 0 1
+vn 0 0.70710678 0.70710678
+vn 0.70710678 0 0.70710678
+f -3//-3 -2//-2 -1//-1

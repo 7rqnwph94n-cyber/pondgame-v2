@@ -1,0 +1,76 @@
+{
+  "version": 3,
+  "assets": [
+    {
+      "id": "01_seed_shelter",
+      "path": "assets/architecture_v03/01_seed_shelter.obj",
+      "triangles": 2424,
+      "height": 0.8100000023841858,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "02_rooted_dwelling",
+      "path": "assets/architecture_v03/02_rooted_dwelling.obj",
+      "triangles": 6904,
+      "height": 1.399999976158142,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "03_mature_habitat",
+      "path": "assets/architecture_v03/03_mature_habitat.obj",
+      "triangles": 10324,
+      "height": 2.225332498550415,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "04_symbiotic_court",
+      "path": "assets/architecture_v03/04_symbiotic_court.obj",
+      "triangles": 11908,
+      "height": 2.619999885559082,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "05_terraced_habitat",
+      "path": "assets/architecture_v03/05_terraced_habitat.obj",
+      "triangles": 10288,
+      "height": 2.923661470413208,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "06_memory_manor",
+      "path": "assets/architecture_v03/06_memory_manor.obj",
+      "triangles": 14352,
+      "height": 4.230616092681885,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "07_general_store",
+      "path": "assets/architecture_v03/07_general_store.obj",
+      "triangles": 7816,
+      "height": 1.8570789098739624,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "08_mineral_washery",
+      "path": "assets/architecture_v03/08_mineral_washery.obj",
+      "triangles": 7372,
+      "height": 2.820000171661377,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "09_ceramic_kiln",
+      "path": "assets/architecture_v03/09_ceramic_kiln.obj",
+      "triangles": 8224,
+      "height": 2.8636395931243896,
+      "status": "massing_candidate"
+    },
+    {
+      "id": "10_waste_digester",
+      "path": "assets/architecture_v03/10_waste_digester.obj",
+      "triangles": 7628,
+      "height": 2.700000047683716,
+      "status": "massing_candidate"
+    }
+  ],
+  "gameplay_bound": false
+}

@@ -1,0 +1,33 @@
+{
+  "asset": "10_waste_digester",
+  "up_axis": "+Y",
+  "units": "metres",
+  "status": "visual_candidate",
+  "anchors": {
+    "CarrierInput": [
+      -0.75,
+      0.22,
+      1.55
+    ],
+    "CarrierOutput": [
+      1.25,
+      0.35,
+      0.9
+    ],
+    "CleanFlowIn": [
+      -1.55,
+      0.28,
+      -1.5
+    ],
+    "WasteReturnIn": [
+      1.55,
+      0.28,
+      -1.5
+    ],
+    "LabelAnchor": [
+      0,
+      3.0000000476837156,
+      0
+    ]
+  }
+}

@@ -55,6 +55,12 @@ func test_obj_loader() -> void:
 		check(mesh != null and stats.get("triangles", 0) > 0 and stats.get("materials", 0) > 0,
 			"blockout %s loads as a mesh (%s)" % [asset, str(stats)])
 	check(ObjLoader.load_mesh("/no/such/file.obj") == null, "missing OBJ returns null (placeholder fallback)")
+	var smooth_mesh := ObjLoader.load_mesh("res://tests/fixtures/authored_normals.obj")
+	var smooth_normals: PackedVector3Array = smooth_mesh.surface_get_arrays(0)[Mesh.ARRAY_NORMAL]
+	# ArrayMesh stores octahedrally quantised normals (observed error ~0.000022).
+	check(smooth_normals[0].distance_to(Vector3(0,0,1)) < 0.0001, "authored first normal survives OBJ import")
+	check(smooth_normals[1].distance_to(Vector3(1,0,1).normalized()) < 0.0001, "negative normal index follows reversed Godot winding")
+	check(smooth_normals[2].distance_to(Vector3(0,1,1).normalized()) < 0.0001, "smooth normals are not flattened per triangle")
 	completed.append("obj_loader")
 
 

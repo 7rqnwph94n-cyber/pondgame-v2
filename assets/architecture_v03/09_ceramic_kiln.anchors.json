@@ -1,0 +1,33 @@
+{
+  "asset": "09_ceramic_kiln",
+  "up_axis": "+Y",
+  "units": "metres",
+  "status": "visual_candidate",
+  "anchors": {
+    "CarrierInput": [
+      -0.4,
+      0.22,
+      1.7
+    ],
+    "CarrierOutput": [
+      1.4,
+      0.3,
+      0.75
+    ],
+    "CleanFlowIn": [
+      -1.5,
+      0.28,
+      -1.5
+    ],
+    "WasteReturnOut": [
+      1.5,
+      0.28,
+      -1.5
+    ],
+    "LabelAnchor": [
+      0,
+      3.1636395931243895,
+      0
+    ]
+  }
+}

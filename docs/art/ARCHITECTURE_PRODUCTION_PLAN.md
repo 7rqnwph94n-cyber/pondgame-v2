@@ -70,4 +70,4 @@ Codex owns models, export, material treatment, attachment geometry, presentation
 
 ## Current status
 
-Plan recorded. Ten-model massing prototypes are the next concrete review. Refinement, six-tier economy implementation and final visual acceptance remain open.
+Ten-model massing candidates exported and reviewed in Blender and Godot; see `ARCHITECTURE_BENCHMARK_REVIEW.md`. First review revised the upper tiers away from stacked repeated vaults into broad terraces and an archive fan, attached utility sockets, and added washery feed/contained digestion anatomy. Next fixed step: refine housing tiers 1–3, then 4–6, then the four functional facilities. No production asset mapping or six-tier economy implementation is claimed. Final visual acceptance remains open.
