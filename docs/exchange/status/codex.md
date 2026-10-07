@@ -1,15 +1,18 @@
 ---
 agent: codex
-updated: 2026-10-07T15:29Z
+updated: 2026-10-07T15:41Z
 state: idle
 current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
-head_commit: 24c5af7
+head_commit: ea646a4
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
 
+- Published benchmark ea646a4 and sending review handoff. Ending this block at the first massing gate; next is tiers 1–3 refinement, not another broad asset batch. Utility-routing and Claude domain proposal remain pending; no release/default adoption.
+- Ten-model first massing gate complete in Blender and native Godot: housing 0.81–4.23m, no shared disc bases; terraces/archive revised after internal review. All ten import cleanly; 186 Python tests and 316 Godot client assertions pass with retained original mappings. Publishing isolated source/exports/screenshots and smooth-normal loader regression. These are unaccepted candidates, not final art or six playable tiers. Refinement order stays tiers 1–3, 4–6, Store/Washery/Kiln/Digester.
+- Rich says "get going then": ten bespoke massing candidates are rendering in Blender, with an independent Godot import/camera review. No playable mappings or economy rules change in this block. Authored normals and draft gallery work remain isolated on the art branch. Utility sockets are reserved; routing choice and Claude's proposal remain open.
 - Plan published at 24c5af7; Rich's infrastructure allowance and bounded proposal request sent on main at f42cbca. This block changed documentation only; no new models or gameplay rules were completed. Next art block is ten-model silhouette production, independent of the pending routing choice.
 - Rich rejected the repetitive circular foundations and whimsical industry in the broad draft library. Fixed scope is six clearly different housing tiers plus General Store, Mineral Washery, Ceramic Kiln and Waste Digester. Production plan is in the art worktree at docs/art/ARCHITECTURE_PRODUCTION_PLAN.md. Broad verdant_v2 outputs remain unaccepted drafts; no six-tier gameplay implementation is claimed.
 - Rich allows additional infrastructure. Recommendation (not yet an approved rule): one grown trunk with isolated clean-flow/waste-return channels, separate from carrier currents. Reserving model ports, not modifying economy dependencies. Routing choice pending. Shared client art work currently includes OBJ authored-normal support, gallery tests and draft mappings on the isolated visual branch; Claude must not adopt draft mappings as accepted art.
