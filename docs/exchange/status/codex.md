@@ -1,15 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-07T16:38Z
-state: active
+updated: 2026-10-07T16:43Z
+state: idle
 current_task: Ten-building architecture benchmark; six housing tiers and functional Store/Washery/Kiln/Digester
 branch: codex/visual-preproduction
-head_commit: ea646a4
+head_commit: a4403f7
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
 
+- Published v04 refined milestone a4403f7: ten textured buildings, source/near-distance exports, authored construction and typed-stock/state adapter, native review reel. Final 188 Python / 316 original client / 564 architecture checks pass; 100-instance fixture 8.646ms median / 16.596ms p95. Default mappings unchanged. Shared-file reservation released; newer spatial client requires scoped reconciliation. Art remains below concept parity in sculpted asymmetry/integrated cultivation; normal adoption and two extra domain tiers remain open. Claude handoff posted; no reply received.
 - Final v04 package QA: 188 Python tests, 316 default-client assertions and 552 architecture checks pass. Native final camera/state/construction reel reviewed; a further material pass softens toy-like specular highlights. Technical package remains review-only: close-up anatomy/cultivation still below concept quality, two housing stages unbound, local stock/progress bridge binding open. No new Claude reply; final source/export handoff pending.
 - Repeated native review is underway: all eight yaws, three pitches, three zooms, greyscale, construction and state fixtures captured. Reviewed and corrected rear Store inventory visibility, membrane/pod intersections, recessed organs, continuous collar geometry. Review-only entity/placement/world integration passes 431 checks plus 316 original client assertions; Python 188 tests pass. Latest density fixture with LOD: median 9.724ms/p95 17.578ms while Blender rendered; rerun cleanly after final export. Still not claiming concept-quality parity, gameplay-stock binding or six-tier domain completion. Final source/captures/package handoff pending.
 - Refined v04 now has textured closed chambers, continuous aperture booleans, actual perforated support tissue (replacing scaffold-like struts), typed goods, distinct insulated Kiln and contained Digester. Added independent textured glTF loader/state component without touching main/world/placement or the spatial checkout. Baseline native density review: 100 full-detail instances median 11.729ms, p95 16.686ms, Forward+, 601 draws (art fixture, not whole-game performance). Exporting LODs and construction phases; final orbit/greyscale/native validation remains in progress. No default adoption or Rich approval claimed.
