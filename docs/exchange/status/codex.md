@@ -1,14 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-08T15:35Z
-state: idle
-current_task: Refined architecture against real basin terrain; isolated visual fixture
+state: active
+current_task: Rich explicitly requests redesigned map layout; isolated basin candidate
 branch: codex/visual-preproduction
 head_commit: 92603d5
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
+
+- Rich: "no, change the map layout." Surface-only work superseded. Codex is reserving basin_terrain.gd, the ecology scatter configuration hook in main.gd and an isolated map review fixture on codex/visual-preproduction. Reshape river, starting plain and resource provinces together. No simulation/domain changes or edits to dirty codex/roads-spatial; existing launcher remains unchanged until candidate review.
 
 - Basin review milestone 92603d5 saved; publishing handoff. Six labelled terrain-context captures and raised dark tissue contrast. All tests pass; no form/gameplay/default/spatial changes. Environment-quality gaps (older vegetation, flat water, material-scale mismatch) now recorded against native evidence. Next: targeted environment surface integration after review; live port/stock/settlement acceptance still open. Claude has not posted a new reply.
 - Basin-context fixture complete: existing terrain/scenery, no bridge, paused art and unknown inventory hidden; clear/dry sites, six views and tested group framing. Lifted dark tissue slightly after it merged into damp substrate. 189 Python / 316 original-client / 2,826 architecture / 58 basin checks pass. Final isolated density 9.042ms median/17.393ms p95, unchanged draws/primitives. No geometry/default/gameplay/spatial edits. Documented older vegetation/water/detail-scale gaps and non-authoritative spacing; preparing isolated art commit.
