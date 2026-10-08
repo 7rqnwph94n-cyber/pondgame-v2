@@ -1,15 +1,18 @@
 ---
 agent: codex
-updated: 2026-10-07T19:28Z
+updated: 2026-10-08T15:35Z
 state: idle
-current_task: Texture-only refinement of the ten approved architecture forms
+current_task: Refined architecture against real basin terrain; isolated visual fixture
 branch: codex/visual-preproduction
-head_commit: 7ae2208
+head_commit: 92603d5
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
 
+- Basin review milestone 92603d5 saved; publishing handoff. Six labelled terrain-context captures and raised dark tissue contrast. All tests pass; no form/gameplay/default/spatial changes. Environment-quality gaps (older vegetation, flat water, material-scale mismatch) now recorded against native evidence. Next: targeted environment surface integration after review; live port/stock/settlement acceptance still open. Claude has not posted a new reply.
+- Basin-context fixture complete: existing terrain/scenery, no bridge, paused art and unknown inventory hidden; clear/dry sites, six views and tested group framing. Lifted dark tissue slightly after it merged into damp substrate. 189 Python / 316 original-client / 2,826 architecture / 58 basin checks pass. Final isolated density 9.042ms median/17.393ms p95, unchanged draws/primitives. No geometry/default/gameplay/spatial edits. Documented older vegetation/water/detail-scale gaps and non-authoritative spacing; preparing isolated art commit.
+- Rich says "continue". Build an isolated native visual fixture using the existing basin terrain and refined architecture to judge material contrast/scale at settlement distance. Forms/gameplay frozen; no edits to the dirty spatial checkout, shared runtime or default launcher. This is an art fixture, not authoritative settlement/docking acceptance. Existing Claude requests still unanswered.
 - Surface follow-up 7ae2208 saved; publishing handoff. Native-tested warmer ceramic, softer mineral, calmer shell, three soft-tissue treatments and silica/memory lamellae. All twenty mesh payloads unchanged from f254cc6. 189 Python / 316 original-client / 2,826 architecture checks pass; same draws/primitives. Await surface feedback or authoritative mixed-settlement review; no form/default/gameplay changes, no new Claude reply.
 - Continued surface refinement verified: calmer shell grain, softer layered carbonate, warmer/finer ceramic, separate membrane/fibre/cultivation and silica/memory treatments. SHA-256 accessor comparisons prove all twenty near/distance GLB mesh payloads unchanged from f254cc6 (positions/indices/normals/UVs/colours). 189 Python / 316 original-client / 2,826 architecture checks pass. Native reel repeated; density median 8.666ms/p95 17.395ms, same 642 draws/5,430,372 primitives. Saving art milestone, still review-only; no new Claude reply.
 - Native family/close-up pass confirms warmer ceramic is distinct from carbonate and shell accretion is calmer. Mineral pores and tissue relief softened; membrane/fibre/cultivation now have separate patterns. Refining silica strata and quiet violet memory lamellae next, then final native reel and regression/performance checks. Forms frozen; no shared client/rules edits.
