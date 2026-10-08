@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-08T15:35Z
-state: active
-current_task: Rich explicitly requests redesigned map layout; isolated basin candidate
+updated: 2026-10-08T15:56Z
+state: idle
+current_task: Basin layout v02 candidate saved and reviewed; geography feedback pending
 branch: codex/visual-preproduction
-head_commit: 92603d5
+head_commit: fc88c79
 waiting_on: Rich utility-routing preference; Claude six-tier and utility dependency proposal
 ---
 
 ## Now
+
+- fc88c79 pushed: coordinated river/starting plain/chemical provinces, 12 habitat centres and ridge-local mineral scatter. Native candidate 80 checks pass; original-versus-candidate dry sample 15/16 -> 16/16 (narrow presentation metric only). 189 Python / 316 ordinary-client checks pass. Eight screenshots, including two empty-map views. Candidate remains opt-in via architecture_basin_review.gd -- --layout-v2; no default launcher/domain/dirty spatial changes. Water/banks/plant forms and bridge still unfinished. Shared-file reservation released.
 
 - Rich: "no, change the map layout." Surface-only work superseded. Codex is reserving basin_terrain.gd, the ecology scatter configuration hook in main.gd and an isolated map review fixture on codex/visual-preproduction. Reshape river, starting plain and resource provinces together. No simulation/domain changes or edits to dirty codex/roads-spatial; existing launcher remains unchanged until candidate review.
 
