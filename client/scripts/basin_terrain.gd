@@ -11,9 +11,11 @@ const CHANNEL := [
 var _smooth_channel: Array[Vector2] = []
 var _channel_points: Array[Vector2] = []
 var _textures: Dictionary = {}
+var _geography: Dictionary = {}
 
 
 func configure_layout(map: Dictionary) -> void:
+	_geography = map.get("geography", {})
 	_channel_points.clear()
 	for pair in map.get("channel", []):
 		if pair is Array and pair.size() >= 2:
@@ -38,15 +40,22 @@ func height_at(x: float, z: float) -> float:
 	elif channel_distance < 17.0:
 		height -= 0.45 * (1.0 - smoothstep(6.2, 17.0, channel_distance))
 	# Silica escarpment: a broad geological rise, not an isolated prop platform.
-	var ridge_face := smoothstep(13.0, 24.0, x)
-	var ridge_reach := 1.0 - smoothstep(-34.0, 10.0, z)
+	var ridge_face := smoothstep(float(_geography.get("ridge_start",13.0)), float(_geography.get("ridge_end",24.0)), x)
+	var ridge_reach := 1.0 - smoothstep(float(_geography.get("ridge_north",-34.0)), float(_geography.get("ridge_south",10.0)), z)
 	var ridge: float = ridge_face * ridge_reach
-	height += ridge * 10.5
+	height += ridge * float(_geography.get("ridge_height",10.5))
 	height += ridge * (sin(z * 0.22) * 0.7 + cos(x * 0.31) * 0.35)
 	# Sheltered settlement terrace and methane depression.
-	height += exp(-pow((x + 19.0) / 19.0, 2.0) - pow((z + 6.0) / 14.0, 2.0)) * 1.1
-	height -= exp(-pow((x + 36.0) / 15.0, 2.0) - pow((z - 21.0) / 13.0, 2.0)) * 1.2
+	height += _province(x,z,"settlement",Vector2(-19,-6),Vector2(19,14)) * 1.1
+	height -= _province(x,z,"methane",Vector2(-36,21),Vector2(15,13)) * 1.2
 	return height
+
+
+func _province(x: float,z: float,key: String,centre: Vector2,spread: Vector2) -> float:
+	var spec: Dictionary = _geography.get(key,{})
+	var pair: Array = spec.get("centre",[centre.x,centre.y])
+	var radius: Array = spec.get("spread",[spread.x,spread.y])
+	return exp(-pow((x-float(pair[0]))/maxf(1,float(radius[0])),2)-pow((z-float(pair[1]))/maxf(1,float(radius[1])),2))
 
 
 func has_dry_footprint_at(x: float, z: float) -> bool:
@@ -64,17 +73,17 @@ func _terrain_weights(x: float, z: float) -> Color:
 	var d := _distance_to_path(point)
 	var bank_variation := sin(x * 0.31 + z * 0.19) * 0.9 + cos(z * 0.39 - x * 0.11) * 0.6
 	var wet := (1.0 - smoothstep(5.4, 13.5 + bank_variation, d)) * 0.94
-	var mineral := smoothstep(10.0, 42.0, x) * (1.0 - smoothstep(-24.0, 16.0, z))
+	var mineral := smoothstep(float(_geography.get("ridge_start",10.0)), float(_geography.get("ridge_end",42.0)), x) * (1.0 - smoothstep(float(_geography.get("ridge_north",-24.0)), float(_geography.get("ridge_south",16.0)), z))
 	mineral *= 0.88
-	var methane := exp(-pow((x + 36.0) / 18.0, 2.0) - pow((z - 21.0) / 16.0, 2.0)) * 0.96
-	var sulphur := exp(-pow((x - 44.0) / 15.0, 2.0) - pow((z + 2.0) / 19.0, 2.0)) * 0.96
+	var methane := _province(x,z,"methane",Vector2(-36,21),Vector2(18,16)) * .96
+	var sulphur := _province(x,z,"sulphur",Vector2(44,-2),Vector2(15,19)) * .96
 	return Color(wet, mineral, methane, sulphur)
 
 
 func _secondary_weights(x: float, z: float) -> Vector2:
 	# Extra province weights travel in UV2: carbonate shelf, then stable carbon-clay terrace.
-	var carbonate := exp(-pow((x + 49.0) / 20.0, 2.0) - pow((z + 29.0) / 17.0, 2.0)) * 0.96
-	var carbon_clay := exp(-pow((x + 18.0) / 35.0, 2.0) - pow((z + 7.0) / 27.0, 2.0)) * 0.82
+	var carbonate := _province(x,z,"carbonate",Vector2(-49,-29),Vector2(20,17)) * .96
+	var carbon_clay := _province(x,z,"settlement",Vector2(-18,-7),Vector2(35,27)) * .82
 	return Vector2(carbonate, carbon_clay)
 
 
@@ -227,12 +236,16 @@ func _water_mesh() -> MeshInstance3D:
 	shader.code = """
 shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_disabled;
+uniform float terrain_half_size = 130.0;
 varying vec3 world_position;
 void vertex() {
 	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	VERTEX.y += sin(VERTEX.x * 0.21 + TIME * 0.35) * 0.045 + cos(VERTEX.z * 0.18 - TIME * 0.23) * 0.035;
 }
 void fragment() {
+	// River control points may lie beyond the map so it exits naturally. Do not
+	// render floating water beyond the terrain square.
+	if (max(abs(world_position.x), abs(world_position.z)) > terrain_half_size) discard;
 	float small_ripple = sin(world_position.x * 0.58 + world_position.z * 0.33 + TIME * 0.52) * 0.5 + 0.5;
 	float long_flow = sin(UV.x * 3.7 - TIME * 0.36 + sin(UV.x * 0.7) * 1.8) * 0.5 + 0.5;
 	float flow_filament = sin(UV.y * 22.0 + sin(UV.x * 2.3 - TIME * 0.27) * 1.2);

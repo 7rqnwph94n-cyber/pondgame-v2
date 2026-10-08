@@ -8,6 +8,7 @@ var base: String
 var world: Node3D
 var camera: Camera3D
 var models: Array[Node3D] = []
+var layout_v02 := false
 
 func fit_group(first: int,last: int) -> void:
 	var low := Vector2(INF,INF)
@@ -52,6 +53,14 @@ func run() -> void:
 	# its _ready() cannot start a bridge, change speed or touch a live game.
 	var builder := Main.new()
 	builder.style = builder._load_style()
+	layout_v02 = "--layout-v2" in OS.get_cmdline_user_args()
+	if layout_v02:
+		var candidate: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://presentation/map_layout_v02.json"))
+		var map: Dictionary = builder.style["environment"]["map"]
+		for key in candidate:
+			if key != "environment_overrides": map[key] = candidate[key]
+		for key in candidate["environment_overrides"]:
+			builder.style["environment"][key] = candidate["environment_overrides"][key]
 	builder.set_meta("empty_map",true)
 	builder._build_environment()
 	var terrain = builder._basin_terrain
@@ -60,6 +69,24 @@ func run() -> void:
 		builder.remove_child(child);world.add_child(child)
 	check(builder.bridge == null,"review must not start simulation bridge")
 	builder.free()
+	if layout_v02:
+		# Geographic acceptance: usable starting plain, separated provinces and dry
+		# crossing landings. These are presentation checks, not domain legality.
+		var original := BasinTerrain.new()
+		original._smooth_channel = original._sample_channel()
+		var old_dry := 0
+		var new_dry := 0
+		for z in [-6.0,3.0,12.0,21.0]:
+			for x in [-48.0,-39.0,-30.0,-21.0]:
+				check(terrain.has_dry_footprint_at(x,z),"continuous starting plain footprint")
+				if original.has_dry_footprint_at(x,z): old_dry += 1
+				if terrain.has_dry_footprint_at(x,z): new_dry += 1
+		print("Starting plain dry samples: original %d/16; candidate %d/16"%[old_dry,new_dry])
+		check(new_dry>old_dry,"starting plain improves against original sample grid")
+		original.free()
+		check(terrain.height_at(48,-30)>terrain.height_at(-30,9)+5,"elevated silica province")
+		check(terrain.channel_distance_at(Vector2(-3,9))>=7,"west crossing landing dry")
+		check(terrain.channel_distance_at(Vector2(20,9))>=7,"east crossing landing dry")
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(base.path_join("assets/architecture_v04/manifest.json")))
 	var locations: Array[Vector2] = []
 	# Use dry, reasonably level sites; these are not domain placement permissions.
@@ -101,6 +128,14 @@ func run() -> void:
 	label.text = "VERDANT MATERIAL REVIEW — ART FIXTURE\nExisting basin terrain • no simulation, roads or stock assertions"
 	label.add_theme_font_size_override("font_size",23)
 	panel.add_child(label)
+	if layout_v02:
+		label.text = "BASIN LAYOUT V02 — ART CANDIDATE\nBroad settlement plain • river bend • separated chemical provinces\nNo simulation resource access or transport permissions"
+		for model in models: model.hide()
+		camera.size = 150;camera.position = Vector3(25,105,130);camera.look_at(Vector3(0,0,0))
+		await capture("empty_overview")
+		camera.size = 84;camera.position = Vector3(-18,64,78);camera.look_at(Vector3(-22,0,0))
+		await capture("empty_start")
+		for model in models: model.show()
 	for view in [{"name":"settlement","size":42.0,"offset":Vector3(9,28,35)},
 			{"name":"context","size":70.0,"offset":Vector3(14,39,48)},
 			{"name":"low","size":44.0,"offset":Vector3(8,16,39)}]:
@@ -132,5 +167,7 @@ func run() -> void:
 func capture(name: String) -> void:
 	for frame in range(15): await process_frame
 	await RenderingServer.frame_post_draw
-	var path := base.path_join("docs/art/renders/architecture_v04/godot_basin_"+name+".png")
+	var directory := "docs/art/renders/map_layout_v02" if layout_v02 else "docs/art/renders/architecture_v04"
+	DirAccess.make_dir_recursive_absolute(base.path_join(directory))
+	var path := base.path_join(directory+"/godot_basin_"+name+".png")
 	check(root.get_texture().get_image().save_png(path)==OK,"save "+name)

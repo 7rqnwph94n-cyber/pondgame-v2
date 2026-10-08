@@ -646,6 +646,11 @@ func _build_environment_assets() -> void:
 func _build_ecological_scatter() -> void:
 	var root: String = style.get("environment_root", "")
 	var clusters := [Vector2(-43, -32), Vector2(-18, -10), Vector2(-2, 5), Vector2(20, 12), Vector2(29, 28)]
+	var authored_clusters: Array = style.get("environment",{}).get("map",{}).get("ecology_centres",[])
+	if not authored_clusters.is_empty():
+		clusters.clear()
+		for pair in authored_clusters:
+			clusters.append(Vector2(float(pair[0]),float(pair[1])))
 	var mat_names := ["vegetation_mat_a", "filter_grove_a", "vegetation_mat_b", "filter_grove_b", "vegetation_mat_c"]
 	# Broad mats make the bank ecology read as habitat at strategy-camera scale.
 	for cluster_index in range(clusters.size()):
@@ -687,6 +692,7 @@ func _build_ecological_scatter() -> void:
 			instance.scale = Vector3.ONE * (1.15 + float(i % 3) * 0.18)
 			add_child(instance)
 	var rocks := ["boulder_a", "boulder_b", "boulder_c", "detail_pebbles_a"]
+	var mineral_bounds: Array = style.get("environment",{}).get("map",{}).get("mineral_scatter_bounds",[18,65,-42,72])
 	for i in range(24):
 		var rock_asset: String = rocks[i % rocks.size()]
 		var rock_mesh: ArrayMesh = ObjLoaderScript.load_mesh(root.path_join(rock_asset + ".obj"))
@@ -695,8 +701,8 @@ func _build_ecological_scatter() -> void:
 		var rock_instance := MeshInstance3D.new()
 		rock_instance.mesh = rock_mesh
 		if rock_asset != "detail_pebbles_a": rock_instance.set_meta("placement_obstacle", true)
-		var rock_x := 18.0 + float((i * 17) % 65)
-		var rock_z := -42.0 + float((i * 29) % 72)
+		var rock_x := float(mineral_bounds[0]) + float((i * 17) % maxi(1,int(mineral_bounds[1])))
+		var rock_z := float(mineral_bounds[2]) + float((i * 29) % maxi(1,int(mineral_bounds[3])))
 		rock_instance.position = Vector3(rock_x, _basin_terrain.height_at(rock_x, rock_z) + 0.06, rock_z)
 		rock_instance.rotation_degrees.y = float((i * 83) % 360)
 		rock_instance.scale = Vector3.ONE * (0.8 + float(i % 6) * 0.18)
