@@ -90,6 +90,22 @@ Before normal adoption:
 
 Refinement remains restricted to these ten assets. Other families remain on hold.
 
+## Basin-context material review, 8 October 2026
+
+`client/tests/architecture_basin_review.gd` assembles the existing art-branch basin terrain/scenery with the ten refined buildings. It invokes environment construction on a detached Main node; Main never enters the scene tree, so its startup cannot launch the simulation bridge. Children are transferred into a separate review world. No live save, gameplay state, roads, default mappings or spatial checkout is changed.
+
+Run: `Godot --path client -s res://tests/architecture_basin_review.gd`. Captures: `godot_basin_settlement.png`, `context`, `low`, `neutral`, `housing_close`, `industry_close` in the same render folder. These are labelled **art fixtures**, not screenshots of a working city. Stocks are unknown/hidden and buildings paused. Dry sites avoid existing scenery bounds and excessive slope; those checks are presentation-only, not domain placement permissions. Close group framing fits transformed asset bounds and verifies they remain in frame.
+
+Findings and correction:
+
+- Teal shell/cream carbonate, warm ceramic and cultivated tissue remain distinguishable against textured ground.
+- Dark digester tissue merged with damp substrate in the first context pass. Lifted its base from `#253B37` to `#2B4844` and slightly softened roughness/relief. No new emission or geometry.
+- Initial diagnostic sites intersected existing scenery; expanded the clear-site pool instead of moving/deleting scenery. Corrected double-transformed group bounds before final framing/captures.
+- Older vegetation remains much simpler than the refined architecture. Water still reads as a broad, flat ribbon and bank transitions need further surface integration. Terrain and biological architecture use noticeably different detail scales. These remain explicit environment-quality gaps, not hidden by fog or claimed solved by this test.
+- Broad spacing is for inspection and is not an authored district or a road-connected settlement. Terrain contact, actual domain port placement, inventory/progress binding and live settlement occlusion still need authoritative review. The art branch's existing basin renderer is reused; this does not certify the newer dirty spatial checkout.
+
+Verification: 189 Python tests, 316 original-client assertions, 2,826 architecture checks and 58 basin-fixture checks pass. Near/distance triangle/bounds/state/anchor metadata stays unchanged. Final isolated 100-instance art fixture after other jobs ended: median 9.042ms, p95 17.393ms, 642 draws, 5,430,372 primitives. No performance improvement or whole-game certification is claimed. Normal launcher remains unchanged.
+
 ## Continued surface refinement, 7 October 2026
 
 Rich: "better. continue refinement". Forms remain frozen. This follow-up uses the material-only refresh rather than rebuilding geometry.

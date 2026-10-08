@@ -1,7 +1,7 @@
 {
 	"draw_calls": 642.0,
-	"frame_ms_median": 8.666,
-	"frame_ms_p95": 17.395,
+	"frame_ms_median": 9.042,
+	"frame_ms_p95": 17.393,
 	"instances": 100,
 	"primitives": 5430372.0,
 	"renderer": "forward_plus"

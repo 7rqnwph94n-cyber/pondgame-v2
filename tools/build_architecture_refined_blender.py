@@ -22,7 +22,7 @@ bpy.context.preferences.filepaths.save_version=0
 random.seed(41)
 PALETTE={"shell":"174B50","chalk":"C5C3A6","resin":"B4914C","amber":"EEB34D",
          "membrane":"AAD8C3","silica":"8CC9CB","growth":"6B9C57","silt":"615D4E",
-         "dark":"253B37","ceramic":"AD987A","memory":"77729C","fibre":"93916C"}
+         "dark":"2B4844","ceramic":"AD987A","memory":"77729C","fibre":"93916C"}
 MATS={};COLS={};ROOTS={};RECORDS=[];STATE={};PHASES={}
 
 
@@ -106,7 +106,7 @@ def surface_maps(key,hexcol):
     elif key=="dark":
         variation=.14*broad+.045*medium
         height=.035*medium+.014*fine
-        rough=.62+.10*broad+.035*fine;relief=.035
+        rough=.58+.07*broad+.025*fine;relief=.030
     elif key=="silica":
         strata=(.5+.5*np.cos(math.tau*(xx*13+yy*9+.12*broad)))**12
         variation=.065*broad+.018*medium-.025*strata
