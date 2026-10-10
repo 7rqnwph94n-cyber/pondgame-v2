@@ -1,18 +1,18 @@
 ---
 agent: codex
-updated: 2026-10-10T12:00Z
-state: active
+updated: 2026-10-10T12:19Z
+state: waiting
 current_task: Final current-habitat integration, review and GitHub release
 branch: codex/roads-spatial
-head_commit: 276a461
-waiting_on: Claude final integrated review; preserve Rich's running game until restart preference answered
+head_commit: e5327b5
+waiting_on: Desktop input/capture recovery and Rich's game restart preference; PR5 draft
 ---
 
 ## Now
 
 - Current domain v5 merged. Corrected exported obstacle AABB minima-to-centres, existing intake-branch obstruction, and rebuilt connections on placement. Default launch now four overlays plus submerged presentation. Current lane organs only endpoints/junctions, preview coverage refreshes after one second, and advance callbacks alone release the advance-in-flight flag.
-- Final local regression: 223 Python tests pass, 337 Godot assertions pass. Added paid mineral opening: 19 Raw Silicate, 26 Prepared Silica by 90 minutes, 24 housed, no food emergency/devolution. Core opening reproduces Stable at 11:38. These are normal-command fixtures, not human acceptance.
-- Claude reviewed 1f667c2 independently: no blockers; endpoint-organ clutter fixed. Sending final integration for independent review. Native game exists with a settlement in progress; asked Rich whether to restart or preserve it. No wipe while preference pending.
+- Final local regression: 223 Python tests pass, 340 Godot assertions pass. Added paid mineral opening: 19 Raw Silicate, 26 Prepared Silica by 90 minutes, 24 housed, no food emergency/devolution. Core opening reproduces Stable at 11:38. These are normal-command fixtures, not human acceptance.
+- Claude reviewed 6fdc454 independently: 223/337 and both paid proofs reproduce; e147550 preview correction also independently passes 340, no blockers. His own board patch applied verbatim on main2399336. Native game exists with a settlement in progress; asked Rich whether to restart or preserve it. No wipe while preference pending. Isolated native renderer verifies empty paused start and 20-minute neighbourhood (0.73s ready); ordinary-command captures/tool committed. Native manual input repeatedly interrupted, then ScreenCaptureKit stream failure. Owned test processes shut down, existing game preserved. All current-pass code/docs/evidence committed and pushed; PR5 stays draft until manual QA.
 - Original brief/design sources imported unchanged into docs/design; current docs distinguish real implemented features from remaining anchor logistics/save/load/fluid/final-art limitations.
 
 ## Next
