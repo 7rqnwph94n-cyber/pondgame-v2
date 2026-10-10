@@ -246,6 +246,13 @@ func _on_view(reply: Dictionary) -> void:
 	elif _selected != "" and _selected != "great_work" and not _selected.begins_with("carrier_") and (_roads == null or not _roads.roads.has(_selected)):
 		_select("")
 	hud.show_view(view)
+	if _empty_settlement_start and _spatial_enabled:
+		if view.get("spatial", {}).get("roads", {}).is_empty():
+			hud.show_status("Grow a current lane (T), then place a home", false)
+		elif view.get("sites", {}).is_empty() and view.get("residences", {}).is_empty():
+			hud.show_status("Place a home beside the current · R turns its intake · Space starts time", false)
+		else:
+			hud.show_status("", false)
 	_apply_season(view.get("season", "bloom"))
 
 
