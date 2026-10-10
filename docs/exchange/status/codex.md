@@ -10,7 +10,7 @@ waiting_on: Desktop input/capture recovery and Rich's game restart preference; P
 
 ## Now
 
-- Rich rejected the v02 houses and requested substantial noticeable house-only polish. Building an isolated four-stage candidate from stronger approved v04 anatomy, with richer embedded surfaces and integrated tissue; compare against v02 under identical native lighting. No industrial or playable-default changes.
+- Rich rejected the v02 houses and requested substantial noticeable house-only polish. Built isolated four-stage housing from approved v04 anatomy, 1024 PBR maps, recessed organs, tapered roots and integrated planted tissue. Two native refinement passes corrected toy-like aperture fill/root bulk. Preparing final matched colour/grey/LOD/rear captures and package commit. Palette conversion experiment reverted after source PNG inspection; exported palette range now checked. No industrial or playable-default changes.
 
 - Rich: "ok continue on the assets". Working in existing asset checkout. 129 candidate meshes now verified with finite vertices, normals, material application and companion anchors. Native Godot galleries cover homes, processors, carriers, goods, ecology and Reef; greyscale homes/processors and matching plain-material baselines included. Asset-only commit 9e7806b complete; procedural surface shader is isolated to review fixture. Generator writes a draft mapping. No gameplay/bridge/default-mapping changes or implicit promotion of speculative resource/caste assets. Current-habitat PR remains draft with native control gate open.
 
