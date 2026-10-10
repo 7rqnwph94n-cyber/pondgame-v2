@@ -19,6 +19,8 @@ var _peer := StreamPeerTCP.new()
 var _pid := -1
 var _buffer := PackedByteArray()
 var _next_id := 1
+var request_timeout_s := 10.0
+var _request_times := {}
 var _callbacks := {}                   # request id -> Callable(reply: Dictionary)
 var _connecting := false
 var _elapsed := 0.0
@@ -66,6 +68,7 @@ func request(op: String, payload: Dictionary = {}, callback: Callable = Callable
 	var id := _send(message)
 	if callback.is_valid():
 		_callbacks[id] = callback
+		_request_times[id] = Time.get_ticks_msec()
 	return id
 
 
@@ -111,7 +114,17 @@ func poll(delta: float) -> void:
 			_peer.connect_to_host("127.0.0.1", port)
 		return
 	if status != StreamPeerTCP.STATUS_CONNECTED:
+		if is_ready:
+			is_ready = false
+			_fail_pending("bridge connection lost")
+			failed.emit("connection lost; restart the game to reconnect")
 		return
+	for id in _request_times.keys():
+		if Time.get_ticks_msec() - int(_request_times[id]) > request_timeout_s * 1000:
+			var callback: Callable = _callbacks.get(id, Callable())
+			_callbacks.erase(id)
+			_request_times.erase(id)
+			if callback.is_valid(): callback.call({"ok": false, "reasons": ["bridge reply timed out"]})
 	var available := _peer.get_available_bytes()
 	if available > 0:
 		var chunk := _peer.get_data(available)
@@ -131,6 +144,7 @@ func poll(delta: float) -> void:
 		if _callbacks.has(id):
 			var callback: Callable = _callbacks[id]
 			_callbacks.erase(id)
+			_request_times.erase(id)
 			callback.call(reply)
 
 
@@ -144,3 +158,11 @@ func _on_hello(reply: Dictionary) -> void:
 
 func _exit_tree() -> void:
 	stop()
+
+
+func _fail_pending(reason: String) -> void:
+	var callbacks := _callbacks.values()
+	_callbacks.clear()
+	_request_times.clear()
+	for callback in callbacks:
+		if callback.is_valid(): callback.call({"ok": false, "reasons": [reason]})

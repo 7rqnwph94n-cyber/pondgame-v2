@@ -9,7 +9,7 @@ This is a Godot 4.3 view over the Python simulation. The design is in ADR 0001 (
 3. The client starts the simulation itself, using `python3 -m economy.bridge`.
    - If your Python 3.10+ is not `python3`, set `python=` in `client/settings.cfg`, or set the `POND_PYTHON` environment variable.
    - `settings.cfg` loads the **provisional slice economy** `candidate_playable_slice_v1` (Rich, 2026-10-04): the playable-first package, plus fewer early job slots, plus slow surface-Carbonate renewal capped at 12. It is not a baseline rule. To switch economies, edit the `overlays=` line:
-     - `["economy/data/experiments/candidate_playable_slice_v1.json", "economy/data/experiments/empty_settlement_start_v1.json"]` is the empty founding default;
+     - `["economy/data/experiments/candidate_playable_slice_v1.json", "economy/data/experiments/empty_settlement_start_v1.json", "economy/data/experiments/spatial_roads_v1.json", "economy/data/experiments/current_lanes_v1.json"]` is the submerged founding default;
      - `["economy/data/experiments/candidate_playable_slice_v1.json"]` reproduces the earlier populated slice benchmark;
      - `["economy/data/experiments/candidate_playable_v1.json"]` is the earlier package;
      - `[]` is the plain v0.2 rules.
@@ -19,13 +19,13 @@ This is a Godot 4.3 view over the Python simulation. The design is in ADR 0001 (
 
 From the repository root, run `tools/macos/install_desktop_launcher.sh` once. Then double-click **Play Pondlife** on the Desktop. It opens the current checkout and starts the simulation automatically. The launcher finds Godot in Applications, your Applications or Downloads folder, or PATH, and finds Python 3 on PATH. Close the game before launching another session. Launch diagnostics are saved to `~/Library/Logs/Pondlife/launch.log`.
 
-The opening slice is playable; longer-game balance and the Memory Reef remain unfinished. Use Space to pause while exploring, click buildings for their inspector, and use Build (B) to open construction. Autoplay is optional.
+The opening slice is playable; longer-game balance and the Memory Reef remain unfinished. Use Space to pause while exploring, click buildings for their inspector, and use Build (B) to open construction. Autoplay is disabled in the current spatial mode.
 
 ## Empty founding start
 
-Play starts paused on an empty basin: no homes, facilities, sites, roads, crossing or visible carriers. Choose Homes on the left rail and build shelters, then press Space to start time. A 24-person founding crew waits off-map, pays for food from your provisions, supplies the first construction labour and moves into the homes you build.
+Play starts paused on an empty basin: no homes, facilities, sites, roads, crossing or visible carriers. Grow the first current lane with T: click its start, then successive ends; right-click finishes. This establishes the supplies anchor. Choose Homes on the left rail, rotate their intake toward the lane with R, and click when the ghost is green. Press Space to start time. A 24-person founding crew waits off-map, pays for food from your provisions, supplies the first construction labour and moves into the homes you build.
 
-Starting supplies: 30 Carbonate, 16 Prepared Silica, 24 Biomass, 8 Raw Silicate, 40 Staple food, 16 Growth Nutrient, 4 Repair Enzyme and 50 trade credits. Construction spends materials; credits are for trade. This covers three homes, food production and the basic services with reserves. First Nursery is now buildable. Optional Autoplay constructs the foundation legally.
+Starting supplies: 30 Carbonate, 16 Prepared Silica, 24 Biomass, 8 Raw Silicate, 40 Staple food, 16 Growth Nutrient, 4 Repair Enzyme and 50 trade credits. Construction spends materials; credits are for trade. This covers three homes, food production and the basic services with reserves. First Nursery is now buildable. Every building needs the same connected current network; no off-network exceptions.
 
 The client applies `empty_settlement_start_v1.json` after the original slice overlay; the earlier populated benchmark remains reproducible with only the original overlay. See `docs/milestone_a/EMPTY_START_2026-10-06.md`.
 
@@ -47,18 +47,23 @@ The client applies `empty_settlement_start_v1.json` after the original slice ove
 | Carrier click / right-click | Inspect the visual carrier or follow it with the camera |
 | Inspector action icons | Pause or resume a facility, cancel a site, evolve a home, or begin the Reef |
 | Inspector info icon | Expand full requirements, workforce consequences and input competition |
-| Autoplay | Lets the reference governor play alongside you. It is a balance aid, not game AI |
+| T / current icon | Grow curving current lanes. Click start and successive ends; Shift makes a straight segment; right-click finishes. Right-click an existing lane to inspect/remove |
+| H / habitat icon | Show local light and silica exposures; crop productivity depends on light, extraction needs an exposure |
+| Autoplay | Disabled in spatial mode; available only in the older non-spatial benchmarks |
 
 ## Current presentation and limits
 
-The client has authored basin terrain, manual building placement, subsequent carrier visuals and resource icons. The earlier populated benchmark also retains its authored river crossing and starting facilities. `presentation/map_layout.json`, `presentation/asset_map.json` and `EntityView` keep these presentation assets replaceable. Geography and carrier movement are visual; the domain still models district-level stores rather than spatial logistics.
+The default habitat is entirely submerged. Suspended current ribbons replace dirt paths; the surface river and dry-bank decorations are removed. Currents carry particles, join biological intake ports and freeze when paused. They are controlled logistics lanes, not a full fluid simulation. Existing terrain relief affects light and usable substrate; rock bounds and building footprints are shared with the rules engine.
 
-The inspector explains labour priority, population stalls, evolution workforce changes and competing input users. Its Inspect buttons open a competitor so the player can choose Pause/Resume; pausing stops its outputs and does not refund held inputs.
+Six simulated carriers move finite cargo along the actual network. Construction, production inputs/outputs and home provisions occupy local depots and spend travel time. Loaded meshes show resource bundles; inspectors show cargo and delivery state. Cut a lane and its buildings lose transport, labour and services; held goods remain in custody. Clean flow, waste and maintenance reach homes by network distance. Placement previews show actual intake branches, light suitability and local coverage before committing.
 
-The earlier populated benchmark (original slice overlay only) reaches Symbiotic at 106:29 under the reference governor. Extended runs first miss Repair Enzyme upkeep at 136:29, with 21.5 unpaid minutes by 180 and 54.7 by 240; no Reef stages complete. These are reproducible governor results, not guarantees for every player strategy. See `docs/milestone_a/SLICE_EXTENDED_HORIZON_2026-10-05.md`. Final art, novice-player acceptance and longer-game balance remain open.
+Construction grows from actual work progress. Evolved homes gain organic chambers within their reserved footprint. Placement stays through construction and evolution in the running session. Save/load, freeform fields, specialized warehouse logistics, fluid hazards, final art and novice-player acceptance remain unfinished. Upkeep, trade, research and Great Work accounting still use the supply anchor. Longer-game balance and the Memory Reef remain open.
 
-The top strip uses resource icons and amounts, with names and explanations on hover. The inspector starts with a short status summary; its info button expands the detailed explanation. Carrier animation follows pause/speed, and selected carriers have a ground ring. Carriers remain presentation-only: individual cargo and worker orders are not simulated. Manual placements retain their location and rotation through construction and evolution during the running session. Geography still does not change district-level economy access or travel times; spatial logistics and save/load are not implemented.
+The reproducible opening builds ten paid buildings, houses all 24 founders and reaches a Stable home at 11:38 with no food emergency or devolution through 90 minutes. The mineral extension adds a pit and washery, produces 19 Raw Silicate and 26 Prepared Silica through real transport, and remains food-solvent. These are ordinary-command fixtures, not human playthroughs or guarantees for arbitrary layouts:
 
-Buildings take click priority over nearby carriers. Right-click evolution shows its workforce change before you act. Carrier animation is capped at high simulation speeds to keep selection and camera follow readable.
+```bash
+python3 tools/verify_current_opening.py --check
+python3 tools/verify_current_opening.py --check --plan economy/data/plans/current_mineral_opening_v1.json --evidence tests/fixtures/current_mineral_opening_evidence.json
+```
 
-Placement: green means valid, red means blocked, with a short reason at the bottom. Footprints cover the current building mesh, with at least a 7m square and clearance between neighbours. Water margins, steep terrain, map bounds, rocks and selected natural features block placement. Camera navigation remains available while placing. Canceling a preview spends nothing; canceling a confirmed site uses the economy's normal salvage rules. Autoplay still uses automatic presentation slots. Road drawing, road snapping and flexible field plots are future work.
+Earlier non-spatial overlay benchmarks remain reproducible. Set `submerged=false` when deliberately reviewing the old terrestrial presentation.

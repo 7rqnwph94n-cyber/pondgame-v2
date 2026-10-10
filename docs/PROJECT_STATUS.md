@@ -8,11 +8,15 @@ The primary Mac checkout is `pondgame-v2`; the exchange/main worktree is `pondga
 
 ## Current playable state
 
-- Python simulation with paid construction, workforce allocation, seasonal food, residence evolution, production and reference-governor diagnostics.
-- Godot client with an empty Verdant basin at launch, player-built facilities and subsequent carrier presentation, resource HUD, Staff first / Normal priority and evolution/growth explanations.
-- Additive sim_bridge contract v3 (protocol 1): input competitors identify same-store recipes and allow direct inspection; waiting recipes are labelled as competing for the next batch, and pausing does not refund reserved inputs.
-- Default economy: provisional `candidate_playable_slice_v1` followed by `empty_settlement_start_v1`, fewer early job slots plus Carbonate renewal 0.2/min capped at 12. Baseline v0.2 remains unchanged.
-- Earlier populated-slice manual-opening replay: first Stable home 25:55 and food-solvent through the first Dry season. This is prior human-play evidence and scripted reproduction, not fresh novice acceptance.
+The default is the submerged founding slice: empty and paused, 24 off-map founders, paid construction and starter supplies. Four explicit overlays add the provisional economy, empty start, mandatory spatial connections and current-habitat rules. Contract v5 remains protocol 1; old non-spatial scenarios remain separate.
+
+Current lanes curve naturally, carry simulated particle flow and connect visible biological intakes. The obsolete surface river and dry-bank presentation are removed. Building placement consults authoritative dry runs; terrain relief, the same visible rock bounds, real building envelopes, local light and silica exposures affect legality and production. H reveals habitat suitability.
+
+Six real carriers deliver finite loads to local depots. Construction materials, household food and recipe inputs/outputs take network travel time. Inspectors show cargo and local service coverage; clean flow, waste and maintenance are limited by lane distance. Construction and evolved homes visibly grow from domain progress/state. Cutting a connection stops its operation while preserving goods in custody.
+
+A reproducible funded opening houses all 24 founders and reaches Stable at 11:38; the extraction/washing extension produces 19 Raw Silicate and 26 Prepared Silica by 90 minutes. Both avoid food emergencies and devolution over that horizon. These are scripted ordinary-player-command proofs, not novice acceptance. See [the playable charter](PLAYABLE_SLICE_CHARTER.md), [client controls and limits](../client/README.md), and [the initial brief/reference audit](BRIEF_REFERENCE_AUDIT_2026-10-06.md). The original design sources now live in [design](design/README.md).
+
+Save/load, flexible plot construction, final art, specialized warehouses, full fluid/hazard simulation and novice acceptance remain open. Upkeep/trade/research/Great Work accounting is still central. Current transport is depot-to-anchor; citywide logistics is not yet complete.
 
 ## Known limits and next work
 
@@ -22,7 +26,7 @@ In the earlier populated slice, the reference governor reaches Symbiotic at 106:
 
 The original `pondlife/game` prototype is clean at `73df57b` and its complete Git history is archived in `archives/pondlife-prototype-2026-10-05/prototype.bundle`, with restore instructions. The v2 development branches remain recoverable in Git history.
 
-## Player controls review, 2026-10-05
+## Historical validation: player controls, 2026-10-05
 
 Rich’s first click-through rejected the hidden build catalogue, wordy HUD, camera controls and unselectable carriers. The new client has a persistent left icon build rail, category flyouts with single-click construction and cost/workforce hover help, a compact icon resource strip and full-stock panel, a short inspector with expandable details, and building/site/home right-click actions. Zoom supports buttons, wheel, trackpad pinch/Shift-scroll and +/−; Home resets the camera. Trackpad scroll pans; Q/E, Alt-scroll or Alt-middle-drag rotate, freeing right-click for options. Carriers can be selected, highlighted, inspected and followed; they freeze with pause and manual panning cancels follow. Construction auto-selects its new site.
 
@@ -32,13 +36,13 @@ Claude independently reproduced the first controls branch’s 273 assertions and
 
 Final controls regression suite: 281 Godot assertions pass on the Mac.
 
-## Empty founding start, 2026-10-06
+## Historical validation: initial empty founding start, 2026-10-06
 
 Rich requested an empty map and a reasonable starting budget. The default now starts paused with no homes, facilities, sites, roads, bridge or carriers. Twenty-four founders wait off-map, provide 18 General workforce and consume actual Staple provisions until housed. Starter supplies and 50 trade credit support paid construction; no buildings are granted. The original populated overlay and v0.2 baseline remain separate. See [budget and opening evidence](milestone_a/EMPTY_START_2026-10-06.md).
 
 The tested opening builds three homes and eight basic facilities within ten minutes, stays food-solvent through ninety minutes, and a separate opening reaches a Stable home within forty minutes. These are bounded opening checks, not long-game balance acceptance. All 180 Python tests and 288 Godot assertions pass. Native Mac launch confirms the empty paused basin and exact starting inventory.
 
-## Manual placement, 2026-10-06
+## Historical validation: initial manual placement, 2026-10-06
 
 Rich rejected automatic slots after comparing with Manor Lords. Build icons now activate a translucent cursor preview, green/red footprint and short rejection reason. R / Shift-R rotates in 15-degree increments; left-click confirms paid construction; right-click / Escape cancels the preview without cost. Water, map bounds, steep terrain, rocks, buildings and sites block placement. Chosen positions and orientations remain through construction and evolution. Autoplay retains fallback slots; manual locations are presentation-owned for the running session, with no save/load or spatial resource/service/transport rules yet. Road drawing and flexible plots are subsequent work.
 

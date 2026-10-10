@@ -6,6 +6,8 @@ extends CanvasLayer
 signal speed_selected(index: int)
 signal autoplay_toggled(enabled: bool)
 signal build_requested(building: String)
+signal habitat_requested
+signal road_requested
 signal action_requested(cmd: Dictionary)
 
 const STAFF_FIRST_RANK := 3   # same rank as construction: above other production, below services and Builders
@@ -156,6 +158,12 @@ func _ready() -> void:
 		b.pressed.connect(func(): open_build_category(category))
 		rail_box.add_child(b)
 		_category_buttons[category] = b
+	var road := _icon_button("road", "Current lanes (T) — click start, then end; right-click finishes")
+	road.pressed.connect(func(): road_requested.emit(); _close_build_panel())
+	rail_box.add_child(road)
+	var habitat := _icon_button("habitat", "Habitat (H) — light suitability and silica exposures")
+	habitat.pressed.connect(func(): habitat_requested.emit())
+	rail_box.add_child(habitat)
 	var stock := _icon_button("stock", "All colony resources — click for stock; hover icons for names")
 	stock.pressed.connect(func(): _inventory.visible = not _inventory.visible)
 	rail_box.add_child(stock)
@@ -361,6 +369,8 @@ func _resource_chip(parent: Container, icon: String, label_text: String) -> void
 
 # ------------------------------------------------------------------ updates
 func configure(hello: Dictionary) -> void:
+	_auto.disabled = not hello.get("autoplay_available", true)
+	if _auto.disabled: _auto.tooltip_text = "Grow connected current lanes and place buildings yourself"
 	var grid := _stock_grid
 	for child in grid.get_children(): child.queue_free()
 	_inventory_values.clear()
@@ -429,7 +439,7 @@ func show_view(view: Dictionary) -> void:
 	_colony.text = "%s%s" % [str(view.get("population", 0)), " !" if not growth_blockers.is_empty() else ""]
 	_colony.tooltip_text = "Population: %s\n%s" % [view.get("population", 0), str(growth_blockers[0].get("text", "stalled")) if not growth_blockers.is_empty() else "Population growth is not blocked"]
 	if view.get("residences", {}).is_empty() and view.get("facilities", {}).is_empty():
-		_colony.tooltip_text += "\nYour founding crew waits off-map. Build shelters to settle them; Space starts time."
+		_colony.tooltip_text += "\nFounders wait off-map. Grow a current lane (T), connect shelter intakes, then start time (Space)."
 	_food.text = "%s min%s" % ["–" if food == null else "%.1f" % food, " !" if view.get("food_emergency", false) else ""]
 	_food.modulate = Color("#ff8a70") if view.get("food_emergency", false) else Color.WHITE
 	_food.tooltip_text = "Food reserve at current consumption.\nUpkeep: %s" % view.get("maintenance_upkeep", "")
@@ -445,6 +455,16 @@ func show_view(view: Dictionary) -> void:
 		_headline_values["builder"].text = "%s" % str(view.get("builders", "idle")).replace("_", " ")
 	for resource in _inventory_values:
 		_inventory_values[resource].text = str(int(store.get(resource, 0)))
+		var local := 0
+		var transit := 0
+		for placement in view.get("spatial", {}).get("placements", {}).values(): local += int(placement.get("local", {}).get(resource, 0))
+		for carrier in view.get("spatial", {}).get("carriers", {}).values(): transit += int(carrier.get("cargo", {}).get(resource, 0))
+		var copy := "%s · Supply %d · Local depots %d · Carried %d" % [str(resource).replace("_", " ").capitalize(), int(store.get(resource, 0)), local, transit]
+		_inventory_values[resource].tooltip_text = copy
+		_inventory_values[resource].mouse_filter = Control.MOUSE_FILTER_STOP
+		if _headline_values.has(resource):
+			_headline_values[resource].tooltip_text = copy
+			_headline_values[resource].mouse_filter = Control.MOUSE_FILTER_STOP
 	var keys := store.keys()
 	keys.sort()
 	var text := ""
@@ -521,6 +541,16 @@ func show_inspection(reply: Dictionary) -> void:
 		lines.append("\n[b]Why it is not progressing:[/b]")
 		for r in reasons:
 			lines.append("[color=#ffcc80]• %s[/color]" % str(r).replace("_", " "))
+	var spatial: Dictionary = reply.get("spatial", {})
+	if not spatial.is_empty():
+		lines.append("\n[b]Current intake:[/b] " + ("Connected · %.1f m supply route" % float(spatial.get("route_length", 0)) if spatial.get("connected", false) else "Disconnected"))
+		for good in spatial.get("local", {}): lines.append("  %s: %s local" % [str(good).replace("_", " "), spatial["local"][good]])
+		for good in spatial.get("inbound", {}): lines.append("  %s: %s arriving" % [str(good).replace("_", " "), spatial["inbound"][good]])
+		for service in spatial.get("coverage", {}):
+			var row: Dictionary = spatial["coverage"][service]
+			lines.append("  %s %s · reach %.0f m%s" % ["✔" if row.get("covered", false) else "✘", str(service).replace("_", " "), float(row.get("range", 0)), " · provider %.1f m away" % float(row["distance"]) if row.get("distance") != null else " · no active provider"])
+		var serves = spatial.get("serves")
+		if serves is Dictionary: lines.append("  Service reach %.0f m · %d homes" % [float(serves.get("range", 0)), serves.get("homes", []).size()])
 	lines.append_array(_consumer_copy(reply))
 	_inspector_body.text = "\n".join(lines)
 	if _last_inspection.get("entity", "") != entity or _last_inspection.get("kind", "") != kind \
@@ -636,11 +666,19 @@ func _inspection_summary(reply: Dictionary) -> String:
 	return summary
 
 
-func show_unit_inspection(id: String, moving: bool) -> void:
+func show_unit_inspection(id: String, moving: bool, state: Dictionary = {}) -> void:
 	_inspector_panel.show()
 	_inspector_title.text = "Carrier %s" % id.get_slice("_", 1)
 	_summary.text = "Following colony route" if moving else "Paused with colony"
-	_inspector_body.text = "Visual carrier on the colony route. Cargo and individual worker orders are not simulated yet. Production is managed through buildings."
+	if not state.is_empty():
+		var cargo: Dictionary = state.get("cargo", {})
+		var parts := PackedStringArray()
+		for good in cargo: parts.append("%s %s" % [cargo[good], str(good).replace("_", " ")])
+		_summary.text = ("Carrying " + ", ".join(parts) if not parts.is_empty() else "Empty") + " · " + str(state.get("state", "idle")).replace("_", " ")
+		if not moving: _summary.text += " · Paused"
+		_inspector_body.text = "From %s to %s. Cargo is held by this carrier until delivery; transport advances with simulation time." % [state.get("source", "anchor"), state.get("target", "anchor")]
+	else:
+		_inspector_body.text = "Visual carrier on the colony route. Cargo and individual worker orders are not simulated yet. Production is managed through buildings."
 	if _last_inspection.get("entity") != id:
 		for c in _actions.get_children(): c.queue_free()
 		var follow := _icon_button("follow", "Follow this carrier with the camera")
@@ -656,6 +694,9 @@ func show_context(position: Vector2, reply: Dictionary = {}) -> void:
 		_context_entry("Build…", {"ui": "build"}, "build")
 		_context_entry("Pause / resume", {"ui": "pause"}, "pause")
 		_context_entry("Reset camera", {"ui": "reset"}, "reset")
+	elif reply.get("kind") == "road":
+		_context_entry("Inspect current lane", {"ui": "inspect", "target": reply["entity"]}, "road")
+		_context_entry("Remove current lane", {"do": "remove_road", "target": reply["entity"]}, "cancel")
 	elif reply.get("kind") == "carrier":
 		_context_entry("Inspect carrier", {"ui": "inspect", "target": reply["entity"]}, "unit")
 		_context_entry("Follow carrier", {"ui": "follow", "target": reply["entity"]}, "follow")
@@ -696,3 +737,13 @@ func _context_action(index: int) -> void:
 		"inspect": inspect_requested.emit(command["target"])
 		"follow": follow_requested.emit(command["target"])
 		_: action_requested.emit(command)
+
+
+func show_road_inspection(id: String, road: Dictionary) -> void:
+	_inspector_panel.show()
+	_inspector_title.text = "Current lane"
+	_summary.text = "%.1f m · Right-click for options" % float(road.get("length", 0))
+	_inspector_body.text = "Every building intake must connect to the founding supply network. Removing a lane can disconnect buildings and halt deliveries."
+	if _last_inspection.get("entity") != id:
+		for child in _actions.get_children(): child.queue_free()
+	_last_inspection = {"entity": id, "kind": "road"}

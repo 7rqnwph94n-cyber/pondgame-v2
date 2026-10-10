@@ -2,7 +2,7 @@
 
 Pondgame v2 is a chemistry-driven alien city builder. The player builds a civilisation whose bodies, farms, industries, settlements and culture emerge from the chemistry of its world.
 
-The current playable slice uses a Godot client over the Python economy simulation. Run `godot --path client` from this directory with Python 3.10+ available; see [client instructions](client/README.md). The normal launch starts paused on an empty basin, with a founding crew and starter supplies, using `candidate_playable_slice_v1` followed by `empty_settlement_start_v1`. The v0.2 baseline remains separate.
+The current playable slice uses a Godot client over the Python economy simulation. Run `godot --path client` from this directory with Python 3.10+ available; see [client instructions](client/README.md). The normal launch starts paused on an empty basin, with a founding crew and starter supplies, using the provisional slice, empty-start, spatial-transport and current-habitat overlays. Build connected current lanes (T), then place and rotate biological buildings beside them; H shows light and silica exposures. Goods travel in finite carrier loads and services have local reach. The v0.2 baseline remains separate.
 
 `main` is the integrated source of truth for the game, documentation and agent exchange. Start new work from current `origin/main`; the milestone and visual branches preserve their development history. Read [the agent exchange](docs/exchange/README.md), [current project state](docs/PROJECT_STATUS.md) and [slice charter](docs/PLAYABLE_SLICE_CHARTER.md) before continuing.
 
@@ -42,10 +42,7 @@ The legacy paper model above is kept unchanged as an arithmetic check.
 
 ## Design documents
 
-The current foundation documents are being maintained in the design workspace and will move into this repository with the next documentation pass:
-
-- `PONDLIFE_CHEMICAL_CIVILISATION_GDD.md`
-- `VERDANT_VERTICAL_SLICE_ECONOMY.md`
+The initial brief, locked decisions and chemical-civilisation design now live in [docs/design](docs/design/README.md). The [direct reference audit](docs/BRIEF_REFERENCE_AUDIT_2026-10-06.md) compares this build with the brief, Pharaoh and Manor Lords.
 
 ## Immediate objective
 

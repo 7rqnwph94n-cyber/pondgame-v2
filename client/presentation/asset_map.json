@@ -127,6 +127,8 @@
     "in_progress": "#4caf50",
     "normal": "#4caf50",
     "strained": "#ffb300",
-    "dormant": "#e53935"
+    "dormant": "#e53935",
+    "road_disconnected": "#ef8969",
+    "awaiting_transport": "#d7bd70"
   }
 }

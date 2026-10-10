@@ -7,7 +7,7 @@ extends SceneTree
 var failures := PackedStringArray()
 var passed := 0
 var completed := PackedStringArray()
-const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "empty_start_presentation", "placement", "bridge"]
+const TESTS := ["obj_loader", "layout", "crossing", "staff_first", "opening_hud", "player_controls", "empty_start_presentation", "placement", "current_habitat", "bridge"]
 const CrossingViewScript = preload("res://scripts/crossing_view.gd")
 
 
@@ -38,6 +38,7 @@ func _run() -> void:
 	await test_player_controls()
 	test_empty_start_presentation()
 	await test_manual_placement()
+	test_current_habitat()
 	await test_bridge_round_trip()
 	for t in TESTS:
 		check(t in completed, "test %s ran to completion (a script error stops a test silently)" % t)
@@ -388,9 +389,17 @@ func test_empty_start_presentation() -> void:
 	main._build_environment()
 	check(main._crossing_view == null and main._carrier_route.is_empty(), "empty opening contains no prebuilt crossing or authored carrier route")
 	main._build_carrier_views()
-	check(main._carrier_views.size() == 3, "carrier visuals remain available for a later player settlement")
+	check(main._carrier_views.size() == 6, "carrier visuals remain available for a later player settlement")
 	for carrier in main._carrier_views:
 		check(not carrier.visible, "no carrier is visible on the empty starting map")
+	main._spatial_enabled = true
+	main.view = {"spatial": {"carriers": {"carrier_1": {"position": [-40, 0], "state": "to_target", "distance": 5, "path": [[-45, 0], [-25, 0]], "cargo": {"carbonate": 4}}}}}
+	main._update_carrier_views(1)
+	check(main._carrier_views[0].visible and is_equal_approx(main._carrier_views[0].position.x, -40), "spatial carrier uses authoritative cargo position without an authored route")
+	var stationary: Vector3 = main._carrier_views[0].position
+	main._update_carrier_views(30)
+	check(main._carrier_views[0].position == stationary, "spatial carrier cannot animate ahead of paused domain state")
+	check(not main._carrier_views[1].visible, "carrier without a domain position stays off map")
 	main.free()
 	completed.append("empty_start_presentation")
 
@@ -455,7 +464,7 @@ func test_manual_placement() -> void:
 	check(main._placement_screen == cursor.position, "placement tracks event coordinates rather than a stale OS cursor")
 	main._on_build_requested("shelter")
 	check(bridge.commands.is_empty() and world.views.is_empty(), "choosing a building creates no site and spends no resources")
-	check(main._placement.get_children().size() == 2, "preview contains only ghost and footprint, without collision bodies")
+	check(main._placement.get_children().size() == 3, "preview contains only ghost, footprint and entrance marker, without collision bodies")
 	main._placement.rotate_preview()
 	check(is_equal_approx(main._placement.yaw, deg_to_rad(15)), "R rotates preview by fifteen degrees")
 	main._placement.rotate_preview(true)
@@ -487,3 +496,80 @@ func test_manual_placement() -> void:
 	world.free()
 	terrain.free()
 	completed.append("placement")
+
+
+class CurrentTerrainHarness extends Node3D:
+	var submerged := true
+	func height_at(_x: float, _z: float) -> float: return 0.0
+	func channel_distance_at(_point: Vector2) -> float: return 0.0
+
+class PreviewBridgeHarness extends Node:
+	var is_ready := true
+	var callbacks: Array[Callable] = []
+	var commands: Array = []
+	func request(_method: String, payload: Dictionary, callback: Callable) -> void:
+		commands.append(payload["cmd"])
+		callbacks.append(callback)
+
+func test_current_habitat() -> void:
+	var terrain := CurrentTerrainHarness.new()
+	var world := WorldView.new()
+	world.configure_terrain(terrain)
+	var lane = preload("res://scripts/road_view.gd").new()
+	lane.configure(world)
+	lane.current_medium = true
+	lane.sync({"second": 10, "roads": {"r": {"points": [[0,0],[10,0]], "length": 10}}, "placements": {"h": {"kind": "residence", "connected": true, "attach": [5,0], "entrance": [5,-1]}}})
+	lane.start = Vector3.ZERO
+	lane.point = Vector3(30,0,0)
+	var curve: Array = lane.draw_points()
+	check(curve.size() > 2 and curve[0] == [0.0,0.0] and curve[-1] == [30.0,0.0], "current curve keeps exact connected endpoints")
+	check(float(curve[curve.size()/2][1]) > 0, "current planning has a natural bend rather than a ground-road strip")
+	lane.straight = true
+	check(lane.draw_points().size() == 2, "straight modifier preserves explicit player control")
+	check(lane._road_mesh.mesh.surface_get_material(0) is ShaderMaterial, "current lanes use suspended flow shader rather than opaque dirt")
+	check(lane._organs.get_child_count() == 2, "current endpoints grow biological junction organs")
+	check(lane._intakes.get_child_count() == 1 and lane._ports.mesh != null, "connected building has a visible intake and branch")
+	check(lane.ground_reason(Vector3(20,0,20)) == "", "current lane permits ordinary liquid habitat without blanket channel exclusion")
+	check(lane.connection_reason(Vector3(5,0,-5), 0, Vector2(7,7)) == "", "building intake can meet current lane")
+	var phase = lane._flow_material.get_shader_parameter("clock")
+	lane.sync({"second": 10, "roads": lane.roads, "placements": {}})
+	check(lane._flow_material.get_shader_parameter("clock") == phase, "current motion uses simulation time and remains still on pause")
+	var habitat = preload("res://scripts/habitat_view.gd").new()
+	habitat.configure(terrain, {"light": {"dark_height": -2.5,"full_height":1}, "extraction_zones":[{"center":[20,0],"radius":8}]})
+	check(not habitat.overlay.visible and habitat.deposits.get_child_count() == 7, "published mineral exposure is visible while suitability overlay stays optional")
+	habitat.toggle()
+	check(habitat.overlay.visible, "habitat view exposes published suitability")
+	check(habitat.in_zone(Vector2(20,0), {"center":[20,0],"radius":8}) and not habitat.in_zone(Vector2(30,0), {"center":[20,0],"radius":8}), "exposure overlay obeys published bounds")
+	var main := PlacementMainHarness.new()
+	var bridge := PreviewBridgeHarness.new()
+	main.bridge = bridge
+	main._preview_last_sent = -1000
+	var a := {"do":"construct","building":"shelter","position":[0,0]}
+	check(main._validate_preview(a) != "", "unverified preview cannot appear valid")
+	check(bridge.commands[0].get("dry_run", false), "preview validates without placing or spending")
+	main._preview_last_sent = -1000
+	var b := {"do":"construct","building":"shelter","position":[10,0]}
+	main._validate_preview(b)
+	bridge.callbacks[0].call({"ok":true})
+	check(not main._preview_ready, "late reply for old cursor location cannot approve a new placement")
+	bridge.callbacks[1].call({"ok":false,"reasons":["spatial:not_connected"]})
+	check(main._validate_preview(b).contains("connected current network"), "authoritative disconnection remains blocked in preview")
+	main._preview_last_sent = -2000
+	main._preview_checked_at = -2000
+	var prior := main._preview_reason
+	check(main._validate_preview(b) == prior and main._preview_ready, "unchanged cursor retains its authoritative colour while coverage refreshes")
+	check(bridge.callbacks.size() == 3, "stationary coverage refresh sends one background dry run")
+	bridge.callbacks[2].call({"ok":true,"preview":{"spur":[[10,0],[10,1]]}})
+	check(main._validate_preview(b) == "" and not main._preview_refresh_pending, "fresh coverage replaces the retained result without an approval gap")
+	var home := EntityView.new()
+	home.setup("residence", _style())
+	home.set_entity_identity("grown", "stable")
+	check(home.uses_asset() == "res_shelter_cluster_a" and home._body.get_child_count() == 3, "evolved home retains organic shelter and adds visible living chambers")
+	home.free()
+	main.free()
+	bridge.free()
+	habitat.free()
+	lane.free()
+	world.free()
+	terrain.free()
+	completed.append("current_habitat")

@@ -30,7 +30,7 @@ from .engine import Simulation, load_definitions
 from .engine.definitions import read_json
 from .player_view import observe
 
-PROTOCOL = 1          # wire protocol; contract sim_bridge v3 adds fields only
+PROTOCOL = 1          # wire protocol; contract sim_bridge v4 adds fields and spatial commands only
 DEFAULT_PORT = 47615
 MAX_ADVANCE = 600
 ROOT = Path(__file__).resolve().parents[1]
@@ -66,7 +66,8 @@ class Session:
             "resources": sorted(d["resources"]) if isinstance(d["resources"], (list, dict)) else [],
             "seasons": [{"id": s["id"], "start": s["start"], "end": s["end"]} for s in d["seasons"]],
             "calendar_cycle_seconds": d["scenario"].get("calendar_cycle_seconds"),
-            "autoplay_available": True,
+            "autoplay_available": self.sim.spatial is None,
+            **({"spatial": self.sim.spatial.hello()} if self.sim.spatial is not None else {}),
         }
 
     def advance(self, seconds: int) -> dict[str, Any]:
@@ -93,8 +94,13 @@ class Session:
             facility["blockers"] = facility_blockers(self.sim, built)
             facility["labour_priority"] = labour_rank(self.sim, built)
             facility["labour_priority_overridden"] = built.labour_priority is not None
+            recipe = self.sim.defs["recipes"].get(built.recipe_id) if built.recipe_id else None
+            facility["cycle_progress"] = (None if built.cycle_remaining is None or not recipe else
+                                          round(1 - built.cycle_remaining / recipe["cycle_seconds"], 3))
         for rid, residence in view["residences"].items():
             residence["blockers"] = residence_blockers(self.sim, self.sim.residences[rid])
+        if self.sim.spatial is not None:
+            view["spatial"] = self.sim.spatial.view()
         new_events = self.sim.events[self.events_sent:]
         self.events_sent = len(self.sim.events)
         view["events"] = new_events
@@ -107,10 +113,16 @@ class Session:
             result = self.sim.issue(cmd, source="player")
         except (KeyError, TypeError, ValueError) as error:
             return {"ok": False, "reasons": [f"invalid_command:{error}"]}
-        return {"ok": result.ok, "info": result.info if result.ok else "", "reasons": [] if result.ok else result.reasons}
+        reply = {"ok": result.ok, "info": result.info if result.ok else "", "reasons": [] if result.ok else result.reasons}
+        if result.ok and result.data is not None:
+            reply["preview"] = result.data   # v5: dry-run construct preview
+        return reply
 
     def autoplay(self, enabled: bool) -> dict[str, Any]:
         from .governor import Governor, load_governor_config
+        if enabled and self.sim.spatial is not None:
+            # No governor can place buildings and roads legally yet; never grant infrastructure for free.
+            return {"ok": False, "autoplay": False, "reasons": ["spatial:autoplay_unavailable"]}
         if enabled and self.governor is None:
             default = "empty_start_governor_v1.json" if self.defs["starting_state"].get("founding_party") else "reference_governor_v3.json"
             path = self.governor_path or str(ROOT / "economy" / "data" / "governors" / default)
@@ -128,9 +140,9 @@ class Session:
 # ---------------------------------------------------------------------- stall inspector
 # Stable blocker codes (sim_bridge contract v2). Presentation binds icons to codes; `text` is the tooltip.
 # Ordered most actionable first. `output_blocked` is reserved: storage capacity is not enforced yet.
-BLOCKER_CODES = ("paused", "unstaffed", "waiting_input", "food_emergency", "morphology_missing", "environment",
-                 "patch_depleted", "output_blocked", "strained", "dormant", "low_need", "missing_service",
-                 "evolution_blocked", "great_work_blocked", "growth_blocked")
+BLOCKER_CODES = ("road_disconnected", "paused", "unstaffed", "waiting_input", "awaiting_transport", "food_emergency",
+                 "morphology_missing", "environment", "patch_depleted", "output_blocked", "strained", "dormant",
+                 "low_need", "missing_service", "evolution_blocked", "great_work_blocked", "growth_blocked")
 GROWTH_TEXT = {"no_free_capacity": "no free housing: build a home",
                "basic_needs_unsupplied": "a home is strained or dormant",
                "growth_nutrient_unavailable": "no Growth Nutrient in store for migrants"}
@@ -167,12 +179,35 @@ def input_consumers(sim: Simulation, district: str, goods: dict, exclude: str = 
     return result
 
 
+def transport_blockers(sim: Simulation, entity_id: str, missing: dict[str, int]) -> list[dict[str, Any]]:
+    """Spatial mode (v4): disconnection first; goods that are on their way or waiting at the anchor."""
+    spatial = sim.spatial
+    if spatial is None or entity_id not in spatial.placements:
+        return []
+    if not spatial.connected(entity_id):
+        return [_blocker("road_disconnected", "no road connection to the supply anchor: connect the entrance to a road")]
+    inbound = spatial.inbound(entity_id)
+    anchor = sim.store(sim.districts[0])
+    carried = {g: q for g, q in missing.items() if inbound.get(g) or anchor.get(g)}
+    if not carried:
+        return []
+    return [_blocker("awaiting_transport", "carriers bringing " + ", ".join(f"{q} {g}" for g, q in sorted(carried.items())),
+                     needs=carried, inbound={g: inbound[g] for g in sorted(inbound)})]
+
+
+def _without_transportable(missing: dict[str, int], blockers: list[dict[str, Any]]) -> dict[str, int]:
+    """Goods reported as awaiting transport are not also 'waiting for input'."""
+    carried = next((b["params"]["needs"] for b in blockers if b["code"] == "awaiting_transport"), {})
+    return {g: q for g, q in missing.items() if g not in carried}
+
+
 def facility_blockers(sim: Simulation, f) -> list[dict[str, Any]]:
     out = []
+    disconnected = not sim.is_connected(f.id)
     if f.paused:
         out.append(_blocker("paused", "paused by the player"))
     jobs = f.definition.get("jobs", {})
-    if jobs and f.staffing < 1.0 - 1e-6 and not f.paused:
+    if jobs and f.staffing < 1.0 - 1e-6 and not f.paused and not disconnected:
         rank = labour_rank(sim, f)
         text = f"staffed {f.staffing:.0%} of {', '.join(f'{n} {c}' for c, n in jobs.items())}"
         if rank > 0:
@@ -180,8 +215,11 @@ def facility_blockers(sim: Simulation, f) -> list[dict[str, Any]]:
         out.append(_blocker("unstaffed", text, staffing=round(f.staffing, 2), jobs=dict(jobs), labour_priority=rank,
                             can_raise_priority=rank > 0))
     recipe = sim.defs["recipes"].get(f.recipe_id) if f.recipe_id else None
-    store = sim.store(f.district).counts
+    store = sim.local_store(f.id, f.district).counts
     missing = {r: q - store.get(r, 0) for r, q in (recipe or {}).get("inputs", {}).items() if store.get(r, 0) < q}
+    transport = transport_blockers(sim, f.id, missing if f.cycle_remaining is None and not f.paused else {})
+    out = transport[:1] + out + transport[1:] if disconnected else out + transport
+    missing = _without_transportable(missing, transport)
     if missing and f.cycle_remaining is None:
         out.append(_blocker("waiting_input", "needs inputs " + ", ".join(f"{q} {r}" for r, q in sorted(missing.items())),
                             goods=missing, consumers=input_consumers(sim, f.district, missing, f.id)))
@@ -197,6 +235,11 @@ def facility_blockers(sim: Simulation, f) -> list[dict[str, Any]]:
 def site_blockers(sim: Simulation, s) -> list[dict[str, Any]]:
     out = []
     missing = s.missing()
+    if sim.spatial is not None and s.id in sim.spatial.depots:
+        local = sim.spatial.depots[s.id]
+        need = {g: q - local.get(g) for g, q in missing.items() if q > local.get(g)}
+        out += transport_blockers(sim, s.id, need)
+        missing = _without_transportable(need, out)
     if missing:
         out.append(_blocker("waiting_input", ", ".join(f"waiting for {q} {r}" for r, q in sorted(missing.items())),
                             goods=dict(missing), consumers=input_consumers(sim, s.district, missing)))
@@ -209,20 +252,30 @@ def site_blockers(sim: Simulation, s) -> list[dict[str, Any]]:
 
 
 def residence_blockers(sim: Simulation, r, state: dict[str, Any] | None = None) -> list[dict[str, Any]]:
-    state = state or r.presentation_state(sim.defs, sim.services.get(r.district, set()))
+    state = state or r.presentation_state(sim.defs, sim.services_for(r))
     out = []
+    if not sim.is_connected(r.id):
+        out += transport_blockers(sim, r.id, {})
     if state["condition"] in ("strained", "dormant"):
         out.append(_blocker(state["condition"], f"condition {state['condition']}"))
     for good, minutes in sorted(state["need_buffer_minutes"].items()):
         if minutes < 3:
             out.append(_blocker("low_need", f"low {good}: {minutes:.1f} min", good=good, minutes=minutes))
+    local = sim.spatial is not None and sim.spatial.mode == "current"
     for service, ok in state["services_for_next_tier"].items():
         if not ok:
-            out.append(_blocker("missing_service", f"next tier needs service: {service}", service=service))
+            if local:   # v5: local reach by lane distance
+                row = sim.spatial.coverage.get(r.id, {}).get(service, {})
+                provider, distance, reach = row.get("provider"), row.get("distance"), row.get("range")
+                text = (f"next tier needs service: {service} (nearest {provider} is {distance:.0f} m by lane; reach {reach:.0f} m)"
+                        if provider else f"next tier needs service: {service} (no active provider connected)")
+                out.append(_blocker("missing_service", text, service=service, provider=provider, distance=distance, range=reach))
+            else:
+                out.append(_blocker("missing_service", f"next tier needs service: {service}", service=service))
     next_tier = sim.defs["residences"][r.tier].get("next")
     if next_tier and not state["evolution"] and all(state["services_for_next_tier"].values()):
         need = sim.defs["residences"][next_tier]["evolution"].get("goods", {})
-        store = sim.store(r.district).counts
+        store = (sim.store(r.district) if sim.spatial is None else _evolution_reachable(sim, r)).counts
         short = {g: q - store.get(g, 0) for g, q in need.items() if store.get(g, 0) < q}
         if short:
             out.append(_blocker("waiting_input", "to evolve, needs in store: " + ", ".join(f"{q} {g}" for g, q in sorted(short.items())),
@@ -234,6 +287,14 @@ def residence_blockers(sim: Simulation, r, state: dict[str, Any] | None = None) 
                 continue   # already reported as missing_service
             out.append(_blocker("evolution_blocked", f"evolution blocked: {b}", blocker=b))
     return out
+
+
+def _evolution_reachable(sim: Simulation, r):
+    """Spatial mode: goods a home can draw on for evolution = its depot plus the anchor store (carriers bring them)."""
+    from .engine.inventory import Inventory
+    combined = Inventory(sim.defs["resources"], sim.spatial.depots[r.id].counts)
+    combined.put(sim.store(r.district).counts)
+    return combined
 
 
 def explain(sim: Simulation, target: str) -> dict[str, Any]:
@@ -270,7 +331,7 @@ def explain(sim: Simulation, target: str) -> dict[str, Any]:
                      work_progress=round(s.physical_done / total, 3), waited_minutes=waits)
     if target in sim.residences:
         r = sim.residences[target]
-        state = r.presentation_state(sim.defs, sim.services.get(r.district, set()))
+        state = r.presentation_state(sim.defs, sim.services_for(r))
         blockers = residence_blockers(sim, r, state)
         defs = sim.defs["residences"]
         next_tier = defs[r.tier].get("next")

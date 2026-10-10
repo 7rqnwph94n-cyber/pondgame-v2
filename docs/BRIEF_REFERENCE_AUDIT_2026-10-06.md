@@ -4,9 +4,9 @@
 
 ## What we were asked to build
 
-The earliest [full-scope brief](../../pond-life-game-full-scope.md) establishes biology as the technology tree, underwater scale and an organic-to-industrial civilisation. The [2 October Chemical Civilisation GDD](../../design/PONDLIFE_CHEMICAL_CIVILISATION_GDD.md) explicitly supersedes the original economy and fixed-era implementation assumptions. Its sections 2–4 make Pharaoh-style settlement relationships the central experience. Section 2 already permits a road to be a controlled current; section 26 includes a nutrient-bearing flow channel and an anoxic basin.
+The earliest [full-scope brief](design/ORIGINAL_FULL_SCOPE.md) establishes biology as the technology tree, underwater scale and an organic-to-industrial civilisation. The [2 October Chemical Civilisation GDD](design/CHEMICAL_CIVILISATION_GDD.md) explicitly supersedes the original economy and fixed-era implementation assumptions. Its sections 2–4 make Pharaoh-style settlement relationships the central experience. Section 2 already permits a road to be a controlled current; section 26 includes a nutrient-bearing flow channel and an anoxic basin.
 
-The [art direction](../../design/art_direction/ART_DIRECTION.md) requires a fantastical underwater world, rounded living structures and biological motion. Our [art bible](art/ART_BIBLE.md) explicitly calls for transport direction through fronds and current ribbons.
+The [art direction](design/ART_DIRECTION.md) requires a fantastical underwater world, rounded living structures and biological motion. Our [art bible](art/ART_BIBLE.md) explicitly calls for transport direction through fronds and current ribbons.
 
 The inherited requirement is not a medieval or Egyptian settlement placed on an underwater backdrop. Chemistry, transport, services and biological growth must determine the settlement's form and make it readable in motion. Rich's later requirement that every building connect overrides the older GDD's preference against universal access requirements.
 

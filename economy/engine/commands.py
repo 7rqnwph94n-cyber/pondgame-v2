@@ -27,6 +27,7 @@ class CommandResult:
     ok: bool
     reasons: list[str] = field(default_factory=list)
     info: str = ""
+    data: dict[str, Any] | None = None    # v5: structured dry-run preview
 
 
 @dataclass
@@ -118,9 +119,29 @@ def cmd_construct(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
     district = _district(sim, cmd)
     if district is None:
         return fail(f"unknown_district:{cmd.get('district')}")
-    site_id = cmd.get("id") or sim.next_id(building_id)
-    if sim.id_in_use(site_id):
+    site_id = cmd.get("id")
+    if not site_id and not (sim.spatial is not None and cmd.get("dry_run")):
+        site_id = sim.next_id(building_id)
+    if site_id and sim.id_in_use(site_id):
         return fail(f"duplicate_id:{site_id}")
+    placement = None
+    if sim.spatial is not None:
+        # Strict roads (Rich 2026-10-06): every building has a position and joins the anchor's network.
+        if cmd.get("position") is None:
+            return fail("spatial:position_required")
+        try:
+            position = (float(cmd["position"][0]), float(cmd["position"][1]))
+            yaw = float(cmd.get("yaw", 0.0))
+            footprint = sim.spatial.footprint_for(building_id, cmd.get("footprint"))
+        except (TypeError, ValueError, IndexError, KeyError):
+            return fail("spatial:malformed_position")
+        checked, reasons = sim.spatial.validate_building(position, yaw, footprint, building_id)
+        if checked is None:
+            return fail(*reasons)
+        placement = (position, yaw, footprint, checked["entrance"], building_id, checked["suitability"])
+        if cmd.get("dry_run"):   # v4: authoritative preview, nothing is created or paid; v5 adds `preview`
+            return CommandResult(True, info=f"valid {building_id} placement",
+                                 data=sim.spatial.preview(building_id, checked, position, yaw, footprint))
     # First-instance terms apply once per settlement; a cancelled first site releases them.
     first = "first_instance" in definition and building_id not in sim.first_instance_used
     terms = first_instance_terms(definition) if first else definition
@@ -134,6 +155,8 @@ def cmd_construct(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
         terms=terms,
     )
     sim.sites[site_id] = site
+    if placement is not None:
+        sim.spatial.place(site_id, *placement)
     return CommandResult(True, info=f"site {site_id} placed")
 
 
@@ -144,7 +167,8 @@ def cmd_cancel(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
         return fail(f"no_active_site:{target}")
     if site.kind == "great_work_stage":
         sim.great_work.paused = True
-    refunded = site.cancel(sim.store(site.district), sim.defs["construction_rules"]["cancel_refund_delivered"])
+    # Spatial mode: the refund stays at the site as a salvage pile for carriers to collect.
+    refunded = site.cancel(sim.local_store(site.id, site.district), sim.defs["construction_rules"]["cancel_refund_delivered"])
     if sim.first_instance_used.get(site.target) == site.id:
         del sim.first_instance_used[site.target]
     return CommandResult(True, info=f"refunded {refunded}")
@@ -157,7 +181,7 @@ def cmd_demolish(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
         return fail(f"no_facility:{target}")
     if not facility.definition.get("constructible", True):
         return fail(f"protected_building:{target}")
-    store = sim.store(facility.district)
+    store = sim.local_store(facility.id, facility.district)
     store.put(facility.held_inputs)
     refund = salvage(facility.definition.get("cost", {}), set(sim.defs["durable_resources"]),
                      sim.defs["construction_rules"]["demolish_refund_durable"])
@@ -346,6 +370,19 @@ HANDLERS = {
     "decline_contract": cmd_decline_contract,
     "begin_great_work": cmd_begin_great_work,
 }
+
+
+def _spatial_only(handler):
+    def run(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
+        if sim.spatial is None:
+            return fail("spatial:not_enabled")
+        ok, info, reasons = handler(sim, cmd)
+        return CommandResult(True, info=info) if ok else fail(*reasons)
+    return run
+
+
+HANDLERS["build_road"] = _spatial_only(lambda sim, cmd: sim.spatial.build_road(cmd))
+HANDLERS["remove_road"] = _spatial_only(lambda sim, cmd: sim.spatial.remove_road(cmd.get("target")))
 
 
 def execute(sim: "Simulation", cmd: dict[str, Any]) -> CommandResult:
