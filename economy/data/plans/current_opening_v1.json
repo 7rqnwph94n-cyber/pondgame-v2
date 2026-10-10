@@ -1,6 +1,6 @@
 {
  "id": "current_opening_v1",
- "description": "Legal, budgeted current-habitat opening (Codex 1924Z acceptance). Every command is an ordinary player command through the bridge: two free lanes, eleven paid buildings, then one evolution at 10:00. No autoplay, no granted goods.",
+ "description": "Legal, budgeted current-habitat opening (Codex 1924Z acceptance). Every command is an ordinary player command through the bridge: two free lanes, ten paid buildings, then one evolution at 10:00. No autoplay, no granted goods.",
  "overlays": [
   "economy/data/experiments/candidate_playable_slice_v1.json",
   "economy/data/experiments/empty_settlement_start_v1.json",
