@@ -10,7 +10,7 @@ waiting_on: Desktop input/capture recovery and Rich's game restart preference; P
 
 ## Now
 
-- Rich: "ok continue on the assets". Working in existing asset checkout. Preserve uncommitted129-asset library, finish material differentiation and settlement-distance render evidence, fix generator writing default mapping. No gameplay/bridge/default-mapping changes or implicit promotion of speculative resource/caste assets. Current-habitat PR remains draft with native control gate open.
+- Rich: "ok continue on the assets". Working in existing asset checkout. 129 candidate meshes now verified with finite vertices, normals, material application and companion anchors. Native Godot galleries cover homes, processors, carriers, goods, ecology and Reef; greyscale homes/processors and matching plain-material baselines included. Preparing asset-only commit; procedural surface shader is isolated to review fixture. Generator writes a draft mapping. No gameplay/bridge/default-mapping changes or implicit promotion of speculative resource/caste assets. Current-habitat PR remains draft with native control gate open.
 
 - Current domain v5 merged. Corrected exported obstacle AABB minima-to-centres, existing intake-branch obstruction, and rebuilt connections on placement. Default launch now four overlays plus submerged presentation. Current lane organs only endpoints/junctions, preview coverage refreshes after one second, and advance callbacks alone release the advance-in-flight flag.
 - Final local regression: 223 Python tests pass, 340 Godot assertions pass. Added paid mineral opening: 19 Raw Silicate, 26 Prepared Silica by 90 minutes, 24 housed, no food emergency/devolution. Core opening reproduces Stable at 11:38. These are normal-command fixtures, not human acceptance.
