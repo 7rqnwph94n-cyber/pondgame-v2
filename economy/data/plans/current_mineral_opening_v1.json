@@ -1,0 +1,246 @@
+{
+ "id": "current_mineral_opening_v1",
+ "description": "Budgeted submerged neighbourhood: ten initial buildings, silicate extraction and washing added at 5:00, then a home evolution at 10:00. All ordinary player commands; no free goods or autoplay.",
+ "overlays": [
+  "economy/data/experiments/candidate_playable_slice_v1.json",
+  "economy/data/experiments/empty_settlement_start_v1.json",
+  "economy/data/experiments/spatial_roads_v1.json",
+  "economy/data/experiments/current_lanes_v1.json"
+ ],
+ "commands": [
+  {
+   "at": 0,
+   "cmd": {
+    "do": "build_road",
+    "id": "lane_main",
+    "points": [
+     [
+      -64,
+      -2
+     ],
+     [
+      -20,
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "build_road",
+    "id": "lane_south",
+    "points": [
+     [
+      -56,
+      -2
+     ],
+     [
+      -56,
+      -26
+     ]
+    ]
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "shelter",
+    "id": "home_1",
+    "position": [
+     -50,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "shelter",
+    "id": "home_2",
+    "position": [
+     -42,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "shelter",
+    "id": "home_3",
+    "position": [
+     -34,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "photosynthetic_field",
+    "id": "field_1",
+    "position": [
+     -25,
+     -7.5
+    ],
+    "yaw": 0.0
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "culture_bed",
+    "id": "bed_1",
+    "position": [
+     -61,
+     -10
+    ],
+    "yaw": 1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "clean_flow_node",
+    "id": "flow_1",
+    "position": [
+     -61,
+     -18
+    ],
+    "yaw": 1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "waste_collector",
+    "id": "waste_1",
+    "position": [
+     -51,
+     -17
+    ],
+    "yaw": -1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "maintenance_organ",
+    "id": "maint_1",
+    "position": [
+     -51,
+     -25
+    ],
+    "yaw": -1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "first_nursery",
+    "id": "nursery_1",
+    "position": [
+     -61,
+     -26
+    ],
+    "yaw": 1.570796
+   }
+  },
+  {
+   "at": 0,
+   "cmd": {
+    "do": "construct",
+    "building": "general_store",
+    "id": "store_1",
+    "position": [
+     -42,
+     3.5
+    ],
+    "yaw": 3.141593
+   }
+  },
+  {
+   "at": 600,
+   "cmd": {
+    "do": "evolve",
+    "residence": "home_1"
+   }
+  },
+  {
+   "at": 300,
+   "cmd": {
+    "do": "build_road",
+    "id": "lane_mineral",
+    "points": [
+     [
+      -20,
+      -2
+     ],
+     [
+      36,
+      12
+     ],
+     [
+      44,
+      12
+     ],
+     [
+      50,
+      4
+     ],
+     [
+      58,
+      -10
+     ],
+     [
+      58,
+      -16
+     ],
+     [
+      42,
+      -50
+     ]
+    ]
+   }
+  },
+  {
+   "at": 300,
+   "cmd": {
+    "do": "construct",
+    "building": "silicate_pit",
+    "id": "pit_1",
+    "position": [
+     42,
+     -55.5
+    ]
+   }
+  },
+  {
+   "at": 300,
+   "cmd": {
+    "do": "construct",
+    "building": "mineral_washery",
+    "id": "washery_1",
+    "position": [
+     -50,
+     3.5
+    ],
+    "yaw": 3.141592653589793
+   }
+  }
+ ],
+ "duration_seconds": 5400
+}

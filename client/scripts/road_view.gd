@@ -308,7 +308,9 @@ func _rebuild_organs() -> void:
 	var seen := {}
 	for road in roads.values():
 		var points: Array = road.get("points", [])
-		for pair in points:
+		# Curve samples are not junctions. Endpoints include each newly joined branch.
+		if points.is_empty(): continue
+		for pair in [points.front(), points.back()]:
 			var key := str(pair)
 			if seen.has(key): continue
 			seen[key] = true

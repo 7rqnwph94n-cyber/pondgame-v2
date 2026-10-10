@@ -19,8 +19,8 @@ PLAN = ROOT / "economy/data/plans/current_opening_v1.json"
 EVIDENCE = ROOT / "tests/fixtures/current_opening_evidence.json"
 
 
-def play() -> dict:
-    plan = json.loads(PLAN.read_text())
+def play(plan_path=PLAN) -> dict:
+    plan = json.loads(plan_path.read_text())
     s = Session([str(ROOT / o) for o in plan["overlays"]])
     queue = sorted(plan["commands"], key=lambda c: c["at"])
     results, snapshots, trips, first_stable = [], [], {"deliver": 0, "collect": 0}, None
@@ -54,7 +54,7 @@ def play() -> dict:
         for good, q in site.cost.items():
             paid[good] = paid.get(good, 0) + q
     v = s.view()
-    return {
+    evidence = {
         "plan": plan["id"], "results": results, "construction_paid": dict(sorted(paid.items())),
         "all_sites_paid_in_full": all(site.delivered == site.cost or site.materials_complete_at is not None
                                       for site in sim.sites.values()),
@@ -67,18 +67,24 @@ def play() -> dict:
         "snapshots": snapshots,
     }
 
+    if plan_path != PLAN:
+        evidence["produced"] = dict(sorted(sim.diag.produced.items()))
+    return evidence
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--plan", type=Path, default=PLAN)
+    parser.add_argument("--evidence", type=Path, default=EVIDENCE)
     args = parser.parse_args()
-    content = json.dumps(play(), indent=1, sort_keys=True) + "\n"
+    content = json.dumps(play(args.plan), indent=1, sort_keys=True) + "\n"
     if args.check:
-        assert EVIDENCE.read_text() == content, "committed evidence differs from reproduction"
+        assert args.evidence.read_text() == content, "committed evidence differs from reproduction"
         print("current opening evidence reproduces")
     else:
-        EVIDENCE.write_text(content)
-        print(f"wrote {EVIDENCE.relative_to(ROOT)}")
+        args.evidence.write_text(content)
+        print(f"wrote {args.evidence.resolve().relative_to(ROOT)}")
     return 0
 
 

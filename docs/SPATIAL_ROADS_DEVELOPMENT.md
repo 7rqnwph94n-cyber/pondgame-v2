@@ -1,13 +1,11 @@
-# Strict road transport — integration in progress
+# Connected current transport
 
-Rich's requirement: “no, all buildings must connect”.
+Rich required “no, all buildings must connect”, then corrected the land-world presentation: “i need roads that dont look like roads. Current streams? we are in a liquid medium at this point, so the river is redundant unless it is a hazard”.
 
-The optional `spatial_roads_v1.json` overlay follows the slice and empty-start overlays. It requires a player road before construction and a connected entrance for every building. Removing its route blocks deliveries, construction, workforce and services. The first road establishes the supply anchor; an anchor without a road does not connect buildings. Roads are currently free instant dirt paths.
+The original optional `spatial_roads_v1` remains available as a legacy comparison. The default now adds `current_lanes_v1`, replacing dirt paths with suspended biological current lanes and removing the blanket water/bank exclusion. There is no implemented river hazard, so the surface river presentation is removed. All buildings require one connected intake network; the first lane establishes the supplies anchor. Curves are baked into the actual transport path. Lane drawing is free for the bounded opening.
 
-Six carriers move finite loads between the supply anchor and building depots. Construction, production inputs/outputs and household provisions use delivered goods. Cargo and salvage remain in custody when connections are removed. Carrier meshes display domain positions and stop when simulation time stops. Upkeep, trade, research and Great Work accounting remain at the central anchor.
+Shared geometry exports actual rock AABB bounds and minimum building envelopes. The domain converts exported minima to centres; parity tests check every obstacle. Current previews run non-mutating domain commands, show actual intake spurs and reject crossings through obstacles/buildings. Buildings cannot obstruct an existing intake branch. Pausing a provider removes its local coverage.
 
-The client has a road icon and T shortcut: click a start, then successive endpoints; right-click/Escape finishes. Building entrances are marked on placement ghosts. R rotates them toward roads. Right-click a road to inspect or remove it.
+Six carriers transport construction goods, recipe inputs/outputs and home provisions with finite capacity and real network distances. Cargo and salvage stay in custody when disconnected. Suspended ribbons, cargo bundles, intake ports and growth follow simulation state, including pause. Local services use published reach; habitat light scales field output and silicate pits require the published exposure.
 
-This overlay is not the default playable launch yet. Remaining release checks: authoritative preview integration; shared natural-obstacle/mesh footprint data; full spatial opening/budget acceptance; native click-through; independent review. The client geometry exporter is `client/tools/export_spatial_geometry.gd`.
-
-Regression evidence: 203 Python tests and 319 Godot client assertions. Native QA is temporarily unavailable while the Mac is locked. These counts cover the implemented domain and existing client regression; they do not establish full spatial opening balance.
+The [client guide](../client/README.md) describes controls and bounded opening evidence. The [charter](PLAYABLE_SLICE_CHARTER.md) records remaining acceptance. This is the first functional submerged neighbourhood; anchor-based logistics, central upkeep/trade/research/Great Work accounting, save/load, fluid hazards and final art remain limitations.

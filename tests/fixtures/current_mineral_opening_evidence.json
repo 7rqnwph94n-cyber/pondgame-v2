@@ -1,0 +1,425 @@
+{
+ "all_sites_paid_in_full": true,
+ "carrier_trips": {
+  "collect": 185,
+  "deliver": 172
+ },
+ "construction_paid": {
+  "biomass": 10,
+  "carbonate": 23,
+  "prepared_silica": 3
+ },
+ "coverage_home_1": {
+  "clean_flow": {
+   "covered": true,
+   "distance": 23.5,
+   "needed_for_next_tier": true,
+   "provider": "flow_1",
+   "range": 40.0
+  },
+  "distribution": {
+   "covered": false,
+   "distance": null,
+   "needed_for_next_tier": true,
+   "provider": null,
+   "range": 45.0
+  },
+  "health": {
+   "covered": false,
+   "distance": null,
+   "needed_for_next_tier": true,
+   "provider": null,
+   "range": 45.0
+  },
+  "maintenance": {
+   "covered": true,
+   "distance": 30.5,
+   "needed_for_next_tier": true,
+   "provider": "maint_1",
+   "range": 50.0
+  },
+  "memory": {
+   "covered": false,
+   "distance": null,
+   "needed_for_next_tier": false,
+   "provider": null,
+   "range": 45.0
+  },
+  "waste": {
+   "covered": true,
+   "distance": 22.5,
+   "needed_for_next_tier": true,
+   "provider": "waste_1",
+   "range": 40.0
+  }
+ },
+ "devolutions": 0,
+ "first_stable_second": 698,
+ "food_emergency_seconds": 0.0,
+ "founders_remaining": 0,
+ "plan": "current_mineral_opening_v1",
+ "produced": {
+  "biomass": 57,
+  "organic_waste": 14,
+  "prepared_silica": 26,
+  "raw_silicate": 19,
+  "staple": 70
+ },
+ "results": [
+  {
+   "at": 1,
+   "do": "build_road",
+   "id": "lane_main",
+   "info": "lane_main 44.0 m",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "build_road",
+   "id": "lane_south",
+   "info": "lane_south 24.0 m",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "home_1",
+   "info": "site home_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "home_2",
+   "info": "site home_2 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "home_3",
+   "info": "site home_3 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "field_1",
+   "info": "site field_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "bed_1",
+   "info": "site bed_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "flow_1",
+   "info": "site flow_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "waste_1",
+   "info": "site waste_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "maint_1",
+   "info": "site maint_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "nursery_1",
+   "info": "site nursery_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 1,
+   "do": "construct",
+   "id": "store_1",
+   "info": "site store_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 300,
+   "do": "build_road",
+   "id": "lane_mineral",
+   "info": "lane_mineral 135.4 m",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 300,
+   "do": "construct",
+   "id": "pit_1",
+   "info": "site pit_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 300,
+   "do": "construct",
+   "id": "washery_1",
+   "info": "site washery_1 placed",
+   "ok": true,
+   "reasons": []
+  },
+  {
+   "at": 600,
+   "do": "evolve",
+   "id": "home_1",
+   "info": "home_1 seeking stable",
+   "ok": true,
+   "reasons": []
+  }
+ ],
+ "snapshots": [
+  {
+   "anchor_store": {
+    "biomass": 10,
+    "carbonate": 7,
+    "growth_nutrient": 16,
+    "organic_waste": 1,
+    "prepared_silica": 13,
+    "raw_silicate": 8,
+    "repair_enzyme": 4,
+    "staple": 26,
+    "stored_value": 50
+   },
+   "carriers_moving": 1,
+   "facilities": 8,
+   "food_emergency": false,
+   "food_minutes": 68.35,
+   "population": 24.0,
+   "sites": [
+    "washery_1"
+   ],
+   "tiers": {
+    "home_1": "shelter",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "10:00"
+  },
+  {
+   "anchor_store": {
+    "biomass": 8,
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 4,
+    "prepared_silica": 16,
+    "raw_silicate": 3,
+    "repair_enzyme": 4,
+    "staple": 29,
+    "stored_value": 50
+   },
+   "carriers_moving": 2,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 70.12,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "20:00"
+  },
+  {
+   "anchor_store": {
+    "biomass": 5,
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 8,
+    "prepared_silica": 21,
+    "repair_enzyme": 4,
+    "staple": 32,
+    "stored_value": 50
+   },
+   "carriers_moving": 2,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 75.74,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "30:00"
+  },
+  {
+   "anchor_store": {
+    "biomass": 2,
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 11,
+    "prepared_silica": 26,
+    "repair_enzyme": 4,
+    "staple": 36,
+    "stored_value": 50
+   },
+   "carriers_moving": 2,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 81.37,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "40:00"
+  },
+  {
+   "anchor_store": {
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 16,
+    "prepared_silica": 29,
+    "repair_enzyme": 4,
+    "staple": 40,
+    "stored_value": 50
+   },
+   "carriers_moving": 1,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 86.99,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "50:00"
+  },
+  {
+   "anchor_store": {
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 19,
+    "prepared_silica": 31,
+    "repair_enzyme": 4,
+    "staple": 42,
+    "stored_value": 50
+   },
+   "carriers_moving": 2,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 92.62,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "60:00"
+  },
+  {
+   "anchor_store": {
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 23,
+    "prepared_silica": 34,
+    "repair_enzyme": 4,
+    "staple": 41,
+    "stored_value": 50
+   },
+   "carriers_moving": 2,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 88.87,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "70:00"
+  },
+  {
+   "anchor_store": {
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 24,
+    "prepared_silica": 36,
+    "repair_enzyme": 4,
+    "staple": 38,
+    "stored_value": 50
+   },
+   "carriers_moving": 2,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 86.68,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "80:00"
+  },
+  {
+   "anchor_store": {
+    "carbonate": 7,
+    "growth_nutrient": 13,
+    "organic_waste": 28,
+    "prepared_silica": 39,
+    "repair_enzyme": 4,
+    "staple": 37,
+    "stored_value": 50
+   },
+   "carriers_moving": 2,
+   "facilities": 9,
+   "food_emergency": false,
+   "food_minutes": 82.93,
+   "population": 28.0,
+   "sites": [],
+   "tiers": {
+    "home_1": "stable",
+    "home_2": "shelter",
+    "home_3": "shelter"
+   },
+   "time": "90:00"
+  }
+ ],
+ "start_store": {
+  "biomass": 24,
+  "carbonate": 30,
+  "growth_nutrient": 16,
+  "prepared_silica": 16,
+  "raw_silicate": 8,
+  "repair_enzyme": 4,
+  "staple": 40,
+  "stored_value": 50
+ }
+}

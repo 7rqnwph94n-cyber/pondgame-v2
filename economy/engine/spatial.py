@@ -257,7 +257,9 @@ class SpatialState:
         self.terrain = Terrain(channel)
         # Natural obstacles are authoritative only in current mode (axis-aligned bounds from shared geometry).
         self.obstacles: list[tuple[Point, Point]] = [
-            ((float(o["position"][0]), float(o["position"][1])), (float(o["size"][0]), float(o["size"][1])))
+            ((float(o["position"][0]) + float(o["size"][0]) / 2,
+              float(o["position"][1]) + float(o["size"][1]) / 2),
+             (float(o["size"][0]), float(o["size"][1])))
             for o in habitat.get("obstacles", [])] if self.mode == "current" else []
         self.footprint_minimums: dict[str, Any] = {**habitat.get("footprints", {}), **self.rules.get("footprints", {})}
         self._distance_cache: dict[str, dict[str, Any]] = {}
@@ -619,6 +621,10 @@ class SpatialState:
         for a, b in self.pieces:
             if segment_hits_rect(a, b, position, yaw, footprint):
                 return None, ["spatial:overlaps_road"]
+        if self.mode == "current":
+            for p in self.placements.values():
+                if p.connected and segment_hits_rect(p.entrance, p.attach, position, yaw, footprint):
+                    return None, ["spatial:spur_blocked"]
         suitability = self.suitability(building_id, position)
         if suitability and "light" in suitability and suitability["light"] < float(self.rules["geography"]["light"]["min_to_place"]) - EPS:
             return None, [f"spatial:too_dark:{suitability['light']:.2f}"]
@@ -674,6 +680,8 @@ class SpatialState:
         self._attach(placement)
         self.placements[entity_id] = placement
         self.depots[entity_id] = Inventory(self.sim.defs["resources"])
+        if self.mode == "current":
+            self._rebuild()  # refresh all intake obstruction checks and service distance caches
 
     # ------------------------------------------------------------ demand
     def kind(self, entity_id: str) -> str:

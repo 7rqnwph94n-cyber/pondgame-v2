@@ -504,6 +504,7 @@ class CurrentTerrainHarness extends Node3D:
 	func channel_distance_at(_point: Vector2) -> float: return 0.0
 
 class PreviewBridgeHarness extends Node:
+	var is_ready := true
 	var callbacks: Array[Callable] = []
 	var commands: Array = []
 	func request(_method: String, payload: Dictionary, callback: Callable) -> void:

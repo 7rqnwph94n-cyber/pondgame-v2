@@ -51,6 +51,14 @@ class HabitatLegalityTests(unittest.TestCase):
         self.assertEqual(len(sim.spatial.obstacles), 26)
         self.assertEqual(sim.spatial.footprint_for("photosynthetic_field", None), (9.0, 7.0))
 
+    def test_exported_obstacle_bounds_match_visible_map(self):
+        sim = make_sim()
+        source = json.loads((ROOT / "economy/data/maps/verdant_habitat_v1.json").read_text())
+        for raw, (centre, size) in zip(source["obstacles"], sim.spatial.obstacles):
+            self.assertEqual(centre, (raw["position"][0] + raw["size"][0]/2,
+                                      raw["position"][1] + raw["size"][1]/2))
+            self.assertEqual(size, tuple(raw["size"]))
+
     def test_no_blanket_water_ban(self):
         roads, current = make_sim(ROADS), make_sim()
         across = [[-30, -2], [-20, -2], [-10, -2], [2, -2]]          # crosses the old channel bed
@@ -63,9 +71,9 @@ class HabitatLegalityTests(unittest.TestCase):
     def test_natural_obstacles_block_buildings_and_lanes(self):
         sim = make_sim()
         issue(sim, {"do": "build_road", "points": MAIN})
-        rock = [[-41, -2], [-41, 25]]                                    # through the rock at (-41, 13.8)
+        rock = [[-41, -2], [-41, 25]]                                    # through the western rock mass at (-31.3, 20.1)
         self.assertEqual(issue(sim, {"do": "build_road", "points": rock}).reasons, ["spatial:obstacle"])
-        r = issue(sim, {"do": "construct", "building": "shelter", "position": [-41, 6], "yaw": math.pi})
+        r = issue(sim, {"do": "construct", "building": "shelter", "position": [-31.2945, 20.06], "yaw": math.pi})
         self.assertEqual(r.reasons, ["spatial:obstacle"])
 
     def test_intake_spur_may_not_cross_rock(self):
@@ -86,12 +94,14 @@ class HabitatLegalityTests(unittest.TestCase):
         light = bright.data["suitability"]["light"]
         h = sim.spatial.terrain.height(-25, -7.5)
         self.assertAlmostEqual(light, round((h + 1.0) / 2.2, 3), places=3)
+        sim.spatial.obstacles = []  # isolate the light constraint from the imported rock over this depression
         dark = issue(sim, {"do": "construct", "building": "photosynthetic_field", "position": [-36, 26]})
         self.assertTrue(dark.reasons[0].startswith("spatial:too_dark:"), dark.reasons)
 
     def test_light_scales_field_output(self):
         def biomass(position):
             sim = make_sim(work=1)
+            sim.spatial.obstacles = []  # compare the same production rule independently of decorative obstacle geography
             issue(sim, {"do": "build_road", "points": [[-64, -2], [-20, -2], [-20, 30]]})
             issue(sim, {"do": "construct", "building": "shelter", "id": "h", "position": [-50, -7.5]})
             issue(sim, {"do": "construct", "building": "photosynthetic_field", "id": "f", **position})
@@ -105,7 +115,7 @@ class HabitatLegalityTests(unittest.TestCase):
     def test_silicate_pits_need_the_published_zone(self):
         sim = make_sim()
         issue(sim, {"do": "build_road", "points": MAIN})
-        self.assertTrue(issue(sim, {"do": "build_road", "points": [[-20, -2], [18, -10], [22, -18], [28, -26], [28, -40], [42, -50]]}).ok)
+        self.assertTrue(issue(sim, {"do": "build_road", "points": [[-20,-2], [36,12], [44,12], [50,4], [58,-10], [58,-16], [42,-50]]}).ok)
         outside = issue(sim, {"do": "construct", "building": "silicate_pit", "position": [60, -50]})
         self.assertEqual(outside.reasons, ["spatial:outside_extraction_zone:silicate_pit"])
         inside = issue(sim, {"do": "construct", "building": "silicate_pit", "position": [42, -55.5], "dry_run": True})
@@ -234,6 +244,22 @@ class OpeningProofTests(unittest.TestCase):
             self.assertTrue(evidence["coverage_home_1"][service]["covered"])
         start = evidence["start_store"]
         self.assertLessEqual(evidence["construction_paid"]["carbonate"], start["carbonate"])
+
+    def test_mineral_chain_opening(self):
+        out = subprocess.run([sys.executable, "tools/verify_current_opening.py", "--check",
+                              "--plan", "economy/data/plans/current_mineral_opening_v1.json",
+                              "--evidence", "tests/fixtures/current_mineral_opening_evidence.json"],
+                             cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(out.returncode, 0, out.stderr)
+        evidence = json.loads((ROOT / "tests/fixtures/current_mineral_opening_evidence.json").read_text())
+        self.assertTrue(all(r["ok"] for r in evidence["results"]))
+        self.assertTrue(evidence["all_sites_paid_in_full"])
+        self.assertEqual(evidence["food_emergency_seconds"], 0)
+        self.assertEqual(evidence["devolutions"], 0)
+        self.assertEqual(evidence["founders_remaining"], 0)
+        self.assertGreater(evidence["produced"]["raw_silicate"], 0)
+        self.assertGreater(evidence["produced"]["prepared_silica"], evidence["start_store"]["raw_silicate"])
+        self.assertEqual(evidence["snapshots"][-1]["facilities"], 9)
 
     def test_autoplay_stays_disabled(self):
         s = Session([str(ROOT / o) for o in CURRENT])

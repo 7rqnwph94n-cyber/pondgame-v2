@@ -53,6 +53,7 @@ var _preview_reason := "Checking connection…"
 var _preview_ready := false
 var _preview_revision := 0
 var _preview_last_sent := 0
+var _preview_checked_at := 0
 var _preview_data: Dictionary = {}
 var _settlement_route_ids := ""
 var _follow_carrier := ""
@@ -205,7 +206,7 @@ func _process(delta: float) -> void:
 		if seconds > 0 or view.is_empty():
 			_accumulated -= seconds
 			_advance_in_flight = true
-			bridge.request("advance", {"seconds": seconds}, _on_view)
+			bridge.request("advance", {"seconds": seconds}, _on_advance_reply)
 	if _capture_path != "":
 		_capture_clock += delta
 		if _capture_clock >= _capture_after and not view.is_empty():
@@ -223,8 +224,12 @@ func _process(delta: float) -> void:
 			if _selected == inspecting: _show_inspection(reply))
 
 
-func _on_view(reply: Dictionary) -> void:
+func _on_advance_reply(reply: Dictionary) -> void:
 	_advance_in_flight = false
+	_on_view(reply)
+
+
+func _on_view(reply: Dictionary) -> void:
 	if not reply.get("ok", false):
 		hud.show_status("Simulation error: " + str(reply.get("reasons", [])), true)
 		return
@@ -1059,6 +1064,9 @@ func _placement_command() -> Dictionary:
 
 
 func _validate_preview(command: Dictionary) -> String:
+	if not bridge.is_ready: return "Connection lost · restart the game"
+	if _preview_ready and Time.get_ticks_msec() - _preview_checked_at > 1000:
+		_preview_revision += 1
 	var key := JSON.stringify(command) + "/" + str(_preview_revision)
 	if key != _preview_key:
 		_preview_key = key
@@ -1073,6 +1081,7 @@ func _validate_preview(command: Dictionary) -> String:
 			bridge.request("command", {"cmd": preview}, func(reply):
 				if _preview_key != key: return
 				_preview_ready = true
+				_preview_checked_at = Time.get_ticks_msec()
 				_preview_data = reply.get("preview", {})
 				_preview_reason = "" if reply.get("ok", false) else _preview_error(reply.get("reasons", [])))
 		else:
