@@ -1,0 +1,27 @@
+{
+  "asset": "plant_current_meadow_02",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "LabelAnchor": [
+      0,
+      1.548647689819336,
+      0
+    ],
+    "InputAnchor": [
+      -1.7,
+      0.4,
+      0
+    ],
+    "OutputAnchor": [
+      1.7,
+      0.4,
+      0
+    ]
+  }
+}

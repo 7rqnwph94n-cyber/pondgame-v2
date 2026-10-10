@@ -1,0 +1,27 @@
+{
+  "asset": "filter_grove_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      1.8,
+      0
+    ],
+    "WetEdge": [
+      0,
+      0,
+      -2
+    ]
+  }
+}

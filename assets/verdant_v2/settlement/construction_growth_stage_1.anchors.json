@@ -1,0 +1,27 @@
+{
+  "asset": "construction_growth_stage_1",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "LabelAnchor": [
+      0,
+      1.6813616037368775,
+      0
+    ],
+    "InputAnchor": [
+      -1.7,
+      0.4,
+      0
+    ],
+    "OutputAnchor": [
+      1.7,
+      0.4,
+      0
+    ]
+  }
+}

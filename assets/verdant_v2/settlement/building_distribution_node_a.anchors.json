@@ -1,0 +1,27 @@
+{
+  "asset": "building_distribution_node_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "LabelAnchor": [
+      0,
+      2.7175760746002195,
+      0
+    ],
+    "InputAnchor": [
+      -1.7,
+      0.4,
+      0
+    ],
+    "OutputAnchor": [
+      1.7,
+      0.4,
+      0
+    ]
+  }
+}

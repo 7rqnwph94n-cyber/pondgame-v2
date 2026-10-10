@@ -1,0 +1,22 @@
+{
+  "asset": "unit_burrowing_carrier_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "PayloadAnchor": [
+      0,
+      1,
+      0.35
+    ],
+    "LabelAnchor": [
+      0,
+      1.6,
+      0
+    ]
+  }
+}

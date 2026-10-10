@@ -1,0 +1,27 @@
+{
+  "asset": "root_arch_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "SnapLeft": [
+      -3,
+      0,
+      0
+    ],
+    "SnapRight": [
+      3,
+      0,
+      0
+    ],
+    "CameraAnchor": [
+      0,
+      2.2,
+      0
+    ]
+  }
+}

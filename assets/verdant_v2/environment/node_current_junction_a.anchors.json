@@ -1,0 +1,42 @@
+{
+  "asset": "node_current_junction_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "PortEast": [
+      1.25,
+      0.57,
+      0
+    ],
+    "PortWest": [
+      -1.25,
+      0.57,
+      0
+    ],
+    "PortNorth": [
+      0,
+      0.57,
+      -1.25
+    ],
+    "PortSouth": [
+      0,
+      0.57,
+      1.25
+    ],
+    "FXAnchor": [
+      0,
+      1,
+      0
+    ],
+    "LabelAnchor": [
+      0,
+      1.36,
+      0
+    ]
+  }
+}

@@ -1,0 +1,2974 @@
+{
+  "version": 2,
+  "units": "metres",
+  "up_axis": "+Y",
+  "assets": [
+    {
+      "id": "res_shelter_cluster_a",
+      "family": "settlement",
+      "triangles": 2324,
+      "objects": 19,
+      "bounds_blender_z_up": [
+        [
+          -1.6609998941421509,
+          1.558840036392212
+        ],
+        [
+          -1.1981600522994995,
+          1.2611465454101562
+        ],
+        [
+          -0.03999999910593033,
+          1.2976408004760742
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/res_shelter_cluster_a.obj"
+    },
+    {
+      "id": "res_stable_habitat_a",
+      "family": "settlement",
+      "triangles": 4560,
+      "objects": 31,
+      "bounds_blender_z_up": [
+        [
+          -1.9231998920440674,
+          1.866444706916809
+        ],
+        [
+          -1.502062439918518,
+          1.5046190023422241
+        ],
+        [
+          -0.03999999910593033,
+          1.4276177883148193
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/res_stable_habitat_a.obj"
+    },
+    {
+      "id": "res_symbiotic_a",
+      "family": "settlement",
+      "triangles": 7050,
+      "objects": 58,
+      "bounds_blender_z_up": [
+        [
+          -2.1853997707366943,
+          2.1744651794433594
+        ],
+        [
+          -1.5775506496429443,
+          1.748091459274292
+        ],
+        [
+          -0.03999999910593033,
+          2.1363086700439453
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/res_symbiotic_a.obj"
+    },
+    {
+      "id": "res_memory_enclave_a",
+      "family": "settlement",
+      "triangles": 8652,
+      "objects": 69,
+      "bounds_blender_z_up": [
+        [
+          -2.4475996494293213,
+          2.4827520847320557
+        ],
+        [
+          -1.7980834245681763,
+          1.9915639162063599
+        ],
+        [
+          -0.03999999910593033,
+          2.4700000286102295
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/res_memory_enclave_a.obj"
+    },
+    {
+      "id": "building_first_nursery_a",
+      "family": "settlement",
+      "triangles": 7484,
+      "objects": 39,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.2476234436035156
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_first_nursery_a.obj"
+    },
+    {
+      "id": "building_additional_nursery_a",
+      "family": "settlement",
+      "triangles": 9548,
+      "objects": 47,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.2476234436035156
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_additional_nursery_a.obj"
+    },
+    {
+      "id": "building_survey_organ_a",
+      "family": "settlement",
+      "triangles": 5488,
+      "objects": 41,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.677105188369751
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_survey_organ_a.obj"
+    },
+    {
+      "id": "building_general_store_a",
+      "family": "settlement",
+      "triangles": 3488,
+      "objects": 22,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7749992609024048
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.7014602422714233
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_general_store_a.obj"
+    },
+    {
+      "id": "building_living_goods_store_a",
+      "family": "settlement",
+      "triangles": 3960,
+      "objects": 30,
+      "bounds_blender_z_up": [
+        [
+          -1.9138323068618774,
+          1.7749992609024048
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.9720860719680786
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_living_goods_store_a.obj"
+    },
+    {
+      "id": "building_distribution_node_a",
+      "family": "settlement",
+      "triangles": 5338,
+      "objects": 38,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.4175760746002197
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_distribution_node_a.obj"
+    },
+    {
+      "id": "building_trade_landing_a",
+      "family": "settlement",
+      "triangles": 4078,
+      "objects": 32,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7749992609024048
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.5973689556121826
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_trade_landing_a.obj"
+    },
+    {
+      "id": "building_maintenance_organ_a",
+      "family": "settlement",
+      "triangles": 4844,
+      "objects": 31,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.9425559043884277
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_maintenance_organ_a.obj"
+    },
+    {
+      "id": "building_clean_flow_node_a",
+      "family": "settlement",
+      "triangles": 5338,
+      "objects": 38,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.4175760746002197
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_clean_flow_node_a.obj"
+    },
+    {
+      "id": "building_waste_collector_a",
+      "family": "settlement",
+      "triangles": 5556,
+      "objects": 31,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.6495624780654907,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.2476234436035156
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_waste_collector_a.obj"
+    },
+    {
+      "id": "building_detox_clinic_a",
+      "family": "settlement",
+      "triangles": 5526,
+      "objects": 35,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.09999996423721313,
+          2.2664854526519775
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_detox_clinic_a.obj"
+    },
+    {
+      "id": "building_memory_circle_a",
+      "family": "settlement",
+      "triangles": 4856,
+      "objects": 34,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.2999999523162842
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_memory_circle_a.obj"
+    },
+    {
+      "id": "building_waste_digester_a",
+      "family": "settlement",
+      "triangles": 5526,
+      "objects": 35,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.09999996423721313,
+          2.2664854526519775
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_waste_digester_a.obj"
+    },
+    {
+      "id": "building_photosynthetic_field_a",
+      "family": "settlement",
+      "triangles": 6452,
+      "objects": 40,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.2742897272109985
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_photosynthetic_field_a.obj"
+    },
+    {
+      "id": "building_culture_bed_a",
+      "family": "settlement",
+      "triangles": 9776,
+      "objects": 46,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          0.5900000333786011
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_culture_bed_a.obj"
+    },
+    {
+      "id": "building_nutrient_washer_a",
+      "family": "settlement",
+      "triangles": 4528,
+      "objects": 32,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7949992418289185
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.9165360927581787
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_nutrient_washer_a.obj"
+    },
+    {
+      "id": "building_channel_separator_a",
+      "family": "settlement",
+      "triangles": 4528,
+      "objects": 32,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7949992418289185
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.9165360927581787
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_channel_separator_a.obj"
+    },
+    {
+      "id": "building_nutrient_kitchen_a",
+      "family": "settlement",
+      "triangles": 5336,
+      "objects": 35,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7949992418289185
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.9165360927581787
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_nutrient_kitchen_a.obj"
+    },
+    {
+      "id": "building_sediment_dredge_a",
+      "family": "settlement",
+      "triangles": 3644,
+      "objects": 26,
+      "bounds_blender_z_up": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -1.5199999809265137,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.1476233005523682
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_sediment_dredge_a.obj"
+    },
+    {
+      "id": "building_filter_crown_a",
+      "family": "settlement",
+      "triangles": 4194,
+      "objects": 40,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.567145347595215
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_filter_crown_a.obj"
+    },
+    {
+      "id": "building_silicate_pit_a",
+      "family": "settlement",
+      "triangles": 3268,
+      "objects": 28,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.2814218997955322
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_silicate_pit_a.obj"
+    },
+    {
+      "id": "building_carbonate_cutter_a",
+      "family": "settlement",
+      "triangles": 3268,
+      "objects": 28,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.2814218997955322
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_carbonate_cutter_a.obj"
+    },
+    {
+      "id": "building_anoxic_pump_a",
+      "family": "settlement",
+      "triangles": 5526,
+      "objects": 35,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.09999996423721313,
+          2.2664854526519775
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_anoxic_pump_a.obj"
+    },
+    {
+      "id": "building_fibre_garden_a",
+      "family": "settlement",
+      "triangles": 7868,
+      "objects": 64,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.119907855987549
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_fibre_garden_a.obj"
+    },
+    {
+      "id": "building_resin_grove_a",
+      "family": "settlement",
+      "triangles": 7796,
+      "objects": 46,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.8681401014328003
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_resin_grove_a.obj"
+    },
+    {
+      "id": "building_pigment_bed_a",
+      "family": "settlement",
+      "triangles": 9776,
+      "objects": 46,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          0.5900000333786011
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_pigment_bed_a.obj"
+    },
+    {
+      "id": "building_mineral_washery_a",
+      "family": "settlement",
+      "triangles": 4528,
+      "objects": 32,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7949992418289185
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.9165360927581787
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_mineral_washery_a.obj"
+    },
+    {
+      "id": "building_ceramic_kiln_a",
+      "family": "settlement",
+      "triangles": 6348,
+      "objects": 32,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.09999996423721313,
+          1.897494912147522
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_ceramic_kiln_a.obj"
+    },
+    {
+      "id": "building_retting_pool_a",
+      "family": "settlement",
+      "triangles": 4624,
+      "objects": 38,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7949992418289185
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          1.9165360927581787
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_retting_pool_a.obj"
+    },
+    {
+      "id": "building_resin_curing_a",
+      "family": "settlement",
+      "triangles": 5526,
+      "objects": 35,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.09999996423721313,
+          2.2664854526519775
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_resin_curing_a.obj"
+    },
+    {
+      "id": "building_composite_workshop_a",
+      "family": "settlement",
+      "triangles": 5496,
+      "objects": 31,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.033205270767212
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_composite_workshop_a.obj"
+    },
+    {
+      "id": "building_emergency_enzyme_a",
+      "family": "settlement",
+      "triangles": 5526,
+      "objects": 35,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.09999996423721313,
+          2.2664854526519775
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_emergency_enzyme_a.obj"
+    },
+    {
+      "id": "building_artisan_organ_a",
+      "family": "settlement",
+      "triangles": 5496,
+      "objects": 31,
+      "bounds_blender_z_up": [
+        [
+          -1.8334999084472656,
+          1.7611541748046875
+        ],
+        [
+          -1.3097599744796753,
+          1.4213258028030396
+        ],
+        [
+          -0.03999999910593033,
+          2.033205270767212
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/building_artisan_organ_a.obj"
+    },
+    {
+      "id": "payload_biomass_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_biomass_a.obj"
+    },
+    {
+      "id": "payload_staple_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_staple_a.obj"
+    },
+    {
+      "id": "payload_phosphate_sediment_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_phosphate_sediment_a.obj"
+    },
+    {
+      "id": "payload_suspended_nutrient_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_suspended_nutrient_a.obj"
+    },
+    {
+      "id": "payload_growth_nutrient_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_growth_nutrient_a.obj"
+    },
+    {
+      "id": "payload_balanced_gel_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_balanced_gel_a.obj"
+    },
+    {
+      "id": "payload_raw_silicate_a",
+      "family": "settlement",
+      "triangles": 72,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.19151075184345245,
+          0.273499995470047
+        ],
+        [
+          -0.2445303499698639,
+          0.21415583789348602
+        ],
+        [
+          0.07999999821186066,
+          0.6700000166893005
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_raw_silicate_a.obj"
+    },
+    {
+      "id": "payload_prepared_silica_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_prepared_silica_a.obj"
+    },
+    {
+      "id": "payload_carbonate_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_carbonate_a.obj"
+    },
+    {
+      "id": "payload_anoxic_organics_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_anoxic_organics_a.obj"
+    },
+    {
+      "id": "payload_raw_fibre_a",
+      "family": "settlement",
+      "triangles": 80,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.4150520861148834,
+          0.45333224534988403
+        ],
+        [
+          -0.19426925480365753,
+          0.20268361270427704
+        ],
+        [
+          0.06111457571387291,
+          0.28916406631469727
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_raw_fibre_a.obj"
+    },
+    {
+      "id": "payload_woven_fibre_a",
+      "family": "settlement",
+      "triangles": 80,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.4150520861148834,
+          0.45333224534988403
+        ],
+        [
+          -0.19426925480365753,
+          0.20268361270427704
+        ],
+        [
+          0.06111457571387291,
+          0.28916406631469727
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_woven_fibre_a.obj"
+    },
+    {
+      "id": "payload_raw_resin_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_raw_resin_a.obj"
+    },
+    {
+      "id": "payload_cured_resin_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_cured_resin_a.obj"
+    },
+    {
+      "id": "payload_raw_pigment_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_raw_pigment_a.obj"
+    },
+    {
+      "id": "payload_fired_ceramic_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_fired_ceramic_a.obj"
+    },
+    {
+      "id": "payload_habitat_composite_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_habitat_composite_a.obj"
+    },
+    {
+      "id": "payload_organic_waste_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_organic_waste_a.obj"
+    },
+    {
+      "id": "payload_repair_enzyme_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_repair_enzyme_a.obj"
+    },
+    {
+      "id": "payload_recovered_fertiliser_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_recovered_fertiliser_a.obj"
+    },
+    {
+      "id": "payload_pigment_ornament_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_pigment_ornament_a.obj"
+    },
+    {
+      "id": "payload_stored_value_a",
+      "family": "settlement",
+      "triangles": 672,
+      "objects": 4,
+      "bounds_blender_z_up": [
+        [
+          -0.270609050989151,
+          0.3100000023841858
+        ],
+        [
+          -0.2694246768951416,
+          0.23905017971992493
+        ],
+        [
+          -0.04999999701976776,
+          0.20999999344348907
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/payload_stored_value_a.obj"
+    },
+    {
+      "id": "anoxic_colony_a",
+      "family": "environment",
+      "triangles": 604,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.25885009765625,
+          3.239229917526245
+        ],
+        [
+          -1.5825300216674805,
+          1.2928199768066406
+        ],
+        [
+          -4.529874431113967e-08,
+          1.4819999933242798
+        ]
+      ],
+      "provenance": "assets/blockout/environment/anoxic_colony_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/anoxic_colony_a.obj"
+    },
+    {
+      "id": "biomass_bower_a",
+      "family": "environment",
+      "triangles": 1856,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.276159763336182,
+          4.2911200523376465
+        ],
+        [
+          -3.013089656829834,
+          2.502270221710205
+        ],
+        [
+          -3.774895063202166e-08,
+          6.037169933319092
+        ]
+      ],
+      "provenance": "assets/blockout/environment/biomass_bower_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/biomass_bower_a.obj"
+    },
+    {
+      "id": "biomass_bower_b",
+      "family": "environment",
+      "triangles": 1856,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.393249988555908,
+          4.7106099128723145
+        ],
+        [
+          -2.8246498107910156,
+          2.518810272216797
+        ],
+        [
+          -3.774895063202166e-08,
+          5.002379894256592
+        ]
+      ],
+      "provenance": "assets/blockout/environment/biomass_bower_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/biomass_bower_b.obj"
+    },
+    {
+      "id": "biomass_bower_c",
+      "family": "environment",
+      "triangles": 1856,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.6059799194335938,
+          4.124360084533691
+        ],
+        [
+          -3.163949728012085,
+          2.4767401218414307
+        ],
+        [
+          -3.774895063202166e-08,
+          6.047749996185303
+        ]
+      ],
+      "provenance": "assets/blockout/environment/biomass_bower_c.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/biomass_bower_c.obj"
+    },
+    {
+      "id": "boulder_a",
+      "family": "environment",
+      "triangles": 72,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -1.0724400281906128,
+          1.1412700414657593
+        ],
+        [
+          -0.8429499268531799,
+          0.8429500460624695
+        ],
+        [
+          0.0,
+          1.399999976158142
+        ]
+      ],
+      "provenance": "assets/blockout/environment/boulder_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/boulder_a.obj"
+    },
+    {
+      "id": "boulder_b",
+      "family": "environment",
+      "triangles": 72,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.6702799797058105,
+          0.7132899761199951
+        ],
+        [
+          -0.6556299328804016,
+          0.6556301116943359
+        ],
+        [
+          0.0,
+          2.200000047683716
+        ]
+      ],
+      "provenance": "assets/blockout/environment/boulder_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/boulder_b.obj"
+    },
+    {
+      "id": "boulder_c",
+      "family": "environment",
+      "triangles": 72,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -1.2511800527572632,
+          1.3314800262451172
+        ],
+        [
+          -1.030269980430603,
+          1.030269980430603
+        ],
+        [
+          0.0,
+          0.8999999761581421
+        ]
+      ],
+      "provenance": "assets/blockout/environment/boulder_c.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/boulder_c.obj"
+    },
+    {
+      "id": "carbonate_colony_a",
+      "family": "environment",
+      "triangles": 612,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.4454500675201416,
+          3.1691300868988037
+        ],
+        [
+          -1.9625600576400757,
+          1.3361200094223022
+        ],
+        [
+          -4.529874431113967e-08,
+          0.9300001263618469
+        ]
+      ],
+      "provenance": "assets/blockout/environment/carbonate_colony_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/carbonate_colony_a.obj"
+    },
+    {
+      "id": "carbonate_shelf_a",
+      "family": "environment",
+      "triangles": 504,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.627349853515625,
+          4.099999904632568
+        ],
+        [
+          -1.688330054283142,
+          2.1368799209594727
+        ],
+        [
+          7.549790126404332e-09,
+          0.8400000333786011
+        ]
+      ],
+      "provenance": "assets/blockout/environment/carbonate_shelf_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/carbonate_shelf_a.obj"
+    },
+    {
+      "id": "channel_bank_bend_a",
+      "family": "environment",
+      "triangles": 60,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.0,
+          3.7052600383758545
+        ],
+        [
+          -3.6763100624084473,
+          4.0
+        ],
+        [
+          -3.019916050561733e-07,
+          0.5000001192092896
+        ]
+      ],
+      "provenance": "assets/blockout/environment/channel_bank_bend_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/channel_bank_bend_a.obj"
+    },
+    {
+      "id": "channel_bank_straight_a",
+      "family": "environment",
+      "triangles": 280,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.300000190734863,
+          4.300000190734863
+        ],
+        [
+          -4.255740165710449,
+          4.255740165710449
+        ],
+        [
+          -3.019916050561733e-07,
+          0.6100002527236938
+        ]
+      ],
+      "provenance": "assets/blockout/environment/channel_bank_straight_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/channel_bank_straight_a.obj"
+    },
+    {
+      "id": "delta_island_a",
+      "family": "environment",
+      "triangles": 224,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -5.5,
+          5.5
+        ],
+        [
+          -2.339829921722412,
+          2.339829921722412
+        ],
+        [
+          0.0,
+          1.0454299449920654
+        ]
+      ],
+      "provenance": "assets/blockout/environment/delta_island_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/delta_island_a.obj"
+    },
+    {
+      "id": "delta_island_b",
+      "family": "environment",
+      "triangles": 224,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -5.5,
+          5.5
+        ],
+        [
+          -2.339829921722412,
+          2.339829921722412
+        ],
+        [
+          0.0,
+          1.0454299449920654
+        ]
+      ],
+      "provenance": "assets/blockout/environment/delta_island_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/delta_island_b.obj"
+    },
+    {
+      "id": "detail_pebbles_a",
+      "family": "environment",
+      "triangles": 120,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.9905300140380859,
+          0.9165099859237671
+        ],
+        [
+          -0.621999979019165,
+          0.4320000112056732
+        ],
+        [
+          -2.2649372155569836e-08,
+          0.22500000894069672
+        ]
+      ],
+      "provenance": "assets/blockout/environment/detail_pebbles_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/detail_pebbles_a.obj"
+    },
+    {
+      "id": "detail_ripple_a",
+      "family": "environment",
+      "triangles": 48,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -1.2000000476837158,
+          1.2000000476837158
+        ],
+        [
+          -0.574999988079071,
+          0.5702300071716309
+        ],
+        [
+          0.0012199589982628822,
+          0.04878004267811775
+        ]
+      ],
+      "provenance": "assets/blockout/environment/detail_ripple_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/detail_ripple_a.obj"
+    },
+    {
+      "id": "detail_scar_a",
+      "family": "environment",
+      "triangles": 48,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -1.2133599519729614,
+          1.1108100414276123
+        ],
+        [
+          -0.7610700130462646,
+          0.7589499950408936
+        ],
+        [
+          0.0167099442332983,
+          0.08329006284475327
+        ]
+      ],
+      "provenance": "assets/blockout/environment/detail_scar_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/detail_scar_a.obj"
+    },
+    {
+      "id": "filter_grove_a",
+      "family": "environment",
+      "triangles": 1624,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.3787999153137207,
+          3.3557400703430176
+        ],
+        [
+          -1.5715099573135376,
+          1.8802499771118164
+        ],
+        [
+          -4.529874431113967e-08,
+          3.1780800819396973
+        ]
+      ],
+      "provenance": "assets/blockout/environment/filter_grove_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/filter_grove_a.obj"
+    },
+    {
+      "id": "filter_grove_b",
+      "family": "environment",
+      "triangles": 1624,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.3787999153137207,
+          3.3557400703430176
+        ],
+        [
+          -1.5715099573135376,
+          1.6668202877044678
+        ],
+        [
+          -4.529874431113967e-08,
+          3.176340103149414
+        ]
+      ],
+      "provenance": "assets/blockout/environment/filter_grove_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/filter_grove_b.obj"
+    },
+    {
+      "id": "floodplain_shelf_a",
+      "family": "environment",
+      "triangles": 248,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -5.800000190734863,
+          5.800000190734863
+        ],
+        [
+          -3.7047300338745117,
+          3.7047300338745117
+        ],
+        [
+          0.0,
+          0.5999998450279236
+        ]
+      ],
+      "provenance": "assets/blockout/environment/floodplain_shelf_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/floodplain_shelf_a.obj"
+    },
+    {
+      "id": "ledge_corner_a",
+      "family": "environment",
+      "triangles": 78,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.0,
+          1.25
+        ],
+        [
+          -4.0,
+          1.23101007938385
+        ],
+        [
+          -7.549790126404332e-08,
+          1.649999976158142
+        ]
+      ],
+      "provenance": "assets/blockout/environment/ledge_corner_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/ledge_corner_a.obj"
+    },
+    {
+      "id": "ledge_straight_a",
+      "family": "environment",
+      "triangles": 282,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -1.0,
+          1.0000001192092896
+        ],
+        [
+          -7.549790126404332e-08,
+          1.600000023841858
+        ]
+      ],
+      "provenance": "assets/blockout/environment/ledge_straight_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/ledge_straight_a.obj"
+    },
+    {
+      "id": "methane_crater_b",
+      "family": "environment",
+      "triangles": 632,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.287169933319092,
+          3.450000047683716
+        ],
+        [
+          -2.3526499271392822,
+          2.3526499271392822
+        ],
+        [
+          0.0,
+          0.8400000333786011
+        ]
+      ],
+      "provenance": "assets/blockout/environment/methane_crater_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/methane_crater_b.obj"
+    },
+    {
+      "id": "methane_seep_a",
+      "family": "environment",
+      "triangles": 668,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -5.138269901275635,
+          4.83204984664917
+        ],
+        [
+          -2.557490110397339,
+          2.4242498874664307
+        ],
+        [
+          -9.059748862227934e-08,
+          0.7800000309944153
+        ]
+      ],
+      "provenance": "assets/blockout/environment/methane_seep_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/methane_seep_a.obj"
+    },
+    {
+      "id": "node_building_intake_a",
+      "family": "environment",
+      "triangles": 1088,
+      "objects": 22,
+      "bounds_blender_z_up": [
+        [
+          -1.2317010164260864,
+          1.7074559926986694
+        ],
+        [
+          -1.1150259971618652,
+          1.0377739667892456
+        ],
+        [
+          -0.07999999821186066,
+          1.469504952430725
+        ]
+      ],
+      "provenance": "assets/blockout/environment/node_building_intake_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/node_building_intake_a.obj"
+    },
+    {
+      "id": "node_current_junction_a",
+      "family": "environment",
+      "triangles": 2684,
+      "objects": 36,
+      "bounds_blender_z_up": [
+        [
+          -1.48409903049469,
+          1.5588010549545288
+        ],
+        [
+          -1.458111047744751,
+          1.3858401775360107
+        ],
+        [
+          -0.10000000149011612,
+          1.059999942779541
+        ]
+      ],
+      "provenance": "assets/blockout/environment/node_current_junction_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/node_current_junction_a.obj"
+    },
+    {
+      "id": "node_transfer_fan_a",
+      "family": "environment",
+      "triangles": 2860,
+      "objects": 37,
+      "bounds_blender_z_up": [
+        [
+          -1.7768800258636475,
+          1.866320013999939
+        ],
+        [
+          -1.2972899675369263,
+          1.2074099779129028
+        ],
+        [
+          -0.10999999940395355,
+          1.8949999809265137
+        ]
+      ],
+      "provenance": "assets/blockout/environment/node_transfer_fan_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/node_transfer_fan_a.obj"
+    },
+    {
+      "id": "plant_branch_a",
+      "family": "environment",
+      "triangles": 200,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.8585600256919861,
+          0.768559992313385
+        ],
+        [
+          -0.1780899167060852,
+          0.1100001186132431
+        ],
+        [
+          0.10999999195337296,
+          1.9225000143051147
+        ]
+      ],
+      "provenance": "assets/blockout/environment/plant_branch_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_branch_a.obj"
+    },
+    {
+      "id": "plant_branch_b",
+      "family": "environment",
+      "triangles": 288,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -1.0385600328445435,
+          0.9485599994659424
+        ],
+        [
+          -0.1780899167060852,
+          0.18451012670993805
+        ],
+        [
+          0.10999999195337296,
+          2.2249999046325684
+        ]
+      ],
+      "provenance": "assets/blockout/environment/plant_branch_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_branch_b.obj"
+    },
+    {
+      "id": "plant_cup_a",
+      "family": "environment",
+      "triangles": 368,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.5404099822044373,
+          0.599810004234314
+        ],
+        [
+          -0.5847699642181396,
+          0.5847700834274292
+        ],
+        [
+          0.0,
+          1.090000033378601
+        ]
+      ],
+      "provenance": "assets/blockout/environment/plant_cup_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_cup_a.obj"
+    },
+    {
+      "id": "plant_fan_a",
+      "family": "environment",
+      "triangles": 248,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.5546900033950806,
+          0.5546900033950806
+        ],
+        [
+          -0.35460999608039856,
+          0.35461002588272095
+        ],
+        [
+          0.0,
+          1.6299999952316284
+        ]
+      ],
+      "provenance": "assets/blockout/environment/plant_fan_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_fan_a.obj"
+    },
+    {
+      "id": "plant_fan_b",
+      "family": "environment",
+      "triangles": 336,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.7425100207328796,
+          0.7425100207328796
+        ],
+        [
+          -0.35460999608039856,
+          0.35461002588272095
+        ],
+        [
+          0.0,
+          2.0799999237060547
+        ]
+      ],
+      "provenance": "assets/blockout/environment/plant_fan_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_fan_b.obj"
+    },
+    {
+      "id": "plant_ribbon_a",
+      "family": "environment",
+      "triangles": 188,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.5113300085067749,
+          0.4397299885749817
+        ],
+        [
+          -0.47333988547325134,
+          0.4999101161956787
+        ],
+        [
+          0.0,
+          1.6084799766540527
+        ]
+      ],
+      "provenance": "assets/blockout/environment/plant_ribbon_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_ribbon_a.obj"
+    },
+    {
+      "id": "plant_ribbon_b",
+      "family": "environment",
+      "triangles": 252,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -0.4979499876499176,
+          0.5034499764442444
+        ],
+        [
+          -0.5081198215484619,
+          0.4723001718521118
+        ],
+        [
+          0.0,
+          2.25642991065979
+        ]
+      ],
+      "provenance": "assets/blockout/environment/plant_ribbon_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_ribbon_b.obj"
+    },
+    {
+      "id": "river_debris_a",
+      "family": "environment",
+      "triangles": 264,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.0990400314331055,
+          3.0526299476623535
+        ],
+        [
+          -0.876550018787384,
+          0.8453500270843506
+        ],
+        [
+          -3.3974053792462655e-08,
+          0.256600022315979
+        ]
+      ],
+      "provenance": "assets/blockout/environment/river_debris_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/river_debris_a.obj"
+    },
+    {
+      "id": "root_arch_a",
+      "family": "environment",
+      "triangles": 216,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.1865599155426025,
+          3.1865599155426025
+        ],
+        [
+          -1.417449951171875,
+          0.22000011801719666
+        ],
+        [
+          0.017230097204446793,
+          3.3166000843048096
+        ]
+      ],
+      "provenance": "assets/blockout/environment/root_arch_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/root_arch_a.obj"
+    },
+    {
+      "id": "route_flow_corner_a",
+      "family": "environment",
+      "triangles": 120,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -2.0,
+          0.5585600137710571
+        ],
+        [
+          -2.0,
+          0.5585600137710571
+        ],
+        [
+          -3.3974053792462655e-08,
+          0.18337014317512512
+        ]
+      ],
+      "provenance": "assets/blockout/environment/route_flow_corner_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/route_flow_corner_a.obj"
+    },
+    {
+      "id": "route_flow_junction_a",
+      "family": "environment",
+      "triangles": 24,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -1.5099580252808664e-07,
+          0.0800001472234726
+        ]
+      ],
+      "provenance": "assets/blockout/environment/route_flow_junction_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/route_flow_junction_a.obj"
+    },
+    {
+      "id": "route_flow_straight_a",
+      "family": "environment",
+      "triangles": 60,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -0.5649999976158142,
+          0.5585600137710571
+        ],
+        [
+          -3.3974053792462655e-08,
+          0.18337002396583557
+        ]
+      ],
+      "provenance": "assets/blockout/environment/route_flow_straight_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/route_flow_straight_a.obj"
+    },
+    {
+      "id": "silica_cliff_a",
+      "family": "environment",
+      "triangles": 588,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -6.199999809265137,
+          5.699999809265137
+        ],
+        [
+          -2.4000000953674316,
+          2.5
+        ],
+        [
+          3.019916050561733e-08,
+          4.150000095367432
+        ]
+      ],
+      "provenance": "assets/blockout/environment/silica_cliff_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/silica_cliff_a.obj"
+    },
+    {
+      "id": "silica_lichen_a",
+      "family": "environment",
+      "triangles": 672,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.072240114212036,
+          3.0825300216674805
+        ],
+        [
+          -1.4959299564361572,
+          1.6350200176239014
+        ],
+        [
+          -3.774895063202166e-08,
+          1.5700000524520874
+        ]
+      ],
+      "provenance": "assets/blockout/environment/silica_lichen_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/silica_lichen_a.obj"
+    },
+    {
+      "id": "silica_outcrop_b",
+      "family": "environment",
+      "triangles": 238,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.9108800888061523,
+          3.799999952316284
+        ],
+        [
+          -1.5857499837875366,
+          1.634220004081726
+        ],
+        [
+          1.5099580252808664e-08,
+          1.4578399658203125
+        ]
+      ],
+      "provenance": "assets/blockout/environment/silica_outcrop_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/silica_outcrop_b.obj"
+    },
+    {
+      "id": "sulphur_colony_a",
+      "family": "environment",
+      "triangles": 520,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.4454500675201416,
+          3.269129991531372
+        ],
+        [
+          -1.6042399406433105,
+          2.0104498863220215
+        ],
+        [
+          -3.774895063202166e-08,
+          1.659999966621399
+        ]
+      ],
+      "provenance": "assets/blockout/environment/sulphur_colony_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/sulphur_colony_a.obj"
+    },
+    {
+      "id": "sulphur_crust_b",
+      "family": "environment",
+      "triangles": 320,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -3.4320499897003174,
+          3.3258299827575684
+        ],
+        [
+          -1.3294199705123901,
+          1.712440013885498
+        ],
+        [
+          -3.774895063202166e-08,
+          1.3899999856948853
+        ]
+      ],
+      "provenance": "assets/blockout/environment/sulphur_crust_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/sulphur_crust_b.obj"
+    },
+    {
+      "id": "sulphur_vent_cluster_a",
+      "family": "environment",
+      "triangles": 592,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.800000190734863,
+          4.800000190734863
+        ],
+        [
+          -3.509740114212036,
+          3.509740114212036
+        ],
+        [
+          0.0,
+          2.859999895095825
+        ]
+      ],
+      "provenance": "assets/blockout/environment/sulphur_vent_cluster_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/sulphur_vent_cluster_a.obj"
+    },
+    {
+      "id": "terrain_sand_tile_a",
+      "family": "environment",
+      "triangles": 128,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -3.019916050561733e-07,
+          0.15390007197856903
+        ]
+      ],
+      "provenance": "assets/blockout/environment/terrain_sand_tile_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/terrain_sand_tile_a.obj"
+    },
+    {
+      "id": "terrain_silt_tile_a",
+      "family": "environment",
+      "triangles": 128,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -3.019916050561733e-07,
+          0.1551000028848648
+        ]
+      ],
+      "provenance": "assets/blockout/environment/terrain_silt_tile_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/terrain_silt_tile_a.obj"
+    },
+    {
+      "id": "terrain_silt_tile_b",
+      "family": "environment",
+      "triangles": 128,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -3.019916050561733e-07,
+          0.15811006724834442
+        ]
+      ],
+      "provenance": "assets/blockout/environment/terrain_silt_tile_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/terrain_silt_tile_b.obj"
+    },
+    {
+      "id": "vegetation_mat_a",
+      "family": "environment",
+      "triangles": 944,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.5601701736450195,
+          4.245450019836426
+        ],
+        [
+          -2.6571500301361084,
+          2.9796199798583984
+        ],
+        [
+          -8.304769494316133e-08,
+          1.7854200601577759
+        ]
+      ],
+      "provenance": "assets/blockout/environment/vegetation_mat_a.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/vegetation_mat_a.obj"
+    },
+    {
+      "id": "vegetation_mat_b",
+      "family": "environment",
+      "triangles": 944,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.451670169830322,
+          4.312170028686523
+        ],
+        [
+          -2.652630090713501,
+          2.9012200832366943
+        ],
+        [
+          -8.304769494316133e-08,
+          1.78125
+        ]
+      ],
+      "provenance": "assets/blockout/environment/vegetation_mat_b.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/vegetation_mat_b.obj"
+    },
+    {
+      "id": "vegetation_mat_c",
+      "family": "environment",
+      "triangles": 944,
+      "objects": 1,
+      "bounds_blender_z_up": [
+        [
+          -4.451670169830322,
+          4.37175989151001
+        ],
+        [
+          -2.6606199741363525,
+          2.263669967651367
+        ],
+        [
+          -8.304769494316133e-08,
+          1.778320074081421
+        ]
+      ],
+      "provenance": "assets/blockout/environment/vegetation_mat_c.obj; topology and material refinement",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/vegetation_mat_c.obj"
+    },
+    {
+      "id": "plant_current_meadow_01",
+      "family": "environment",
+      "triangles": 590,
+      "objects": 10,
+      "bounds_blender_z_up": [
+        [
+          0.20816799998283386,
+          1.1179840564727783
+        ],
+        [
+          -0.703209400177002,
+          0.8424899578094482
+        ],
+        [
+          0.029999999329447746,
+          1.0206037759780884
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_current_meadow_01.obj"
+    },
+    {
+      "id": "plant_current_meadow_02",
+      "family": "environment",
+      "triangles": 708,
+      "objects": 12,
+      "bounds_blender_z_up": [
+        [
+          -0.9331972599029541,
+          0.6898045539855957
+        ],
+        [
+          -0.670271635055542,
+          0.8598203659057617
+        ],
+        [
+          0.029999999329447746,
+          1.248647689819336
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_current_meadow_02.obj"
+    },
+    {
+      "id": "plant_current_meadow_03",
+      "family": "environment",
+      "triangles": 826,
+      "objects": 14,
+      "bounds_blender_z_up": [
+        [
+          -0.9798462390899658,
+          1.2352215051651
+        ],
+        [
+          -0.6742650270462036,
+          0.8054187297821045
+        ],
+        [
+          0.029999999329447746,
+          1.5222623348236084
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_current_meadow_03.obj"
+    },
+    {
+      "id": "plant_current_meadow_04",
+      "family": "environment",
+      "triangles": 944,
+      "objects": 16,
+      "bounds_blender_z_up": [
+        [
+          -1.029325246810913,
+          1.0250582695007324
+        ],
+        [
+          -0.5359565019607544,
+          1.017759084701538
+        ],
+        [
+          0.029999999329447746,
+          1.825048804283142
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_current_meadow_04.obj"
+    },
+    {
+      "id": "plant_current_meadow_05",
+      "family": "environment",
+      "triangles": 1062,
+      "objects": 18,
+      "bounds_blender_z_up": [
+        [
+          -0.851124107837677,
+          1.2270402908325195
+        ],
+        [
+          -0.4908193051815033,
+          1.291365623474121
+        ],
+        [
+          0.029999999329447746,
+          2.029160737991333
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_current_meadow_05.obj"
+    },
+    {
+      "id": "plant_current_meadow_06",
+      "family": "environment",
+      "triangles": 1180,
+      "objects": 20,
+      "bounds_blender_z_up": [
+        [
+          -0.7557362914085388,
+          1.1941514015197754
+        ],
+        [
+          -0.6135461926460266,
+          1.556778073310852
+        ],
+        [
+          0.029999999329447746,
+          2.2772488594055176
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/environment/plant_current_meadow_06.obj"
+    },
+    {
+      "id": "unit_general_carrier_a",
+      "family": "settlement",
+      "triangles": 4216,
+      "objects": 28,
+      "bounds_blender_z_up": [
+        [
+          -1.0027046203613281,
+          1.0027046203613281
+        ],
+        [
+          -0.9900000095367432,
+          1.0499999523162842
+        ],
+        [
+          0.12999996542930603,
+          1.0
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/unit_general_carrier_a.obj"
+    },
+    {
+      "id": "unit_burrowing_carrier_a",
+      "family": "settlement",
+      "triangles": 4664,
+      "objects": 30,
+      "bounds_blender_z_up": [
+        [
+          -1.0027046203613281,
+          1.0027046203613281
+        ],
+        [
+          -1.0499999523162842,
+          1.0499999523162842
+        ],
+        [
+          0.12999996542930603,
+          1.0
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/unit_burrowing_carrier_a.obj"
+    },
+    {
+      "id": "unit_filter_carrier_a",
+      "family": "settlement",
+      "triangles": 5042,
+      "objects": 42,
+      "bounds_blender_z_up": [
+        [
+          -1.0027046203613281,
+          1.0027046203613281
+        ],
+        [
+          -0.9900000095367432,
+          1.0499999523162842
+        ],
+        [
+          0.12999996542930603,
+          1.4732023477554321
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/unit_filter_carrier_a.obj"
+    },
+    {
+      "id": "unit_mineral_jaw_carrier_a",
+      "family": "settlement",
+      "triangles": 4252,
+      "objects": 30,
+      "bounds_blender_z_up": [
+        [
+          -1.0027046203613281,
+          1.0027046203613281
+        ],
+        [
+          -1.0736373662948608,
+          1.0499999523162842
+        ],
+        [
+          0.12999996542930603,
+          1.0
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/unit_mineral_jaw_carrier_a.obj"
+    },
+    {
+      "id": "unit_detox_carrier_a",
+      "family": "settlement",
+      "triangles": 4664,
+      "objects": 30,
+      "bounds_blender_z_up": [
+        [
+          -1.0027046203613281,
+          1.0027046203613281
+        ],
+        [
+          -0.9900000095367432,
+          1.0499999523162842
+        ],
+        [
+          0.12999996542930603,
+          1.0
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/unit_detox_carrier_a.obj"
+    },
+    {
+      "id": "unit_vascular_carrier_a",
+      "family": "settlement",
+      "triangles": 4216,
+      "objects": 28,
+      "bounds_blender_z_up": [
+        [
+          -1.0027046203613281,
+          1.0027046203613281
+        ],
+        [
+          -0.9900000095367432,
+          1.0499999523162842
+        ],
+        [
+          0.12999996542930603,
+          1.0
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/unit_vascular_carrier_a.obj"
+    },
+    {
+      "id": "unit_memory_carrier_a",
+      "family": "settlement",
+      "triangles": 4520,
+      "objects": 34,
+      "bounds_blender_z_up": [
+        [
+          -1.0027046203613281,
+          1.0027046203613281
+        ],
+        [
+          -0.9900000095367432,
+          1.0499999523162842
+        ],
+        [
+          0.12999996542930603,
+          1.4114125967025757
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/unit_memory_carrier_a.obj"
+    },
+    {
+      "id": "great_work_memory_reef_stage_0",
+      "family": "settlement",
+      "triangles": 1680,
+      "objects": 12,
+      "bounds_blender_z_up": [
+        [
+          -3.1778008937835693,
+          3.2622694969177246
+        ],
+        [
+          -2.384850025177002,
+          2.60665225982666
+        ],
+        [
+          -0.03999999910593033,
+          0.6058845520019531
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/great_work_memory_reef_stage_0.obj"
+    },
+    {
+      "id": "great_work_memory_reef_stage_1",
+      "family": "settlement",
+      "triangles": 1968,
+      "objects": 21,
+      "bounds_blender_z_up": [
+        [
+          -3.1778008937835693,
+          3.2622694969177246
+        ],
+        [
+          -2.384850025177002,
+          2.60665225982666
+        ],
+        [
+          -0.03999999910593033,
+          2.455545663833618
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/great_work_memory_reef_stage_1.obj"
+    },
+    {
+      "id": "great_work_memory_reef_stage_2",
+      "family": "settlement",
+      "triangles": 4362,
+      "objects": 39,
+      "bounds_blender_z_up": [
+        [
+          -3.1778008937835693,
+          3.2622694969177246
+        ],
+        [
+          -2.384850025177002,
+          2.60665225982666
+        ],
+        [
+          -0.03999999910593033,
+          3.1182210445404053
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/great_work_memory_reef_stage_2.obj"
+    },
+    {
+      "id": "great_work_memory_reef_stage_3",
+      "family": "settlement",
+      "triangles": 6056,
+      "objects": 53,
+      "bounds_blender_z_up": [
+        [
+          -3.1778008937835693,
+          3.2622694969177246
+        ],
+        [
+          -2.384850025177002,
+          2.60665225982666
+        ],
+        [
+          -0.03999999910593033,
+          3.799999952316284
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/great_work_memory_reef_stage_3.obj"
+    },
+    {
+      "id": "construction_growth_stage_0",
+      "family": "settlement",
+      "triangles": 1120,
+      "objects": 17,
+      "bounds_blender_z_up": [
+        [
+          -1.6609998941421509,
+          1.5891621112823486
+        ],
+        [
+          -1.1981600522994995,
+          1.2611465454101562
+        ],
+        [
+          -0.03999999910593033,
+          1.3813616037368774
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/construction_growth_stage_0.obj"
+    },
+    {
+      "id": "construction_growth_stage_1",
+      "family": "settlement",
+      "triangles": 2548,
+      "objects": 26,
+      "bounds_blender_z_up": [
+        [
+          -1.6609998941421509,
+          1.5891621112823486
+        ],
+        [
+          -1.1981600522994995,
+          1.2611465454101562
+        ],
+        [
+          -0.03999999910593033,
+          1.3813616037368774
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/construction_growth_stage_1.obj"
+    },
+    {
+      "id": "construction_growth_stage_2",
+      "family": "settlement",
+      "triangles": 3020,
+      "objects": 34,
+      "bounds_blender_z_up": [
+        [
+          -1.6609998941421509,
+          1.5891621112823486
+        ],
+        [
+          -1.1981600522994995,
+          1.2611465454101562
+        ],
+        [
+          -0.03999999910593033,
+          1.3813616037368774
+        ]
+      ],
+      "provenance": "new Blender geometry",
+      "status": "candidate",
+      "path": "assets/verdant_v2/settlement/construction_growth_stage_2.obj"
+    }
+  ]
+}

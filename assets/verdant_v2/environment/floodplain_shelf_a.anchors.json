@@ -1,0 +1,27 @@
+{
+  "asset": "floodplain_shelf_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "GroundPivot": [
+      0,
+      0,
+      0
+    ],
+    "CultivationAnchor": [
+      0,
+      0.3,
+      0
+    ],
+    "WetEdge": [
+      0,
+      0.1,
+      3.5
+    ]
+  }
+}

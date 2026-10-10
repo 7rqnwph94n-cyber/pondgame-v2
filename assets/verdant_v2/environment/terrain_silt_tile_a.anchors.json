@@ -1,0 +1,27 @@
+{
+  "asset": "terrain_silt_tile_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "LabelAnchor": [
+      0,
+      0.4551000028848648,
+      0
+    ],
+    "InputAnchor": [
+      -1.7,
+      0.4,
+      0
+    ],
+    "OutputAnchor": [
+      1.7,
+      0.4,
+      0
+    ]
+  }
+}

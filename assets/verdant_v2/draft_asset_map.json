@@ -1,0 +1,668 @@
+{
+  "_comment": "Blender Verdant library v2; presentation mapping only. Original blockouts retained.",
+  "asset_dir": "../assets/verdant_v2/settlement",
+  "environment_dir": "../assets/verdant_v2/environment",
+  "terrain_texture_dir": "../assets/textures/terrain",
+  "icon_dir": "../assets/ui/icons",
+  "buildings": {
+    "first_nursery": "building_first_nursery_a",
+    "additional_nursery": "building_additional_nursery_a",
+    "survey_organ": "building_survey_organ_a",
+    "general_store": "building_general_store_a",
+    "living_goods_store": "building_living_goods_store_a",
+    "distribution_node": "building_distribution_node_a",
+    "trade_landing": "building_trade_landing_a",
+    "maintenance_organ": "building_maintenance_organ_a",
+    "clean_flow_node": "building_clean_flow_node_a",
+    "waste_collector": "building_waste_collector_a",
+    "detox_clinic": "building_detox_clinic_a",
+    "memory_circle": "building_memory_circle_a",
+    "waste_digester": "building_waste_digester_a",
+    "photosynthetic_field": "building_photosynthetic_field_a",
+    "culture_bed": "building_culture_bed_a",
+    "nutrient_washer": "building_nutrient_washer_a",
+    "channel_separator": "building_channel_separator_a",
+    "nutrient_kitchen": "building_nutrient_kitchen_a",
+    "sediment_dredge": "building_sediment_dredge_a",
+    "filter_crown": "building_filter_crown_a",
+    "silicate_pit": "building_silicate_pit_a",
+    "carbonate_cutter": "building_carbonate_cutter_a",
+    "anoxic_pump": "building_anoxic_pump_a",
+    "fibre_garden": "building_fibre_garden_a",
+    "resin_grove": "building_resin_grove_a",
+    "pigment_bed": "building_pigment_bed_a",
+    "mineral_washery": "building_mineral_washery_a",
+    "ceramic_kiln": "building_ceramic_kiln_a",
+    "retting_pool": "building_retting_pool_a",
+    "resin_curing": "building_resin_curing_a",
+    "composite_workshop": "building_composite_workshop_a",
+    "emergency_enzyme": "building_emergency_enzyme_a",
+    "artisan_organ": "building_artisan_organ_a",
+    "shelter": "res_shelter_cluster_a"
+  },
+  "residence_tiers": {
+    "shelter": "res_shelter_cluster_a",
+    "stable": "res_stable_habitat_a",
+    "symbiotic": "res_symbiotic_a",
+    "memory": "res_memory_enclave_a"
+  },
+  "environment": {
+    "map": {
+      "base_colour": "#293d3a",
+      "water_colour": "#176b73",
+      "floodplain_colour": "#535b48",
+      "terrace_colour": "#39564e",
+      "methane_colour": "#24373a",
+      "sulphur_colour": "#554a34",
+      "carbonate_colour": "#52605a",
+      "district_centres": {
+        "residence": [
+          -18,
+          -8
+        ],
+        "food": [
+          -5,
+          13
+        ],
+        "extraction": [
+          24,
+          -14
+        ],
+        "processing": [
+          13,
+          -6
+        ],
+        "service": [
+          -10,
+          -1
+        ],
+        "logistics": [
+          1,
+          -1
+        ],
+        "institution": [
+          -15,
+          -16
+        ],
+        "luxury": [
+          -8,
+          -18
+        ],
+        "other": [
+          5,
+          7
+        ]
+      },
+      "layout_file": "map_layout.json"
+    },
+    "terrain_tiles": [],
+    "features": [
+      {
+        "asset": "silica_cliff_a",
+        "position": [
+          25,
+          0.1,
+          -22
+        ],
+        "rotation_y": 18,
+        "scale": 1.8
+      },
+      {
+        "asset": "silica_outcrop_b",
+        "position": [
+          39,
+          0.1,
+          -31
+        ],
+        "rotation_y": -8,
+        "scale": 1.15
+      },
+      {
+        "asset": "methane_seep_a",
+        "position": [
+          -31,
+          0.13,
+          20
+        ],
+        "rotation_y": -12,
+        "scale": 1.8
+      },
+      {
+        "asset": "methane_crater_b",
+        "position": [
+          -47,
+          0.13,
+          28
+        ],
+        "rotation_y": 24,
+        "scale": 1.1
+      },
+      {
+        "asset": "sulphur_vent_cluster_a",
+        "position": [
+          39,
+          0.12,
+          -3
+        ],
+        "rotation_y": 8,
+        "scale": 1.65
+      },
+      {
+        "asset": "sulphur_crust_b",
+        "position": [
+          52,
+          0.12,
+          7
+        ],
+        "rotation_y": -17,
+        "scale": 1.15
+      },
+      {
+        "asset": "carbonate_shelf_a",
+        "position": [
+          -49,
+          0.1,
+          -29
+        ],
+        "rotation_y": 13,
+        "scale": 1.35
+      }
+    ],
+    "empty_features": [
+      {
+        "asset": "silica_cliff_a",
+        "position": [
+          29,
+          0.1,
+          -22
+        ],
+        "rotation_y": 18,
+        "scale": 1.25
+      },
+      {
+        "asset": "silica_outcrop_b",
+        "position": [
+          42,
+          0.1,
+          -32
+        ],
+        "rotation_y": -8,
+        "scale": 1.0
+      },
+      {
+        "asset": "methane_seep_a",
+        "position": [
+          -34,
+          0.13,
+          19
+        ],
+        "rotation_y": -12,
+        "scale": 1.3
+      },
+      {
+        "asset": "methane_crater_b",
+        "position": [
+          -48,
+          0.13,
+          29
+        ],
+        "rotation_y": 24,
+        "scale": 1.0
+      },
+      {
+        "asset": "sulphur_vent_cluster_a",
+        "position": [
+          42,
+          0.12,
+          -1
+        ],
+        "rotation_y": 8,
+        "scale": 1.15
+      },
+      {
+        "asset": "sulphur_crust_b",
+        "position": [
+          53,
+          0.12,
+          8
+        ],
+        "rotation_y": -17,
+        "scale": 1.0
+      },
+      {
+        "asset": "carbonate_shelf_a",
+        "position": [
+          -49,
+          0.1,
+          -29
+        ],
+        "rotation_y": 13,
+        "scale": 1.25
+      }
+    ],
+    "chemical_ecology": [
+      {
+        "asset": "anoxic_colony_a",
+        "position": [
+          -40,
+          0.08,
+          14
+        ],
+        "rotation_y": 18,
+        "scale": 1.05
+      },
+      {
+        "asset": "anoxic_colony_a",
+        "position": [
+          -28,
+          0.08,
+          29
+        ],
+        "rotation_y": -34,
+        "scale": 0.78
+      },
+      {
+        "asset": "sulphur_colony_a",
+        "position": [
+          35,
+          0.08,
+          -7
+        ],
+        "rotation_y": 24,
+        "scale": 0.92
+      },
+      {
+        "asset": "sulphur_colony_a",
+        "position": [
+          50,
+          0.08,
+          9
+        ],
+        "rotation_y": -19,
+        "scale": 0.72
+      },
+      {
+        "asset": "silica_lichen_a",
+        "position": [
+          24,
+          0.08,
+          -31
+        ],
+        "rotation_y": 11,
+        "scale": 0.88
+      },
+      {
+        "asset": "silica_lichen_a",
+        "position": [
+          42,
+          0.08,
+          -18
+        ],
+        "rotation_y": -27,
+        "scale": 0.68
+      },
+      {
+        "asset": "carbonate_colony_a",
+        "position": [
+          -53,
+          0.08,
+          -25
+        ],
+        "rotation_y": -14,
+        "scale": 0.82
+      },
+      {
+        "asset": "carbonate_colony_a",
+        "position": [
+          -41,
+          0.08,
+          -36
+        ],
+        "rotation_y": 31,
+        "scale": 0.64
+      }
+    ],
+    "shore_habitat": [
+      {
+        "asset": "biomass_bower_a",
+        "position": [
+          7,
+          0.08,
+          25
+        ],
+        "rotation_y": 18,
+        "scale": 1.13
+      },
+      {
+        "asset": "biomass_bower_b",
+        "position": [
+          13,
+          0.08,
+          32
+        ],
+        "rotation_y": -31,
+        "scale": 0.91
+      },
+      {
+        "asset": "biomass_bower_b",
+        "position": [
+          9,
+          0.08,
+          36
+        ],
+        "rotation_y": 47,
+        "scale": 0.78
+      },
+      {
+        "asset": "biomass_bower_c",
+        "position": [
+          -53,
+          0.08,
+          -28
+        ],
+        "rotation_y": 42,
+        "scale": 0.92
+      },
+      {
+        "asset": "river_debris_a",
+        "position": [
+          12,
+          0.07,
+          18
+        ],
+        "rotation_y": 12,
+        "scale": 1.05
+      },
+      {
+        "asset": "river_debris_a",
+        "position": [
+          3,
+          0.07,
+          14
+        ],
+        "rotation_y": -22,
+        "scale": 0.77
+      },
+      {
+        "asset": "river_debris_a",
+        "position": [
+          -45,
+          0.07,
+          -28
+        ],
+        "rotation_y": 31,
+        "scale": 0.83
+      }
+    ],
+    "scenery": [
+      {
+        "asset": "ledge_straight_a",
+        "position": [
+          25,
+          0.2,
+          -25
+        ],
+        "rotation_y": 18,
+        "scale": 2.0
+      },
+      {
+        "asset": "ledge_straight_a",
+        "position": [
+          31,
+          0.2,
+          -18
+        ],
+        "rotation_y": 28,
+        "scale": 1.8
+      },
+      {
+        "asset": "ledge_corner_a",
+        "position": [
+          34,
+          0.2,
+          -9
+        ],
+        "rotation_y": -8,
+        "scale": 1.8
+      },
+      {
+        "asset": "root_arch_a",
+        "position": [
+          -33,
+          0,
+          10
+        ],
+        "rotation_y": 38,
+        "scale": 1.5
+      },
+      {
+        "asset": "boulder_a",
+        "position": [
+          -30,
+          0,
+          -25
+        ],
+        "rotation_y": 10,
+        "scale": 1.6
+      },
+      {
+        "asset": "boulder_b",
+        "position": [
+          37,
+          0,
+          25
+        ],
+        "rotation_y": 35,
+        "scale": 1.5
+      },
+      {
+        "asset": "boulder_c",
+        "position": [
+          39,
+          0,
+          8
+        ],
+        "rotation_y": -20,
+        "scale": 1.8
+      },
+      {
+        "asset": "plant_fan_b",
+        "position": [
+          -30,
+          0,
+          4
+        ],
+        "rotation_y": 22,
+        "scale": 1.25
+      },
+      {
+        "asset": "plant_ribbon_b",
+        "position": [
+          30,
+          0,
+          19
+        ],
+        "rotation_y": -18,
+        "scale": 1.2
+      },
+      {
+        "asset": "plant_cup_a",
+        "position": [
+          -16,
+          0,
+          25
+        ],
+        "rotation_y": 15,
+        "scale": 1.1
+      },
+      {
+        "asset": "plant_branch_b",
+        "position": [
+          18,
+          0,
+          27
+        ],
+        "rotation_y": -25,
+        "scale": 1.2
+      },
+      {
+        "asset": "plant_fan_a",
+        "position": [
+          -38,
+          0,
+          20
+        ],
+        "rotation_y": 45,
+        "scale": 1.0
+      },
+      {
+        "asset": "plant_ribbon_a",
+        "position": [
+          39,
+          0,
+          -2
+        ],
+        "rotation_y": -40,
+        "scale": 1.0
+      },
+      {
+        "asset": "plant_current_meadow_01",
+        "position": [
+          -40,
+          0.08,
+          5
+        ],
+        "rotation_y": 0,
+        "scale": 0.9
+      },
+      {
+        "asset": "plant_current_meadow_02",
+        "position": [
+          -25,
+          0.08,
+          27
+        ],
+        "rotation_y": 31,
+        "scale": 0.9
+      },
+      {
+        "asset": "plant_current_meadow_03",
+        "position": [
+          32,
+          0.08,
+          30
+        ],
+        "rotation_y": 62,
+        "scale": 0.9
+      },
+      {
+        "asset": "plant_current_meadow_04",
+        "position": [
+          -46,
+          0.08,
+          -18
+        ],
+        "rotation_y": 93,
+        "scale": 0.9
+      },
+      {
+        "asset": "plant_current_meadow_05",
+        "position": [
+          44,
+          0.08,
+          -14
+        ],
+        "rotation_y": 124,
+        "scale": 0.9
+      },
+      {
+        "asset": "plant_current_meadow_06",
+        "position": [
+          12,
+          0.08,
+          34
+        ],
+        "rotation_y": 155,
+        "scale": 0.9
+      }
+    ],
+    "routes": []
+  },
+  "category_colours": {
+    "institution": "#3c6e71",
+    "logistics": "#5a7d8c",
+    "service": "#7fc8b8",
+    "food": "#6fae4f",
+    "extraction": "#b38b59",
+    "processing": "#c9a227",
+    "luxury": "#b56576",
+    "residence": "#2a9d8f",
+    "site": "#9aa5ab",
+    "terrain_silt": "#77664d",
+    "panel": "#102f33",
+    "panel_border": "#e8dfc4",
+    "focus": "#78d6dc",
+    "attention": "#f0a23a",
+    "failure": "#dc5a4b"
+  },
+  "status_colours": {
+    "running": "#4caf50",
+    "idle": "#9e9e9e",
+    "no_input": "#ffb300",
+    "no_workforce": "#e53935",
+    "environment": "#42a5f5",
+    "patch_depleted": "#6d4c41",
+    "morphology_missing": "#ab47bc",
+    "paused": "#455a64",
+    "awaiting_materials": "#ffb300",
+    "awaiting_labour": "#e53935",
+    "in_progress": "#4caf50",
+    "normal": "#4caf50",
+    "strained": "#ffb300",
+    "dormant": "#e53935"
+  },
+  "payloads": {
+    "biomass": "payload_biomass_a",
+    "staple": "payload_staple_a",
+    "phosphate_sediment": "payload_phosphate_sediment_a",
+    "suspended_nutrient": "payload_suspended_nutrient_a",
+    "growth_nutrient": "payload_growth_nutrient_a",
+    "balanced_gel": "payload_balanced_gel_a",
+    "raw_silicate": "payload_raw_silicate_a",
+    "prepared_silica": "payload_prepared_silica_a",
+    "carbonate": "payload_carbonate_a",
+    "anoxic_organics": "payload_anoxic_organics_a",
+    "raw_fibre": "payload_raw_fibre_a",
+    "woven_fibre": "payload_woven_fibre_a",
+    "raw_resin": "payload_raw_resin_a",
+    "cured_resin": "payload_cured_resin_a",
+    "raw_pigment": "payload_raw_pigment_a",
+    "fired_ceramic": "payload_fired_ceramic_a",
+    "habitat_composite": "payload_habitat_composite_a",
+    "organic_waste": "payload_organic_waste_a",
+    "repair_enzyme": "payload_repair_enzyme_a",
+    "recovered_fertiliser": "payload_recovered_fertiliser_a",
+    "pigment_ornament": "payload_pigment_ornament_a",
+    "stored_value": "payload_stored_value_a"
+  },
+  "carrier_morphologies": {
+    "general": "unit_general_carrier_a",
+    "burrowing": "unit_burrowing_carrier_a",
+    "filter": "unit_filter_carrier_a",
+    "mineral_jaw": "unit_mineral_jaw_carrier_a",
+    "detox": "unit_detox_carrier_a",
+    "vascular": "unit_vascular_carrier_a",
+    "memory": "unit_memory_carrier_a"
+  },
+  "great_work_stages": [
+    "great_work_memory_reef_stage_0",
+    "great_work_memory_reef_stage_1",
+    "great_work_memory_reef_stage_2",
+    "great_work_memory_reef_stage_3"
+  ],
+  "construction_growth_stages": [
+    "construction_growth_stage_0",
+    "construction_growth_stage_1",
+    "construction_growth_stage_2"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "asset": "payload_organic_waste_a",
+  "units": "metres",
+  "up_axis": "+Y",
+  "ground_pivot": [
+    0,
+    0,
+    0
+  ],
+  "anchors": {
+    "PayloadAnchor": [
+      0,
+      0,
+      0
+    ]
+  }
+}
