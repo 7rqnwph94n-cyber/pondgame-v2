@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "gameplay_bound": false,
+  "materials": [
+    "shell",
+    "chalk",
+    "resin",
+    "amber",
+    "membrane",
+    "silica",
+    "growth",
+    "silt",
+    "dark",
+    "ceramic",
+    "memory",
+    "fibre"
+  ],
+  "assets": [
+    {
+      "id": "01_seed_shelter",
+      "path": "assets/housing_polish_v01/01_seed_shelter.glb",
+      "lod_path": "assets/housing_polish_v01/01_seed_shelter_lod.glb",
+      "triangles": 26060,
+      "lod_triangles": 10942,
+      "surfaces": 12,
+      "bounds_y_up": {
+        "min": [
+          -1.9539309740066528,
+          -0.04487838223576546,
+          -1.402999997138977
+        ],
+        "max": [
+          1.3454657793045044,
+          1.2648783922195435,
+          1.5449999570846558
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "02_rooted_dwelling",
+      "path": "assets/housing_polish_v01/02_rooted_dwelling.glb",
+      "lod_path": "assets/housing_polish_v01/02_rooted_dwelling_lod.glb",
+      "triangles": 52094,
+      "lod_triangles": 21873,
+      "surfaces": 12,
+      "bounds_y_up": {
+        "min": [
+          -1.975978136062622,
+          -0.0648542270064354,
+          -2.252999782562256
+        ],
+        "max": [
+          1.929642677307129,
+          1.7048542499542236,
+          1.5449999570846558
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "04_symbiotic_court",
+      "path": "assets/housing_polish_v01/04_symbiotic_court.glb",
+      "lod_path": "assets/housing_polish_v01/04_symbiotic_court_lod.glb",
+      "triangles": 89676,
+      "lod_triangles": 37659,
+      "surfaces": 12,
+      "bounds_y_up": {
+        "min": [
+          -2.384979248046875,
+          -0.04487838223576546,
+          -2.8135550022125244
+        ],
+        "max": [
+          2.528256893157959,
+          2.5338587760925293,
+          1.5539467334747314
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    },
+    {
+      "id": "06_memory_manor",
+      "path": "assets/housing_polish_v01/06_memory_manor.glb",
+      "lod_path": "assets/housing_polish_v01/06_memory_manor_lod.glb",
+      "triangles": 140080,
+      "lod_triangles": 58830,
+      "surfaces": 13,
+      "bounds_y_up": {
+        "min": [
+          -2.442364454269409,
+          -0.04487838223576546,
+          -2.346377372741699
+        ],
+        "max": [
+          2.6644980907440186,
+          4.74068546295166,
+          1.5449999570846558
+        ]
+      },
+      "states": [
+        "Structure",
+        "Dormancy",
+        "Activity"
+      ],
+      "construction_phases": [
+        "GrowthShell",
+        "GrowthFrame",
+        "GrowthSoft"
+      ],
+      "status": "refined_candidate"
+    }
+  ],
+  "source": "Approved v04 anatomy with house-only material and tissue refinement"
+}
