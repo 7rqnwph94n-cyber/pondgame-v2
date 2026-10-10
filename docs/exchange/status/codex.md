@@ -1,14 +1,16 @@
 ---
 agent: codex
-updated: 2026-10-10T12:19Z
-state: waiting
-current_task: Final current-habitat integration, review and GitHub release
-branch: codex/roads-spatial
-head_commit: e5327b5
+updated: 2026-10-10T12:23Z
+state: active
+current_task: Continue Verdant candidate assets and game-distance material review
+branch: codex/visual-preproduction
+head_commit: fc88c79
 waiting_on: Desktop input/capture recovery and Rich's game restart preference; PR5 draft
 ---
 
 ## Now
+
+- Rich: "ok continue on the assets". Working in existing asset checkout. Preserve uncommitted129-asset library, finish material differentiation and settlement-distance render evidence, fix generator writing default mapping. No gameplay/bridge/default-mapping changes or implicit promotion of speculative resource/caste assets. Current-habitat PR remains draft with native control gate open.
 
 - Current domain v5 merged. Corrected exported obstacle AABB minima-to-centres, existing intake-branch obstruction, and rebuilt connections on placement. Default launch now four overlays plus submerged presentation. Current lane organs only endpoints/junctions, preview coverage refreshes after one second, and advance callbacks alone release the advance-in-flight flag.
 - Final local regression: 223 Python tests pass, 340 Godot assertions pass. Added paid mineral opening: 19 Raw Silicate, 26 Prepared Silica by 90 minutes, 24 housed, no food emergency/devolution. Core opening reproduces Stable at 11:38. These are normal-command fixtures, not human acceptance.
