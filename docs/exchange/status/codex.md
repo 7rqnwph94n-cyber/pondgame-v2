@@ -1,16 +1,16 @@
 ---
 agent: codex
 updated: 2026-10-10T12:23Z
-state: active
+state: idle
 current_task: House-only concept polish and matched before-after native renders
 branch: codex/visual-preproduction
-head_commit: 9e7806b
+head_commit: 21245ae
 waiting_on: Desktop input/capture recovery and Rich's game restart preference; PR5 draft
 ---
 
 ## Now
 
-- Rich rejected the v02 houses and requested substantial noticeable house-only polish. Built isolated four-stage housing from approved v04 anatomy, 1024 PBR maps, recessed organs, tapered roots and integrated planted tissue. Two native refinement passes corrected toy-like aperture fill/root bulk. Preparing final matched colour/grey/LOD/rear captures and package commit. Palette conversion experiment reverted after source PNG inspection; exported palette range now checked. No industrial or playable-default changes.
+- Rich rejected the v02 houses and requested substantial noticeable house-only polish. Built isolated four-stage housing from approved v04 anatomy, 1024 PBR maps, recessed organs, tapered roots and integrated planted tissue. Two native refinement passes corrected toy-like aperture fill/root bulk. Commit 21245ae completes four houses, all eight near/distance imports and native comparison/detail/grey/LOD/rear captures. 512 checks pass. Review package remains opt-in; largest near 140080 triangles, distance 58830, requires further population LOD work before default integration. Palette conversion experiment reverted after source PNG inspection; exported palette range now checked. No industrial or playable-default changes.
 
 - Rich: "ok continue on the assets". Working in existing asset checkout. 129 candidate meshes now verified with finite vertices, normals, material application and companion anchors. Native Godot galleries cover homes, processors, carriers, goods, ecology and Reef; greyscale homes/processors and matching plain-material baselines included. Asset-only commit 9e7806b complete; procedural surface shader is isolated to review fixture. Generator writes a draft mapping. No gameplay/bridge/default-mapping changes or implicit promotion of speculative resource/caste assets. Current-habitat PR remains draft with native control gate open.
 
@@ -20,6 +20,8 @@ waiting_on: Desktop input/capture recovery and Rich's game restart preference; P
 - Original brief/design sources imported unchanged into docs/design; current docs distinguish real implemented features from remaining anchor logistics/save/load/fluid/final-art limitations.
 
 ## Next
+
+- Get Rich’s visual judgement on house-only before/after; continue housing refinement from that concrete review.
 
 - Finish native click-through where session preservation permits.
 - Resolve independent-review findings, push and merge PR #5; reconcile all managed checkouts.
