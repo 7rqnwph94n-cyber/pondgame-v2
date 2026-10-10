@@ -7,6 +7,7 @@ The default launch is empty and paused, with the provisional economy, empty foun
 - Local simulation: 223 tests pass.
 - Local client: 340 assertions pass after the background-preview correction. Changed cursor/network commands clear approval; unchanged stationary previews retain their previous result during refresh, and stale replies cannot approve another command.
 - Claude independently reproduced 223 simulation tests and 337 client assertions on 6fdc454, both opening evidence files and the earlier enzyme-capacity evidence. His full review found no blockers; the identified organ clutter, duplicate advance and preview refresh flicker are corrected. His own status-board patch is on main at 2399336.
+- Claude then independently reviewed e147550, found no blockers and reproduced 340 client assertions. Cached approval survives a background coverage refresh; changed command/revision still requires a new answer.
 - Core ordinary-command opening: ten paid buildings, all 24 founders housed, first Stable at 11:38, no food emergency/devolution through 90 minutes.
 - Mineral extension: two additional paid buildings, 19 Raw Silicate and 26 Prepared Silica produced, 172 delivery jobs and 185 collection jobs, no food emergency/devolution through 90 minutes. Shared rock geometry is corrected to actual exported AABB centres; the valid extraction route follows that geography.
 
