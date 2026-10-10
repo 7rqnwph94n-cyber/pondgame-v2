@@ -54,6 +54,7 @@ var _preview_ready := false
 var _preview_revision := 0
 var _preview_last_sent := 0
 var _preview_checked_at := 0
+var _preview_refresh_pending := false
 var _preview_data: Dictionary = {}
 var _settlement_route_ids := ""
 var _follow_carrier := ""
@@ -1072,26 +1073,31 @@ func _placement_command() -> Dictionary:
 
 func _validate_preview(command: Dictionary) -> String:
 	if not bridge.is_ready: return "Connection lost · restart the game"
-	if _preview_ready and Time.get_ticks_msec() - _preview_checked_at > 1000:
-		_preview_revision += 1
 	var key := JSON.stringify(command) + "/" + str(_preview_revision)
-	if key != _preview_key:
+	var changed := key != _preview_key
+	var refresh := not changed and _preview_ready and not _preview_refresh_pending and Time.get_ticks_msec() - _preview_checked_at > 1000
+	if changed:
 		_preview_key = key
 		_preview_ready = false
+		_preview_refresh_pending = false
 		_preview_data = {}
 		_preview_reason = "Checking connection…"
-		# Pending requests are bounded by the bridge latency and this rate limit.
+	if changed or refresh:
+		# Refresh coverage without flickering or refusing an unchanged valid cursor.
+		# A changed command/network revision still requires a new authoritative reply.
 		if Time.get_ticks_msec() - _preview_last_sent >= 120:
 			_preview_last_sent = Time.get_ticks_msec()
+			_preview_refresh_pending = true
 			var preview := command.duplicate(true)
 			preview["dry_run"] = true
 			bridge.request("command", {"cmd": preview}, func(reply):
 				if _preview_key != key: return
+				_preview_refresh_pending = false
 				_preview_ready = true
 				_preview_checked_at = Time.get_ticks_msec()
 				_preview_data = reply.get("preview", {})
 				_preview_reason = "" if reply.get("ok", false) else _preview_error(reply.get("reasons", [])))
-		else:
+		elif changed:
 			_preview_key = "" # retry after the rate limit, even if cursor stays still
 	return _preview_reason if _preview_ready else "Checking connection…"
 

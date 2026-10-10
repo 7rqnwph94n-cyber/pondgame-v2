@@ -554,6 +554,13 @@ func test_current_habitat() -> void:
 	check(not main._preview_ready, "late reply for old cursor location cannot approve a new placement")
 	bridge.callbacks[1].call({"ok":false,"reasons":["spatial:not_connected"]})
 	check(main._validate_preview(b).contains("connected current network"), "authoritative disconnection remains blocked in preview")
+	main._preview_last_sent = -2000
+	main._preview_checked_at = -2000
+	var prior := main._preview_reason
+	check(main._validate_preview(b) == prior and main._preview_ready, "unchanged cursor retains its authoritative colour while coverage refreshes")
+	check(bridge.callbacks.size() == 3, "stationary coverage refresh sends one background dry run")
+	bridge.callbacks[2].call({"ok":true,"preview":{"spur":[[10,0],[10,1]]}})
+	check(main._validate_preview(b) == "" and not main._preview_refresh_pending, "fresh coverage replaces the retained result without an approval gap")
 	var home := EntityView.new()
 	home.setup("residence", _style())
 	home.set_entity_identity("grown", "stable")
